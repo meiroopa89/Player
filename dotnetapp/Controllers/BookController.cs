@@ -9,6 +9,7 @@ using dotnetapp.Models;
 using System.Data;
 using Microsoft.Data.SqlClient;
 
+namespace dotnetapp.Controllers{
 
 public class BookController : Controller
 {
@@ -147,4 +148,5 @@ public class BookController : Controller
             }
         }
     }
+}
 }

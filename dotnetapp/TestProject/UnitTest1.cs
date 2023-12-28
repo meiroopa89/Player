@@ -149,7 +149,7 @@ public void TestIndexMethodExists()
         [Test]
         public void Test_CreateViewFile_Exists()
         {
-            string indexPath = Path.Combine(@"/home/coder/project/workspace/BookStore-MVC-ADO/dotnetapp/Views/Book", "Create.cshtml");
+            string indexPath = Path.Combine(@"/home/coder/project/workspace/dotnetapp/Views/Book", "Create.cshtml");
             bool indexViewExists = File.Exists(indexPath);
 
             Assert.IsTrue(indexViewExists, "Create.cshtml view file does not exist.");
@@ -158,7 +158,7 @@ public void TestIndexMethodExists()
         [Test]
         public void Test_IndexViewFile_Exists()
         {
-            string indexPath = Path.Combine(@"/home/coder/project/workspace/BookStore-MVC-ADO/dotnetapp/Views/Book", "Index.cshtml");
+            string indexPath = Path.Combine(@"/home/coder/project/workspace/dotnetapp/Views/Book", "Index.cshtml");
             bool indexViewExists = File.Exists(indexPath);
 
             Assert.IsTrue(indexViewExists, "Index.cshtml view file does not exist.");
