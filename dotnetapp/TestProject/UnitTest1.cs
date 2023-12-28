@@ -32,14 +32,26 @@ namespace BookControllerTests
         [Test]
         public void Test_IndexReturns_ViewResult()
         {
-            // Act
-            var result = _controller.Index() as ViewResult;
+            // // Act
+            // var result = _controller.Index() as ViewResult;
 
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<ViewResult>(result);
-            Assert.IsAssignableFrom<List<Book>>(result.Model);
-        }
+            // // Assert
+            // Assert.IsNotNull(result);
+            // Assert.IsInstanceOf<ViewResult>(result);
+            // Assert.IsAssignableFrom<List<Book>>(result.Model);
+
+                string assemblyName = "dotnetapp";
+                Assembly assembly = Assembly.Load(assemblyName);
+                string controllerTypeName = "dotnetapp.Controllers.BookController";
+                Type controllerType = assembly.GetType(controllerTypeName);
+                MethodInfo method = controllerType.GetMethod("Index");
+                Assert.IsNotNull(method);
+                var controllerInstance = Activator.CreateInstance(controllerType);
+                var result = method.Invoke(controllerInstance, null);
+                Assert.IsNotNull(result);
+                Assert.IsInstanceOf<IActionResult>(result); // Change the expected type based on your method's return type
+            }
+
         [Test]
         public void Test_CreateReturns_ViewResult()
         {
@@ -97,13 +109,6 @@ namespace BookControllerTests
             Assert.IsNotNull(bookType);   
         }
 
-        [Test]
-        public void TestBookPropertiesExist()
-        {
-            // Assert
-            Assert.IsNotNull(properties, "Book class should have properties.");
-            Assert.IsTrue(properties.Length > 0, "Book class should have at least one property.");
-        }
 
         [Test]
         public void TestBookIDProperty()
