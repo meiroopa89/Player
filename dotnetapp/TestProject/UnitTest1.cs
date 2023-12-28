@@ -44,28 +44,68 @@ namespace BookControllerTests
                 Assert.IsInstanceOf<IActionResult>(result); 
             }
 
+        // [Test]
+        // public void Test_CreateReturns_ViewResult()
+        // {
+
+        //     string assemblyName = "dotnetapp";
+        //     Assembly assembly = Assembly.Load(assemblyName);
+        //     string controllerTypeName = "dotnetapp.Controllers.BookController";
+        //     Type controllerType = assembly.GetType(controllerTypeName);
+        //     MethodInfo method = controllerType.GetMethod("Create");
+
+        //     Assert.IsNotNull(method);
+
+        //     // Instantiate the controller
+        //     var controllerInstance = Activator.CreateInstance(controllerType);
+
+        //     // Invoke the method dynamically
+        //     var result = method.Invoke(controllerInstance, null);
+
+        //     // Check the return type
+        //     Assert.IsNotNull(result);
+        //     Assert.IsInstanceOf<IActionResult>(result); 
+        // }
+
         [Test]
-        public void Test_CreateReturns_ViewResult()
-        {
+public void Test_CreateGetMethodReturns_ViewResult()
+{
+    string assemblyName = "dotnetapp";
+    Assembly assembly = Assembly.Load(assemblyName);
+    string controllerTypeName = "dotnetapp.Controllers.BookController";
+    Type controllerType = assembly.GetType(controllerTypeName);
+    MethodInfo method = controllerType.GetMethod("Create", new Type[0]); // Method without parameters
 
-            string assemblyName = "dotnetapp";
-            Assembly assembly = Assembly.Load(assemblyName);
-            string controllerTypeName = "dotnetapp.Controllers.BookController";
-            Type controllerType = assembly.GetType(controllerTypeName);
-            MethodInfo method = controllerType.GetMethod("Create");
+    Assert.IsNotNull(method);
 
-            Assert.IsNotNull(method);
+    var controllerInstance = Activator.CreateInstance(controllerType);
 
-            // Instantiate the controller
-            var controllerInstance = Activator.CreateInstance(controllerType);
+    var result = method.Invoke(controllerInstance, null);
 
-            // Invoke the method dynamically
-            var result = method.Invoke(controllerInstance, null);
+    Assert.IsNotNull(result);
+    Assert.IsInstanceOf<ViewResult>(result);
+}
 
-            // Check the return type
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<IActionResult>(result); 
-        }
+[Test]
+public void Test_CreatePostMethodReturns_ViewResult()
+{
+    string assemblyName = "dotnetapp";
+    Assembly assembly = Assembly.Load(assemblyName);
+    string controllerTypeName = "dotnetapp.Controllers.BookController";
+    Type controllerType = assembly.GetType(controllerTypeName);
+    MethodInfo method = controllerType.GetMethod("Create", new Type[] { typeof(Book) }); // Method with Book parameter
+
+    Assert.IsNotNull(method);
+    var controllerInstance = Activator.CreateInstance(controllerType);
+
+    var book = new Book(); 
+
+    var result = method.Invoke(controllerInstance, new object[] { book });
+
+    Assert.IsNotNull(result);
+    Assert.IsInstanceOf<ViewResult>(result);
+}
+
 
 
         [Test]
