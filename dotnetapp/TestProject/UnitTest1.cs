@@ -89,12 +89,7 @@ namespace BookControllerTests
 
         [Test]
         public void TestBookClassExists()
-        {
-            // // Arrange
-            // Type furnitureType = typeof(dotnetapp.Models.Book);
-
-            // // Assert
-            // Assert.IsNotNull(furnitureType, "Book class should exist.");    
+        {  
              string assemblyName = "dotnetapp";
             string typeName = "dotnetapp.Models.Book";
             Assembly assembly = Assembly.Load(assemblyName);
@@ -113,44 +108,52 @@ namespace BookControllerTests
         [Test]
         public void TestBookIDProperty()
         {
-            // Arrange
-            PropertyInfo idProperty = properties.FirstOrDefault(p => p.Name == "BookID");
-
-            // Assert
-            Assert.IsNotNull(idProperty, "BookID property should exist.");
-            Assert.AreEqual(typeof(int), idProperty.PropertyType, "BookID property should have data type 'int'.");
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.Book";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type commuterType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = commuterType.GetProperty("BookID");
+            Assert.IsNotNull(propertyInfo, "The property 'BookID' was not found on the Book class.");
+            Type propertyType = propertyInfo.PropertyType;
+            Assert.AreEqual(typeof(int), propertyType, "The data type of 'BookID' property is not as expected (Int).");
         }
 
         [Test]
         public void TestTitleProperty()
         {
-            // Arrange
-            PropertyInfo productProperty = properties.FirstOrDefault(p => p.Name == "Title");
-
-            // Assert
-            Assert.IsNotNull(productProperty, "Title property should exist.");
-            Assert.AreEqual(typeof(string), productProperty.PropertyType, "Title property should have data type 'string'.");
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.Book";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type commuterType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = commuterType.GetProperty("Title");
+            Assert.IsNotNull(propertyInfo, "The property 'Title' was not found on the Book class.");
+            Type propertyType = propertyInfo.PropertyType;
+            Assert.AreEqual(typeof(string), propertyType, "The data type of 'Title' property is not as expected (string).");
         }
 
         [Test]
         public void TestPriceProperty()
         {
-            // Arrange
-            PropertyInfo productProperty = properties.FirstOrDefault(p => p.Name == "Price");
-
-            // Assert
-            Assert.IsNotNull(productProperty, "Price property should exist.");
-            Assert.AreEqual(typeof(decimal), productProperty.PropertyType, "Price property should have data type 'string'.");
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.Book";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type commuterType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = commuterType.GetProperty("Price");
+            Assert.IsNotNull(propertyInfo, "The property 'Price' was not found on the Book class.");
+            Type propertyType = propertyInfo.PropertyType;
+            Assert.AreEqual(typeof(decimal), propertyType, "The data type of 'Price' property is not as expected (decimal).");
         }
         [Test]
         public void TestQuantityProperty()
         {
-            // Arrange
-            PropertyInfo productProperty = properties.FirstOrDefault(p => p.Name == "Quantity");
-
-            // Assert
-            Assert.IsNotNull(productProperty, "Quantity property should exist.");
-            Assert.AreEqual(typeof(int), productProperty.PropertyType, "Quantity property should have data type 'string'.");
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.Book";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type commuterType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = commuterType.GetProperty("Quantity");
+            Assert.IsNotNull(propertyInfo, "The property 'Quantity' was not found on the Book class.");
+            Type propertyType = propertyInfo.PropertyType;
+            Assert.AreEqual(typeof(int), propertyType, "The data type of 'Quantity' property is not as expected (Int).");
         }
 
         [Test]
@@ -165,20 +168,10 @@ namespace BookControllerTests
         [Test]
         public void Test_IndexViewFile_Exists()
         {
-            // string indexPath = Path.Combine(@"/home/coder/project/workspace/dotnetapp/Views/Book", "Index.cshtml");
-            // bool indexViewExists = File.Exists(indexPath);
+            string indexPath = Path.Combine(@"/home/coder/project/workspace/dotnetapp/Views/Book", "Index.cshtml");
+            bool indexViewExists = File.Exists(indexPath);
 
-            // Assert.IsTrue(indexViewExists, "Index.cshtml view file does not exist.");
-
-            string folderPath = @"dotnetapp\dotnetapp\Views\"; // Replace with the folder path you want to check
-            string desiredFiles = "Index.cshtml"; // Replace with the names of the files you want to check
-
-            bool folderExists = Directory.Exists(folderPath);
-
-            Assert.IsTrue(folderExists, "The folder does not exist.");
-            string filePath = Path.Combine(folderPath, desiredFiles);
-            bool fileExists = File.Exists(filePath);
-            Assert.IsTrue(fileExists, $"File '{desiredFiles}' does not exist.");
+            Assert.IsTrue(indexViewExists, "Index.cshtml view file does not exist.");
         }
 
         
