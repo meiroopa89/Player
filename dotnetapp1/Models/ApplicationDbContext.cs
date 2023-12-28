@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace dotnetapp1.Data
 {
-    public class BookDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public BookDbContext(DbContextOptions<BookDbContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
@@ -14,12 +14,8 @@ namespace dotnetapp1.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // If you want to specify any configurations, relationships, constraints, or validations,
-            // you can define them here similar to how it was done for the Classes and Students.
-
-            // Example: If you want to set a unique constraint on the Name property of the Book entity
             modelBuilder.Entity<Book>()
-                .HasIndex(b => b.Name)
+                .HasIndex(b => b.Id)
                 .IsUnique();
         }
     }
