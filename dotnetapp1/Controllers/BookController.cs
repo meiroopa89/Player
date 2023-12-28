@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using dotnetapp.Models;
+using dotnetapp1.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using dotnetapp.Data;
+using dotnetapp1.Data;
 
-namespace dotnetapp.Controllers
+namespace dotnetapp1.Controllers
 {
     public class BookController : Controller
     {
