@@ -56,10 +56,11 @@ namespace BookControllerTests
 public void TestIndexMethodExists()
 {
     string assemblyName = "dotnetapp";
-    string controllerTypeName = "dotnetapp.Controllers.BookController";
     Assembly assembly = Assembly.Load(assemblyName);
+    string controllerTypeName = "dotnetapp.Controllers.BookController";
     Type controllerType = assembly.GetType(controllerTypeName);
-    Assert.IsNotNull(controllerType);
+                                                                MethodInfo method = controllerType.GetMethod("Index");
+                                                                Assert.IsNotNull(method);
 }
 
 
