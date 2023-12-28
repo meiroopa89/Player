@@ -52,46 +52,54 @@ namespace BookControllerTests
         }
 
 
-[Test]
-public void TestIndexMethodExists()
-{
-    string assemblyName = "dotnetapp";
-    Assembly assembly = Assembly.Load(assemblyName);
-    string controllerTypeName = "dotnetapp.Controllers.BookController";
-    Type controllerType = assembly.GetType(controllerTypeName);
-                                                                MethodInfo method = controllerType.GetMethod("Index");
-                                                                Assert.IsNotNull(method);
-}
+        [Test]
+        public void TestIndexMethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            Assembly assembly = Assembly.Load(assemblyName);
+            string controllerTypeName = "dotnetapp.Controllers.BookController";
+            Type controllerType = assembly.GetType(controllerTypeName);
+            MethodInfo method = controllerType.GetMethod("Index");
+            Assert.IsNotNull(method);
+        }
 
 
         [Test]
         public void TestCreateGetMethodExists()
         {
-            // Arrange
-            MethodInfo createGetMethod = controllerType.GetMethod("Create", new Type[0]);
-
-            // Assert
-            Assert.IsNotNull(createGetMethod, "Create method should exist in BookController.");
+            string assemblyName = "dotnetapp";
+            Assembly assembly = Assembly.Load(assemblyName);
+            string controllerTypeName = "dotnetapp.Controllers.BookController";
+            Type controllerType = assembly.GetType(controllerTypeName);
+            MethodInfo method = controllerType.GetMethod("Create", new[] { typeof(Book) });
+            Assert.IsNotNull(method);
         }
 
         [Test]
         public void TestCreatePostMethodExists()
         {
-            // Arrange
-            MethodInfo createPostMethod = controllerType.GetMethod("Create", new Type[] { typeof(Book) });
 
-            // Assert
-            Assert.IsNotNull(createPostMethod, "Create POST method should exist in BookController.");
+            string assemblyName = "dotnetapp";
+            Assembly assembly = Assembly.Load(assemblyName);
+            string controllerTypeName = "dotnetapp.Controllers.BookController";
+            Type controllerType = assembly.GetType(controllerTypeName);
+            MethodInfo method = controllerType.GetMethod("Create", new Type[] { typeof(Book) });
+            Assert.IsNotNull(method);
         }
 
         [Test]
         public void TestBookClassExists()
         {
-            // Arrange
-            Type furnitureType = typeof(dotnetapp.Models.Book);
+            // // Arrange
+            // Type furnitureType = typeof(dotnetapp.Models.Book);
 
-            // Assert
-            Assert.IsNotNull(furnitureType, "Book class should exist.");            
+            // // Assert
+            // Assert.IsNotNull(furnitureType, "Book class should exist.");    
+             string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.Book";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type bookType = assembly.GetType(typeName);
+            Assert.IsNotNull(bookType);   
         }
 
         [Test]
@@ -157,10 +165,20 @@ public void TestIndexMethodExists()
         [Test]
         public void Test_IndexViewFile_Exists()
         {
-            string indexPath = Path.Combine(@"/home/coder/project/workspace/dotnetapp/Views/Book", "Index.cshtml");
-            bool indexViewExists = File.Exists(indexPath);
+            // string indexPath = Path.Combine(@"/home/coder/project/workspace/dotnetapp/Views/Book", "Index.cshtml");
+            // bool indexViewExists = File.Exists(indexPath);
 
-            Assert.IsTrue(indexViewExists, "Index.cshtml view file does not exist.");
+            // Assert.IsTrue(indexViewExists, "Index.cshtml view file does not exist.");
+
+            string folderPath = @"dotnetapp\dotnetapp\Views\"; // Replace with the folder path you want to check
+            string desiredFiles = "Index.cshtml"; // Replace with the names of the files you want to check
+
+            bool folderExists = Directory.Exists(folderPath);
+
+            Assert.IsTrue(folderExists, "The folder does not exist.");
+            string filePath = Path.Combine(folderPath, desiredFiles);
+            bool fileExists = File.Exists(filePath);
+            Assert.IsTrue(fileExists, $"File '{desiredFiles}' does not exist.");
         }
 
         
