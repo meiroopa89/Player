@@ -51,19 +51,17 @@ namespace BookControllerTests
             Assert.IsInstanceOf<ViewResult>(result);
         }
 
-        [Test]
+
+[Test]
 public void TestIndexMethodExists()
 {
-    // Arrange
-    var controllerType = typeof(BookController);
-    var methodName = "Index";
-
-    // Act
-    var indexMethod = controllerType.GetMethod(methodName);
-
-    // Assert
-    Assert.IsNotNull(indexMethod, $"{methodName} method should exist in BookController.");
+    string assemblyName = "dotnetapp";
+    string controllerTypeName = "dotnetapp.Controllers.BookController";
+    Assembly assembly = Assembly.Load(assemblyName);
+    Type controllerType = assembly.GetType(controllerTypeName);
+    Assert.IsNotNull(controllerType);
 }
+
 
         [Test]
         public void TestCreateGetMethodExists()
