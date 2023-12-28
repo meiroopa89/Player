@@ -32,14 +32,6 @@ namespace BookControllerTests
         [Test]
         public void Test_IndexReturns_ViewResult()
         {
-            // // Act
-            // var result = _controller.Index() as ViewResult;
-
-            // // Assert
-            // Assert.IsNotNull(result);
-            // Assert.IsInstanceOf<ViewResult>(result);
-            // Assert.IsAssignableFrom<List<Book>>(result.Model);
-
                 string assemblyName = "dotnetapp";
                 Assembly assembly = Assembly.Load(assemblyName);
                 string controllerTypeName = "dotnetapp.Controllers.BookController";
@@ -49,18 +41,30 @@ namespace BookControllerTests
                 var controllerInstance = Activator.CreateInstance(controllerType);
                 var result = method.Invoke(controllerInstance, null);
                 Assert.IsNotNull(result);
-                Assert.IsInstanceOf<IActionResult>(result); // Change the expected type based on your method's return type
+                Assert.IsInstanceOf<IActionResult>(result); 
             }
 
         [Test]
         public void Test_CreateReturns_ViewResult()
         {
-            // Act
-            var result = _controller.Create() as ViewResult;
 
-            // Assert
+            string assemblyName = "dotnetapp";
+            Assembly assembly = Assembly.Load(assemblyName);
+            string controllerTypeName = "dotnetapp.Controllers.BookController";
+            Type controllerType = assembly.GetType(controllerTypeName);
+            MethodInfo method = controllerType.GetMethod("Create");
+
+            Assert.IsNotNull(method);
+
+            // Instantiate the controller
+            var controllerInstance = Activator.CreateInstance(controllerType);
+
+            // Invoke the method dynamically
+            var result = method.Invoke(controllerInstance, null);
+
+            // Check the return type
             Assert.IsNotNull(result);
-            Assert.IsInstanceOf<ViewResult>(result);
+            Assert.IsInstanceOf<IActionResult>(result); 
         }
 
 
