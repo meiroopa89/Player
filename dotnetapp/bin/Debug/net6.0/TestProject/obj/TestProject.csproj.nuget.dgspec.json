@@ -1,106 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\prave\\Downloads\\BookStore-MVC-ADO-master\\BookStore-MVC-ADO-master\\dotnetapp\\TestProject\\TestProject.csproj": {}
+    "/home/coder/project/workspace/dotnetapp/TestProject/TestProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\prave\\Downloads\\BookStore-MVC-ADO-master\\BookStore-MVC-ADO-master\\dotnetapp\\dotnetapp.csproj": {
+    "/home/coder/project/workspace/dotnetapp/TestProject/TestProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\prave\\Downloads\\BookStore-MVC-ADO-master\\BookStore-MVC-ADO-master\\dotnetapp\\dotnetapp.csproj",
-        "projectName": "dotnetapp",
-        "projectPath": "C:\\Users\\prave\\Downloads\\BookStore-MVC-ADO-master\\BookStore-MVC-ADO-master\\dotnetapp\\dotnetapp.csproj",
-        "packagesPath": "C:\\Users\\prave\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\prave\\Downloads\\BookStore-MVC-ADO-master\\BookStore-MVC-ADO-master\\dotnetapp\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\prave\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net6.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
-          "dependencies": {
-            "Microsoft.Data.SqlClient": {
-              "target": "Package",
-              "version": "[5.1.1, )"
-            },
-            "Moq": {
-              "target": "Package",
-              "version": "[4.18.4, )"
-            },
-            "nunit": {
-              "target": "Package",
-              "version": "[3.13.3, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\prave\\Downloads\\BookStore-MVC-ADO-master\\BookStore-MVC-ADO-master\\dotnetapp\\TestProject\\TestProject.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\prave\\Downloads\\BookStore-MVC-ADO-master\\BookStore-MVC-ADO-master\\dotnetapp\\TestProject\\TestProject.csproj",
+        "projectUniqueName": "/home/coder/project/workspace/dotnetapp/TestProject/TestProject.csproj",
         "projectName": "TestProject",
-        "projectPath": "C:\\Users\\prave\\Downloads\\BookStore-MVC-ADO-master\\BookStore-MVC-ADO-master\\dotnetapp\\TestProject\\TestProject.csproj",
-        "packagesPath": "C:\\Users\\prave\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\prave\\Downloads\\BookStore-MVC-ADO-master\\BookStore-MVC-ADO-master\\dotnetapp\\TestProject\\obj\\",
+        "projectPath": "/home/coder/project/workspace/dotnetapp/TestProject/TestProject.csproj",
+        "packagesPath": "/home/coder/.nuget/packages/",
+        "outputPath": "/home/coder/project/workspace/dotnetapp/TestProject/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\prave\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/coder/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\prave\\Downloads\\BookStore-MVC-ADO-master\\BookStore-MVC-ADO-master\\dotnetapp\\dotnetapp.csproj": {
-                "projectPath": "C:\\Users\\prave\\Downloads\\BookStore-MVC-ADO-master\\BookStore-MVC-ADO-master\\dotnetapp\\dotnetapp.csproj"
+              "/home/coder/project/workspace/dotnetapp/dotnetapp.csproj": {
+                "projectPath": "/home/coder/project/workspace/dotnetapp/dotnetapp.csproj"
               }
             }
           }
@@ -142,7 +69,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -151,7 +79,77 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.417/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/coder/project/workspace/dotnetapp/dotnetapp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/coder/project/workspace/dotnetapp/dotnetapp.csproj",
+        "projectName": "dotnetapp",
+        "projectPath": "/home/coder/project/workspace/dotnetapp/dotnetapp.csproj",
+        "packagesPath": "/home/coder/.nuget/packages/",
+        "outputPath": "/home/coder/project/workspace/dotnetapp/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/coder/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.1.1, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.18.4, )"
+            },
+            "nunit": {
+              "target": "Package",
+              "version": "[3.13.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.417/RuntimeIdentifierGraph.json"
         }
       }
     }

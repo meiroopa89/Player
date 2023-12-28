@@ -16,7 +16,7 @@ public class BookController : Controller
                                                                                                                                                                                                                           // private string connectionString = "User ID=sa;password=examlyMssql@123;server=dffafdafebcfacbdcbaeadbebabcdebdca-0;Database=GymDB;trusted_connection=false;Persist Security Info=False;Encrypt=False";
     // private string connectionString = "Data Source = LAPTOP - A6KE9HHT; Initial Catalog = BookDB; Integrated Security = True; Persist Security Info=True;Encrypt=True;TrustServerCertificate=True";
    
-    private readonly string connectionString = "User ID=sa;password=examlyMssql@123;server=dffafdafebcfacbdcbaeadbebabcdebdca-0;Database=BookStoreDB;trusted_connection=false;Persist Security Info=False;Encrypt=False";    
+    private readonly string connectionString = "User ID=sa;password=examlyMssql@123;server= bfdeeddcedfabcfacbdcbaeadbebabcdebdca-0;Database=BookStoreDB;trusted_connection=false;Persist Security Info=False;Encrypt=False";    
 
     // GET: /Book
     public ActionResult Index()
