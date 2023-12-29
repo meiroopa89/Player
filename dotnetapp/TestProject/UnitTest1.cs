@@ -14,20 +14,6 @@ namespace BookControllerTests
     [TestFixture]
     public class BookControllerTests
     {
-        private BookController _controller;
-        private Type controllerType;
-        private Type carserviceType;
-        private PropertyInfo[] properties;
-
-        [SetUp]
-        public void Setup()
-        {
-            // Initialize the controller before each test
-            _controller = new BookController();
-            carserviceType = typeof(dotnetapp.Models.Book);
-            properties = carserviceType.GetProperties();
-            controllerType = typeof(BookController);
-        }
 
         [Test]
         public void Test_IndexReturns_ViewResult()
@@ -63,25 +49,29 @@ namespace BookControllerTests
                 Assert.IsInstanceOf<ActionResult>(result);
             }
 
-        [Test]
-        public void Test_CreatePostMethodReturns_ViewResult()
-        {
-            string assemblyName = "dotnetapp";
-            Assembly assembly = Assembly.Load(assemblyName);
-            string controllerTypeName = "dotnetapp.Controllers.BookController";
-            Type controllerType = assembly.GetType(controllerTypeName);
-            MethodInfo method = controllerType.GetMethod("Create", new Type[] { typeof(Book) }); 
 
-            Assert.IsNotNull(method);
-            var controllerInstance = Activator.CreateInstance(controllerType);
+            [Test]
+            public void Test_CreatePostMethodReturns_ViewResult()
+            {
+                string assemblyName = "dotnetapp";
+                Assembly assembly = Assembly.Load(assemblyName);
+                string controllerTypeName = "dotnetapp.Controllers.BookController";
+                Type controllerType = assembly.GetType(controllerTypeName);
+                
+                MethodInfo method = controllerType.GetMethod("Create", new Type[] { assembly.GetType("dotnetapp.Models.Book") });
 
-            var book = new Book(); 
+                Assert.IsNotNull(method);
+                var controllerInstance = Activator.CreateInstance(controllerType);
 
-            var result = method.Invoke(controllerInstance, new object[] { book });
+                var bookTypeName = "dotnetapp.Models.Book";
+                var bookType = assembly.GetType(bookTypeName);
+                var bookInstance = Activator.CreateInstance(bookType);
 
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<ActionResult>(result);
-        }
+                var result = method.Invoke(controllerInstance, new object[] { bookInstance });
+
+                Assert.IsNotNull(result);
+                Assert.IsInstanceOf<ActionResult>(result);
+            }
 
 
 
@@ -108,15 +98,17 @@ namespace BookControllerTests
             Assert.IsNotNull(method);
         }
 
-        [Test]
+         [Test]
         public void TestCreatePostMethodExists()
         {
-
             string assemblyName = "dotnetapp";
+            string bookTypeName = "dotnetapp.Models.Book";
+
             Assembly assembly = Assembly.Load(assemblyName);
-            string controllerTypeName = "dotnetapp.Controllers.BookController";
-            Type controllerType = assembly.GetType(controllerTypeName);
-            MethodInfo method = controllerType.GetMethod("Create", new Type[] { typeof(Book) });
+            Type controllerType = assembly.GetType("dotnetapp.Controllers.BookController");
+            Type bookType = assembly.GetType(bookTypeName);
+
+            MethodInfo method = controllerType.GetMethod("Create", new Type[] { bookType });
             Assert.IsNotNull(method);
         }
 
@@ -198,19 +190,6 @@ namespace BookControllerTests
             bool indexViewExists = File.Exists(indexPath);
 
             Assert.IsTrue(indexViewExists, "Index.cshtml view file does not exist.");
-        }
-
-        
-    [Test]
-        public void Book_ClassExists()
-        {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Book";
-            Assembly assembly = Assembly.Load(assemblyName);
-            Type bookType = assembly.GetType(typeName);
-            Assert.IsNotNull(bookType);
-            var book = Activator.CreateInstance(bookType);
-            Assert.IsNotNull(book);
         }
 
     [Test]
