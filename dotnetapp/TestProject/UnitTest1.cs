@@ -237,4 +237,5 @@ namespace BookControllerTests
         try{
         await page.goto('http://localhost:8080/');
     }
+    })();
 }
