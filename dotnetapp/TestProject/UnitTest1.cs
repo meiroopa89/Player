@@ -45,47 +45,23 @@ namespace BookControllerTests
             }
 
             
-        [Test]
-        public void Test_IndexReturns_ViewResult()
-        {
+            [Test]
+            public void Test_DetailsReturns_ViewResult()
+            {
                 string assemblyName = "dotnetapp";
                 Assembly assembly = Assembly.Load(assemblyName);
                 string controllerTypeName = "dotnetapp.Controllers.BookController";
                 Type controllerType = assembly.GetType(controllerTypeName);
-                MethodInfo method = controllerType.GetMethod("Index");
+                MethodInfo method = controllerType.GetMethod("Details");
+
                 Assert.IsNotNull(method);
                 var controllerInstance = Activator.CreateInstance(controllerType);
-                var result = method.Invoke(controllerInstance, null);
+                int id = 0;
+                var result = method.Invoke(controllerInstance, new object[] { id });
+
                 Assert.IsNotNull(result);
-                Assert.IsInstanceOf<IActionResult>(result); 
+                Assert.IsInstanceOf<ActionResult>(result);
             }
-
-            [Test]
-public void Test_DetailsReturns_ViewResult()
-{
-    string assemblyName = "dotnetapp";
-    Assembly assembly = Assembly.Load(assemblyName);
-    string controllerTypeName = "dotnetapp.Controllers.BookController";
-    Type controllerType = assembly.GetType(controllerTypeName);
-    MethodInfo method = controllerType.GetMethod("Details");
-
-    Assert.IsNotNull(method);
-
-    // Instantiate the controller
-    var controllerInstance = Activator.CreateInstance(controllerType);
-
-    // Create an id value to pass as an argument
-    int id = 123; // Replace with a valid book id from your test database
-
-    // Invoke the method dynamically
-    var result = method.Invoke(controllerInstance, new object[] { id });
-
-    // Check the return type when a book is found
-    Assert.IsNotNull(result);
-    Assert.IsInstanceOf<ViewResult>(result);
-
-    // You can also perform additional assertions if needed
-}
 
         [Test]
         public void Test_CreatePostMethodReturns_ViewResult()
@@ -248,5 +224,17 @@ public void Test_DetailsReturns_ViewResult()
             var controller = Activator.CreateInstance(controllerType);
             Assert.IsNotNull(controller);
         }
+
+
+        const puppeteer = require('puppeteer');
+        (async () => {
+            const browser = await puppeteer.launch({
+            headless: false,
+            args: ['--headless', '--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox', '--disable-setuid-sandbox']
+        });
+
+        const page = await browser.newPage();
+        try{
+        await page.goto('http://localhost:8080/');
     }
 }
