@@ -226,17 +226,5 @@ namespace BookControllerTests
         }
 
 
-    //     const puppeteer = require('puppeteer');
-    //     (async () => {
-    //         const browser = await puppeteer.launch({
-    //         headless: false,
-    //         args: ['--headless', '--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox', '--disable-setuid-sandbox']
-    //     });
-
-    //     const page = await browser.newPage();
-    //     try{
-    //     await page.goto('http://localhost:8080/');
-    // }
-    // })();
     }
 }
