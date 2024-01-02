@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Z24LlnFRT/Q2Bbu6D1SZ3xHVDZm7uQ6vyb2sP1XVYBgVCqQbQ7sIorJP+iiIloSeLP07nCwQysT/pZnBNz04xw==",
+  "dgSpecHash": "gqRqWJWVsMmxbLRFqrSVxGV6U9PWaPmE94qoL0KAgEuaw3WJZkEBdOQHQAJ5A2KK/OxcO9PSYSqhVvXD6o7Tjg==",
   "success": true,
   "projectFilePath": "/home/coder/project/workspace/GymSlot/dotnetapp/dotnetapp.csproj",
   "expectedPackageFiles": [
@@ -33,6 +33,8 @@
     "/home/coder/.nuget/packages/microsoft.netcore.platforms/3.1.0/microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "/home/coder/.nuget/packages/microsoft.win32.registry/4.7.0/microsoft.win32.registry.4.7.0.nupkg.sha512",
     "/home/coder/.nuget/packages/microsoft.win32.systemevents/4.7.0/microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "/home/coder/.nuget/packages/netstandard.library/2.0.0/netstandard.library.2.0.0.nupkg.sha512",
+    "/home/coder/.nuget/packages/nunit/3.13.3/nunit.3.13.3.nupkg.sha512",
     "/home/coder/.nuget/packages/system.collections.immutable/6.0.0/system.collections.immutable.6.0.0.nupkg.sha512",
     "/home/coder/.nuget/packages/system.configuration.configurationmanager/4.7.0/system.configuration.configurationmanager.4.7.0.nupkg.sha512",
     "/home/coder/.nuget/packages/system.diagnostics.diagnosticsource/6.0.0/system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
