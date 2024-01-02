@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/coder/project/workspace/dotnetapp/dotnetapp.csproj": {}
+    "/home/coder/project/workspace/dotnetapp/TestProject/TestProject.csproj": {}
   },
   "projects": {
-    "/home/coder/project/workspace/dotnetapp/dotnetapp.csproj": {
+    "/home/coder/project/workspace/dotnetapp/TestProject/TestProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/coder/project/workspace/dotnetapp/dotnetapp.csproj",
-        "projectName": "dotnetapp",
-        "projectPath": "/home/coder/project/workspace/dotnetapp/dotnetapp.csproj",
+        "projectUniqueName": "/home/coder/project/workspace/dotnetapp/TestProject/TestProject.csproj",
+        "projectName": "TestProject",
+        "projectPath": "/home/coder/project/workspace/dotnetapp/TestProject/TestProject.csproj",
         "packagesPath": "/home/coder/.nuget/packages/",
-        "outputPath": "/home/coder/project/workspace/dotnetapp/obj/",
+        "outputPath": "/home/coder/project/workspace/dotnetapp/TestProject/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/coder/.nuget/NuGet/NuGet.Config"
@@ -38,9 +38,25 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Microsoft.Data.SqlClient": {
+            "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[5.1.1, )"
+              "version": "[17.1.0, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.13.3, )"
+            },
+            "NUnit.Analyzers": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[4.2.1, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.1.2, )"
             }
           },
           "imports": [
@@ -55,9 +71,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
