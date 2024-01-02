@@ -139,3 +139,11 @@
 /home/coder/project/workspace/TestProject/obj/Debug/net6.0/TestProject.pdb
 /home/coder/project/workspace/TestProject/obj/Debug/net6.0/TestProject.genruntimeconfig.cache
 /home/coder/project/workspace/TestProject/obj/Debug/net6.0/ref/TestProject.dll
+/home/coder/project/workspace/dotnetapp/TestProject/obj/Debug/net6.0/TestProject.csproj.AssemblyReference.cache
+/home/coder/project/workspace/dotnetapp/TestProject/obj/Debug/net6.0/TestProject.GeneratedMSBuildEditorConfig.editorconfig
+/home/coder/project/workspace/dotnetapp/TestProject/obj/Debug/net6.0/TestProject.AssemblyInfoInputs.cache
+/home/coder/project/workspace/dotnetapp/TestProject/obj/Debug/net6.0/TestProject.AssemblyInfo.cs
+/home/coder/project/workspace/dotnetapp/TestProject/obj/Debug/net6.0/TestProject.csproj.CoreCompileInputs.cache
+/home/coder/project/workspace/dotnetapp/TestProject/obj/Debug/net6.0/TestProject.dll
+/home/coder/project/workspace/dotnetapp/TestProject/obj/Debug/net6.0/refint/TestProject.dll
+/home/coder/project/workspace/dotnetapp/TestProject/obj/Debug/net6.0/TestProject.pdb
