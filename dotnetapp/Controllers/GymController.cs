@@ -18,7 +18,7 @@ public class GymController : Controller
     //     _repository = repository;
     // }
 
-    private string connectionString = "User ID=sa;password=examlyMssql@123;server=dffafdafebcfacbdcbaeadbebabcdebdca-0;Database=GymDB;trusted_connection=false;Persist Security Info=False;Encrypt=False";
+    private string connectionString = "User ID=sa;password=examlyMssql@123;server=bfdeeddcedfabcfacbdcbaeadbebabcdebdca-0;Database=GymDB;trusted_connection=false;Persist Security Info=False;Encrypt=False";
 
     public ActionResult Index()
     {
@@ -29,7 +29,7 @@ public class GymController : Controller
 
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string query = "SELECT * FROM GymMembership";
+            string query = "SELECT * FROM gyms";
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
@@ -77,7 +77,7 @@ catch(Exception ex)
         try{
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string query = "INSERT INTO GymMembership (Name, JoiningDate, MembershipType, ExpiryDate) VALUES (@Name, @JoiningDate,@MembershipType, @ExpiryDate)";
+            string query = "INSERT INTO gyms (Name, JoiningDate, MembershipType, ExpiryDate) VALUES (@Name, @JoiningDate,@MembershipType, @ExpiryDate)";
 
             using (SqlCommand command = new SqlCommand(query, connection))
             {
