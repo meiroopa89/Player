@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using Microsoft.Data.SqlClient;
 using System;
+using Microsoft.Data; 
 
 namespace TestProject
 {
@@ -249,6 +250,32 @@ namespace TestProject
 
             // Assert
             Assert.IsTrue(containsSqlConnection, "SqlConnection is not used in the application.");
+        }
+
+        [Test]
+        public void CreateCshtml_ViewFileExists()
+        {
+            // Replace the path below with the actual path to your Views folder
+            string viewsFolderPath = "/home/coder/project/workspace/dotnetapp/Views";
+
+            string filePath = Path.Combine(viewsFolderPath, "Gym", "Create.cshtml");
+
+            bool fileExists = File.Exists(filePath);
+
+            Assert.IsTrue(fileExists, "Create.cshtml file does not exist in the Views/Gym folder.");
+        }
+
+         [Test]
+        public void IndexCshtml_ViewFileExists()
+        {
+            // Replace the path below with the actual path to your Views folder
+            string viewsFolderPath = "/home/coder/project/workspace/dotnetapp/Views";
+
+            string filePath = Path.Combine(viewsFolderPath, "Gym", "Index.cshtml");
+
+            bool fileExists = File.Exists(filePath);
+
+            Assert.IsTrue(fileExists, "Index.cshtml file does not exist in the Views/Gym folder.");
         }
 
     }
