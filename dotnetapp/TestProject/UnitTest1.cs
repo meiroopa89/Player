@@ -12,199 +12,199 @@ namespace TestProject
 
         // Test to check whether Appointment Models Class exists
         [Test]
-        public void Appointment_Models_ClassExists()
+        public void GymMembership_Models_ClassExists()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Appointment";
+            string typeName = "dotnetapp.Models.GymMembership";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentType = assembly.GetType(typeName);
-            Assert.IsNotNull(AppointmentType);
+            Type GymMembershipType = assembly.GetType(typeName);
+            Assert.IsNotNull(GymMembershipType);
         }
 
         // Test to Check Appointment Models Property Appointmentid Exists with correcct datatype int    
         [Test]
-        public void Appointment_Appointmentid_PropertyExists_ReturnExpectedDataTypes_int()
+        public void GymMembership_id_PropertyExists_ReturnExpectedDataTypes_int()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Appointment";
+            string typeName = "dotnetapp.Models.GymMembership";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentType = assembly.GetType(typeName);
-            PropertyInfo propertyInfo = AppointmentType.GetProperty("Appointmentid");
-            Assert.IsNotNull(propertyInfo, "Property Appointmentid does not exist in Appointment class");
+            Type GymMembershipType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = GymMembershipType.GetProperty("id");
+            Assert.IsNotNull(propertyInfo, "Property id does not exist in GymMembership class");
             Type expectedType = propertyInfo.PropertyType;
-            Assert.AreEqual(typeof(int), expectedType, "Property Appointmentid in Appointment class is not of type int");
+            Assert.AreEqual(typeof(int), expectedType, "Property id in GymMembership class is not of type int");
         }
 
-        // Test to Check Appointment Models Property Patientname Exists with correcct datatype string    
+        // Test to Check GymMembership Models Property Patientname Exists with correcct datatype string    
         [Test]
-        public void Appointment_Patientname_PropertyExists_ReturnExpectedDataTypes_string()
+        public void GymMembership_Name_PropertyExists_ReturnExpectedDataTypes_string()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Appointment";
+            string typeName = "dotnetapp.Models.GymMembership";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentType = assembly.GetType(typeName);
-            PropertyInfo propertyInfo = AppointmentType.GetProperty("Patientname");
-            Assert.IsNotNull(propertyInfo, "Property Patientname does not exist in Appointment class");
+            Type GymMembershipType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = GymMembershipType.GetProperty("Name");
+            Assert.IsNotNull(propertyInfo, "Property Name does not exist in GymMembership class");
             Type expectedType = propertyInfo.PropertyType;
-            Assert.AreEqual(typeof(string), expectedType, "Property Patientname in Appointment class is not of type string");
+            Assert.AreEqual(typeof(string), expectedType, "Property Name in GymMembership class is not of type string");
         }
 
-        // Test to Check Appointment Models Property Doctorname Exists with correcct datatype string    
+        // // Test to Check GymMembership Models Property Doctorname Exists with correcct datatype string    
+        // [Test]
+        // public void Appointment_Doctorname_PropertyExists_ReturnExpectedDataTypes_string()
+        // {
+        //     string assemblyName = "dotnetapp";
+        //     string typeName = "dotnetapp.Models.Appointment";
+        //     Assembly assembly = Assembly.Load(assemblyName);
+        //     Type AppointmentType = assembly.GetType(typeName);
+        //     PropertyInfo propertyInfo = AppointmentType.GetProperty("Doctorname");
+        //     Assert.IsNotNull(propertyInfo, "Property Doctorname does not exist in Appointment class");
+        //     Type expectedType = propertyInfo.PropertyType;
+        //     Assert.AreEqual(typeof(string), expectedType, "Property Doctorname in Appointment class is not of type string");
+        // }
+
+        // Test to Check GymMembership Models Property JoiningDate Exists with correcct datatype DateTime    
         [Test]
-        public void Appointment_Doctorname_PropertyExists_ReturnExpectedDataTypes_string()
+        public void GymMembership_JoiningDate_PropertyExists_ReturnExpectedDataTypes_DateTime()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Appointment";
+            string typeName = "dotnetapp.Models.GymMembership";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentType = assembly.GetType(typeName);
-            PropertyInfo propertyInfo = AppointmentType.GetProperty("Doctorname");
-            Assert.IsNotNull(propertyInfo, "Property Doctorname does not exist in Appointment class");
+            Type GymMembershipType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = GymMembershipType.GetProperty("JoiningDate");
+            Assert.IsNotNull(propertyInfo, "Property JoiningDate does not exist in GymMembership class");
             Type expectedType = propertyInfo.PropertyType;
-            Assert.AreEqual(typeof(string), expectedType, "Property Doctorname in Appointment class is not of type string");
+            Assert.AreEqual(typeof(DateTime), expectedType, "Property JoiningDate in GymMembership class is not of type DateTime");
         }
 
-        // Test to Check Appointment Models Property StartTime Exists with correcct datatype DateTime    
+        // Test to Check GymMembership Models Property ExpiryDate Exists with correcct datatype DateTime    
         [Test]
-        public void Appointment_StartTime_PropertyExists_ReturnExpectedDataTypes_DateTime()
+        public void GymMembership_ExpiryDate_PropertyExists_ReturnExpectedDataTypes_DateTime()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Appointment";
+            string typeName = "dotnetapp.Models.GymMembership";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentType = assembly.GetType(typeName);
-            PropertyInfo propertyInfo = AppointmentType.GetProperty("StartTime");
-            Assert.IsNotNull(propertyInfo, "Property StartTime does not exist in Appointment class");
+            Type GymMembershipType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = GymMembershipType.GetProperty("ExpiryDate");
+            Assert.IsNotNull(propertyInfo, "Property ExpiryDate does not exist in GymMembership class");
             Type expectedType = propertyInfo.PropertyType;
-            Assert.AreEqual(typeof(DateTime), expectedType, "Property StartTime in Appointment class is not of type DateTime");
+            Assert.AreEqual(typeof(DateTime), expectedType, "Property ExpiryDate in GymMembership class is not of type DateTime");
         }
 
-        // Test to Check Appointment Models Property EndTime Exists with correcct datatype DateTime    
+        // Test to Check GymMembership Models Property Reason Exists with correcct datatype string    
         [Test]
-        public void Appointment_EndTime_PropertyExists_ReturnExpectedDataTypes_DateTime()
+        public void GymMembership_MembershipType_PropertyExists_ReturnExpectedDataTypes_string()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Appointment";
+            string typeName = "dotnetapp.Models.GymMembership";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentType = assembly.GetType(typeName);
-            PropertyInfo propertyInfo = AppointmentType.GetProperty("EndTime");
-            Assert.IsNotNull(propertyInfo, "Property EndTime does not exist in Appointment class");
+            Type GymMembershipType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = GymMembershipType.GetProperty("MembershipType");
+            Assert.IsNotNull(propertyInfo, "Property MembershipType does not exist in GymMembership class");
             Type expectedType = propertyInfo.PropertyType;
-            Assert.AreEqual(typeof(DateTime), expectedType, "Property EndTime in Appointment class is not of type DateTime");
+            Assert.AreEqual(typeof(string), expectedType, "Property MembershipType in GymMembership class is not of type string");
         }
 
-        // Test to Check Appointment Models Property Reason Exists with correcct datatype string    
+        // Test to check whether GymController Controllers Class exists
         [Test]
-        public void Appointment_Reason_PropertyExists_ReturnExpectedDataTypes_string()
+        public void GymController_Controllers_ClassExists()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Appointment";
+            string typeName = "dotnetapp.Controllers.GymController";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentType = assembly.GetType(typeName);
-            PropertyInfo propertyInfo = AppointmentType.GetProperty("Reason");
-            Assert.IsNotNull(propertyInfo, "Property Reason does not exist in Appointment class");
-            Type expectedType = propertyInfo.PropertyType;
-            Assert.AreEqual(typeof(string), expectedType, "Property Reason in Appointment class is not of type string");
+            Type GymControllerType = assembly.GetType(typeName);
+            Assert.IsNotNull(GymControllerType);
         }
 
-        // Test to check whether AppointmentController Controllers Class exists
+        // Test to Check GymController Controllers Method Index Exists
         [Test]
-        public void AppointmentController_Controllers_ClassExists()
+        public void GymController_Index_MethodExists()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.AppointmentController";
+            string typeName = "dotnetapp.Controllers.GymController";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentControllerType = assembly.GetType(typeName);
-            Assert.IsNotNull(AppointmentControllerType);
+            Type GymControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = GymControllerType.GetMethod("Index");
+            Assert.IsNotNull(methodInfo, "Method Index does not exist in GymController class");
         }
 
-        // Test to Check AppointmentController Controllers Method Index Exists
+        // Test to Check GymController Controllers Method Index Returns ActionResult
         [Test]
-        public void AppointmentController_Index_MethodExists()
+        public void GymController_Index_MethodReturns_ActionResult()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.AppointmentController";
+            string typeName = "dotnetapp.Controllers.GymController";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = AppointmentControllerType.GetMethod("Index");
-            Assert.IsNotNull(methodInfo, "Method Index does not exist in AppointmentController class");
+            Type GymControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = GymControllerType.GetMethod("Index");
+            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Index in GymController class is not of type ActionResult");
         }
 
-        // Test to Check AppointmentController Controllers Method Index Returns ActionResult
+        // Test to Check GymController Controllers Method Create Exists
         [Test]
-        public void AppointmentController_Index_MethodReturns_ActionResult()
+        public void GymController_Create_MethodExists()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.AppointmentController";
+            string typeName = "dotnetapp.Controllers.GymController";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = AppointmentControllerType.GetMethod("Index");
-            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Index in AppointmentController class is not of type ActionResult");
+            Type GymController = assembly.GetType(typeName);
+            MethodInfo methodInfo = GymController.GetMethod("Create", Type.EmptyTypes);
+            Assert.IsNotNull(methodInfo, "Method Create does not exist in GymController class");
         }
 
-        // Test to Check AppointmentController Controllers Method Create Exists
+        // Test to Check GymController Controllers Method Create with no parameter Returns ActionResult
         [Test]
-        public void AppointmentController_Create_MethodExists()
+        public void GymController_Create_Method_with_NoParams_Returns_ActionResult()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.AppointmentController";
+            string typeName = "dotnetapp.Controllers.GymController";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = AppointmentControllerType.GetMethod("Create", Type.EmptyTypes);
-            Assert.IsNotNull(methodInfo, "Method Create does not exist in AppointmentController class");
+            Type GymControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = GymControllerType.GetMethod("Create", Type.EmptyTypes);
+            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Create in GymController class is not of type ActionResult");
         }
 
-        // Test to Check AppointmentController Controllers Method Create with no parameter Returns ActionResult
+        // Test to Check GymController Controllers Method Create with Appoinment parameter Returns ActionResult
         [Test]
-        public void AppointmentController_Create_Method_with_NoParams_Returns_ActionResult()
+        public void GymController_Create_Method_with_Appoinment_Params_Returns_ActionResult()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.AppointmentController";
+            string typeName = "dotnetapp.Controllers.GymController";
+            string typeName1 = "dotnetapp.Models.GymMembership";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = AppointmentControllerType.GetMethod("Create", Type.EmptyTypes);
-            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Create in AppointmentController class is not of type ActionResult");
-        }
-
-        // Test to Check AppointmentController Controllers Method Create with Appoinment parameter Returns ActionResult
-        [Test]
-        public void AppointmentController_Create_Method_with_Appoinment_Params_Returns_ActionResult()
-        {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.AppointmentController";
-            string typeName1 = "dotnetapp.Models.Appointment";
-            Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentControllerType = assembly.GetType(typeName);
-            Type AppointmentModelType = assembly.GetType(typeName1);
-            MethodInfo methodInfo = AppointmentControllerType.GetMethod("Create", new[] { AppointmentModelType });
-            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Create in AppointmentController class is not of type ActionResult");
-            object instanceOfController = Activator.CreateInstance(AppointmentControllerType);
-            object instanceOfModel = Activator.CreateInstance(AppointmentModelType);
+            Type GymControllerType = assembly.GetType(typeName);
+            Type GymMembershipModelType = assembly.GetType(typeName1);
+            MethodInfo methodInfo = GymControllerType.GetMethod("Create", new[] { GymMembershipModelType });
+            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Create in GymController class is not of type ActionResult");
+            object instanceOfController = Activator.CreateInstance(GymControllerType);
+            object instanceOfModel = Activator.CreateInstance(GymMembershipModelType);
             object result = methodInfo.Invoke(instanceOfController, new object[] { instanceOfModel });
             Assert.IsNotNull(result);
         }
 
 
-        // Test to Check AppointmentController Controllers Method Delete Exists
+        // Test to Check AppointmentController Controllers Method Edit Exists
         [Test]
-        public void AppointmentController_Delete_MethodExists()
+        public void GymController_Edit_MethodExists()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.AppointmentController";
+            string typeName = "dotnetapp.Controllers.GymController";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = AppointmentControllerType.GetMethod("Delete");
-            Assert.IsNotNull(methodInfo, "Method Delete does not exist in AppointmentController class");
+            Type GymControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = GymControllerType.GetMethod("Edit");
+            Assert.IsNotNull(methodInfo, "Method Edit does not exist in GymController class");
         }
 
-        // Test to Check AppointmentController Controllers Method Delete Returns ActionResult
+        // Test to Check GymController Controllers Method Edit Returns ActionResult
         [Test]
-        public void AppointmentController_Delete_MethodReturns_ActionResult()
+        public void GymController_Edit_MethodReturns_ActionResult()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.AppointmentController";
+            string typeName = "dotnetapp.Controllers.GymController";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type AppointmentControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = AppointmentControllerType.GetMethod("Delete");
-            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Delete in AppointmentController class is not of type ActionResult");
+            Type GymControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = GymControllerType.GetMethod("Edit");
+            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Edit in GymController class is not of type ActionResult");
         }
 
         // Test to Check AppointmentController Controllers Method Delete with parameter int Returns ActionResult
@@ -226,10 +226,10 @@ namespace TestProject
         public void ShouldUseADONET_Classes_SqlCommand()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.AppointmentController";
+            string typeName = "dotnetapp.Controllers.GymController";
             Assembly assembly1 = Assembly.Load(assemblyName);
-            Type CarserviceControllerType = assembly1.GetType(typeName);
-            var assembly = Assembly.GetAssembly(CarserviceControllerType);
+            Type GymControllerType = assembly1.GetType(typeName);
+            var assembly = Assembly.GetAssembly(GymControllerType);
             var types = assembly.GetTypes();
 
             // Act
@@ -247,10 +247,10 @@ namespace TestProject
         public void ShouldUseADONET_Classes_SqlConnection()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.AppointmentController";
+            string typeName = "dotnetapp.Controllers.GymController";
             Assembly assembly1 = Assembly.Load(assemblyName);
-            Type CarserviceControllerType = assembly1.GetType(typeName);
-            var assembly = Assembly.GetAssembly(CarserviceControllerType);
+            Type GymControllerType = assembly1.GetType(typeName);
+            var assembly = Assembly.GetAssembly(GymControllerType);
             var types = assembly.GetTypes();
 
             // Act
