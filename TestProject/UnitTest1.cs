@@ -104,70 +104,70 @@ namespace TestProject
         }
 
         // Test to Check GymController Controllers Method Index Exists
-        // [Test]
-        // public void GymController_Index_MethodExists()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Controllers.GymController";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type GymControllerType = assembly.GetType(typeName);
-        //     MethodInfo methodInfo = GymControllerType.GetMethod("Index");
-        //     Assert.IsNotNull(methodInfo, "Method Index does not exist in GymController class");
-        // }
+        [Test]
+        public void GymController_Index_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.GymController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type GymControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = GymControllerType.GetMethod("Index");
+            Assert.IsNotNull(methodInfo, "Method Index does not exist in GymController class");
+        }
 
         // Test to Check GymController Controllers Method Index Returns ActionResult
-        // [Test]
-        // public void GymController_Index_MethodReturns_ActionResult()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Controllers.GymController";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type GymControllerType = assembly.GetType(typeName);
-        //     MethodInfo methodInfo = GymControllerType.GetMethod("Index");
-        //     Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Index in GymController class is not of type ActionResult");
-        // }
+        [Test]
+        public void GymController_Index_MethodReturns_ActionResult()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.GymController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type GymControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = GymControllerType.GetMethod("Index");
+            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Index in GymController class is not of type ActionResult");
+        }
 
         // Test to Check GymController Controllers Method Create Exists
-        // [Test]
-        // public void GymController_Create_MethodExists()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Controllers.GymController";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type GymController = assembly.GetType(typeName);
-        //     MethodInfo methodInfo = GymController.GetMethod("Create", Type.EmptyTypes);
-        //     Assert.IsNotNull(methodInfo, "Method Create does not exist in GymController class");
-        // }
+        [Test]
+        public void GymController_Create_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.GymController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type GymController = assembly.GetType(typeName);
+            MethodInfo methodInfo = GymController.GetMethod("Create", Type.EmptyTypes);
+            Assert.IsNotNull(methodInfo, "Method Create does not exist in GymController class");
+        }
 
         // Test to Check GymController Controllers Method Create with no parameter Returns ActionResult
-        // [Test]
-        // public void GymController_Create_Method_with_NoParams_Returns_ActionResult()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Controllers.GymController";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type GymControllerType = assembly.GetType(typeName);
-        //     MethodInfo methodInfo = GymControllerType.GetMethod("Create", Type.EmptyTypes);
-        //     Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Create in GymController class is not of type ActionResult");
-        // }
+        [Test]
+        public void GymController_Create_Method_with_NoParams_Returns_ActionResult()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.GymController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type GymControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = GymControllerType.GetMethod("Create", Type.EmptyTypes);
+            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Create in GymController class is not of type ActionResult");
+        }
 
-        // Test to Check GymController Controllers Method Create with Appoinment parameter Returns ActionResult
-        // [Test]
-        // public void GymController_Create_Method_with_Appoinment_Params_Returns_ActionResult()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Controllers.GymController";
-        //     string typeName1 = "dotnetapp.Models.GymMembership";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type GymControllerType = assembly.GetType(typeName);
-        //     Type GymMembershipModelType = assembly.GetType(typeName1);
-        //     MethodInfo methodInfo = GymControllerType.GetMethod("Create", new[] { GymMembershipModelType });
-        //     Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Create in GymController class is not of type ActionResult");
-        //     object instanceOfController = Activator.CreateInstance(GymControllerType);
-        //     object instanceOfModel = Activator.CreateInstance(GymMembershipModelType);
-        //     object result = methodInfo.Invoke(instanceOfController, new object[] { instanceOfModel });
-        //     Assert.IsNotNull(result);
-        // }
+        // Test to Check GymController Controllers Method Create with GymMembership parameter Returns ActionResult
+        [Test]
+        public void GymController_Create_Method_with_GymMembership_Params_Returns_ActionResult()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.GymController";
+            string typeName1 = "dotnetapp.Models.GymMembership";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type GymControllerType = assembly.GetType(typeName);
+            Type GymMembershipModelType = assembly.GetType(typeName1);
+            MethodInfo methodInfo = GymControllerType.GetMethod("Create", new[] { GymMembershipModelType });
+            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Create in GymController class is not of type ActionResult");
+            object instanceOfController = Activator.CreateInstance(GymControllerType);
+            object instanceOfModel = Activator.CreateInstance(GymMembershipModelType);
+            object result = methodInfo.Invoke(instanceOfController, new object[] { instanceOfModel });
+            Assert.IsNotNull(result);
+        }
 
 
         // Test to Check AppointmentController Controllers Method Edit Exists
@@ -209,47 +209,47 @@ namespace TestProject
         //     Assert.IsNotNull(result, "Result should not be null");
         // }
 
-        // [Test]
-        // public void ShouldUseADONET_Classes_SqlCommand()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Controllers.GymController";
-        //     Assembly assembly1 = Assembly.Load(assemblyName);
-        //     Type GymControllerType = assembly1.GetType(typeName);
-        //     var assembly = Assembly.GetAssembly(GymControllerType);
-        //     var types = assembly.GetTypes();
+        [Test]
+        public void ShouldUseADONET_Classes_SqlCommand()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.GymController";
+            Assembly assembly1 = Assembly.Load(assemblyName);
+            Type GymControllerType = assembly1.GetType(typeName);
+            var assembly = Assembly.GetAssembly(GymControllerType);
+            var types = assembly.GetTypes();
 
-        //     // Act
-        //     var containsSqlCommand = types.Any(type =>
-        //         type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
-        //             .SelectMany(method => method.GetMethodBody()?.LocalVariables.Cast<LocalVariableInfo>() ?? Enumerable.Empty<LocalVariableInfo>())
-        //             .Any(variable => variable.LocalType == typeof(SqlCommand))
-        //     );
+            // Act
+            var containsSqlCommand = types.Any(type =>
+                type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
+                    .SelectMany(method => method.GetMethodBody()?.LocalVariables.Cast<LocalVariableInfo>() ?? Enumerable.Empty<LocalVariableInfo>())
+                    .Any(variable => variable.LocalType == typeof(SqlCommand))
+            );
 
-        //     // Assert
-        //     Assert.IsTrue(containsSqlCommand, "SqlCommand is not used in the application.");
-        // }
+            // Assert
+            Assert.IsTrue(containsSqlCommand, "SqlCommand is not used in the application.");
+        }
 
-        // [Test]
-        // public void ShouldUseADONET_Classes_SqlConnection()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Controllers.GymController";
-        //     Assembly assembly1 = Assembly.Load(assemblyName);
-        //     Type GymControllerType = assembly1.GetType(typeName);
-        //     var assembly = Assembly.GetAssembly(GymControllerType);
-        //     var types = assembly.GetTypes();
+        [Test]
+        public void ShouldUseADONET_Classes_SqlConnection()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.GymController";
+            Assembly assembly1 = Assembly.Load(assemblyName);
+            Type GymControllerType = assembly1.GetType(typeName);
+            var assembly = Assembly.GetAssembly(GymControllerType);
+            var types = assembly.GetTypes();
 
-        //     // Act
-        //     var containsSqlConnection = types.Any(type =>
-        //         type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
-        //             .SelectMany(method => method.GetMethodBody()?.LocalVariables.Cast<LocalVariableInfo>() ?? Enumerable.Empty<LocalVariableInfo>())
-        //             .Any(variable => variable.LocalType == typeof(SqlConnection))
-        //     );
+            // Act
+            var containsSqlConnection = types.Any(type =>
+                type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
+                    .SelectMany(method => method.GetMethodBody()?.LocalVariables.Cast<LocalVariableInfo>() ?? Enumerable.Empty<LocalVariableInfo>())
+                    .Any(variable => variable.LocalType == typeof(SqlConnection))
+            );
 
-        //     // Assert
-        //     Assert.IsTrue(containsSqlConnection, "SqlConnection is not used in the application.");
-        // }
+            // Assert
+            Assert.IsTrue(containsSqlConnection, "SqlConnection is not used in the application.");
+        }
 
     }
 }

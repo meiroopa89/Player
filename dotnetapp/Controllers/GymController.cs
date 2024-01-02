@@ -9,6 +9,8 @@ using dotnetapp.Models;
 using System.Data;
 using Microsoft.Data.SqlClient;
 
+namespace dotnetapp.Controllers
+{
 public class GymController : Controller
 {
     // private readonly IRepository<GymMembership> _repository;
@@ -227,5 +229,6 @@ catch(Exception ex)
 //     return RedirectToAction("Index");
 //     }
 
+}
 
 }
