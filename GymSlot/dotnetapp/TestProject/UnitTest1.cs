@@ -29,8 +29,6 @@ public class TestProject
 
             _controller = new BookingController(_context);
             _slotcontroller = new SlotController(_context);
-
-            
     }
 
     [TearDown]
