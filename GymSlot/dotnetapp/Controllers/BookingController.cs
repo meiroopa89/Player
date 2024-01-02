@@ -1,18 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 // using gym.Data;
-using GymSlot.dotnetapp.Exceptions; 
 
-using GymSlot.dotnetapp.Models;
+using dotnetapp.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GymSlot.dotnetapp.Controllers
+namespace dotnetapp.Controllers
 {
-
-
-
 
 public class BookingController : Controller
 {

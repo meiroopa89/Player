@@ -1,6 +1,6 @@
 using System;
 
-namespace GymSlot.dotnetapp.Exceptions
+namespace dotnetapp.Models
 {
 public class SlotBookingException : Exception
 {

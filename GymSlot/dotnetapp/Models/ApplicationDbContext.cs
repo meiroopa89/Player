@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
 
-namespace gymI.Models
+namespace dotnetapp.Models
 {
 public class ApplicationDbContext : DbContext
 {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace GymSlot.dotnetapp.Models
+namespace dotnetapp.Models
 
 {
 
