@@ -22,86 +22,86 @@ namespace TestProject
         }
 
         // Test to Check Appointment Models Property Appointmentid Exists with correcct datatype int    
-        // [Test]
-        // public void GymMembership_id_PropertyExists_ReturnExpectedDataTypes_int()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Models.GymMembership";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type GymMembershipType = assembly.GetType(typeName);
-        //     PropertyInfo propertyInfo = GymMembershipType.GetProperty("id");
-        //     Assert.IsNotNull(propertyInfo, "Property id does not exist in GymMembership class");
-        //     Type expectedType = propertyInfo.PropertyType;
-        //     Assert.AreEqual(typeof(int), expectedType, "Property id in GymMembership class is not of type int");
-        // }
+        [Test]
+        public void GymMembership_id_PropertyExists_ReturnExpectedDataTypes_int()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.GymMembership";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type GymMembershipType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = GymMembershipType.GetProperty("id");
+            Assert.IsNotNull(propertyInfo, "Property id does not exist in GymMembership class");
+            Type expectedType = propertyInfo.PropertyType;
+            Assert.AreEqual(typeof(int), expectedType, "Property id in GymMembership class is not of type int");
+        }
 
         // Test to Check GymMembership Models Property Patientname Exists with correcct datatype string    
-        // [Test]
-        // public void GymMembership_Name_PropertyExists_ReturnExpectedDataTypes_string()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Models.GymMembership";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type GymMembershipType = assembly.GetType(typeName);
-        //     PropertyInfo propertyInfo = GymMembershipType.GetProperty("Name");
-        //     Assert.IsNotNull(propertyInfo, "Property Name does not exist in GymMembership class");
-        //     Type expectedType = propertyInfo.PropertyType;
-        //     Assert.AreEqual(typeof(string), expectedType, "Property Name in GymMembership class is not of type string");
-        // }
+        [Test]
+        public void GymMembership_Name_PropertyExists_ReturnExpectedDataTypes_string()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.GymMembership";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type GymMembershipType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = GymMembershipType.GetProperty("Name");
+            Assert.IsNotNull(propertyInfo, "Property Name does not exist in GymMembership class");
+            Type expectedType = propertyInfo.PropertyType;
+            Assert.AreEqual(typeof(string), expectedType, "Property Name in GymMembership class is not of type string");
+        }
 
        
         // Test to Check GymMembership Models Property JoiningDate Exists with correcct datatype DateTime    
-        // [Test]
-        // public void GymMembership_JoiningDate_PropertyExists_ReturnExpectedDataTypes_DateTime()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Models.GymMembership";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type GymMembershipType = assembly.GetType(typeName);
-        //     PropertyInfo propertyInfo = GymMembershipType.GetProperty("JoiningDate");
-        //     Assert.IsNotNull(propertyInfo, "Property JoiningDate does not exist in GymMembership class");
-        //     Type expectedType = propertyInfo.PropertyType;
-        //     Assert.AreEqual(typeof(DateTime), expectedType, "Property JoiningDate in GymMembership class is not of type DateTime");
-        // }
+        [Test]
+        public void GymMembership_JoiningDate_PropertyExists_ReturnExpectedDataTypes_DateTime()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.GymMembership";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type GymMembershipType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = GymMembershipType.GetProperty("JoiningDate");
+            Assert.IsNotNull(propertyInfo, "Property JoiningDate does not exist in GymMembership class");
+            Type expectedType = propertyInfo.PropertyType;
+            Assert.AreEqual(typeof(DateTime), expectedType, "Property JoiningDate in GymMembership class is not of type DateTime");
+        }
 
         // Test to Check GymMembership Models Property ExpiryDate Exists with correcct datatype DateTime    
-        // [Test]
-        // public void GymMembership_ExpiryDate_PropertyExists_ReturnExpectedDataTypes_DateTime()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Models.GymMembership";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type GymMembershipType = assembly.GetType(typeName);
-        //     PropertyInfo propertyInfo = GymMembershipType.GetProperty("ExpiryDate");
-        //     Assert.IsNotNull(propertyInfo, "Property ExpiryDate does not exist in GymMembership class");
-        //     Type expectedType = propertyInfo.PropertyType;
-        //     Assert.AreEqual(typeof(DateTime), expectedType, "Property ExpiryDate in GymMembership class is not of type DateTime");
-        // }
+        [Test]
+        public void GymMembership_ExpiryDate_PropertyExists_ReturnExpectedDataTypes_DateTime()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.GymMembership";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type GymMembershipType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = GymMembershipType.GetProperty("ExpiryDate");
+            Assert.IsNotNull(propertyInfo, "Property ExpiryDate does not exist in GymMembership class");
+            Type expectedType = propertyInfo.PropertyType;
+            Assert.AreEqual(typeof(DateTime), expectedType, "Property ExpiryDate in GymMembership class is not of type DateTime");
+        }
 
         // Test to Check GymMembership Models Property Reason Exists with correcct datatype string    
-        // [Test]
-        // public void GymMembership_MembershipType_PropertyExists_ReturnExpectedDataTypes_string()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Models.GymMembership";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type GymMembershipType = assembly.GetType(typeName);
-        //     PropertyInfo propertyInfo = GymMembershipType.GetProperty("MembershipType");
-        //     Assert.IsNotNull(propertyInfo, "Property MembershipType does not exist in GymMembership class");
-        //     Type expectedType = propertyInfo.PropertyType;
-        //     Assert.AreEqual(typeof(string), expectedType, "Property MembershipType in GymMembership class is not of type string");
-        // }
+        [Test]
+        public void GymMembership_MembershipType_PropertyExists_ReturnExpectedDataTypes_string()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.GymMembership";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type GymMembershipType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = GymMembershipType.GetProperty("MembershipType");
+            Assert.IsNotNull(propertyInfo, "Property MembershipType does not exist in GymMembership class");
+            Type expectedType = propertyInfo.PropertyType;
+            Assert.AreEqual(typeof(string), expectedType, "Property MembershipType in GymMembership class is not of type string");
+        }
 
         // Test to check whether GymController Controllers Class exists
-        // [Test]
-        // public void GymController_Controllers_ClassExists()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Controllers.GymController";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type GymControllerType = assembly.GetType(typeName);
-        //     Assert.IsNotNull(GymControllerType);
-        // }
+        [Test]
+        public void GymController_Controllers_ClassExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.GymController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type GymControllerType = assembly.GetType(typeName);
+            Assert.IsNotNull(GymControllerType);
+        }
 
         // Test to Check GymController Controllers Method Index Exists
         // [Test]
