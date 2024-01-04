@@ -25,18 +25,18 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "vehicleRoute",
-    pattern: "Vehicle/{action=Index}/{id?}",
-    defaults: new { controller = "Vehicle" });
+// app.MapControllerRoute(
+//     name: "vehicleRoute",
+//     pattern: "Vehicle/{action=Index}/{id?}",
+//     defaults: new { controller = "Vehicle" });
 
-app.MapControllerRoute(
-    name: "bookingRoute",
-    pattern: "Booking/{action=Index}/{listId?}/{id?}",
-    defaults: new { controller = "Booking" });
+// app.MapControllerRoute(
+//     name: "bookingRoute",
+//     pattern: "Booking/{action=Index}/{listId?}/{id?}",
+//     defaults: new { controller = "Booking" });
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Vehicle}/{action=Index}/{id?}");
 
 app.Run();

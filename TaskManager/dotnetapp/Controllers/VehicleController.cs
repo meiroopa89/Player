@@ -18,8 +18,8 @@ namespace dotnetapp.Controllers
         // GET: Vehicle/Index
         public IActionResult Index()
         {
-            var vehicles = _context.Vehicles.ToList(); // Fetch the list of vehicles from the database
-            return View(vehicles); // Pass the list to the Index view
+            var vehicles = _context.Vehicles.ToList(); 
+            return View(vehicles); 
         }
 
         // GET: Vehicle/Details/5
