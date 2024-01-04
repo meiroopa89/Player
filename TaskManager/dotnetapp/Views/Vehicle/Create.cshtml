@@ -12,7 +12,6 @@
         @foreach (var vehicle in Model)
         {
             <tr>
-                <!-- ... (table data) ... -->
                 <td>
                     <a asp-action="Details" asp-route-id="@vehicle.VehicleId">Details</a> |
                     <a asp-action="Edit" asp-route-id="@vehicle.VehicleId">Edit</a> |
