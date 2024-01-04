@@ -1,24 +1,25 @@
-@model List<dotnetapp.Models.Vehicle>
+@model dotnetapp.Models.Vehicle
 
-<h1>Vehicle List</h1>
+<h1>Add Vehicle</h1>
 
-<p>
-    <a asp-action="Create">Create New Vehicle</a>
-</p>
-
-<table class="table">
-    <!-- ... (table headers) ... -->
-    <tbody>
-        @foreach (var vehicle in Model)
-        {
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@vehicle.VehicleId">Details</a> |
-                    <a asp-action="Edit" asp-route-id="@vehicle.VehicleId">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@vehicle.VehicleId">Delete</a> |
-                    <a asp-action="Book" asp-route-id="@vehicle.VehicleId">Book</a> <!-- Book button -->
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@using (Html.BeginForm("Create", "Vehicle", FormMethod.Post)) 
+{
+    <div>
+        <label for="VehicleId">Vehicle ID:</label>
+        <input type="text" id="VehicleId" name="VehicleId" />
+    </div>
+    <div>
+        <label for="Model">Model:</label>
+        <input type="text" id="Model" name="Model" />
+    </div>
+    <div>
+        <label for="Date">Date:</label>
+        <input type="date" id="Date" name="Date" />
+    </div>
+    <div>
+        <label for="Color">Color:</label>
+        <input type="text" id="Color" name="Color" />
+    </div>
+    
+    <button type="submit">Submit</button>
+}
