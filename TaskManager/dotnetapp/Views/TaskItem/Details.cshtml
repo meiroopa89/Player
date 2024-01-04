@@ -1,0 +1,11 @@
+@model dotnetapp.Models.TaskItem
+
+<h1>Task Item Details</h1>
+
+<p><strong>Description:</strong> @Model.Description</p>
+<p><strong>Completed:</strong> @(Model.IsCompleted ? "Yes" : "No")</p>
+
+<a asp-action="Edit" asp-controller="TaskItem" asp-route-id="@Model.Id">Edit</a>
+<form asp-action="Delete" asp-controller="TaskItem" asp-route-id="@Model.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="submit" value="Delete" class="btn btn-danger" />
+</form>
