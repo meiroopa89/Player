@@ -8,17 +8,16 @@ namespace dotnetapp.Models
         {
         }
 
-        public DbSet<TaskList> TaskLists { get; set; }
-        public DbSet<TaskItem> TaskItems { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TaskItem>()
-                .HasOne(ti => ti.TaskList)
-                .WithMany(tl => tl.Tasks)
-                .HasForeignKey(ti => ti.TaskListId);
-
-            base.OnModelCreating(modelBuilder);
+            // Configure your model here if needed
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Vehicle)
+                .WithMany(v => v.Bookings)
+                .HasForeignKey(b => b.VehicleId);
         }
     }
 }

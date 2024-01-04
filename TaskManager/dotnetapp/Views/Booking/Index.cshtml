@@ -1,0 +1,35 @@
+@model List<dotnetapp.Models.Booking>
+
+<h1>Booking List</h1>
+
+<p>
+    <a asp-action="Create">Create New Booking</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Booking ID</th>
+            <th>Vehicle ID</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>@booking.BookingId</td>
+                <td>@booking.VehicleId</td>
+                <td>@booking.StartDate.ToShortDateString()</td>
+                <td>@booking.EndDate.ToShortDateString()</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@booking.BookingId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@booking.BookingId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@booking.BookingId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
