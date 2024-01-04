@@ -1,0 +1,25 @@
+@model List<dotnetapp.Models.Vehicle>
+
+<h1>Vehicle List</h1>
+
+<p>
+    <a asp-action="Create">Create New Vehicle</a>
+</p>
+
+<table class="table">
+    <!-- ... (table headers) ... -->
+    <tbody>
+        @foreach (var vehicle in Model)
+        {
+            <tr>
+                <!-- ... (table data) ... -->
+                <td>
+                    <a asp-action="Details" asp-route-id="@vehicle.VehicleId">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@vehicle.VehicleId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@vehicle.VehicleId">Delete</a> |
+                    <a asp-action="Book" asp-route-id="@vehicle.VehicleId">Book</a> <!-- Book button -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

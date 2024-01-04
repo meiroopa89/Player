@@ -1,0 +1,27 @@
+@model List<dotnetapp.Models.Vehicle>
+
+<h1>Vehicle List</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Vehicle ID</th>
+            <th>Model</th>
+            <th>Date</th>
+            <th>Color</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vehicle in Model)
+        {
+            <tr>
+                <td>@vehicle.VehicleId</td>
+                <td>@vehicle.Model</td>
+                <td>@vehicle.Date.ToShortDateString()</td>
+                <td>@vehicle.Color</td>
+                <td><a href="/Booking/Create/@vehicle.VehicleId">Book</a></td> <!-- Link to Booking page -->
+            </tr>
+        }
+    </tbody>
+</table>
