@@ -1,3 +1,4 @@
+// TaskListController.cs
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using dotnetapp.Models;
@@ -33,7 +34,9 @@ namespace dotnetapp.Controllers
             {
                 _context.Add(taskList);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                // Redirect to TaskItem creation page with the new TaskListId
+                return RedirectToAction("Create", "TaskItem", new { listId = taskList.Id });
             }
             return View(taskList);
         }
