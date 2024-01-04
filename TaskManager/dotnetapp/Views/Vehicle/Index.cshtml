@@ -1,4 +1,4 @@
-@* @model List<dotnetapp.Models.Vehicle>
+@model IEnumerable<dotnetapp.Models.Vehicle>
 
 <h1>Vehicle List</h1>
 
@@ -9,7 +9,6 @@
             <th>Model</th>
             <th>Date</th>
             <th>Color</th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -20,62 +19,10 @@
                 <td>@vehicle.Model</td>
                 <td>@vehicle.Date.ToShortDateString()</td>
                 <td>@vehicle.Color</td>
-                <td><a href="/Booking/Create/@vehicle.VehicleId">Book</a></td> <!-- Link to Booking page -->
-            </tr>
-        }
-    </tbody>
-</table> *@
-
-
-
-@model dotnetapp.Models.VehicleViewModel
-
-<h1>Vehicle List</h1>
-
-<table>
-    <thead>
-        <tr>
-            <th>Vehicle ID</th>
-            <th>Model</th>
-            <th>Date</th>
-            <th>Color</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var vehicle in Model.Vehicles)
-        {
-            <tr>
-                <td>@vehicle.VehicleId</td>
-                <td>@vehicle.Model</td>
-                <td>@vehicle.Date.ToShortDateString()</td>
-                <td>@vehicle.Color</td>
-                <td><a href="/Booking/Create/@vehicle.VehicleId">Book</a></td> <!-- Link to Booking page -->
             </tr>
         }
     </tbody>
 </table>
 
-<h1>Add Vehicle</h1>
-
-@using (Html.BeginForm("Create", "Vehicle", FormMethod.Post)) 
-{
-    <div>
-        <label asp-for="NewVehicle.VehicleId">Vehicle ID:</label>
-        <input asp-for="NewVehicle.VehicleId" />
-    </div>
-    <div>
-        <label asp-for="NewVehicle.Model">Model:</label>
-        <input asp-for="NewVehicle.Model" />
-    </div>
-    <div>
-        <label asp-for="NewVehicle.Date">Date:</label>
-        <input asp-for="NewVehicle.Date" type="date" />
-    </div>
-    <div>
-        <label asp-for="NewVehicle.Color">Color:</label>
-        <input asp-for="NewVehicle.Color" />
-    </div>
-    
-    <button type="submit">Submit</button>
-}
+<h2>Add Vehicle</h2>
+<a asp-action="Create">Add New</a> <!-- Link to navigate to the Create view -->
