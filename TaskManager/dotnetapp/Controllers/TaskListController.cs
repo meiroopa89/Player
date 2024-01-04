@@ -1,4 +1,3 @@
-// TaskListController.cs
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using dotnetapp.Models;
@@ -41,79 +40,7 @@ namespace dotnetapp.Controllers
             return View(taskList);
         }
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var taskList = await _context.TaskLists.FindAsync(id);
-            if (taskList == null)
-            {
-                return NotFound();
-            }
-            return View(taskList);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title")] TaskList taskList)
-        {
-            if (id != taskList.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(taskList);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TaskListExists(taskList.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(taskList);
-        }
-
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var taskList = await _context.TaskLists
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (taskList == null)
-            {
-                return NotFound();
-            }
-
-            return View(taskList);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var taskList = await _context.TaskLists.FindAsync(id);
-            _context.TaskLists.Remove(taskList);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        // Other actions for Edit, Delete, etc. as required
 
         private bool TaskListExists(int id)
         {
