@@ -273,25 +273,23 @@ public class BookingController : Controller
             _context.SaveChanges();
             
             // return RedirectToAction(nameof(Index));
-              return RedirectToAction("Index", "Booking");
+            //   return RedirectToAction("Index", "Booking");
+            return RedirectToAction("Details", new { id = booking.BookingId });
         }
         
         return View(booking);
     }
 
-    public IActionResult Create(Vehicle vehicle)
-{
-    if (ModelState.IsValid)
-    {
-        // Logic to save the vehicle details to the database goes here
+//     public IActionResult Create(Vehicle vehicle)
+// {
+//     if (ModelState.IsValid)
+//     {
+//        return RedirectToAction("Details", new { id = booking.BookingId });
+//     }
 
-        // Redirect to the Booking/Create action after successful submission
-        return RedirectToAction("Create", "Booking"); // Replace "Create" with the appropriate action in your BookingController
+//     return View(vehicle);
     }
 
-    return View(vehicle);
 }
 
-}
 
-}

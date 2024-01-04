@@ -6,23 +6,39 @@
     <h4>Model: @Model.Model</h4>
     <p>Manufacture Date: @Model.Date.ToShortDateString()</p>
     <p>Color: @Model.Color</p>
+</div>
 
-    <h4>Bookings:</h4>
-    @if (Model.Bookings != null && Model.Bookings.Any())
-    {
-        <ul>
+<!-- Display bookings associated with this vehicle -->
+<h2>Bookings</h2>
+
+@if (Model.Bookings != null && Model.Bookings.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var booking in Model.Bookings)
             {
-                <li>
-                    Booking ID: @booking.BookingId <br />
-                    Start Date: @booking.StartDate.ToShortDateString() <br />
-                    End Date: @booking.EndDate.ToShortDateString()
-                </li>
+                <tr>
+                    <td>@booking.BookingId</td>
+                    <td>@booking.StartDate.ToShortDateString()</td>
+                    <td>@booking.EndDate.ToShortDateString()</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@booking.BookingId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@booking.BookingId">Delete</a>
+                    </td>
+                </tr>
             }
-        </ul>
-    }
-    else
-    {
-        <p>No bookings for this vehicle.</p>
-    }
-</div>
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No bookings for this vehicle.</p>
+}
