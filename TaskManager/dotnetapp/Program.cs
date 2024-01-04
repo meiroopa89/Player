@@ -1,3 +1,6 @@
+using dotnetapp.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,6 +29,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=TaskList}/{action=Index}/{id?}"),
+    pattern: "{controller=TaskItem}/{action=Index}/{id?}");
 
 app.Run();

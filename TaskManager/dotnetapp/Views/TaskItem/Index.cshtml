@@ -1,0 +1,23 @@
+@model IEnumerable<dotnetapp.Models.TaskItem>
+
+<h1>Task Items</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Is Completed</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var taskItem in Model)
+        {
+            <tr>
+                <td>@taskItem.Description</td>
+                <td>@(taskItem.IsCompleted ? "Yes" : "No")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" asp-controller="TaskItem" asp-route-listId="@ViewBag.TaskListId">Add Task</a>

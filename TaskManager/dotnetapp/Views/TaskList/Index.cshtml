@@ -1,0 +1,25 @@
+@model IEnumerable<dotnetapp.Models.TaskList>
+
+<h1>Task Lists</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var taskList in Model)
+        {
+            <tr>
+                <td>@taskList.Title</td>
+                <td>
+                    <a asp-controller="TaskItem" asp-action="Index" asp-route-listId="@taskList.Id">View Tasks</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create">Create New</a>
