@@ -72,6 +72,19 @@ namespace dotnetapp.Controllers
         return View(booking);
     }
 
+    public IActionResult Create(Vehicle vehicle)
+{
+    if (ModelState.IsValid)
+    {
+        // Logic to save the vehicle details to the database goes here
+
+        // Redirect to the Booking/Create action after successful submission
+        return RedirectToAction("Create", "Booking"); // Replace "Create" with the appropriate action in your BookingController
+    }
+
+    return View(vehicle);
+}
+
     // GET: /Booking/Details/5
     public IActionResult Details(int? id)
     {

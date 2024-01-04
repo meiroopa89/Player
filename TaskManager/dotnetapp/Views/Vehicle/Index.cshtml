@@ -1,16 +1,16 @@
 @model IEnumerable<dotnetapp.Models.Vehicle>
 
-<h1>Vehicle List</h1>
+@* <h1>Vehicle List</h1> *@
 
 <table>
-    <thead>
+    @* <thead>
         <tr>
             <th>Vehicle ID</th>
             <th>Model</th>
             <th>Date</th>
             <th>Color</th>
         </tr>
-    </thead>
+    </thead> *@
     <tbody>
         @foreach (var vehicle in Model)
         {
@@ -25,4 +25,4 @@
 </table>
 
 <h2>Add Vehicle</h2>
-<a asp-action="Create">Add New</a> <!-- Link to navigate to the Create view -->
+<a asp-action="Create">Add New</a> 
