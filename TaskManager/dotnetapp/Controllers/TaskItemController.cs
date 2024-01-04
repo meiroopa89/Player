@@ -44,25 +44,6 @@ namespace dotnetapp.Controllers
             return View(taskItem);
         }
 
-        [HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> Create([Bind("Id,Description,IsCompleted,TaskListId")] TaskItem taskItem)
-{
-    if (ModelState.IsValid)
-    {
-        _context.Add(taskItem);
-        await _context.SaveChangesAsync();
-
-        // Set ViewData for TaskItem details
-        ViewData["Title"] = taskItem.Title;
-        ViewData["Description"] = taskItem.Description;
-        ViewData["IsCompleted"] = taskItem.IsCompleted;
-
-        // Redirect to TaskItem details view
-        return View("TaskItemDetails"); // Assuming "TaskItemDetails.cshtml" is the name of the view displaying TaskItem details
-    }
-    return View(taskItem);
-}
 
         // GET: TaskItem/Edit/5
         public async Task<IActionResult> Edit(int? id)
