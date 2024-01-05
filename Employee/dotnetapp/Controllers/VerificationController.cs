@@ -43,7 +43,6 @@ public class VerificationController : Controller
     public IActionResult Create(VerificationTask verificationTask)
     {
             Console.WriteLine(verificationTask.Status);
-            Console.WriteLine(verificationTask.);
         // if (!ModelState.IsValid)
         // {
         //     // Handle validation errors and display user-friendly messages
@@ -52,7 +51,10 @@ public class VerificationController : Controller
 
         try
         {
+            verificationTask.CandidateID = 1;
+            
             Console.WriteLine(verificationTask);
+            Console.WriteLine(verificationTask.V);
             _context.VerificationTasks.Add(verificationTask);
             _context.SaveChanges();
             return RedirectToAction("Index", "Verification"); 
