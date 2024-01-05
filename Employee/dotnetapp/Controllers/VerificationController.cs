@@ -38,25 +38,31 @@ public class VerificationController : Controller
     }
 
     // // POST: /Verification/Create
-    // 
-    
     [HttpPost]
-[ValidateAntiForgeryToken]
-public IActionResult Create(VerificationTask verificationTask)
-{
-    if (ModelState.IsValid)
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(VerificationTask verificationTask)
+    {
+            Console.WriteLine(verificationTask.Status);
+        // if (!ModelState.IsValid)
+        // {
+        //     // Handle validation errors and display user-friendly messages
+        //     return View("Task", verificationTask);
+        // }
+
+        try
         {
-            // Save the new candidate to the database
-            _context.Candidates.Add(candidate);
+            // verificationTask.CandidateID = 3;
+            
+            // Console.WriteLine(verificationTask);
+            _context.VerificationTasks.Add(verificationTask);
             _context.SaveChanges();
-
-            // Redirect to the Index page
-            return RedirectToAction("Index", "Verification");
+            return RedirectToAction("Index", "Verification"); 
         }
-
-        return View(candidate);
-}
-
+        catch (Exception ex)
+        {
+            return RedirectToAction("Error", "Home");
+        }
+    }
 
  
     // public IActionResult Index()
@@ -86,12 +92,10 @@ public IActionResult Create(VerificationTask verificationTask)
 //         return View(verificationTasks);
 //     }
 // }
-public IActionResult Index(int? candidateId)
+
+    public IActionResult Index(int? candidateId)
 {
     var verificationTasksQuery = _context.VerificationTasks.AsQueryable(); // Cast to IQueryable
-
-    // Get list of candidates for dropdown
-    ViewBag.Candidates = _context.Candidates.ToList();
 
     if (candidateId != null)
     {
