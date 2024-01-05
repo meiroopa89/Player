@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace dotnetapp.Models
 {
-public class VerificationTaskSummary
+public class CandidateTaskSummary
 {
     public string CandidateName { get; set; }
     public int PendingCount { get; set; }
