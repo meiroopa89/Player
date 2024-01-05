@@ -1,12 +1,13 @@
-@model List<dynamic>
+@model dotnetapp.Models.Candidate 
 
 <h2>Tasks Count by Candidate</h2>
 
-@foreach (var candidate in Model)
+@foreach (var candidate in ViewBag.TasksByCandidate)
 {
     <h3>@candidate.CandidateName</h3>
-    <p>Pending Tasks: @candidate.PendingCount</p>
-    <p>Ongoing Tasks: @candidate.OngoingCount</p>
-    <p>Completed Tasks: @candidate.CompletedCount</p>
+    <p>Total Tasks: @candidate.TotalTasks</p>
+    <p>Pending Tasks: @candidate.PendingTasks</p>
+    <p>Ongoing Tasks: @candidate.OngoingTasks</p>
+    <p>Completed Tasks: @candidate.CompletedTasks</p>
     <hr>
 }

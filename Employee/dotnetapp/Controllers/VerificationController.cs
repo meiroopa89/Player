@@ -37,7 +37,7 @@ public class VerificationController : Controller
         return View();
     }
 
-    // POST: /Verification/Create
+    // // POST: /Verification/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(VerificationTask verificationTask)
@@ -51,9 +51,9 @@ public class VerificationController : Controller
 
         try
         {
-            verificationTask.CandidateID = 3;
+            // verificationTask.CandidateID = 3;
             
-            Console.WriteLine(verificationTask);
+            // Console.WriteLine(verificationTask);
             _context.VerificationTasks.Add(verificationTask);
             _context.SaveChanges();
             return RedirectToAction("Index", "Verification"); 
@@ -63,31 +63,36 @@ public class VerificationController : Controller
             return RedirectToAction("Error", "Home");
         }
     }
+
+ 
     // public IActionResult Index()
     // {
     //     var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
     //     return View(verificationTasks); 
     // }
+    public IActionResult Index(int? candidateId)
+{
+    if (candidateId != null)
+    {
+        ViewBag.SelectedCandidateId = candidateId;
+        var verificationTasks = _context.VerificationTasks
+            .Include(vt => vt.Candidate)
+            .Where(vt => vt.CandidateID == candidateId)
+            .ToList();
 
-    public IActionResult Index()
-        {
-            var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
+        return View(verificationTasks);
+    }
+    else
+    {
+        ViewBag.SelectedCandidateId = "All";
+        var verificationTasks = _context.VerificationTasks
+            .Include(vt => vt.Candidate)
+            .ToList();
 
-            var tasksByCandidate = verificationTasks
-                .GroupBy(vt => vt.Candidate.CandidateName)
-                .Select(g => new
-                {
-                    CandidateName = g.Key,
-                    TotalTasks = g.Count(),
-                    PendingTasks = g.Count(t => t.Status == "Pending"),
-                    OngoingTasks = g.Count(t => t.Status == "Ongoing"),
-                    CompletedTasks = g.Count(t => t.Status == "Completed")
-                }).ToList();
+        return View(verificationTasks);
+    }
+}
 
-            ViewBag.TasksByCandidate = tasksByCandidate;
-
-            return View();
-        }
 
 }
 }
