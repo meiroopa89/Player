@@ -63,11 +63,12 @@ public class VerificationController : Controller
             return RedirectToAction("Error", "Home");
         }
     }
-    // public IActionResult Index()
-    // {
-    //     // Fetch all verification tasks or necessary data for the dashboard view
-    //     var tasks = _context.VerificationTasks.ToList(); // Fetching tasks, you may have custom logic here
-    //     return View(tasks); // Pass the necessary data to the view
-    // }
+    public IActionResult Index()
+    {
+        // Fetch all verification tasks or necessary data for the dashboard view
+var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
+Console.WriteLine(verificationTasks);
+        return View(verificationTasks); // Pass the necessary data to the view
+    }
 }
 }
