@@ -39,4 +39,9 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Vehicle}/{action=Index}/{id?}");
 
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Booking}/{action=Index}/{id?}");
+
 app.Run();
