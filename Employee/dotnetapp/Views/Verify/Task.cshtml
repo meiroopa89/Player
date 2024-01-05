@@ -1,0 +1,19 @@
+@model VerificationTask
+
+<h2>New Verification Task for @ViewBag.CandidateName</h2>
+
+@using (Html.BeginForm("CreateTask", "Verification"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.HiddenFor(model => model.CandidateID)
+        <!-- Add other input fields for VerificationDetails, Status, etc. -->
+        <!-- Example: -->
+        <label for="VerificationDetails">Verification Details:</label>
+        @Html.TextAreaFor(model => model.VerificationDetails, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.VerificationDetails, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+}
