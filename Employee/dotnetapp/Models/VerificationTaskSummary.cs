@@ -4,10 +4,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace dotnetapp.Models
 {
-public class Candidate
+public class VerificationTaskSummary
 {
-    public int CandidateID { get; set; }
     public string CandidateName { get; set; }
-    public ICollection<VerificationTask>? VerificationTasks { get; set; }
+    public int PendingCount { get; set; }
+    public int OngoingCount { get; set; }
+    public int CompletedCount { get; set; }
 }
 }
+
+
+

@@ -63,12 +63,32 @@ public class VerificationController : Controller
             return RedirectToAction("Error", "Home");
         }
     }
-    public IActionResult Index()
-    {
-        // Fetch all verification tasks or necessary data for the dashboard view
-var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
-// Console.WriteLine(verificationTasks);
-        return View(verificationTasks); // Pass the necessary data to the view
-    }
+//     public IActionResult Index()
+//     {
+//         // Fetch all verification tasks or necessary data for the dashboard view
+// var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
+// // Console.WriteLine(verificationTasks);
+//         return View(verificationTasks); // Pass the necessary data to the view
+//     }
+
+public IActionResult Index()
+{
+    // Fetch all verification tasks or necessary data for the dashboard view
+    var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
+
+    // Group tasks by CandidateName and count tasks in each group
+    var tasksByCandidate = verificationTasks
+        .GroupBy(vt => vt.Candidate.CandidateName)
+        .Select(g => new
+        {
+            CandidateName = g.Key,
+            PendingCount = g.Count(t => t.Status == "Pending"),
+            OngoingCount = g.Count(t => t.Status == "Ongoing"),
+            CompletedCount = g.Count(t => t.Status == "Completed")
+        }).ToList();
+
+    return View(tasksByCandidate); 
+}
+
 }
 }
