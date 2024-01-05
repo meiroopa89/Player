@@ -1,0 +1,12 @@
+@model List<dynamic>
+
+<h2>Tasks Count by Candidate</h2>
+
+@foreach (var candidate in Model)
+{
+    <h3>@candidate.CandidateName</h3>
+    <p>Pending Tasks: @candidate.PendingCount</p>
+    <p>Ongoing Tasks: @candidate.OngoingCount</p>
+    <p>Completed Tasks: @candidate.CompletedCount</p>
+    <hr>
+}

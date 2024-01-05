@@ -66,26 +66,28 @@ public class VerificationController : Controller
     // public IActionResult Index()
     // {
     //     var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
-    //     return View(verificationTasks); // Pass the necessary data to the view
+    //     return View(verificationTasks); 
     // }
 
     public IActionResult Index()
-{
-    var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
-
-    var tasksByCandidate = verificationTasks
-        .GroupBy(vt => vt.Candidate.CandidateName)
-        .Select(g => new
         {
-            CandidateName = g.Key,
-            PendingCount = g.Count(t => t.Status == "Pending"),
-            OngoingCount = g.Count(t => t.Status == "Ongoing"),
-            CompletedCount = g.Count(t => t.Status == "Completed")
-        }).ToList();
+            var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
 
-    return View(tasksByCandidate);
-}
+            var tasksByCandidate = verificationTasks
+                .GroupBy(vt => vt.Candidate.CandidateName)
+                .Select(g => new
+                {
+                    CandidateName = g.Key,
+                    TotalTasks = g.Count(),
+                    PendingTasks = g.Count(t => t.Status == "Pending"),
+                    OngoingTasks = g.Count(t => t.Status == "Ongoing"),
+                    CompletedTasks = g.Count(t => t.Status == "Completed")
+                }).ToList();
 
+            ViewBag.TasksByCandidate = tasksByCandidate;
+
+            return View();
+        }
 
 }
 }
