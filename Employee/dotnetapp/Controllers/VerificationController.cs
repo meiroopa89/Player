@@ -42,14 +42,17 @@ public class VerificationController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Create(VerificationTask verificationTask)
     {
-        if (!ModelState.IsValid)
-        {
-            // Handle validation errors and display user-friendly messages
-            return View("Task", verificationTask);
-        }
+            Console.WriteLine(verificationTask.Status);
+            Console.WriteLine(verificationTask.);
+        // if (!ModelState.IsValid)
+        // {
+        //     // Handle validation errors and display user-friendly messages
+        //     return View("Task", verificationTask);
+        // }
 
         try
         {
+            Console.WriteLine(verificationTask);
             _context.VerificationTasks.Add(verificationTask);
             _context.SaveChanges();
             return RedirectToAction("Index", "Verification"); 
