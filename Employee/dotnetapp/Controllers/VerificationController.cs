@@ -67,7 +67,7 @@ public class VerificationController : Controller
     {
         // Fetch all verification tasks or necessary data for the dashboard view
 var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
-Console.WriteLine(verificationTasks);
+// Console.WriteLine(verificationTasks);
         return View(verificationTasks); // Pass the necessary data to the view
     }
 }
