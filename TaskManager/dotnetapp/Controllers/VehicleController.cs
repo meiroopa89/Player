@@ -23,6 +23,7 @@ namespace dotnetapp.Controllers
         }
 
         // GET: Vehicle/Details/5
+        // GET: Vehicle/Details/5
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -38,6 +39,7 @@ namespace dotnetapp.Controllers
 
             return View(vehicle);
         }
+
 
         // GET: Vehicle/Create
         public IActionResult Create()

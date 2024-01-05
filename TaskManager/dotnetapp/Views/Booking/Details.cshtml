@@ -1,44 +1,20 @@
-@model dotnetapp.Models.Vehicle
+@model dotnetapp.Models.Booking
 
-<h1>Vehicle Details</h1>
+<h1>Booking Details</h1>
 
 <div>
-    <h4>Model: @Model.Model</h4>
-    <p>Manufacture Date: @Model.Date.ToShortDateString()</p>
-    <p>Color: @Model.Color</p>
+    <h4>Booking ID: @Model.BookingId</h4>
+    <h4>Vehicle ID: @Model.VehicleId</h4>
+    <h4>Start Date: @Model.StartDate.ToShortDateString()</h4>
+    <h4>End Date: @Model.EndDate.ToShortDateString()</h4>
+    <!-- Add more details as needed -->
 </div>
 
-<!-- Display bookings associated with this vehicle -->
-<h2>Bookings</h2>
-
-@if (Model.Bookings != null && Model.Bookings.Any())
-{
-    <table>
-        <thead>
-            <tr>
-                <th>Booking ID</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var booking in Model.Bookings)
-            {
-                <tr>
-                    <td>@booking.BookingId</td>
-                    <td>@booking.StartDate.ToShortDateString()</td>
-                    <td>@booking.EndDate.ToShortDateString()</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@booking.BookingId">Edit</a> |
-                        <a asp-action="Delete" asp-route-id="@booking.BookingId">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No bookings for this vehicle.</p>
-}
+<div>
+    <!-- Buttons for Edit and Delete -->
+    <a asp-action="Edit" asp-route-id="@Model.BookingId">Edit</a>
+    <form asp-action="Delete" asp-route-id="@Model.BookingId" method="post">
+        <button type="submit">Delete</button>
+    </form>
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,29 +1,28 @@
 @model dotnetapp.Models.Vehicle
 
 <h1>Vehicle Details</h1>
-
-<div>
-    <h4>Model: @Model.Model</h4>
-    <p>Manufacture Date: @Model.Date.ToShortDateString()</p>
-    <p>Color: @Model.Color</p>
-    <!-- Other vehicle details -->
-
-    <h4>Bookings:</h4>
-    @if (Model.Bookings != null && Model.Bookings.Any())
-    {
-        <ul>
-            @foreach (var booking in Model.Bookings)
-            {
-                <li>
-                    Booking ID: @booking.BookingId <br />
-                    Start Date: @booking.StartDate.ToShortDateString() <br />
-                    End Date: @booking.EndDate.ToShortDateString()
-                </li>
-            }
-        </ul>
-    }
-    else
-    {
-        <p>No bookings for this vehicle.</p>
-    }
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Booking ID</th>
+            <th>Vehicle ID</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>@booking.BookingId</td>
+                <td>@booking.VehicleId</td>
+                <td>@booking.StartDate.ToShortDateString()</td>
+                <td>@booking.EndDate.ToShortDateString()</td>
+                <td>
+                    <a asp-controller="Vehicle" asp-action="Details" asp-route-id="@booking.VehicleId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
