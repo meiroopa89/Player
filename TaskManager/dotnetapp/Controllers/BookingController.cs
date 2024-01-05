@@ -127,10 +127,10 @@ namespace dotnetapp.Controllers
         }
 
         // GET: Booking/Index
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var bookings = _context.Bookings.ToList();
-            return View(bookings);
+            // var bookings = _context.Bookings.ToList();
+            return View(await _context.Bookings.ToListAsync());
         }
 
     }
