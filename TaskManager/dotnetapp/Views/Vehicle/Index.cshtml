@@ -2,15 +2,18 @@
 
 @* <h1>Vehicle List</h1> *@
 
+<h2>Add Vehicle</h2>
+<a asp-action="Create">Add New</a> 
+
 <table>
-    @* <thead>
+    <thead>
         <tr>
             <th>Vehicle ID</th>
             <th>Model</th>
             <th>Date</th>
             <th>Color</th>
         </tr>
-    </thead> *@
+    </thead>
     <tbody>
         @foreach (var vehicle in Model)
         {
@@ -24,5 +27,4 @@
     </tbody>
 </table>
 
-<h2>Add Vehicle</h2>
-<a asp-action="Create">Add New</a> 
+

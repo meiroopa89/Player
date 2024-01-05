@@ -16,10 +16,22 @@ namespace dotnetapp.Controllers
         }
 
         // GET: Vehicle/Index
+        // public IActionResult Index()
+        // {
+        //     var vehicles = _context.Vehicles.ToList(); 
+        //     return View(vehicles); 
+        // }
+
+
         public IActionResult Index()
         {
-            var vehicles = _context.Vehicles.ToList(); 
-            return View(vehicles); 
+            var vehicles = _context.Vehicles.ToList();
+            var viewModel = new VehicleDetailsViewModel
+            {
+                Vehicles = vehicles,
+                Details = null // Assuming no specific details by default
+            };
+            return View(viewModel);
         }
 
         // GET: Vehicle/Details/5
