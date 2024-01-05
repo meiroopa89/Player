@@ -64,7 +64,6 @@
 @model List<VerificationTask>
 
 <h2>Verification Tasks Dashboard</h2>
-
 <form asp-action="Index" asp-controller="Verification" method="get">
     <label for="candidateId">Filter by Candidate:</label>
     <select name="candidateId" id="candidateId">
@@ -76,7 +75,6 @@
     </select>
     <button type="submit">Filter</button>
 </form>
-
 
 <p>Selected Candidate ID: @ViewBag.SelectedCandidateId</p> 
 
