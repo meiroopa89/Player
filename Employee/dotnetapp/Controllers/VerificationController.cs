@@ -36,7 +36,7 @@ public class VerificationController : Controller
     // POST: /Verification/CreateTask
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult CreateTask(VerificationTask verificationTask)
+    public IActionResult Create(VerificationTask verificationTask)
     {
         if (!ModelState.IsValid)
         {
@@ -56,6 +56,12 @@ public class VerificationController : Controller
             // Provide a user-friendly error message or redirect to an error page
             return RedirectToAction("Error", "Home");
         }
+    }
+    public IActionResult Index()
+    {
+        // Fetch all verification tasks or necessary data for the dashboard view
+        var tasks = _context.VerificationTasks.ToList(); // Fetching tasks, you may have custom logic here
+        return View(tasks); // Pass the necessary data to the view
     }
 }
 }
