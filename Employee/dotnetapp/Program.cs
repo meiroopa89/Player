@@ -31,4 +31,15 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+    
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Verification}/{action=Index}/{id?}");
+
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Verification}/{action=CreateTask}/{id?}");
+
+
 app.Run();
