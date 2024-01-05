@@ -23,16 +23,23 @@ namespace dotnetapp.Controllers
         // }
 
 
-        public IActionResult Index()
+        // public IActionResult Index()
+        // {
+        //     var vehicles = _context.Vehicles.ToList();
+        //     var viewModel = new VehicleDetailsViewModel
+        //     {
+        //         Vehicles = vehicles,
+        //         Details = null // Assuming no specific details by default
+        //     };
+        //     return View(viewModel);
+        // }
+
+        public async Task<IActionResult> Index()
         {
-            var vehicles = _context.Vehicles.ToList();
-            var viewModel = new VehicleDetailsViewModel
-            {
-                Vehicles = vehicles,
-                Details = null // Assuming no specific details by default
-            };
-            return View(viewModel);
+            // var bookings = _context.Bookings.ToList();
+            return View(await _context.Vehicles.ToListAsync());
         }
+
 
         // GET: Vehicle/Details/5
         // GET: Vehicle/Details/5
@@ -70,6 +77,7 @@ namespace dotnetapp.Controllers
                 _context.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
+                // return RedirectToAction(nameof(Create));
             }
 
             return View(vehicle);
@@ -103,7 +111,7 @@ namespace dotnetapp.Controllers
             }
 
             // Redirect to the Booking/Create action with the VehicleId as a route parameter
-            return RedirectToAction("Create", "Booking", new { vehicleId = id });
+            return RedirectToAction("Index", "Booking", new { vehicleId = id });
         }
 
         private bool VehicleExists(int id)
