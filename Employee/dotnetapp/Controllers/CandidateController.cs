@@ -42,23 +42,6 @@ public class CandidateController : Controller
         return View(candidate);
     }
 
-    
-//     public IActionResult Index()
-// {
-//     var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
-
-//     var tasksByCandidate = verificationTasks
-//         .GroupBy(vt => vt.Candidate.CandidateName)
-//         .Select(g => new
-//         {
-//             CandidateName = g.Key,
-//             PendingCount = g.Count(t => t.Status == "Pending"),
-//             OngoingCount = g.Count(t => t.Status == "Ongoing"),
-//             CompletedCount = g.Count(t => t.Status == "Completed")
-//         }).ToList();
-
-//     return View(tasksByCandidate);
-// }
 
 }
 }

@@ -38,31 +38,25 @@ public class VerificationController : Controller
     }
 
     // // POST: /Verification/Create
+    // 
+    
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Create(VerificationTask verificationTask)
-    {
-            Console.WriteLine(verificationTask.Status);
-        // if (!ModelState.IsValid)
-        // {
-        //     // Handle validation errors and display user-friendly messages
-        //     return View("Task", verificationTask);
-        // }
-
-        try
+[ValidateAntiForgeryToken]
+public IActionResult Create(VerificationTask verificationTask)
+{
+    if (ModelState.IsValid)
         {
-            // verificationTask.CandidateID = 3;
-            
-            // Console.WriteLine(verificationTask);
-            _context.VerificationTasks.Add(verificationTask);
+            // Save the new candidate to the database
+            _context.Candidates.Add(candidate);
             _context.SaveChanges();
-            return RedirectToAction("Index", "Verification"); 
+
+            // Redirect to the Index page
+            return RedirectToAction("Index", "Verification");
         }
-        catch (Exception ex)
-        {
-            return RedirectToAction("Error", "Home");
-        }
-    }
+
+        return View(candidate);
+}
+
 
  
     // public IActionResult Index()
