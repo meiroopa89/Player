@@ -1,4 +1,4 @@
-@model VerificationTask
+@model dotnetapp.Models.VerificationTask
 
 <h2>New Verification Task for @ViewBag.CandidateName</h2>
 
@@ -20,7 +20,7 @@
         @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
     </div>
 
-    <!-- Add more fields as needed -->
+   
 
     <button type="submit" class="btn btn-primary">Submit</button>
 }

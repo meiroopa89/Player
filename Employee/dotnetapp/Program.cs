@@ -26,19 +26,22 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-app.MapControllerRoute(
-    name: "verificationIndex",
-    pattern: "{controller=Verification}/{action=Index}/{id?}");
+
+// app.MapControllerRoute(
+//     name: "verificationCreate",
+//     pattern: "Verification/Create",
+//     defaults: new { controller = "Verification", action = "Create" }
+// );
 
 app.MapControllerRoute(
     name: "verificationCreate",
     pattern: "{controller=Verification}/{action=Create}/{id?}");
 
+
 app.MapControllerRoute(
-    name: "verificationCreate",
-    pattern: "Verification/Create",
-    defaults: new { controller = "Verification", action = "Create" }
-);
+    name: "verificationIndex",
+    pattern: "{controller=Verification}/{action=Index}/{id?}");
+
 
 
 app.MapControllerRoute(
