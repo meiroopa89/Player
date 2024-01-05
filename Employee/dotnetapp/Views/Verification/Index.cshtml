@@ -65,6 +65,19 @@
 
 <h2>Verification Tasks Dashboard</h2>
 
+<form asp-action="Index" asp-controller="Verification" method="get">
+    <label for="candidateId">Filter by Candidate:</label>
+    <select name="candidateId" id="candidateId">
+        <option value="">All Candidates</option>
+        @foreach (var candidate in ViewBag.Candidates)
+        {
+            <option value="@candidate.CandidateID">@candidate.CandidateName</option>
+        }
+    </select>
+    <button type="submit">Filter</button>
+</form>
+
+
 <p>Selected Candidate ID: @ViewBag.SelectedCandidateId</p> 
 
 <p>Total Tasks: @ViewBag.TotalTasks</p>
@@ -97,6 +110,32 @@
             </td>
         </tr> 
     }
+
+    @* @foreach(var verificationTask in Model)
+{
+    <tr>
+        <td>@verificationTask.CandidateID</td>
+        <td>
+            @if (verificationTask.Candidate != null)
+            {
+                <span>@verificationTask.Candidate.CandidateName</span>
+            }
+            else
+            {
+                <span>/span>
+            }
+        </td>
+        <td>@verificationTask.VerificationDetails</td>
+        <td>
+            <select class="status-dropdown" data-taskid="@verificationTask.TaskID">
+                <option value="Pending" selected="@("Pending" == verificationTask.Status)">Pending</option>
+                <option value="Ongoing" selected="@("Ongoing" == verificationTask.Status)">Ongoing</option>
+                <option value="Completed" selected="@("Completed" == verificationTask.Status)">Completed</option>
+            </select>
+        </td>
+    </tr> 
+} *@
+
 
     
 </tbody>

@@ -92,10 +92,12 @@ public class VerificationController : Controller
 //         return View(verificationTasks);
 //     }
 // }
-
 public IActionResult Index(int? candidateId)
 {
-    var verificationTasksQuery = _context.VerificationTasks.Include(vt => vt.Candidate);
+    var verificationTasksQuery = _context.VerificationTasks.AsQueryable(); // Cast to IQueryable
+
+    // Get list of candidates for dropdown
+    ViewBag.Candidates = _context.Candidates.ToList();
 
     if (candidateId != null)
     {
@@ -103,30 +105,22 @@ public IActionResult Index(int? candidateId)
 
         // Filter tasks for the selected candidate
         verificationTasksQuery = verificationTasksQuery.Where(vt => vt.CandidateID == candidateId);
-
-        // Calculate counts for the selected candidate
-        var selectedCandidateTasks = verificationTasksQuery.ToList();
-        ViewBag.TotalTasks = selectedCandidateTasks.Count();
-        ViewBag.PendingTasks = selectedCandidateTasks.Count(vt => vt.Status == "Pending");
-        ViewBag.OngoingTasks = selectedCandidateTasks.Count(vt => vt.Status == "Ongoing");
-        ViewBag.CompletedTasks = selectedCandidateTasks.Count(vt => vt.Status == "Completed");
     }
     else
     {
         ViewBag.SelectedCandidateId = "All";
-
-        // No specific candidate selected, so counts for all candidates
-        var allTasks = verificationTasksQuery.ToList();
-        ViewBag.TotalTasks = allTasks.Count();
-        ViewBag.PendingTasks = allTasks.Count(vt => vt.Status == "Pending");
-        ViewBag.OngoingTasks = allTasks.Count(vt => vt.Status == "Ongoing");
-        ViewBag.CompletedTasks = allTasks.Count(vt => vt.Status == "Completed");
     }
 
     var verificationTasks = verificationTasksQuery.ToList();
+
+    // Calculate counts based on the filtered tasks or all tasks
+    ViewBag.TotalTasks = verificationTasks.Count();
+    ViewBag.PendingTasks = verificationTasks.Count(vt => vt.Status == "Pending");
+    ViewBag.OngoingTasks = verificationTasks.Count(vt => vt.Status == "Ongoing");
+    ViewBag.CompletedTasks = verificationTasks.Count(vt => vt.Status == "Completed");
+
     return View(verificationTasks);
 }
-
 
 }
 }
