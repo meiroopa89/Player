@@ -31,16 +31,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/coder/project/workspace/Employee/dotnetapp/Views/Verify/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVyaWZ5L0NyZWF0ZS5jc2h0bWw=
+[/home/coder/project/workspace/Employee/dotnetapp/Views/Verification/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVyaWZpY2F0aW9uL0NyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/coder/project/workspace/Employee/dotnetapp/Views/Verify/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVyaWZ5L0luZGV4LmNzaHRtbA==
+[/home/coder/project/workspace/Employee/dotnetapp/Views/Verification/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVyaWZpY2F0aW9uL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/coder/project/workspace/Employee/dotnetapp/Views/Verify/Task.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVyaWZ5L1Rhc2suY3NodG1s
+[/home/coder/project/workspace/Employee/dotnetapp/Views/Verification/Task.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVyaWZpY2F0aW9uL1Rhc2suY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/coder/project/workspace/Employee/dotnetapp/Views/_ViewImports.cshtml]
