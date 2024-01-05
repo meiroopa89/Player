@@ -70,27 +70,61 @@ public class VerificationController : Controller
     //     var verificationTasks = _context.VerificationTasks.Include(vt => vt.Candidate).ToList();
     //     return View(verificationTasks); 
     // }
-    public IActionResult Index(int? candidateId)
+//     public IActionResult Index(int? candidateId)
+// {
+//     if (candidateId != null)
+//     {
+//         ViewBag.SelectedCandidateId = candidateId;
+//         var verificationTasks = _context.VerificationTasks
+//             .Include(vt => vt.Candidate)
+//             .Where(vt => vt.CandidateID == candidateId)
+//             .ToList();
+
+//         return View(verificationTasks);
+//     }
+//     else
+//     {
+//         ViewBag.SelectedCandidateId = "All";
+//         var verificationTasks = _context.VerificationTasks
+//             .Include(vt => vt.Candidate)
+//             .ToList();
+
+//         return View(verificationTasks);
+//     }
+// }
+
+public IActionResult Index(int? candidateId)
 {
+    var verificationTasksQuery = _context.VerificationTasks.Include(vt => vt.Candidate);
+
     if (candidateId != null)
     {
         ViewBag.SelectedCandidateId = candidateId;
-        var verificationTasks = _context.VerificationTasks
-            .Include(vt => vt.Candidate)
-            .Where(vt => vt.CandidateID == candidateId)
-            .ToList();
 
-        return View(verificationTasks);
+        // Filter tasks for the selected candidate
+        verificationTasksQuery = verificationTasksQuery.Where(vt => vt.CandidateID == candidateId);
+
+        // Calculate counts for the selected candidate
+        var selectedCandidateTasks = verificationTasksQuery.ToList();
+        ViewBag.TotalTasks = selectedCandidateTasks.Count();
+        ViewBag.PendingTasks = selectedCandidateTasks.Count(vt => vt.Status == "Pending");
+        ViewBag.OngoingTasks = selectedCandidateTasks.Count(vt => vt.Status == "Ongoing");
+        ViewBag.CompletedTasks = selectedCandidateTasks.Count(vt => vt.Status == "Completed");
     }
     else
     {
         ViewBag.SelectedCandidateId = "All";
-        var verificationTasks = _context.VerificationTasks
-            .Include(vt => vt.Candidate)
-            .ToList();
 
-        return View(verificationTasks);
+        // No specific candidate selected, so counts for all candidates
+        var allTasks = verificationTasksQuery.ToList();
+        ViewBag.TotalTasks = allTasks.Count();
+        ViewBag.PendingTasks = allTasks.Count(vt => vt.Status == "Pending");
+        ViewBag.OngoingTasks = allTasks.Count(vt => vt.Status == "Ongoing");
+        ViewBag.CompletedTasks = allTasks.Count(vt => vt.Status == "Completed");
     }
+
+    var verificationTasks = verificationTasksQuery.ToList();
+    return View(verificationTasks);
 }
 
 
