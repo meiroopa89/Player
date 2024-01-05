@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using dotnetapp.Models;
 using System.Linq;
 
@@ -33,9 +34,18 @@ public class VerificationController : Controller
         return View(newTask);
     }
 
-    public IActionResult Create(){
-        return View();
-    }
+    // public IActionResult Create(){
+    //     return View();
+    // }
+
+    public IActionResult Create()
+{
+        List<Candidate> candidates = _context.Candidates.ToList();
+
+    ViewBag.Candidates = new SelectList(candidates, "CandidateID", "CandidateName");
+
+    return View();
+}
 
     // // POST: /Verification/Create
     [HttpPost]
