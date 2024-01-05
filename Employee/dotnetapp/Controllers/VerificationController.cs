@@ -33,6 +33,10 @@ public class VerificationController : Controller
         return View(newTask);
     }
 
+    public IActionResult Create(){
+        return View();
+    }
+
     // POST: /Verification/Create
     [HttpPost]
     [ValidateAntiForgeryToken]

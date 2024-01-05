@@ -27,15 +27,15 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "verificationCreate",
-    pattern: "Verification/Create",
-    defaults: new { controller = "Verification", action = "Create" }
-);
-
 // app.MapControllerRoute(
-//     name: "verificationIndex",
-//     pattern: "{controller=Verification}/{action=Index}/{id?}");
+//     name: "verificationCreate",
+//     pattern: "Verification/Create",
+//     defaults: new { controller = "Verification", action = "Create" }
+// );
+
+app.MapControllerRoute(
+    name: "verificationIndex",
+    pattern: "{controller=Verification}/{action=Index}/{id?}");
 
 
 
