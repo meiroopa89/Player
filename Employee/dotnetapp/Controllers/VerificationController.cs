@@ -14,7 +14,7 @@ public class VerificationController : Controller
         _context = context;
     }
 
-    public IActionResult NewTask(int candidateId)
+    public IActionResult Task(int candidateId)
     {
         var candidate = _context.Candidates.Find(candidateId);
         if (candidate == null)
@@ -41,14 +41,14 @@ public class VerificationController : Controller
         if (!ModelState.IsValid)
         {
             // Handle validation errors and display user-friendly messages
-            return View("NewTask", verificationTask);
+            return View("Task", verificationTask);
         }
 
         try
         {
             _context.VerificationTasks.Add(verificationTask);
             _context.SaveChanges();
-            return RedirectToAction("Index", "Dashboard"); // Redirect to dashboard or specific page
+            return RedirectToAction("Index", "Verification"); 
         }
         catch (Exception ex)
         {
