@@ -51,7 +51,7 @@ public class VerificationController : Controller
 
         try
         {
-            verificationTask.CandidateID = 1;
+            verificationTask.CandidateID = 3;
             
             Console.WriteLine(verificationTask);
             _context.VerificationTasks.Add(verificationTask);
