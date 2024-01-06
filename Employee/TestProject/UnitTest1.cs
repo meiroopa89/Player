@@ -322,13 +322,14 @@ public class Tests
         [Test]
         public void VerificationController_TaskMethodExists()
         {
+            // Arrange
             string assemblyName = "dotnetapp"; 
             Assembly assembly = Assembly.Load(assemblyName);
             Assert.IsNotNull(assembly, "Assembly should not be null");
 
-            string controllerName = "dotnetapp.Controllers.VerificationController"; 
+            string controllerName = "VerificationController"; 
 
-            Type controllerType = assembly.GetType($"dotnetapp.Controllers.{Verification}");
+            Type controllerType = assembly.GetType($"dotnetapp.Controllers.{controllerName}");
             Assert.IsNotNull(controllerType, "Controller type should not be null");
 
             // Act
@@ -340,8 +341,60 @@ public class Tests
 
             ParameterInfo[] parameters = taskMethod.GetParameters();
             Assert.AreEqual(1, parameters.Length, "Task method should have one parameter");
-
             Assert.AreEqual(typeof(int), parameters[0].ParameterType, "Task method's parameter should be of type int");
+        }
+
+        [Test]
+        public void VerificationController_EditPostMethodExists()
+        {
+            // Arrange
+            string assemblyName = "dotnetapp"; // Replace with your assembly name
+            Assembly assembly = Assembly.Load(assemblyName);
+            Assert.IsNotNull(assembly, "Assembly should not be null");
+
+            string controllerName = "VerificationController"; // Replace with your controller name
+
+            Type controllerType = assembly.GetType($"dotnetapp.Controllers.{controllerName}");
+            Assert.IsNotNull(controllerType, "Controller type should not be null");
+
+            // Act
+            MethodInfo editPostMethod = controllerType.GetMethod("Edit", new Type[] { typeof(int), typeof(VerificationTask) });
+
+            // Assert
+            Assert.IsNotNull(editPostMethod, "Edit method should exist");
+            Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(editPostMethod.ReturnType), "Edit method should return IActionResult");
+
+            ParameterInfo[] parameters = editPostMethod.GetParameters();
+            Assert.AreEqual(2, parameters.Length, "Edit method should have two parameters");
+
+            Assert.AreEqual(typeof(int), parameters[0].ParameterType, "First parameter of Edit method should be of type int");
+            Assert.AreEqual(typeof(VerificationTask), parameters[1].ParameterType, "Second parameter of Edit method should be of type VerificationTask");
+        }
+
+        [Test]
+        public void VerificationController_DeleteGetMethodExists()
+        {
+            // Arrange
+            string assemblyName = "dotnetapp"; // Replace with your assembly name
+            Assembly assembly = Assembly.Load(assemblyName);
+            Assert.IsNotNull(assembly, "Assembly should not be null");
+
+            string controllerName = "VerificationController"; // Replace with your controller name
+
+            Type controllerType = assembly.GetType($"dotnetapp.Controllers.{controllerName}");
+            Assert.IsNotNull(controllerType, "Controller type should not be null");
+
+            // Act
+            MethodInfo deleteGetMethod = controllerType.GetMethod("Delete", new Type[] { typeof(int) });
+
+            // Assert
+            Assert.IsNotNull(deleteGetMethod, "Delete method should exist");
+            Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(deleteGetMethod.ReturnType), "Delete method should return IActionResult");
+
+            ParameterInfo[] parameters = deleteGetMethod.GetParameters();
+            Assert.AreEqual(1, parameters.Length, "Delete method should have one parameter");
+
+            Assert.AreEqual(typeof(int), parameters[0].ParameterType, "Parameter of Delete method should be of type int");
         }
 
     }
