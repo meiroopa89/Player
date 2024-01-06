@@ -108,11 +108,9 @@
             </td>
 
             <td>
-    <button onclick="editTask(@verificationTask.TaskID, @verificationTask.CandidateID, 'UpdatedStatus')">Edit</button>
-    <button onclick="deleteTask(@verificationTask.TaskID, @verificationTask.CandidateID)">Delete</button>
+                <button onclick="editTask(@verificationTask.TaskID, @verificationTask.CandidateID, 'UpdatedStatus')">Edit</button>
+                <button onclick="deleteTaskConfirmation(@verificationTask.TaskID, @verificationTask.CandidateID)">Delete</button>
             </td>
-
-
 
         </tr> 
     }
@@ -121,6 +119,8 @@
 </tbody>
 
 </table>
+
+
 @* 
 @section scripts {
     <script>
@@ -143,5 +143,57 @@
         });
     </script>
 } *@
+
+
+<script>
+    function editTask(taskId, candidateId, newStatus) {
+        $.ajax({
+            url: '/Verification/EditTask',
+            method: 'POST',
+            data: { taskId: taskId, candidateId: candidateId, newStatus: newStatus },
+            success: function (data) {
+                console.log("Task updated successfully.");
+                // Optionally, update the UI after successful edit
+            },
+            error: function (error) {
+                console.error(error);
+                // Handle error, if needed
+            }
+        });
+    }
+
+    function deleteTask(taskId, candidateId) {
+        var confirmation = confirm("Are you sure you want to delete this task?");
+        if (confirmation) {
+            $.ajax({
+                url: '/Verification/DeleteTask',
+                method: 'POST',
+                data: { taskId: taskId, candidateId: candidateId },
+                success: function (data) {
+                    console.log("Task deleted successfully.");
+                    // Optionally, update the UI after successful deletion
+                },
+                error: function (error) {
+                    console.error(error);
+                    // Handle error, if needed
+                }
+            });
+        }
+    }
+
+    // Call the editTask and deleteTask functions when the respective buttons are clicked
+    $(document).on('click', '.edit-btn', function () {
+        var taskId = $(this).data('taskid');
+        var candidateId = $(this).data('candidateid');
+        var newStatus = $(this).data('newstatus');
+        editTask(taskId, candidateId, newStatus);
+    });
+
+    $(document).on('click', '.delete-btn', function () {
+        var taskId = $(this).data('taskid');
+        var candidateId = $(this).data('candidateid');
+        deleteTask(taskId, candidateId);
+    });
+</script>
 
 

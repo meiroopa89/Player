@@ -103,21 +103,17 @@ public IActionResult Index(int? candidateId)
     return View(verificationTasks);
 }
 
+
 [HttpPost]
 public IActionResult EditTask(int taskId, int candidateId, string newStatus)
 {
     try
     {
-        // Find the task by ID and candidate ID in the database
         var taskToUpdate = _context.VerificationTasks.FirstOrDefault(vt => vt.TaskID == taskId && vt.CandidateID == candidateId);
 
-        // Perform operations to edit the task, for example:
         if (taskToUpdate != null)
         {
-            // Update task details
-            taskToUpdate.Status = newStatus; // Assign the new status
-
-            // Save changes to the database
+            taskToUpdate.Status = newStatus;
             _context.SaveChanges();
             return Ok("Task updated successfully.");
         }
@@ -128,7 +124,6 @@ public IActionResult EditTask(int taskId, int candidateId, string newStatus)
     }
     catch (Exception ex)
     {
-        // Handle exception
         return StatusCode(500, "An error occurred while updating the task.");
     }
 }
@@ -138,15 +133,11 @@ public IActionResult DeleteTask(int taskId, int candidateId)
 {
     try
     {
-        // Find the task by ID and candidate ID in the database
         var taskToDelete = _context.VerificationTasks.FirstOrDefault(vt => vt.TaskID == taskId && vt.CandidateID == candidateId);
 
         if (taskToDelete != null)
         {
-            // Remove the task
             _context.VerificationTasks.Remove(taskToDelete);
-
-            // Save changes to the database
             _context.SaveChanges();
             return Ok("Task deleted successfully.");
         }
@@ -157,7 +148,6 @@ public IActionResult DeleteTask(int taskId, int candidateId)
     }
     catch (Exception ex)
     {
-        // Handle exception
         return StatusCode(500, "An error occurred while deleting the task.");
     }
 }
