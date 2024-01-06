@@ -22,13 +22,7 @@ public class Tests
                 .Options;
             _context = new ApplicationDbContext(options);
             _context.Database.EnsureCreated();
-
-
-    // [Test]
-    // public void Test1()
-    // {
-    //     Assert.Pass();
-    // }
+    }
 
         [Test]
         public void Candidate_Models_ClassExists()
@@ -159,15 +153,16 @@ public class Tests
             Assert.IsNotNull(methodInfo, "Method Delete does not exist in VerificationController class");
         }
 
-        public void VerificationController_Edit_MethodExists()
-        {
-            string assemblyName = "dotnetapp"; 
-            string typeName = "dotnetapp.Controllers.VerificationController";
-            Assembly assembly = Assembly.Load(assemblyName);
-            Type verificationControllerType = assembly.GetType(typeName);
-            MethodInfo editMethod = verificationControllerType.GetMethod("Edit");
-            Assert.NotNull(editMethod, "Method Edit does not exist in VerificationController class");
-        }
+        // [Test]
+        // public void VerificationController_Edit_MethodExists()
+        // {
+        //     string assemblyName = "dotnetapp"; 
+        //     string typeName = "dotnetapp.Controllers.VerificationController";
+        //     Assembly assembly = Assembly.Load(assemblyName);
+        //     Type verificationControllerType = assembly.GetType(typeName);
+        //     MethodInfo editMethod = verificationControllerType.GetMethod("Edit");
+        //     Assert.NotNull(editMethod, "Method Edit does not exist in VerificationController class");
+        // }
 
         [Test]
         public void VerificationController_Task_MethodExists()
@@ -202,44 +197,6 @@ public class Tests
             Assert.IsNotNull(methodInfo, "Method Create does not exist in VerificationController class");
         }
 
-
-        // [Test]
-        // public void CandidateController_Create_Method_with_NoParams_Returns_ActionResult()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Controllers.CandidateController";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type CandidateControllerType = assembly.GetType(typeName);
-        //     MethodInfo methodInfo = CandidateControllerType.GetMethod("Create", Type.EmptyTypes);
-        //     Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType,
-        //         "Method Create in CandidateController class is not of type ActionResult");
-        // }
-
-
-        // [Test]
-        // public void VerificationController_Delete_MethodReturns_ActionResult()
-        // {
-        //     string assemblyName = "dotnetapp";
-        //     string typeName = "dotnetapp.Controllers.VerificationController";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type VerificationControllerType = assembly.GetType(typeName);
-        //     MethodInfo methodInfo = VerificationControllerType.GetMethod("Delete");
-        //     Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Delete in VerificationController class is not of type ActionResult");
-        // }
-
-        // [Test]
-        // public void VerificationController_Delete_MethodReturns_ActionResult()
-        // {
-        //     string assemblyName = "dotnetapp"; // Replace with your assembly name
-        //     string typeName = "dotnetapp.Controllers.VerificationController";
-        //     Assembly assembly = Assembly.Load(assemblyName);
-        //     Type VerificationControllerType = assembly.GetType(typeName);
-        //     MethodInfo methodInfo = VerificationControllerType.GetMethod("Delete");
-        //     Assert.IsNotNull(methodInfo, "Method Delete does not exist in VerificationController class");
-        //     var returnType = methodInfo.ReturnType;
-        //     Assert.IsTrue(typeof(ActionResult).IsAssignableFrom(returnType), $"Method Delete in VerificationController class is not of type ActionResult. It is {returnType}");
-        // }
-
         [Test]
         public void ApplicationDbContextContainsDbSetCandidateProperty()
         {
@@ -259,7 +216,21 @@ public class Tests
             Assert.IsNotNull(propertyInfo);
             Assert.AreEqual(typeof(DbSet<VerificationTask>), propertyInfo.PropertyType);
         }
-  
 
-}
+        [Test]
+        public void VerificationController_CreateGetMethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.FoodOrderController";
+ 
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type controllerType = assembly.GetType(typeName);
+ 
+            MethodInfo createGetMethod = controllerType.GetMethod("Create", new Type[] { });
+ 
+            Assert.IsNotNull(createGetMethod);
+            Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(createGetMethod.ReturnType));
+        }
+    }
+
 }
