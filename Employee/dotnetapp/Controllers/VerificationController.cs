@@ -124,12 +124,35 @@ public IActionResult Edit(int id, VerificationTask verificationTask)
 
     if (ModelState.IsValid)
     {
-        _context.Update(verificationTask);
-        _context.SaveChanges();
-        return RedirectToAction(nameof(Index));
+        try
+        {
+            _context.Update(verificationTask);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!VerificationTaskExists(verificationTask.TaskID))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log the exception or handle it accordingly
+            ModelState.AddModelError("", "Error occurred while saving changes.");
+            // Return to the Edit view to show error
+            return View(verificationTask);
+        }
     }
     return View(verificationTask);
 }
+
+
 
 public IActionResult Delete(int id)
 {
