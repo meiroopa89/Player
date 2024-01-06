@@ -106,6 +106,14 @@
                     <option value="Completed" selected="@("Completed" == verificationTask.Status)">Completed</option>
                 </select>
             </td>
+
+            <td>
+    <button onclick="editTask(@verificationTask.TaskID, @verificationTask.CandidateID, 'UpdatedStatus')">Edit</button>
+    <button onclick="deleteTask(@verificationTask.TaskID, @verificationTask.CandidateID)">Delete</button>
+            </td>
+
+
+
         </tr> 
     }
 
@@ -113,7 +121,7 @@
 </tbody>
 
 </table>
-
+@* 
 @section scripts {
     <script>
         $(document).ready(function () {
@@ -134,4 +142,6 @@
             });
         });
     </script>
-}
+} *@
+
+
