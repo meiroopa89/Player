@@ -113,6 +113,7 @@ public IActionResult Edit(int id)
     return View(verificationTask);
 }
 
+
 [HttpPost]
 [ValidateAntiForgeryToken]
 public IActionResult Edit(int id, VerificationTask verificationTask)
@@ -126,8 +127,17 @@ public IActionResult Edit(int id, VerificationTask verificationTask)
     {
         try
         {
-            _context.Update(verificationTask);
+            var existingTask = _context.VerificationTasks.Find(id);
+            if (existingTask == null)
+            {
+                return NotFound();
+            }
+
+            existingTask.Status = verificationTask.Status; // Update the status property
+
+            _context.Update(existingTask);
             _context.SaveChanges();
+
             return RedirectToAction(nameof(Index));
         }
         catch (DbUpdateConcurrencyException)
