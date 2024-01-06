@@ -4,16 +4,27 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using Microsoft.Data.SqlClient;
 using System;
+using Microsoft.EntityFrameworkCore;
+using dotnetapp.Models;
 
 
-
-namespace TestProject;
-
+namespace TestProject
+{
 public class Tests
 {
+
+    private ApplicationDbContext _context;
     [SetUp]
     public void Setup()
     {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "Verify")
+                .Options;
+            _context = new ApplicationDbContext(options);
+            _context.Database.EnsureCreated();
+
+            _controller = new CandidateController(_context);
+            _verificatiioncontroller = new VerificationController(_context);
     }
 
     // [Test]
@@ -219,17 +230,39 @@ public class Tests
         //     Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Delete in VerificationController class is not of type ActionResult");
         // }
 
+        // [Test]
+        // public void VerificationController_Delete_MethodReturns_ActionResult()
+        // {
+        //     string assemblyName = "dotnetapp"; // Replace with your assembly name
+        //     string typeName = "dotnetapp.Controllers.VerificationController";
+        //     Assembly assembly = Assembly.Load(assemblyName);
+        //     Type VerificationControllerType = assembly.GetType(typeName);
+        //     MethodInfo methodInfo = VerificationControllerType.GetMethod("Delete");
+        //     Assert.IsNotNull(methodInfo, "Method Delete does not exist in VerificationController class");
+        //     var returnType = methodInfo.ReturnType;
+        //     Assert.IsTrue(typeof(ActionResult).IsAssignableFrom(returnType), $"Method Delete in VerificationController class is not of type ActionResult. It is {returnType}");
+        // }
+
         [Test]
-        public void VerificationController_Delete_MethodReturns_ActionResult()
+        public void ApplicationDbContextContainsDbSetCandidateProperty()
         {
-            string assemblyName = "dotnetapp"; // Replace with your assembly name
-            string typeName = "dotnetapp.Controllers.VerificationController";
-            Assembly assembly = Assembly.Load(assemblyName);
-            Type VerificationControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = VerificationControllerType.GetMethod("Delete");
-            Assert.IsNotNull(methodInfo, "Method Delete does not exist in VerificationController class");
-            var returnType = methodInfo.ReturnType;
-            Assert.IsTrue(typeof(ActionResult).IsAssignableFrom(returnType), $"Method Delete in VerificationController class is not of type ActionResult. It is {returnType}");
+
+            var propertyInfo = _context.GetType().GetProperty("Candidates");
+
+            Assert.IsNotNull(propertyInfo);
+            Assert.AreEqual(typeof(DbSet<Candidate>), propertyInfo.PropertyType);
         }
 
+        [Test]
+        public void ApplicationDbContextContainsDbSetVerificationTaskProperty()
+        {
+
+            var propertyInfo = _context.GetType().GetProperty("VerificationTasks");
+
+            Assert.IsNotNull(propertyInfo);
+            Assert.AreEqual(typeof(DbSet<VerificationTask>), propertyInfo.PropertyType);
+        }
+  
+
+}
 }
