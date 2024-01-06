@@ -111,20 +111,20 @@ public async Task<IActionResult> Edit(int? id)
         return NotFound();
     }
 
-    var verification = await _context.Verifications.FindAsync(id);
-    if (verification == null)
+    var verificationTask = await _context.VerificationTasks.FindAsync(id);
+    if (verificationTask == null)
     {
         return NotFound();
     }
-    return View(verification);
+    return View(verificationTask);
 }
 
 // POST: Edit
 [HttpPost]
 [ValidateAntiForgeryToken]
-public async Task<IActionResult> Edit(int id, Verification verification)
+public async Task<IActionResult> Edit(int id, VerificationTask verificationTask)
 {
-    if (id != verification.Id)
+    if (id != verificationTask.TaskID)
     {
         return NotFound();
     }
@@ -133,12 +133,12 @@ public async Task<IActionResult> Edit(int id, Verification verification)
     {
         try
         {
-            _context.Update(verification);
+            _context.Update(verificationTask);
             await _context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!VerificationExists(verification.Id))
+            if (!VerificationTaskExists(verificationTask.TaskID))
             {
                 return NotFound();
             }
@@ -149,7 +149,7 @@ public async Task<IActionResult> Edit(int id, Verification verification)
         }
         return RedirectToAction(nameof(Index));
     }
-    return View(verification);
+    return View(verificationTask);
 }
 
 // GET: Delete
@@ -160,13 +160,13 @@ public async Task<IActionResult> Delete(int? id)
         return NotFound();
     }
 
-    var verification = await _context.Verifications.FirstOrDefaultAsync(m => m.Id == id);
-    if (verification == null)
+    var verificationTask = await _context.VerificationTasks.FirstOrDefaultAsync(m => m.TaskID == id);
+    if (verificationTask == null)
     {
         return NotFound();
     }
 
-    return View("Delete", verification);
+    return View("Delete", verificationTask);
 }
 
 // POST: Delete
@@ -174,21 +174,20 @@ public async Task<IActionResult> Delete(int? id)
 [ValidateAntiForgeryToken]
 public async Task<IActionResult> DeleteConfirmed(int id)
 {
-    var verification = await _context.Verifications.FindAsync(id);
-    if (verification != null)
+    var verificationTask = await _context.VerificationTasks.FindAsync(id);
+    if (verificationTask != null)
     {
-        _context.Verifications.Remove(verification);
+        _context.VerificationTasks.Remove(verificationTask);
         await _context.SaveChangesAsync();
     }
 
     return RedirectToAction(nameof(Index));
 }
 
-private bool VerificationExists(int id)
+private bool VerificationTaskExists(int id)
 {
-    return _context.Verifications.Any(e => e.Id == id);
+    return _context.VerificationTasks.Any(e => e.TaskID == id);
 }
-
 
 
 }

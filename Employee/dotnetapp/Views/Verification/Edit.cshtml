@@ -1,9 +1,9 @@
-@model dotnetapp.Models.Verification
+@model dotnetapp.Models.VerificationTask
 
 <form asp-action="Edit">
-    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="TaskID" />
 
-<div class="form-group">
+    <div class="form-group">
         <label>Status</label>
         <select class="status-dropdown form-control" asp-for="Status">
             <option value="Pending">Pending</option>

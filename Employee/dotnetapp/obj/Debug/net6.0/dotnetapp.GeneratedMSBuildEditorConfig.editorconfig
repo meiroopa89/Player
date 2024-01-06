@@ -43,6 +43,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVyaWZpY2F0aW9uL0NyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/coder/project/workspace/Employee/dotnetapp/Views/Verification/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVyaWZpY2F0aW9uL0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/coder/project/workspace/Employee/dotnetapp/Views/Verification/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVyaWZpY2F0aW9uL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/coder/project/workspace/Employee/dotnetapp/Views/Verification/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVmVyaWZpY2F0aW9uL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
