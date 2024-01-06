@@ -103,54 +103,92 @@ public IActionResult Index(int? candidateId)
     return View(verificationTasks);
 }
 
-
-[HttpPost]
-public IActionResult EditTask(int taskId, int candidateId, string newStatus)
+// GET: Edit
+public async Task<IActionResult> Edit(int? id)
 {
-    try
+    if (id == null)
     {
-        var taskToUpdate = _context.VerificationTasks.FirstOrDefault(vt => vt.TaskID == taskId && vt.CandidateID == candidateId);
+        return NotFound();
+    }
 
-        if (taskToUpdate != null)
-        {
-            taskToUpdate.Status = newStatus;
-            _context.SaveChanges();
-            return Ok("Task updated successfully.");
-        }
-        else
-        {
-            return NotFound("Task not found.");
-        }
-    }
-    catch (Exception ex)
+    var verification = await _context.Verifications.FindAsync(id);
+    if (verification == null)
     {
-        return StatusCode(500, "An error occurred while updating the task.");
+        return NotFound();
     }
+    return View(verification);
 }
 
+// POST: Edit
 [HttpPost]
-public IActionResult DeleteTask(int taskId, int candidateId)
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Edit(int id, Verification verification)
 {
-    try
+    if (id != verification.Id)
     {
-        var taskToDelete = _context.VerificationTasks.FirstOrDefault(vt => vt.TaskID == taskId && vt.CandidateID == candidateId);
+        return NotFound();
+    }
 
-        if (taskToDelete != null)
-        {
-            _context.VerificationTasks.Remove(taskToDelete);
-            _context.SaveChanges();
-            return Ok("Task deleted successfully.");
-        }
-        else
-        {
-            return NotFound("Task not found.");
-        }
-    }
-    catch (Exception ex)
+    if (ModelState.IsValid)
     {
-        return StatusCode(500, "An error occurred while deleting the task.");
+        try
+        {
+            _context.Update(verification);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!VerificationExists(verification.Id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+        return RedirectToAction(nameof(Index));
     }
+    return View(verification);
 }
+
+// GET: Delete
+public async Task<IActionResult> Delete(int? id)
+{
+    if (id == null)
+    {
+        return NotFound();
+    }
+
+    var verification = await _context.Verifications.FirstOrDefaultAsync(m => m.Id == id);
+    if (verification == null)
+    {
+        return NotFound();
+    }
+
+    return View("Delete", verification);
+}
+
+// POST: Delete
+[HttpPost, ActionName("Delete")]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> DeleteConfirmed(int id)
+{
+    var verification = await _context.Verifications.FindAsync(id);
+    if (verification != null)
+    {
+        _context.Verifications.Remove(verification);
+        await _context.SaveChangesAsync();
+    }
+
+    return RedirectToAction(nameof(Index));
+}
+
+private bool VerificationExists(int id)
+{
+    return _context.Verifications.Any(e => e.Id == id);
+}
+
 
 
 }
