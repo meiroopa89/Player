@@ -136,3 +136,4 @@
 /home/coder/project/workspace/Employee/TestProject/obj/Debug/net6.0/TestProject.pdb
 /home/coder/project/workspace/Employee/TestProject/obj/Debug/net6.0/TestProject.genruntimeconfig.cache
 /home/coder/project/workspace/Employee/TestProject/obj/Debug/net6.0/ref/TestProject.dll
+/home/coder/project/workspace/Employee/TestProject/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.InMemory.dll

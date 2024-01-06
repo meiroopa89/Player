@@ -23,9 +23,6 @@ public class Tests
             _context = new ApplicationDbContext(options);
             _context.Database.EnsureCreated();
 
-            _controller = new CandidateController(_context);
-            _verificatiioncontroller = new VerificationController(_context);
-    }
 
     // [Test]
     // public void Test1()
