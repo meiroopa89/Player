@@ -248,18 +248,24 @@ public class Tests
         }
 
         [Test]
-        public void VerificationController_CreatePostMethodExists()
+        public void VerificationController_IndexPostMethodExists()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.VerificationController";
- 
+            // Arrange
+            string assemblyName = "dotnetapp"; 
             Assembly assembly = Assembly.Load(assemblyName);
-            Type controllerType = assembly.GetType(typeName);
- 
-            MethodInfo createPostMethod = controllerType.GetMethod("Index", new Type[] { });
- 
-            Assert.IsNotNull(createPostMethod);
-            Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(createPostMethod.ReturnType));
+            Assert.IsNotNull(assembly, "Assembly should not be null");
+
+            string controllerName = "VerificationController"; 
+
+            Type controllerType = assembly.GetType($"dotnetapp.Controllers.{controllerName}");
+            Assert.IsNotNull(controllerType, "Controller type should not be null");
+
+            // Act
+            MethodInfo indexPostMethod = controllerType.GetMethod("Index", new Type[] { typeof(int?) });
+
+            // Assert
+            Assert.IsNotNull(indexPostMethod, "Index method should exist");
+            Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(indexPostMethod.ReturnType), "Index method should return IActionResult");
         }
 
         [Test]
@@ -290,6 +296,27 @@ public class Tests
 
             Assert.IsNotNull(createPostMethod);
             Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(createPostMethod.ReturnType));
+        }
+
+        [Test]
+        public void VerificationController_DeleteConfirmedMethodExists()
+        {
+            // Arrange
+            string assemblyName = "dotnetapp"; // Replace with your assembly name
+            Assembly assembly = Assembly.Load(assemblyName);
+            Assert.IsNotNull(assembly, "Assembly should not be null");
+
+            string controllerName = "VerificationController"; // Replace with your controller name
+
+            Type controllerType = assembly.GetType($"dotnetapp.Controllers.{controllerName}");
+            Assert.IsNotNull(controllerType, "Controller type should not be null");
+
+            // Act
+            MethodInfo deleteConfirmedMethod = controllerType.GetMethod("DeleteConfirmed", new Type[] { typeof(int) });
+
+            // Assert
+            Assert.IsNotNull(deleteConfirmedMethod, "DeleteConfirmed method should exist");
+            Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(deleteConfirmedMethod.ReturnType), "DeleteConfirmed method should return IActionResult");
         }
 
     }
