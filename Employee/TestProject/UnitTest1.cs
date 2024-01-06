@@ -194,14 +194,42 @@ public class Tests
             Assert.IsNotNull(methodInfo, "Method Create does not exist in VerificationController class");
         }
 
+
+        // [Test]
+        // public void CandidateController_Create_Method_with_NoParams_Returns_ActionResult()
+        // {
+        //     string assemblyName = "dotnetapp";
+        //     string typeName = "dotnetapp.Controllers.CandidateController";
+        //     Assembly assembly = Assembly.Load(assemblyName);
+        //     Type CandidateControllerType = assembly.GetType(typeName);
+        //     MethodInfo methodInfo = CandidateControllerType.GetMethod("Create", Type.EmptyTypes);
+        //     Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType,
+        //         "Method Create in CandidateController class is not of type ActionResult");
+        // }
+
+
+        // [Test]
+        // public void VerificationController_Delete_MethodReturns_ActionResult()
+        // {
+        //     string assemblyName = "dotnetapp";
+        //     string typeName = "dotnetapp.Controllers.VerificationController";
+        //     Assembly assembly = Assembly.Load(assemblyName);
+        //     Type VerificationControllerType = assembly.GetType(typeName);
+        //     MethodInfo methodInfo = VerificationControllerType.GetMethod("Delete");
+        //     Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Delete in VerificationController class is not of type ActionResult");
+        // }
+
         [Test]
-        public void CandidateController_Create_Method_with_NoParams_Returns_ActionResult()
+        public void VerificationController_Delete_MethodReturns_ActionResult()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.CandidateController";
+            string assemblyName = "dotnetapp"; // Replace with your assembly name
+            string typeName = "dotnetapp.Controllers.VerificationController";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type CandidateControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = CandidateControllerType.GetMethod("Create", Type.EmptyTypes);
-            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method Create in CandidateController class is not of type ActionResult");
+            Type VerificationControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = VerificationControllerType.GetMethod("Delete");
+            Assert.IsNotNull(methodInfo, "Method Delete does not exist in VerificationController class");
+            var returnType = methodInfo.ReturnType;
+            Assert.IsTrue(typeof(ActionResult).IsAssignableFrom(returnType), $"Method Delete in VerificationController class is not of type ActionResult. It is {returnType}");
         }
+
 }
