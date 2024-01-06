@@ -319,6 +319,31 @@ public class Tests
             Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(deleteConfirmedMethod.ReturnType), "DeleteConfirmed method should return IActionResult");
         }
 
+        [Test]
+        public void VerificationController_TaskMethodExists()
+        {
+            string assemblyName = "dotnetapp"; 
+            Assembly assembly = Assembly.Load(assemblyName);
+            Assert.IsNotNull(assembly, "Assembly should not be null");
+
+            string controllerName = "dotnetapp.Controllers.VerificationController"; 
+
+            Type controllerType = assembly.GetType($"dotnetapp.Controllers.{controllerName}");
+            Assert.IsNotNull(controllerType, "Controller type should not be null");
+
+            // Act
+            MethodInfo taskMethod = controllerType.GetMethod("Task", new Type[] { typeof(int) });
+
+            // Assert
+            Assert.IsNotNull(taskMethod, "Task method should exist");
+            Assert.AreEqual(typeof(IActionResult), taskMethod.ReturnType, "Task method should return IActionResult");
+
+            ParameterInfo[] parameters = taskMethod.GetParameters();
+            Assert.AreEqual(1, parameters.Length, "Task method should have one parameter");
+
+            Assert.AreEqual(typeof(int), parameters[0].ParameterType, "Task method's parameter should be of type int");
+        }
+
     }
 
 }
