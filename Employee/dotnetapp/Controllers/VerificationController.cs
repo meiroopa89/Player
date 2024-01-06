@@ -103,15 +103,9 @@ public IActionResult Index(int? candidateId)
     return View(verificationTasks);
 }
 
-// GET: Edit
-public async Task<IActionResult> Edit(int? id)
+public IActionResult Edit(int id)
 {
-    if (id == null)
-    {
-        return NotFound();
-    }
-
-    var verificationTask = await _context.VerificationTasks.FindAsync(id);
+    var verificationTask = _context.VerificationTasks.Find(id);
     if (verificationTask == null)
     {
         return NotFound();
@@ -119,10 +113,9 @@ public async Task<IActionResult> Edit(int? id)
     return View(verificationTask);
 }
 
-// POST: Edit
 [HttpPost]
 [ValidateAntiForgeryToken]
-public async Task<IActionResult> Edit(int id, VerificationTask verificationTask)
+public IActionResult Edit(int id, VerificationTask verificationTask)
 {
     if (id != verificationTask.TaskID)
     {
@@ -131,58 +124,37 @@ public async Task<IActionResult> Edit(int id, VerificationTask verificationTask)
 
     if (ModelState.IsValid)
     {
-        try
-        {
-            _context.Update(verificationTask);
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!VerificationTaskExists(verificationTask.TaskID))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
+        _context.Update(verificationTask);
+        _context.SaveChanges();
         return RedirectToAction(nameof(Index));
     }
     return View(verificationTask);
 }
 
-// GET: Delete
-public async Task<IActionResult> Delete(int? id)
+public IActionResult Delete(int id)
 {
-    if (id == null)
-    {
-        return NotFound();
-    }
-
-    var verificationTask = await _context.VerificationTasks.FirstOrDefaultAsync(m => m.TaskID == id);
+    var verificationTask = _context.VerificationTasks.Find(id);
     if (verificationTask == null)
     {
         return NotFound();
     }
-
-    return View("Delete", verificationTask);
+    return View(verificationTask);
 }
 
-// POST: Delete
 [HttpPost, ActionName("Delete")]
 [ValidateAntiForgeryToken]
-public async Task<IActionResult> DeleteConfirmed(int id)
+public IActionResult DeleteConfirmed(int id)
 {
-    var verificationTask = await _context.VerificationTasks.FindAsync(id);
+    var verificationTask = _context.VerificationTasks.Find(id);
     if (verificationTask != null)
     {
         _context.VerificationTasks.Remove(verificationTask);
-        await _context.SaveChangesAsync();
+        _context.SaveChanges();
     }
-
     return RedirectToAction(nameof(Index));
 }
+
+
 
 private bool VerificationTaskExists(int id)
 {
