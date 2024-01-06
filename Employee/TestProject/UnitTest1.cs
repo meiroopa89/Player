@@ -328,7 +328,7 @@ public class Tests
 
             string controllerName = "dotnetapp.Controllers.VerificationController"; 
 
-            Type controllerType = assembly.GetType($"dotnetapp.Controllers.{controllerName}");
+            Type controllerType = assembly.GetType($"dotnetapp.Controllers.{Verification}");
             Assert.IsNotNull(controllerType, "Controller type should not be null");
 
             // Act

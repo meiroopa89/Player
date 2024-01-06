@@ -99,8 +99,7 @@ public IActionResult Index(int? candidateId)
     ViewBag.OngoingTasks = verificationTasks.Count(vt => vt.Status == "Ongoing");
     ViewBag.CompletedTasks = verificationTasks.Count(vt => vt.Status == "Completed");
 
-    // Populate ViewBag.Candidates with data from your database
-    ViewBag.Candidates = _context.Candidates.ToList(); // Adjust this to fetch your candidates from the database
+    ViewBag.Candidates = _context.Candidates.ToList(); 
 
     return View(verificationTasks);
 }
