@@ -73,6 +73,8 @@ public class VerificationController : Controller
         }
     }
 
+[HttpPost]
+[ValidateAntiForgeryToken]
 public IActionResult Index(int? candidateId)
 {
     var verificationTasksQuery = _context.VerificationTasks.AsQueryable(); // Cast to IQueryable

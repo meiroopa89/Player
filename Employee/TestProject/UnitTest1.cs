@@ -221,7 +221,7 @@ public class Tests
         public void VerificationController_CreateGetMethodExists()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.FoodOrderController";
+            string typeName = "dotnetapp.Controllers.VerificationController";
  
             Assembly assembly = Assembly.Load(assemblyName);
             Type controllerType = assembly.GetType(typeName);
@@ -231,6 +231,67 @@ public class Tests
             Assert.IsNotNull(createGetMethod);
             Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(createGetMethod.ReturnType));
         }
+
+        [Test]
+        public void VerificationController_CreatePostMethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.VerificationController";
+ 
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type controllerType = assembly.GetType(typeName);
+ 
+            MethodInfo createPostMethod = controllerType.GetMethod("Create", new Type[] { });
+ 
+            Assert.IsNotNull(createPostMethod);
+            Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(createPostMethod.ReturnType));
+        }
+
+        [Test]
+        public void VerificationController_CreatePostMethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.VerificationController";
+ 
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type controllerType = assembly.GetType(typeName);
+ 
+            MethodInfo createPostMethod = controllerType.GetMethod("Index", new Type[] { });
+ 
+            Assert.IsNotNull(createPostMethod);
+            Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(createPostMethod.ReturnType));
+        }
+
+        [Test]
+        public void CandidateController_CreateGetMethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.CandidateController";
+ 
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type controllerType = assembly.GetType(typeName);
+ 
+            MethodInfo createGetMethod = controllerType.GetMethod("Create", new Type[] { });
+ 
+            Assert.IsNotNull(createGetMethod);
+            Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(createGetMethod.ReturnType));
+        }
+
+        [Test]
+        public void CandidateController_CreatePostMethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.CandidateController";
+
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type controllerType = assembly.GetType(typeName);
+
+            MethodInfo createPostMethod = controllerType.GetMethod("Create", Type.EmptyTypes);
+
+            Assert.IsNotNull(createPostMethod);
+            Assert.IsTrue(typeof(IActionResult).IsAssignableFrom(createPostMethod.ReturnType));
+        }
+
     }
 
 }
