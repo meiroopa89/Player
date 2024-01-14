@@ -1,10 +1,12 @@
+@model Expense
+
 @{
     ViewData["Title"] = "Create Expense";
 }
 
 <h2>Create Expense</h2>
 
-<form asp-action="PostExpense">
+<form asp-action="Create" method="post"> <!-- Updated action to match the controller method -->
     <div class="form-group">
         <label asp-for="Description"></label>
         <input asp-for="Description" class="form-control" />
