@@ -15,26 +15,31 @@ namespace dotnetapp.Controllers
         _context = context;
     }
 
-    // GET: Category/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
 
-    // POST: Category/Create
-    [HttpPost]
-    public IActionResult Create([FromBody] Category category)
-    {
-        if (!ModelState.IsValid)
+[HttpGet]
+        public IActionResult Create()
         {
-            return BadRequest(ModelState);
+            return View();
         }
 
-        _context.Categories.Add(category);
-        _context.SaveChanges();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                // Save the new category to the database
+                _context.Categories.Add(category);
+                _context.SaveChanges();
 
-        return RedirectToAction("Index");
-    }
+                // Redirect to the Index page
+                // return RedirectToAction("Index", "Verification");
+                return RedirectToAction("Index", "Category");
+            }
+
+            return View(category);
+        }
+
 
     // GET: Category/Index
     public IActionResult Index()
