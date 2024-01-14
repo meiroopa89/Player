@@ -1,8 +1,7 @@
-using System;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using dotnetapp.Models;
+using System.Linq;
 
 namespace dotnetapp.Controllers
 {
@@ -39,9 +38,20 @@ namespace dotnetapp.Controllers
             return Ok(expense);
         }
 
+        // GET: api/Expense/Index
+        [HttpGet("Index")]
+        // GET: api/Expense/Index
+    [HttpGet("Index")]
+    public IActionResult Index()
+    {
+        var expenses = _context.Expenses.ToList();
+        return Ok(expenses);
+    }
+
         // POST: api/Expense
         [HttpPost]
-        public IActionResult PostExpense([FromBody] Expense expense)
+        [ActionName("Create")]
+        public IActionResult Create([FromBody] Expense expense)
         {
             if (!ModelState.IsValid)
             {
