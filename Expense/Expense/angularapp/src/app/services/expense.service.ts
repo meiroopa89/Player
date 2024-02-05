@@ -9,7 +9,7 @@ export class ExpenseService {
   static addExpense(mockExpense: { expenseDetails: string; category: string; amount: number; paymentMode: string; expenseDate: string; }) {
     throw new Error('Method not implemented.');
   }
-  public apiUrl = 'https://localhost:7022/';
+  public apiUrl = 'https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/';
 
   constructor(private http: HttpClient) { }
 
