@@ -1,20 +1,32 @@
 <div class="container">
-    <h2>Book List</h2>
-  
-    <div *ngIf="books.length === 0" class="no-books-message">
+  <h2>Book List</h2>
+
+  <div *ngIf="books.length === 0" class="no-books-message">
       No books available.
-    </div>
-  
-    <div *ngFor="let book of books" class="book-item">
-      <div class="book-details">
-        <h3>{{ book.title }}</h3>
-        <p><strong>Author:</strong> {{ book.author }}</p>
-        <p><strong>Category:</strong> {{ book.category }}</p>
-        <p><strong>Publication Year:</strong> {{ book.publicationYear }}</p>
-        <p><strong>Publisher:</strong> {{ book.publisher }}</p>
-        <p><strong>Price:</strong> ${{ book.price }}</p>
-        <p><strong>Number of Pages:</strong> {{ book.numberOfPages }}</p>
-      </div>
-    </div>
   </div>
 
+  <table *ngIf="books.length > 0" class="book-table">
+      <thead>
+          <tr>
+              <th>title</th>
+              <th>author</th>
+              <th>category</th>
+              <th>publicationYear</th>
+              <th>publisher</th>
+              <th>price</th>
+              <th>numberOfPages</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let book of books" class="book-item">
+              <td>{{ book.title }}</td>
+              <td>{{ book.author }}</td>
+              <td>{{ book.category }}</td>
+              <td>{{ book.publicationYear }}</td>
+              <td>{{ book.publisher }}</td>
+              <td>${{ book.price }}</td>
+              <td>{{ book.numberOfPages }}</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
