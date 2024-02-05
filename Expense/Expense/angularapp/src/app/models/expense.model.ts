@@ -4,5 +4,5 @@ export class Expense {
    public Category: string;
    public Amount: number;
    public PaymentMode: string;
-   public ExpenseDate: string;
+   public PaymentMode: string;
 }
