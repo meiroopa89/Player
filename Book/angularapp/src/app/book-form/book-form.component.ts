@@ -2,7 +2,7 @@
 import { Component } from '@angular/core';
 import { Book } from '../models/book.model';
 import { BookService } from '../services/book.service';
-import { Router } from '@angular/router'; 
+
 
 
 @Component({
@@ -19,9 +19,6 @@ export class BookFormComponent {
   addBook(): void {
     this.bookService.addBook(this.newBook).subscribe(() => {
       console.log('Book added successfully!');
-      
-      // After adding the book, navigate to the list of books
-      this.router.navigate(['/viewBooks']);
     });
   }
 }

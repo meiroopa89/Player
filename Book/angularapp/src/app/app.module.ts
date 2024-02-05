@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { BookFormComponent } from './book-form/book-form.component';
 import { BookListComponent } from './book-list/book-list.component';
 import { HeaderComponent } from './header/header.component';
+import { AppRoutingModule } from './app-routing.module';
 
 
 
@@ -20,7 +21,8 @@ import { HeaderComponent } from './header/header.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [HttpClientModule],
   bootstrap: [AppComponent]
