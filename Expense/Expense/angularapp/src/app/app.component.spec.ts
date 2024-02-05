@@ -26,10 +26,10 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
   
-  // Check if AppComponent renders a app-dashboard
-  fit('should_render_app-dashboard_InAppComponent', () => {
+  // Check if AppComponent renders a app-header
+  fit('should_render_app-header_InAppComponent', () => {
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('app-dashboard')).toBeTruthy();
+    expect(compiled.querySelector('app-header')).toBeTruthy();
   });
 
 });
