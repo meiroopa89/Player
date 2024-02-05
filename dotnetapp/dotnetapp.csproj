@@ -8,10 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+    <PackageReference Include="Microsoft.EntityframeworkCore.SqlServer" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityframeworkCore.Tools" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="./TestProject/TestProject.csproj"/>
+    <ProjectReference Include="./TestProject/TestProject.csproj" />
   </ItemGroup>
 
 </Project>
