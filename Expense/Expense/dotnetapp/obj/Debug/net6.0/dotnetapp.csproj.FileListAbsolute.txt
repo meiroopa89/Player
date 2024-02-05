@@ -2,7 +2,6 @@
 /home/coder/project/workspace/Expense/Expense/dotnetapp/bin/Debug/net6.0/appsettings.json
 /home/coder/project/workspace/Expense/Expense/dotnetapp/bin/Debug/net6.0/dotnetapp
 /home/coder/project/workspace/Expense/Expense/dotnetapp/bin/Debug/net6.0/dotnetapp.deps.json
-/home/coder/project/workspace/Expense/Expense/dotnetapp/bin/Debug/net6.0/dotnetapp.runtimeconfig.json
 /home/coder/project/workspace/Expense/Expense/dotnetapp/bin/Debug/net6.0/dotnetapp.dll
 /home/coder/project/workspace/Expense/Expense/dotnetapp/bin/Debug/net6.0/dotnetapp.pdb
 /home/coder/project/workspace/Expense/Expense/dotnetapp/bin/Debug/net6.0/Humanizer.dll
