@@ -19,14 +19,14 @@ describe('AppComponent', () => {
 
     });
 
-    fit('AppComponent_should_render_app-book-form', () => {
+    fit('AppComponent_should_render_app-header', () => {
         const compiled = fixture.nativeElement;
-        expect(compiled.querySelector('app-book-form')).toBeTruthy();
+        expect(compiled.querySelector('app-header')).toBeTruthy();
     });
 
-    fit('AppComponent_should_render_app-book-list', () => {
+    fit('AppComponent_should_render_router-outlet', () => {
         const compiled = fixture.nativeElement;
-        expect(compiled.querySelector('app-book-list')).toBeTruthy();
+        expect(compiled.querySelector('router-outlet')).toBeTruthy();
     });
 
 });
