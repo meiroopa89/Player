@@ -1,4 +1,3 @@
-// Repositories/OrderRepository.cs
 using dotnetapp.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ namespace dotnetapp.Repositories
             _context = context;
         }
 
-        public Order addOrder(Order order)
+        public Orders addOrder(Orders order)
         {
             // Placeholder: Add order to the database
             _context.Orders.Add(order);
@@ -24,7 +23,7 @@ namespace dotnetapp.Repositories
             return order;
         }
 
-        public bool cancelOrder(long orderId)
+        public bool cancelOrder(long ordersId)
         {
             // Placeholder: Cancel order in the database
             var order = _context.Orders.Find(orderId);
@@ -39,19 +38,19 @@ namespace dotnetapp.Repositories
             return false;
         }
 
-        public List<Order> viewAllOrders()
+        public List<Orders> viewAllOrders()
         {
             // Placeholder: Retrieve all orders from the database
             return _context.Orders.ToList();
         }
 
-        public Order viewOrderById(long orderId)
+        public Orders viewOrderById(long ordersId)
         {
             // Placeholder: Retrieve order by Id from the database
             return _context.Orders.Find(orderId);
         }
 
-        public List<Order> viewOrderByCustomerId(long customerId)
+        public List<Orders> viewOrderByCustomerId(long customerId)
         {
             // Placeholder: Retrieve orders by customer Id from the database
             return _context.Orders.Where(o => o.CustomerId == customerId).ToList();

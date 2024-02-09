@@ -17,19 +17,19 @@ namespace dotnetapp.Controllers
         }
 
         [HttpPost]
-        public IActionResult addOrder([FromBody] Order order)
+        public IActionResult addOrder([FromBody] Orders order)
         {
             // Placeholder: Add order logic
-            var addedOrder = _orderService.AddOrder(order);
+            var addedOrder = _orderService.addOrder(order);
 
-            return CreatedAtAction(nameof(viewOrderById), new { orderId = addedOrder.OrderId }, addedOrder);
+            return CreatedAtAction(nameof(viewOrderById), new { orderId = addedOrder.OrdersId }, addedOrder);
         }
 
         [HttpDelete("{orderId}")]
-        public IActionResult cancelOrder(long orderId)
+        public IActionResult cancelOrder(long ordersId)
         {
             // Placeholder: Cancel order logic
-            var result = _orderService.CancelOrder(orderId);
+            var result = _orderService.cancelOrder(ordersId);
 
             if (result)
             {
@@ -49,10 +49,10 @@ namespace dotnetapp.Controllers
         }
 
         [HttpGet("{orderId}")]
-        public IActionResult viewOrderById(long orderId)
+        public IActionResult viewOrderById(long ordersId)
         {
             // Placeholder: Get order by Id logic
-            var order = _orderService.GetOrderById(orderId);
+            var order = _orderService.GetOrderById(ordersId);
 
             if (order == null)
             {

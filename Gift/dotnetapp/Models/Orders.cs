@@ -6,7 +6,7 @@ namespace dotnetapp.Models
 public class Orders
     {
         [Key]
-        public long OrderId { get; set; }
+        public long OrdersId { get; set; }
         public double OrderPrice { get; set; }
         public int Quantity { get; set; }
         public List<Gift> Gifts { get; set; }

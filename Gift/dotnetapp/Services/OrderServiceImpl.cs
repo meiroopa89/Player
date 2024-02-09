@@ -6,40 +6,40 @@ using System.Collections.Generic;
 
 namespace dotnetapp.Services
 {
-    public class OrderService
+    public class OrderServiceImpl
     {
         private readonly OrderRepository _orderRepository;
 
-        public OrderService(OrderRepository orderRepository)
+        public OrderServiceImpl(OrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
         }
 
-        public Order addOrder(Order order)
+        public Orders addOrder(Orders order)
         {
             // Your implementation here
             return _orderRepository.addOrder(order);
         }
 
-        public bool cancelOrder(long orderId)
+        public bool cancelOrder(long ordersId)
         {
             // Your implementation here
-            return _orderRepository.cancelOrder(orderId);
+            return _orderRepository.cancelOrder(ordersId);
         }
 
-        public List<Order> viewAllOrders()
+        public List<Orders> viewAllOrders()
         {
             // Your implementation here
             return _orderRepository.viewAllOrders();
         }
 
-        public Order viewOrderById(long orderId)
+        public Orders viewOrderById(long ordersId)
         {
             // Your implementation here
-            return _orderRepository.viewOrderById(orderId);
+            return _orderRepository.viewOrderById(ordersId);
         }
 
-        public List<Order> viewOrderByCustomerId(long customerId)
+        public List<Orders> viewOrderByCustomerId(long customerId)
         {
             // Your implementation here
             return _orderRepository.viewOrderByCustomerId(customerId);
