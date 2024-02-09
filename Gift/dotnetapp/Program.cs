@@ -53,7 +53,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using dotnetapp.Data;
 using dotnetapp.Services;
-using dotnet
+using dotnetapp.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
