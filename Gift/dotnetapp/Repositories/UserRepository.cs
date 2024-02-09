@@ -1,12 +1,12 @@
-// Services/UserServiceImpl.cs
+// Repositories/UserRepository.cs
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using dotnetapp.Models;
 
-namespace dotnetapp.Services
+namespace dotnetapp.Repositories
 {
-    public class UserServiceImpl : UserService
+    public class UserRepository
     {
         private readonly List<User> _users = new List<User>();
 

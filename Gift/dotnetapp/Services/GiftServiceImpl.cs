@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using dotnetapp.Models;
 
-using namespace.Services
+namespace dotnetapp.Services
 {
     public class GiftServiceImpl : GiftService
 {

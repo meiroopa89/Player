@@ -6,7 +6,7 @@ using dotnetapp.Services;
 namespace dotnetapp.Controllers
 {
     [ApiController]
-    [Route("api/user")]
+    [Route("api/")]
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;

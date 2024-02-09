@@ -1,6 +1,6 @@
 using dotnetapp.Models;
 
-using namespace.Services
+namespace dotnetapp.Services
 {
     public interface UserService
     {

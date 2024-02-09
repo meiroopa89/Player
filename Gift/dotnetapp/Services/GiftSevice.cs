@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using dotnetapp.Models;
 
-using namespace.Services
+namespace dotnetapp.Services
 {
     public interface GiftService
     {
