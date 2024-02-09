@@ -14,7 +14,7 @@ namespace dotnetapp.Repositories
             _context = context;
         }
 
-        public User RegisterUser(User user)
+        public User register(User user)
         {
             // Check if the email is already registered in the database
             if (_context.Users.Any(u => u.Email == user.Email))
@@ -30,7 +30,7 @@ namespace dotnetapp.Repositories
         }
 
 
-        public User LoginUser(User user)
+        public User login(User user)
         {
             // Find the user with the provided email and password in the database
             var authenticatedUser = _context.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);

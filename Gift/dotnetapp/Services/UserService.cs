@@ -4,8 +4,8 @@ namespace dotnetapp.Services
 {
     public interface UserService
     {
-        User RegisterUser(User user);
-        User LoginUser(User user);
+        User register(User user);
+        User login(User user);
         string GenerateJwtToken(User user);
     }
 }

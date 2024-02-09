@@ -13,14 +13,14 @@
 //             _userRepository = userRepository;
 //         }
 
-//         public User RegisterUser(User user)
+//         public User register(User user)
 //         {
-//             return _userRepository.RegisterUser(user);
+//             return _userRepository.register(user);
 //         }
 
-//         public User LoginUser(User user)
+//         public User login(User user)
 //         {
-//             return _userRepository.LoginUser(user);
+//             return _userRepository.login(user);
 //         }
 //     }
 // }
@@ -49,14 +49,14 @@ namespace dotnetapp.Services
             _configuration = configuration;
         }
 
-        public User RegisterUser(User user)
+        public User register(User user)
         {
-            return _userRepository.RegisterUser(user);
+            return _userRepository.register(user);
         }
 
-        public User LoginUser(User user)
+        public User login(User user)
         {
-            return _userRepository.LoginUser(user);
+            return _userRepository.login(user);
         }
 
         public string GenerateJwtToken(User user)
