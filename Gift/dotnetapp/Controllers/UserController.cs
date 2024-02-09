@@ -29,40 +29,22 @@ namespace dotnetapp.Controllers
             return Conflict(new { Message = "Email already registered." });
         }
 
-       [HttpPost("login")]
-    public IActionResult LoginUser([FromBody] User user)
-    {
-        // Log the received user credentials for debugging
-        Console.WriteLine($"Received Login Request - Email: {user.Email}, Password: {user.Password}");
-
-        var authenticatedUser = _userService.LoginUser(user);
-
-        if (authenticatedUser != null)
-        // if (!ModelState.IsValid)
+        [HttpPost("login")]
+        public IActionResult LoginUser([FromBody] User user)
         {
-            // return Ok(authenticatedUser);
-            return Ok("successful");
+            // Log the received user credentials for debugging
+            Console.WriteLine($"Received Login Request - Email: {user.Email}, Password: {user.Password}");
+
+            var authenticatedUser = _userService.LoginUser(user);
+
+            if (authenticatedUser != null)
+            {
+                return Ok(new { Message = "User login successful.", User = authenticatedUser });
+            }
+            else
+            {
+                return NotFound(new { Message = "Invalid email or password." });
+            }
         }
-        else
-        {
-            return NotFound(new { Message = "Invalid email or password." });
-        }
-    }
-
-
-        // [HttpPost("login")]
-        // public IActionResult LoginUser([FromBody] User user)
-        // {
-        //     // Only consider the Email and Password properties for authentication
-        //     var authenticatedUser = _userService.LoginUser(new User { Email = user.Email, Password = user.Password });
-
-        //     if (authenticatedUser != null)
-        //     {
-        //         return Ok(authenticatedUser);
-        //     }
-
-        //     return NotFound(new { Message = "Invalid email or password." });
-        // }
-
     }
 }
