@@ -1,8 +1,8 @@
-// // Services/CustomerService.cs
-// using dotnetapp.Models;
+// Services/CustomerService.cs
+using dotnetapp.Models;
 
-// public interface CustomerService
-// {
-//     Customer registerCustomer(Customer customer);
-//     Customer GetCustomerById(long customerId);
-// }
+public interface CustomerService
+{
+    Customer registerCustomer(Customer customer);
+    Customer GetCustomerById(long customerId);
+}

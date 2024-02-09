@@ -19,7 +19,7 @@ namespace dotnetapp.Controllers
         [HttpPost]
         public IActionResult registerCustomer([FromBody] Customer customer)
         {
-            var registeredCustomer = _customerService.RegisterCustomer(customer);
+            var registeredCustomer = _customerService.registerCustomer(customer);
 
             return CreatedAtAction(nameof(registerCustomer), new { id = registeredCustomer.CustomerId }, registeredCustomer);
         }
@@ -27,7 +27,7 @@ namespace dotnetapp.Controllers
         [HttpGet("{customerId}")]
         public IActionResult viewCustomerById(long customerId)
         {
-            var customer = _customerService.ViewCustomerById(customerId);
+            var customer = _customerService.viewCustomerById(customerId);
 
             if (customer == null)
             {
