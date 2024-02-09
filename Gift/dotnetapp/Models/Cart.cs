@@ -5,6 +5,7 @@ namespace dotnetapp.Models
 {
 public class Cart
     {
+        [Key]
         public long CartId { get; set; }
         public List<Gift> Gifts { get; set; }
         public long CustomerId { get; set; } // Foreign key

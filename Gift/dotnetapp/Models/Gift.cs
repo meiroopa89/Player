@@ -5,6 +5,7 @@ namespace dotnetapp.Models
 {
 public class Gift
     {
+        [Key]
         public long GiftId { get; set; }
         public string GiftType { get; set; }
         public string GiftImageUrl { get; set; }

@@ -5,6 +5,7 @@ namespace dotnetapp.Models
 {
 public class Customer
     {
+        [Key]
         public long CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string Address { get; set; }
