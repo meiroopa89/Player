@@ -25,7 +25,6 @@
 //     }
 // }
 
-
 // Services/UserServiceImpl.cs
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -35,6 +34,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using dotnetapp.Models;
 using dotnetapp.Repositories;
+using System.Security.Cryptography;
 
 namespace dotnetapp.Services
 {
@@ -62,21 +62,32 @@ namespace dotnetapp.Services
         public string GenerateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
+            using (var hmac = new HMACSHA256())
             {
-                Subject = new ClaimsIdentity(new[]
+                // Generate a random 256-bit key
+                var key = new byte[32]; // 256 bits
+                using (var rng = new RNGCryptoServiceProvider())
                 {
-                    new Claim(ClaimTypes.Name, user.Email),
-                    // Add other claims as needed
-                }),
-                Expires = DateTime.UtcNow.AddHours(1), // Token expiration time
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
+                    rng.GetBytes(key);
+                }
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+                hmac.Key = key;
+
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new[]
+                    {
+                        new Claim(ClaimTypes.Name, user.Email),
+                        // Add other claims as needed
+                    }),
+                    Expires = DateTime.UtcNow.AddHours(1), // Token expiration time
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                return tokenHandler.WriteToken(token);
+            }
         }
     }
 }
