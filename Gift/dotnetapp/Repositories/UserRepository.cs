@@ -22,15 +22,13 @@ namespace dotnetapp.Repositories
                 return null; // Email already exists, registration failed
             }
 
-            // Assign a new UserId
-            user.UserId = System.Guid.NewGuid().GetHashCode();
-
             // Add user to the database
             _context.Users.Add(user);
             _context.SaveChanges();
 
             return user;
         }
+
 
         public User LoginUser(User user)
         {

@@ -1,7 +1,4 @@
 // Services/UserServiceImpl.cs
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using dotnetapp.Models;
 using dotnetapp.Repositories;
 
@@ -27,4 +24,3 @@ namespace dotnetapp.Services
         }
     }
 }
-
