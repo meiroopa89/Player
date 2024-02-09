@@ -1,3 +1,4 @@
+// Services/UserServiceImpl.cs
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace dotnetapp.Services
                 return null; // Email already exists, registration failed
             }
 
-            // Assign a new UserId
+            // Assign a new UserId using GUID hash code
             user.UserId = Guid.NewGuid().GetHashCode();
 
             // Add user to the list (or save to database)

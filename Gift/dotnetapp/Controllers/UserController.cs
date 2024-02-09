@@ -38,11 +38,15 @@ namespace dotnetapp.Controllers
         var authenticatedUser = _userService.LoginUser(user);
 
         if (authenticatedUser != null)
+        // if (!ModelState.IsValid)
         {
-            return Ok(authenticatedUser);
+            // return Ok(authenticatedUser);
+            return Ok("successful");
         }
-
-        return NotFound(new { Message = "Invalid email or password." });
+        else
+        {
+            return NotFound(new { Message = "Invalid email or password." });
+        }
     }
 
 
