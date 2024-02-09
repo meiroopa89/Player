@@ -1,7 +1,8 @@
-// Controllers/GiftController.cs
 using Microsoft.AspNetCore.Mvc;
 using dotnetapp.Models;
 using dotnetapp.Services;
+using Microsoft.Extensions.Configuration;
+
 
 namespace dotnetapp.Controllers
 {
@@ -19,7 +20,7 @@ namespace dotnetapp.Controllers
         [HttpPost]
         public IActionResult addGift([FromBody] Gift gift)
         {
-            var addedGift = _giftService.AddGift(gift);
+            var addedGift = _giftService.addGift(gift);
 
             return CreatedAtAction(nameof(viewAllGifts), new { id = addedGift.GiftId }, addedGift);
         }
@@ -27,7 +28,7 @@ namespace dotnetapp.Controllers
         [HttpGet]
         public IActionResult viewAllGifts()
         {
-            var gifts = _giftService.GetAllGifts();
+            var gifts = _giftService.viewAllGifts();
 
             return Ok(gifts);
         }
@@ -35,7 +36,7 @@ namespace dotnetapp.Controllers
         [HttpPut("{id}")]
         public IActionResult updateGift(long id, [FromBody] Gift updatedGift)
         {
-            var editedGift = _giftService.EditGift(id, updatedGift);
+            var editedGift = _giftService.updateGift(id, updatedGift);
 
             if (editedGift != null)
             {
@@ -48,7 +49,7 @@ namespace dotnetapp.Controllers
         [HttpDelete("{id}")]
         public IActionResult deleteGift(long id)
         {
-            var deletedGift = _giftService.DeleteGift(id);
+            var deletedGift = _giftService.deleteGift(id);
 
             if (deletedGift != null)
             {

@@ -1,60 +1,35 @@
-// Services/GiftServiceImpl.cs
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using dotnetapp.Models;
 
 namespace dotnetapp.Services
 {
     public class GiftServiceImpl : GiftService
-{
-    private readonly List<Gift> _gifts = new List<Gift>();
-    private long _nextGiftId = 1;
-
-    public Gift AddGift(Gift gift)
     {
-        gift.GiftId = _nextGiftId++;
-        _gifts.Add(gift);
-        return gift;
-    }
+        private readonly GiftRepository _giftRepository;
 
-    public List<Gift> GetAllGifts()
-    {
-        return _gifts.ToList();
-    }
-
-    public Gift EditGift(long giftId, Gift updatedGift)
-    {
-        var existingGift = _gifts.FirstOrDefault(g => g.GiftId == giftId);
-
-        if (existingGift != null)
+        public GiftServiceImpl(GiftRepository giftRepository)
         {
-            // Update properties of existing gift
-            existingGift.GiftType = updatedGift.GiftType;
-            existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
-            existingGift.GiftDetails = updatedGift.GiftDetails;
-            existingGift.GiftPrice = updatedGift.GiftPrice;
-            existingGift.Quantity = updatedGift.Quantity;
-            // Add any other properties to update
-
-            return existingGift;
+            _giftRepository = giftRepository;
         }
 
-        return null; // Gift not found
-    }
-
-    public Gift DeleteGift(long giftId)
-    {
-        var giftToRemove = _gifts.FirstOrDefault(g => g.GiftId == giftId);
-
-        if (giftToRemove != null)
+        public Gift addGift(Gift gift)
         {
-            _gifts.Remove(giftToRemove);
-            return giftToRemove;
+            return _giftRepository.addGift(gift);
         }
 
-        return null; // Gift not found
+        public List<Gift> viewAllGifts()
+        {
+            return _giftRepository.viewAllGifts();
+        }
+
+        public Gift updateGift(long giftId, Gift updatedGift)
+        {
+            return _giftRepository.updateGift(giftId, updatedGift);
+        }
+
+        public Gift deleteGift(long giftId)
+        {
+            return _giftRepository.deleteGift(giftId);
+        }
     }
 }
-}
-

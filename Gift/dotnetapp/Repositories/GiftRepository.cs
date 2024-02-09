@@ -1,36 +1,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using dotnetapp.Models;
-using Microsoft.EntityFrameworkCore;
 
 public class GiftRepository
 {
-    private readonly ApplicationDbContext _context;
+    private readonly List<Gift> _gifts = new List<Gift>();
+    private long _nextGiftId = 1;
 
-    public GiftRepository(ApplicationDbContext context)
+    public Gift addGift(Gift gift)
     {
-        _context = context;
-    }
-
-    public Gift AddGift(Gift gift)
-    {
-        _context.Gifts.Add(gift);
-        _context.SaveChanges();
+        gift.GiftId = _nextGiftId++;
+        _gifts.Add(gift);
         return gift;
     }
 
-    public List<Gift> GetAllGifts()
+    public List<Gift> viewAllGifts()
     {
-        return _context.Gifts.ToList();
+        return _gifts.ToList();
     }
 
-    public Gift EditGift(long giftId, Gift updatedGift)
+    public Gift updateGift(long giftId, Gift updatedGift)
     {
-        var existingGift = _context.Gifts.FirstOrDefault(g => g.GiftId == giftId);
+        var existingGift = _gifts.FirstOrDefault(g => g.GiftId == giftId);
 
         if (existingGift != null)
         {
-            // Update properties of existing gift
             existingGift.GiftType = updatedGift.GiftType;
             existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
             existingGift.GiftDetails = updatedGift.GiftDetails;
@@ -38,24 +32,22 @@ public class GiftRepository
             existingGift.Quantity = updatedGift.Quantity;
             // Add any other properties to update
 
-            _context.SaveChanges();
             return existingGift;
         }
 
-        return null; // Gift not found
+        return null;
     }
 
-    public Gift DeleteGift(long giftId)
+    public Gift deleteGift(long giftId)
     {
-        var giftToRemove = _context.Gifts.FirstOrDefault(g => g.GiftId == giftId);
+        var giftToRemove = _gifts.FirstOrDefault(g => g.GiftId == giftId);
 
         if (giftToRemove != null)
         {
-            _context.Gifts.Remove(giftToRemove);
-            _context.SaveChanges();
+            _gifts.Remove(giftToRemove);
             return giftToRemove;
         }
 
-        return null; // Gift not found
+        return null;
     }
 }
