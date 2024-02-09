@@ -1,15 +1,15 @@
-// Services/CustomerService.cs
+// Services/CustomerServiceImpl.cs
 using System;
 using dotnetapp.Models;
 using dotnetapp.Repositories;
 
 namespace dotnetapp.Services
 {
-    public class CustomerService
+    public class CustomerServiceImpl : CustomerService
     {
         private readonly CustomerRepository _customerRepository;
 
-        public CustomerService(CustomerRepository customerRepository)
+        public CustomerServiceImpl(CustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
         }

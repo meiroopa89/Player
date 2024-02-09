@@ -116,11 +116,14 @@ public class Program
         // Add DbContext registration
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("Gift")));
-
+        // Inside the Main method of Program.cs
+        builder.Services.AddScoped<CustomerRepository>();
         builder.Services.AddScoped<UserRepository>();
         builder.Services.AddScoped<GiftRepository>();  // Add this line for GiftRepository
         builder.Services.AddScoped<GiftService, GiftServiceImpl>();
         builder.Services.AddScoped<UserService, UserServiceImpl>();
+        builder.Services.AddScoped<CustomerService, CustomerServiceImpl>();
+
         // Add JWT authentication
         var key = Encoding.ASCII.GetBytes("MySuperSecretKey123!$%^&*");
         builder.Services.AddAuthentication(x =>
@@ -167,8 +170,8 @@ public class Program
         app.UseCors();
         app.UseRouting();
 
-        app.UseAuthentication();  // Add this line for JWT authentication
-        app.UseAuthorization();   // Add this line for JWT authorization
+        app.UseAuthentication();  
+        app.UseAuthorization();  
 
         app.UseEndpoints(endpoints =>
         {
