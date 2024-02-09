@@ -1,40 +1,40 @@
-// // Controllers/CustomerController.cs
-// using Microsoft.AspNetCore.Mvc;
-// using dotnetapp.Models;
-// using dotnetapp.Services;
+// Controllers/CustomerController.cs
+using Microsoft.AspNetCore.Mvc;
+using dotnetapp.Models;
+using dotnetapp.Services;
 
-// namespace dotnetapp.Controllers
-// {
-//     [ApiController]
-//     [Route("api/customer")]  // Assuming you want the endpoint to be "api/customer"
-//     public class CustomerController : ControllerBase
-//     {
-//         private readonly CustomerService _customerService;
+namespace dotnetapp.Controllers
+{
+    [ApiController]
+    [Route("api/customer")]
+    public class CustomerController : ControllerBase
+    {
+        private readonly CustomerService _customerService;
 
-//         public CustomerController(CustomerService customerService)
-//         {
-//             _customerService = customerService;
-//         }
+        public CustomerController(CustomerService customerService)
+        {
+            _customerService = customerService;
+        }
 
-//         [HttpPost]
-//         public IActionResult registerCustomer([FromBody] Customer customer)
-//         {
-//             var registeredCustomer = _customerService.registerCustomer(customer);
+        [HttpPost]
+        public IActionResult registerCustomer([FromBody] Customer customer)
+        {
+            var registeredCustomer = _customerService.RegisterCustomer(customer);
 
-//             return CreatedAtAction(nameof(ViewCustomerById), new { id = registeredCustomer.CustomerId }, registeredCustomer);
-//         }
+            return CreatedAtAction(nameof(registerCustomer), new { id = registeredCustomer.CustomerId }, registeredCustomer);
+        }
 
-//         [HttpGet("{id}")]
-//         public IActionResult viewCustomerById(long id)
-//         {
-//             var customer = _customerService.GetCustomerById(id);
+        [HttpGet("{customerId}")]
+        public IActionResult viewCustomerById(long customerId)
+        {
+            var customer = _customerService.ViewCustomerById(customerId);
 
-//             if (customer == null)
-//             {
-//                 return NotFound(new { Message = "Customer not found." });
-//             }
+            if (customer == null)
+            {
+                return NotFound(new { Message = "Customer not found." });
+            }
 
-//             return Ok(customer);
-//         }
-//     }
-// }
+            return Ok(customer);
+        }
+    }
+}

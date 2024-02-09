@@ -1,28 +1,33 @@
-// // Services/CustomerServiceImpl.cs
-// using dotnetapp.Models;
-// using dotnetapp.Repositories;  // You may need to include the appropriate repository namespace
+// Services/CustomerService.cs
+using System;
+using dotnetapp.Models;
+using dotnetapp.Repositories;
 
-// public class CustomerServiceImpl : CustomerService
-// {
-//     private readonly CustomerRepository _customerRepository;  // Assuming there's a CustomerRepository
+namespace dotnetapp.Services
+{
+    public class CustomerService
+    {
+        private readonly CustomerRepository _customerRepository;
 
-//     public CustomerServiceImpl(CustomerRepository customerRepository)
-//     {
-//         _customerRepository = customerRepository;
-//     }
+        public CustomerService(CustomerRepository customerRepository)
+        {
+            _customerRepository = customerRepository;
+        }
 
-//     public Customer registerCustomer(Customer customer)
-//     {
-//         // Add any business logic or validation before registering the customer
-//         // For example, check if the customer already exists or if the provided data is valid.
+        public Customer registerCustomer(Customer customer)
+        {
+            // Perform any necessary validation or business logic
+            // before calling the repository method.
+            
+            return _customerRepository.registerCustomer(customer);
+        }
 
-//         // Call the repository method to register the customer
-//         return _customerRepository.RegisterCustomer(customer);
-//     }
+        public Customer viewCustomerById(long customerId)
+        {
+            // Perform any necessary validation or business logic
+            // before calling the repository method.
 
-//     public Customer GetCustomerById(long customerId)
-//     {
-//         // Call the repository method to retrieve the customer by ID
-//         return _customerRepository.GetCustomerById(customerId);
-//     }
-// }
+            return _customerRepository.viewCustomerById(customerId);
+        }
+    }
+}
