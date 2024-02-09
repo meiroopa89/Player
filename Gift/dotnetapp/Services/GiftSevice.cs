@@ -6,10 +6,10 @@ namespace dotnetapp.Services
 {
     public interface GiftService
     {
-        Gift AddGift(Gift gift);
-        List<Gift> GetAllGifts();
-        Gift EditGift(long giftId, Gift updatedGift);
-        Gift DeleteGift(long giftId);
+        Gift addGift(Gift gift);
+        List<Gift> viewAllGifts();
+        Gift updateGift(long giftId, Gift gift);
+        Gift deleteGift(long giftId);
     }
 }
 
