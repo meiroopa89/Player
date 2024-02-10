@@ -1,54 +1,33 @@
-// // Services/CustomerServiceImpl.cs
-// using System;
-// using dotnetapp.Models;
-// using dotnetapp.Repositories;
-
-// namespace dotnetapp.Services
-// {
-//     public class CustomerServiceImpl : CustomerService
-//     {
-//         private readonly CustomerRepository _customerRepository;
-
-//         public CustomerServiceImpl(CustomerRepository customerRepository)
-//         {
-//             _customerRepository = customerRepository;
-//         }
-
-//         public Customer registerCustomer(Customer customer)
-//         {
-//             // Perform any necessary validation or business logic
-//             // before calling the repository method.
-            
-//             return _customerRepository.registerCustomer(customer);
-//         }
-
-//         public Customer viewCustomerById(long customerId)
-//         {
-//             // Perform any necessary validation or business logic
-//             // before calling the repository method.
-
-//             return _customerRepository.viewCustomerById(customerId);
-//         }
-//     }
-// }
-
 // Services/CustomerServiceImpl.cs
-public class CustomerServiceImpl : CustomerService
+using System;
+using dotnetapp.Models;
+using dotnetapp.Repositories;
+
+namespace dotnetapp.Services
 {
-    private readonly CustomerRepository _customerRepository;
-
-    public CustomerServiceImpl(CustomerRepository customerRepository)
+    public class CustomerServiceImpl : CustomerService
     {
-        _customerRepository = customerRepository;
-    }
+        private readonly CustomerRepository _customerRepository;
 
-    public Customer registerCustomer(Customer customer)
-    {
-        return _customerRepository.registerCustomer(customer);
-    }
+        public CustomerServiceImpl(CustomerRepository customerRepository)
+        {
+            _customerRepository = customerRepository;
+        }
 
-    public Customer viewCustomerById(long customerId)
-    {
-        return _customerRepository.viewCustomerById(customerId);
+        public Customer registerCustomer(Customer customer)
+        {
+            // Perform any necessary validation or business logic
+            // before calling the repository method.
+            
+            return _customerRepository.registerCustomer(customer);
+        }
+
+        public Customer viewCustomerById(long customerId)
+        {
+            // Perform any necessary validation or business logic
+            // before calling the repository method.
+
+            return _customerRepository.viewCustomerById(customerId);
+        }
     }
 }

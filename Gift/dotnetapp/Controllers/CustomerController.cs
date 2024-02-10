@@ -27,7 +27,7 @@ namespace dotnetapp.Controllers
         [HttpGet("{customerId}")]
         public IActionResult viewCustomerById(long customerId)
         {
-            var customer = _customerService.viewCustomerById(customerId);
+            var customer = _custom  erService.viewCustomerById(customerId);
 
             if (customer == null)
             {
