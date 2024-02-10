@@ -12,9 +12,9 @@ public class Gift
         public string GiftDetails { get; set; }
         public double GiftPrice { get; set; }
         public int Quantity { get; set; }
-        public long? CartId { get; set; } // Foreign key
-        public Cart? Cart { get; set; }
-        public long? OrdersId { get; set; } // Foreign key
-        public Orders? Orders { get; set; }
+        // public long? CartId { get; set; } // Foreign key
+        // public Cart? Cart { get; set; }
+        // public long? OrdersId { get; set; } // Foreign key
+        // public Orders? Orders { get; set; }
     }
 }

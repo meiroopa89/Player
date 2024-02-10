@@ -11,6 +11,6 @@ public class Customer
         public string Address { get; set; }
         public long UserId { get; set; } // Foreign key
         public User User { get; set; }
-        public List<Orders>? Orders { get; set; }
+        // public List<Orders>? Orders { get; set; }
     }
 }
