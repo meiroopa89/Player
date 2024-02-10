@@ -1,33 +1,54 @@
-// Services/CustomerServiceImpl.cs
-using System;
-using dotnetapp.Models;
-using dotnetapp.Repositories;
+// // Services/CustomerServiceImpl.cs
+// using System;
+// using dotnetapp.Models;
+// using dotnetapp.Repositories;
 
-namespace dotnetapp.Services
-{
-    public class CustomerServiceImpl : CustomerService
-    {
-        private readonly CustomerRepository _customerRepository;
+// namespace dotnetapp.Services
+// {
+//     public class CustomerServiceImpl : CustomerService
+//     {
+//         private readonly CustomerRepository _customerRepository;
 
-        public CustomerServiceImpl(CustomerRepository customerRepository)
-        {
-            _customerRepository = customerRepository;
-        }
+//         public CustomerServiceImpl(CustomerRepository customerRepository)
+//         {
+//             _customerRepository = customerRepository;
+//         }
 
-        public Customer registerCustomer(Customer customer)
-        {
-            // Perform any necessary validation or business logic
-            // before calling the repository method.
+//         public Customer registerCustomer(Customer customer)
+//         {
+//             // Perform any necessary validation or business logic
+//             // before calling the repository method.
             
-            return _customerRepository.registerCustomer(customer);
-        }
+//             return _customerRepository.registerCustomer(customer);
+//         }
 
-        public Customer viewCustomerById(long customerId)
-        {
-            // Perform any necessary validation or business logic
-            // before calling the repository method.
+//         public Customer viewCustomerById(long customerId)
+//         {
+//             // Perform any necessary validation or business logic
+//             // before calling the repository method.
 
-            return _customerRepository.viewCustomerById(customerId);
-        }
+//             return _customerRepository.viewCustomerById(customerId);
+//         }
+//     }
+// }
+
+// Services/CustomerServiceImpl.cs
+public class CustomerServiceImpl : CustomerService
+{
+    private readonly CustomerRepository _customerRepository;
+
+    public CustomerServiceImpl(CustomerRepository customerRepository)
+    {
+        _customerRepository = customerRepository;
+    }
+
+    public Customer registerCustomer(Customer customer)
+    {
+        return _customerRepository.registerCustomer(customer);
+    }
+
+    public Customer viewCustomerById(long customerId)
+    {
+        return _customerRepository.viewCustomerById(customerId);
     }
 }
