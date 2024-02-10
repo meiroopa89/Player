@@ -70,12 +70,8 @@ namespace dotnetapp.Data
                 .WithOne()
                 .HasForeignKey<Customer>(c => c.UserId);
 
-            modelBuilder.Entity<Gift>()
-                .HasOne(g => g.Customer)  // Add this line to define the relationship with Customer
-                .WithMany(c => c.Gifts)
-                .HasForeignKey(g => g.CustomerId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
+
 
