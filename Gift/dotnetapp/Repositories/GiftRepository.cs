@@ -1,27 +1,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using dotnetapp.Models;
+using dotnetapp.Data;
 
 public class GiftRepository
 {
-    private readonly List<Gift> _gifts = new List<Gift>();
-    private long _nextGiftId = 1;
+    private readonly ApplicationDbContext _context;
+
+    public GiftRepository(ApplicationDbContext context)
+    {
+        _context = context;
+    }
 
     public Gift addGift(Gift gift)
     {
-        gift.GiftId = _nextGiftId++;
-        _gifts.Add(gift);
+        _context.Gifts.Add(gift);
+        _context.SaveChanges();
         return gift;
     }
 
     public List<Gift> viewAllGifts()
     {
-        return _gifts.ToList();
+        return _context.Gifts.ToList();
     }
 
     public Gift updateGift(long giftId, Gift updatedGift)
     {
-        var existingGift = _gifts.FirstOrDefault(g => g.GiftId == giftId);
+        var existingGift = _context.Gifts.Find(giftId);
 
         if (existingGift != null)
         {
@@ -32,6 +37,7 @@ public class GiftRepository
             existingGift.Quantity = updatedGift.Quantity;
             // Add any other properties to update
 
+            _context.SaveChanges();
             return existingGift;
         }
 
@@ -40,11 +46,12 @@ public class GiftRepository
 
     public Gift deleteGift(long giftId)
     {
-        var giftToRemove = _gifts.FirstOrDefault(g => g.GiftId == giftId);
+        var giftToRemove = _context.Gifts.Find(giftId);
 
         if (giftToRemove != null)
         {
-            _gifts.Remove(giftToRemove);
+            _context.Gifts.Remove(giftToRemove);
+            _context.SaveChanges();
             return giftToRemove;
         }
 

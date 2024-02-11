@@ -28,25 +28,31 @@
 
 // Repositories/CustomerRepository.cs
 using System.Collections.Generic;
+using System.Linq;
 using dotnetapp.Models;
+using dotnetapp.Data;  // Assuming you have a DbContext in a 'Data' namespace
 
 namespace dotnetapp.Repositories
 {
     public class CustomerRepository
     {
-        private readonly List<Customer> _customers = new List<Customer>();
-        private long _nextCustomerId = 1;
+        private readonly ApplicationDbContext _context;
+
+        public CustomerRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public Customer registerCustomer(Customer customer)
         {
-            customer.CustomerId = _nextCustomerId++;
-            _customers.Add(customer);
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
             return customer;
         }
 
         public Customer viewCustomerById(long customerId)
         {
-            return _customers.Find(c => c.CustomerId == customerId);
+            return _context.Customers.Find(customerId);
         }
     }
 }
