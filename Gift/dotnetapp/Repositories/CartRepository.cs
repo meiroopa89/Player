@@ -1,38 +1,44 @@
-// // Repositories/CartRepository.cs
-// using System.Collections.Generic;
-// using dotnetapp.Models;
+using System.Linq;
+using dotnetapp.Data;
+using dotnetapp.Models;
 
-// public class CartRepository
-// {
-//     private readonly List<Cart> _carts = new List<Cart>();
-//     private long _nextCartId = 1;
+public class CartRepository
+{
+    private readonly ApplicationDbContext _context;
 
-//     public Cart addCart(Cart cart)
-//     {
-//         cart.CartId = _nextCartId++;
-//         _carts.Add(cart);
-//         return cart;
-//     }
+    public CartRepository(ApplicationDbContext context)
+    {
+        _context = context;
+    }
 
-//     public Cart updateCart(Cart updatedCart)
-//     {
-//         var existingCart = _carts.Find(c => c.CartId == updatedCart.CartId);
+    public Cart addCart(Cart cart)
+    {
+        _context.Carts.Add(cart);
+        _context.SaveChanges();
+        return cart;
+    }
 
-//         if (existingCart != null)
-//         {
-//             // Update properties of existing cart
-//             existingCart.Gifts = updatedCart.Gifts;
-//             existingCart.CustomerId = updatedCart.CustomerId;
-//             // Add any other properties to update
+    public Cart updateCart(Cart updatedCart)
+    {
+        var existingCart = _context.Carts.Find(updatedCart.CartId);
 
-//             return existingCart;
-//         }
+        if (existingCart != null)
+        {
+            // Update properties of existing cart
+            existingCart.Gifts = updatedCart.Gifts;
+            existingCart.CustomerId = updatedCart.CustomerId;
+            // Add any other properties to update
 
-//         return null; // Cart not found
-//     }
+            _context.SaveChanges();
 
-//     public Cart getCartByCustomerId(long customerId)
-//     {
-//         return _carts.Find(c => c.CustomerId == customerId);
-//     }
-// }
+            return existingCart;
+        }
+
+        return null; // Cart not found
+    }
+
+    public Cart getCartByCustomerId(long customerId)
+    {
+        return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
+    }
+}

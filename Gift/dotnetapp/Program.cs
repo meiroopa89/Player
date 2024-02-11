@@ -119,10 +119,12 @@ public class Program
         // Inside the Main method of Program.cs
         builder.Services.AddScoped<CustomerRepository>();
         builder.Services.AddScoped<UserRepository>();
-        builder.Services.AddScoped<GiftRepository>();  // Add this line for GiftRepository
+        builder.Services.AddScoped<GiftRepository>();  
+        builder.Services.AddScoped<CartRepository>();  // Add this line for GiftRepository
         builder.Services.AddScoped<GiftService, GiftServiceImpl>();
         builder.Services.AddScoped<UserService, UserServiceImpl>();
         builder.Services.AddScoped<CustomerService, CustomerServiceImpl>();
+        builder.Services.AddScoped<CartService, CartServiceImpl>();
 
         // Add JWT authentication
         var key = Encoding.ASCII.GetBytes("MySuperSecretKey123!$%^&*");
