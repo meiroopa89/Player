@@ -43,7 +43,6 @@
 //     }
 // }
 
-
 using System.Collections.Generic;
 using System.Linq;
 using dotnetapp.Models;
@@ -74,7 +73,7 @@ namespace dotnetapp.Repositories
 
             if (existingCart != null)
             {
-                // Update properties of existing cart
+                // Update properties of the existing cart
                 existingCart.Gifts = updatedCart.Gifts;
                 existingCart.CustomerId = updatedCart.CustomerId;
                 // Add any other properties to update
@@ -89,9 +88,16 @@ namespace dotnetapp.Repositories
 
         public Cart getCartByCustomerId(long customerId)
         {
+            // return _context.Carts
+            //     .Include(c => c.User) // Include the Customer navigation property
+            //     .Include(c => c.Gifts)    // Include the Gifts navigation property
+            //     .FirstOrDefault(c => c.CustomerId == customerId);
             return _context.Carts
-                .Include(c => c.Customer) // Include the Customer navigation property
-                .FirstOrDefault(c => c.CustomerId == customerId);
+        .Include(c => c.Customer)
+            .ThenInclude(customer => customer.User)  // Include the User navigation property
+        .Include(c => c.Gifts)
+        .FirstOrDefault(c => c.CustomerId == customerId);
         }
+
     }
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using dotnetapp.Models;
 using dotnetapp.Data;
-
+using Microsoft.EntityFrameworkCore;
 public class GiftRepository
 {
     private readonly ApplicationDbContext _context;
@@ -21,7 +21,10 @@ public class GiftRepository
 
     public List<Gift> viewAllGifts()
     {
-        return _context.Gifts.ToList();
+        // return _context.Gifts.ToList();
+        return _context.Gifts
+        .Include(g => g.Cart)  // Include the Cart navigation property
+        .ToList();
     }
 
     public Gift updateGift(long giftId, Gift updatedGift)
