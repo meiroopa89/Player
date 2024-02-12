@@ -89,6 +89,7 @@ public class CartRepository
         //         .Include(c => c.User) // Include the Customer navigation property
         //         .Include(c => c.Gifts)    // Include the Gifts navigation property
         //         .FirstOrDefault(c => c.CustomerId == customerId);
+        
     }
 
 public IQueryable<Cart> IncludeUserAndGifts(long customerId)
