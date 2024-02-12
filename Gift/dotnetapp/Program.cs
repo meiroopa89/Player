@@ -132,6 +132,12 @@ public class Program
         // Add DbContext registration
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("Gift")));
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<JobApplicationDbContext>()
+        .AddDefaultTokenProviders();
+
         // Inside the Main method of Program.cs
         builder.Services.AddScoped<CustomerRepository>();
         builder.Services.AddScoped<UserRepository>();
@@ -176,6 +182,24 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+    // Create roles if they don't exist
+    if (!await roleManager.RoleExistsAsync("admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("admin"));
+    }
+
+    if (!await roleManager.RoleExistsAsync("applicant"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("applicant"));
+    }
+}
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
