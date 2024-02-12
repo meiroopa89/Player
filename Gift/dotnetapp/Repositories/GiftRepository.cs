@@ -23,7 +23,7 @@ public class GiftRepository
     {
         // return _context.Gifts.ToList();
         return _context.Gifts
-        .Include(g => g.Cart)  // Include the Cart navigation property
+        .Include(g => g.Cart)
         .ToList();
     }
 

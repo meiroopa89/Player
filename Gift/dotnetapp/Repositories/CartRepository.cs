@@ -43,61 +43,63 @@
 //     }
 // }
 
-using System.Collections.Generic;
 using System.Linq;
-using dotnetapp.Models;
 using dotnetapp.Data;
+using dotnetapp.Models;
 using Microsoft.EntityFrameworkCore;
-
-namespace dotnetapp.Repositories
+public class CartRepository
 {
-    public class CartRepository
+    private readonly ApplicationDbContext _context;
+
+    public CartRepository(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
-
-        public CartRepository(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public Cart addCart(Cart cart)
-        {
-            _context.Carts.Add(cart);
-            _context.SaveChanges();
-            return cart;
-        }
-
-        public Cart updateCart(Cart updatedCart)
-        {
-            var existingCart = _context.Carts.Find(updatedCart.CartId);
-
-            if (existingCart != null)
-            {
-                // Update properties of the existing cart
-                existingCart.Gifts = updatedCart.Gifts;
-                existingCart.CustomerId = updatedCart.CustomerId;
-                // Add any other properties to update
-
-                _context.SaveChanges();
-
-                return existingCart;
-            }
-
-            return null; // Cart not found
-        }
-
-        public Cart getCartByCustomerId(long customerId)
-        {
-            // return _context.Carts
-            //     .Include(c => c.User) // Include the Customer navigation property
-            //     .Include(c => c.Gifts)    // Include the Gifts navigation property
-            //     .FirstOrDefault(c => c.CustomerId == customerId);
-            return _context.Carts
-        .Include(c => c.Customer)
-            .ThenInclude(customer => customer.User)  // Include the User navigation property
-        .Include(c => c.Gifts)
-        .FirstOrDefault(c => c.CustomerId == customerId);
-        }
-
+        _context = context;
     }
+
+    public Cart addCart(Cart cart)
+    {
+        _context.Carts.Add(cart);
+        _context.SaveChanges();
+        return cart;
+    }
+
+    public Cart updateCart(Cart updatedCart)
+    {
+        var existingCart = _context.Carts.Find(updatedCart.CartId);
+
+        if (existingCart != null)
+        {
+            // Update properties of existing cart
+            existingCart.Gifts = updatedCart.Gifts;
+            existingCart.CustomerId = updatedCart.CustomerId;
+            // Add any other properties to update
+
+            _context.SaveChanges();
+
+            return existingCart;
+        }
+
+        return null; // Cart not found
+    }
+
+    public Cart getCartByCustomerId(long customerId)
+    {
+        return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
+        // return _context.Carts
+        //         .Include(c => c.User) // Include the Customer navigation property
+        //         .Include(c => c.Gifts)    // Include the Gifts navigation property
+        //         .FirstOrDefault(c => c.CustomerId == customerId);
+    }
+
+    public IQueryable<Customer> IncludeUser()
+        {
+            return _context.Carts
+                .Include(c => c.User) // Include the Customer navigation property
+                .Include(c => c.Gifts)    // Include the Gifts navigation property
+                .FirstOrDefault(c => c.CustomerId == customerId);
+        }
 }
+
+
+
+
