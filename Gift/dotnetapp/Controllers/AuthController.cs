@@ -95,6 +95,8 @@ namespace dotnetapp.Controllers
                     {
                         Username = user.Username,
                         Password = user.Password,
+                        Email = user.Email,
+                        MobileNumber = user.MobileNumber,
                         Role = user.Role,
                     };
 

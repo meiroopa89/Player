@@ -151,57 +151,6 @@ namespace dotnetapp.Services
             }
         }
 
-        //    public async Task<string> LoginAsync(string username, string password)
-        //    {
-        //        try
-        //        {
-        //            var user = await _userManager.FindByNameAsync(username);
-
-        //            if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
-        //                return null; // Invalid username or password
-
-        //            // Generate a JWT token
-        //            var token = GenerateJwtToken(user);
-        //            Console.WriteLine("hai" + token);
-
-        //            return token;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine("zxcvbnm" + ex.Message);
-        //            // Handle exceptions appropriately (e.g., logging)
-        //            return null; // Login failed
-        //        }
-        //    }
-
-
-        //    private string GenerateJwtToken(IdentityUser user)
-        //    {
-        //        Console.WriteLine(user.UserName);
-        //        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-        //        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        //        var claims = new List<Claim>
-        //{
-        //    new Claim(ClaimTypes.Name, user.UserName),
-        //};
-
-        //        // Retrieve roles for the user
-        //        var roles = _userManager.GetRolesAsync(user).Result;
-
-        //        // Add role claims to the JWT token
-        //        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
-        //        var token = new JwtSecurityToken(
-        //            _configuration["Jwt:Issuer"],
-        //            _configuration["Jwt:Audience"],
-        //            claims,
-        //            expires: DateTime.Now.AddHours(2), // Token expiry time
-        //            signingCredentials: credentials
-        //        );
-
-        //        return new JwtSecurityTokenHandler().WriteToken(token);
-        //    }
-
         public async Task<string> LoginAsync(string username, string password)
         {
             try
