@@ -21,10 +21,10 @@ public class GiftRepository
 
     public List<Gift> viewAllGifts()
     {
-        // return _context.Gifts.ToList();
-        return _context.Gifts
-        .Include(g => g.Cart)
-        .ToList();
+        return _context.Gifts.ToList();
+        // return _context.Gifts
+        // .Include(g => g.Cart)
+        // .ToList();
     }
 
     public Gift updateGift(long giftId, Gift updatedGift)
@@ -60,4 +60,9 @@ public class GiftRepository
 
         return null;
     }
+
+    public IQueryable<Gift> IncludeCart()
+        {
+            return _context.Gifts.Include(c => c.Cart);
+        }
 }

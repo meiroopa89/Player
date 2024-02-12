@@ -31,15 +31,7 @@ namespace dotnetapp.Controllers
             var gifts = _giftService.viewAllGifts();
 
             return Ok(gifts);
-                var jsonOptions = new JsonSerializerOptions
-        {
-            ReferenceHandler = ReferenceHandler.Preserve,
-            // You can add other options as needed...
-        };
-
-        var json = JsonSerializer.Serialize(cart, jsonOptions);
-        return Ok(json);
-        }
+            
         }
 
         [HttpPut("{id}")]

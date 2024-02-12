@@ -17,7 +17,8 @@ namespace dotnetapp.Services
             return _giftRepository.addGift(gift);
         }
 
-       public List<Gift> viewAllGifts()
+        // Corrected method signature without parameters
+        public List<Gift> viewAllGifts()
         {
             // Update to use the modified repository method
             return _giftRepository.viewAllGifts();
@@ -31,6 +32,14 @@ namespace dotnetapp.Services
         public Gift deleteGift(long giftId)
         {
             return _giftRepository.deleteGift(giftId);
+        }
+
+        public Gift getGiftById(long giftId)
+        {
+            var gift = _giftRepository.IncludeCart()
+                                      .FirstOrDefault(c => c.GiftId == giftId);
+
+            return gift;
         }
     }
 }
