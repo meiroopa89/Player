@@ -16,34 +16,65 @@ namespace dotnetapp.Controllers
             _userService = userService;
         }
 
+        // [HttpPost("register")]
+        // public IActionResult register([FromBody] User user)
+        // {
+        //     var registeredUser = _userService.register(user);
+
+        //     if (registeredUser != null)
+        //     {
+        //         var token = _userService.GenerateJwtToken(registeredUser);
+        //         return CreatedAtAction(nameof(login), new { email = registeredUser.Email, token });
+        //     }
+
+        //     return Conflict(new { Message = "Email already registered." });
+        // }
+
+        // [HttpPost("login")]
+        // public IActionResult login([FromBody] User user)
+        // {
+        //     var authenticatedUser = _userService.login(user);
+
+        //     if (authenticatedUser != null)
+        //     {
+        //         var token = _userService.GenerateJwtToken(authenticatedUser);
+        //         return Ok(new { Message = "User login successful.", User = authenticatedUser, Token = token });
+        //     }
+        //     else
+        //     {
+        //         return NotFound(new { Message = "Invalid email or password." });
+        //     }
+        // }
+
         [HttpPost("register")]
-        public IActionResult register([FromBody] User user)
-        {
-            var registeredUser = _userService.register(user);
+public IActionResult register([FromBody] User user)
+{
+    var registeredUser = _userService.register(user);
 
-            if (registeredUser != null)
-            {
-                var token = _userService.GenerateJwtToken(registeredUser);
-                return CreatedAtAction(nameof(login), new { email = registeredUser.Email, token });
-            }
+    if (registeredUser != null)
+    {
+        var token = _userService.GenerateJwtToken(registeredUser);
+        return CreatedAtAction(nameof(login), new { email = registeredUser.Email, role = registeredUser.UserRole, token });
+    }
 
-            return Conflict(new { Message = "Email already registered." });
-        }
+    return Conflict(new { Message = "Email already registered." });
+}
 
-        [HttpPost("login")]
-        public IActionResult login([FromBody] User user)
-        {
-            var authenticatedUser = _userService.login(user);
+[HttpPost("login")]
+public IActionResult login([FromBody] User user)
+{
+    var authenticatedUser = _userService.login(user);
 
-            if (authenticatedUser != null)
-            {
-                var token = _userService.GenerateJwtToken(authenticatedUser);
-                return Ok(new { Message = "User login successful.", User = authenticatedUser, Token = token });
-            }
-            else
-            {
-                return NotFound(new { Message = "Invalid email or password." });
-            }
-        }
+    if (authenticatedUser != null)
+    {
+        var token = _userService.GenerateJwtToken(authenticatedUser);
+        return Ok(new { Message = "User login successful.", User = authenticatedUser, Token = token });
+    }
+    else
+    {
+        return NotFound(new { Message = "Invalid email or password." });
+    }
+}
+
     }
 }
