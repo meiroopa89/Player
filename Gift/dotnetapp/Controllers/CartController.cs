@@ -50,16 +50,16 @@ namespace dotnetapp.Controllers
             //     return NotFound(new { Message = "Cart not found." });
             // }
 
-            // return Ok(cart);
+            return Ok(cart);
 
-            var jsonOptions = new JsonSerializerOptions
-        {
-            ReferenceHandler = ReferenceHandler.Preserve,
-            // You can add other options as needed...
-        };
+        //     var jsonOptions = new JsonSerializerOptions
+        // {
+        //     ReferenceHandler = ReferenceHandler.Preserve,
+        //     // You can add other options as needed...
+        // };
 
-        var json = JsonSerializer.Serialize(cart, jsonOptions);
-        return Ok(json);
+        // var json = JsonSerializer.Serialize(cart, jsonOptions);
+        // return Ok(json);
         }
     }
 }

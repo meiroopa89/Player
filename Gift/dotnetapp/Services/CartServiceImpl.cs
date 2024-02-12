@@ -54,10 +54,9 @@ namespace dotnetapp.Services
             return _cartRepository.updateCart(updatedCart);
         }
 
-       public Cart getCartByCustomerId(long customerId)
+        public Cart getCartByCustomerId(long customerId)
         {
             return _cartRepository.getCartByCustomerId(customerId);
         }
-
     }
 }
