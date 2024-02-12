@@ -153,22 +153,24 @@ namespace dotnetapp.Services
 
         public async Task<string> LoginAsync(string username, string password)
         {
-            try
-            {
-                var user = await _userManager.FindByNameAsync(username);
-                 Console.WriteLine("zxcvbnm" + user);
-                 Console.WriteLine("zxcvbnm" + password);
+             try
+    {
+        var user = await _userManager.FindByNameAsync(username);
+        Console.WriteLine("User: " + user?.UserName); // Debug output
+        Console.WriteLine("Password: " + password); // Debug output
 
+        if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
+        {
+            Console.WriteLine("Invalid username or password"); // Debug output
+            return null; // Invalid username or password
+        }
 
-                if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
-                    return null; // Invalid username or password
+        // Generate a JWT token
+        var token = GenerateJwtToken(user);
+        Console.WriteLine("Token: " + token); // Debug output
 
-                // Generate a JWT token
-                var token = GenerateJwtToken(user);
-                Console.WriteLine("hai" + token);
-
-                return token;
-            }
+        return token;
+    }
             catch (Exception ex)
             {
                 Console.WriteLine("zxcvbnm" + ex.Message);
@@ -179,7 +181,7 @@ namespace dotnetapp.Services
 
         private string GenerateJwtToken(IdentityUser user)
         {
-            Console.WriteLine(user.UserName);
+            Console.WriteLine("asdf"+user.UserName);
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new List<Claim>
@@ -205,57 +207,5 @@ namespace dotnetapp.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
-
-
-
-        //    private async Task<string> GenerateJwtToken(IdentityUser user)
-        //    {
-        //        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-        //        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        //        var claims = new List<Claim>
-        //{
-        //    new Claim(ClaimTypes.Name, user.UserName),
-        //};
-
-        //        // Add the user's role to claims
-        //        var roles = await _userManager.GetRolesAsync(user);
-        //        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
-        //        var token = new JwtSecurityToken(
-        //            _configuration["Jwt:Issuer"],
-        //            _configuration["Jwt:Audience"],
-        //            claims,
-        //            expires: DateTime.Now.AddHours(2), // Token expiry time
-        //            signingCredentials: credentials
-        //        );
-
-        //        return new JwtSecurityTokenHandler().WriteToken(token);
-        //    }
-
-
-
-        //private string GenerateJwtToken(IdentityUser user)
-        //{
-        //    Console.WriteLine(user.UserName);
-        //    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-        //    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        //    var claims = new[]
-        //    {
-        //        new Claim(ClaimTypes.Name, user.UserName),
-        //        // You can add role claims here if needed
-        //    };
-
-
-        //    var token = new JwtSecurityToken(
-        //        _configuration["Jwt:Issuer"],
-        //        _configuration["Jwt:Audience"],
-        //        claims,
-        //        expires: DateTime.Now.AddHours(2), // Token expiry time
-        //        signingCredentials: credentials
-        //    );
-
-        //    return new JwtSecurityTokenHandler().WriteToken(token);
-        //}
     }
 }
