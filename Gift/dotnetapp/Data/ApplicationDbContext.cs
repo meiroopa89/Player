@@ -66,6 +66,8 @@ namespace dotnetapp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+                base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Customer>()
                 .HasOne(c => c.User)
                 .WithOne()
