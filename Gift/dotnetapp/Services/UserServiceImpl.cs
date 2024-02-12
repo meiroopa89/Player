@@ -59,59 +59,35 @@ namespace dotnetapp.Services
             return _userRepository.login(user);
         }
 
-        // public string GenerateJwtToken(User user)
-        // {
-        //     var tokenHandler = new JwtSecurityTokenHandler();
-
-        //     using (var hmac = new HMACSHA256())
-        //     {
-        //         // Generate a random 256-bit key
-        //         var key = new byte[32]; // 256 bits
-        //         using (var rng = new RNGCryptoServiceProvider())
-        //         {
-        //             rng.GetBytes(key);
-        //         }
-
-        //         hmac.Key = key;
-
-        //         var tokenDescriptor = new SecurityTokenDescriptor
-        //         {
-        //             Subject = new ClaimsIdentity(new[]
-        //             {
-        //                 new Claim(ClaimTypes.Name, user.Email),
-        //                 // Add other claims as needed
-        //             }),
-        //             Expires = DateTime.UtcNow.AddHours(1), // Token expiration time
-        //             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        //         };
-
-        //         var token = tokenHandler.CreateToken(tokenDescriptor);
-        //         return tokenHandler.WriteToken(token);
-        //     }
-        // }
-
         public string GenerateJwtToken(User user)
-{
-    var tokenHandler = new JwtSecurityTokenHandler();
-    var key = Encoding.ASCII.GetBytes("MySuperSecretKey123!$%^&*");
-    // Assuming you have a property named "Role" in the User model
-    var roleClaim = new Claim(ClaimTypes.Role, user.UserRole);
-
-    var tokenDescriptor = new SecurityTokenDescriptor
-    {
-        Subject = new ClaimsIdentity(new[]
         {
-            new Claim(ClaimTypes.Name, user.Email),
-            roleClaim,
-            // Add other claims as needed
-        }),
-        Expires = DateTime.UtcNow.AddHours(1),
-        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-    };
+            var tokenHandler = new JwtSecurityTokenHandler();
 
-    var token = tokenHandler.CreateToken(tokenDescriptor);
-    return tokenHandler.WriteToken(token);
-}
+            using (var hmac = new HMACSHA256())
+            {
+                // Generate a random 256-bit key
+                var key = new byte[32]; // 256 bits
+                using (var rng = new RNGCryptoServiceProvider())
+                {
+                    rng.GetBytes(key);
+                }
 
+                hmac.Key = key;
+
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new[]
+                    {
+                        new Claim(ClaimTypes.Name, user.Email),
+                        // Add other claims as needed
+                    }),
+                    Expires = DateTime.UtcNow.AddHours(1), // Token expiration time
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                return tokenHandler.WriteToken(token);
+            }
+        }
     }
 }
