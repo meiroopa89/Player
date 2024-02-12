@@ -47,13 +47,13 @@
 //         }
 //     }
 // }
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore; // Add this using directive
 using Microsoft.EntityFrameworkCore;
 using dotnetapp.Models;
-
+using Microsoft.AspNetCore.Identity;
 namespace dotnetapp.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser> // Inherit from IdentityDbContext<IdentityUser>
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -85,5 +85,3 @@ namespace dotnetapp.Data
         }
     }
 }
-
-
