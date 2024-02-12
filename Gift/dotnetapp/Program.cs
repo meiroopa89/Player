@@ -111,10 +111,11 @@ using dotnetapp.Repositories;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Identity;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -133,18 +134,18 @@ public class Program
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("Gift")));
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-        .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<JobApplicationDbContext>()
-        .AddDefaultTokenProviders();
+        builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
         // Inside the Main method of Program.cs
         builder.Services.AddScoped<CustomerRepository>();
-        builder.Services.AddScoped<UserRepository>();
-        builder.Services.AddScoped<GiftRepository>();  
+        // builder.Services.AddScoped<UserRepository>();
+        builder.Services.AddScoped<GiftRepository>();
         builder.Services.AddScoped<CartRepository>();  // Add this line for CartRepository
         builder.Services.AddScoped<GiftService, GiftServiceImpl>();
-        builder.Services.AddScoped<UserService, UserServiceImpl>();
+        builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<CustomerService, CustomerServiceImpl>();
         builder.Services.AddScoped<CartService, CartServiceImpl>();
 
@@ -183,25 +184,22 @@ public class Program
 
         var app = builder.Build();
 
+        using (var scope = app.Services.CreateScope())
+        {
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-using (var scope = app.Services.CreateScope())
-{
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            if (!await roleManager.RoleExistsAsync("admin"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("admin"));
+            }
 
-    // Create roles if they don't exist
-    if (!await roleManager.RoleExistsAsync("admin"))
-    {
-        await roleManager.CreateAsync(new IdentityRole("admin"));
-    }
+            if (!await roleManager.RoleExistsAsync("applicant"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("applicant"));
+            }
+        }
 
-    if (!await roleManager.RoleExistsAsync("applicant"))
-    {
-        await roleManager.CreateAsync(new IdentityRole("applicant"));
-    }
-}
-
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -212,8 +210,8 @@ using (var scope = app.Services.CreateScope())
         app.UseCors();
         app.UseRouting();
 
-        app.UseAuthentication();  
-        app.UseAuthorization();  
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
         {
