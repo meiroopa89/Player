@@ -156,6 +156,9 @@ namespace dotnetapp.Services
             try
             {
                 var user = await _userManager.FindByNameAsync(username);
+                 Console.WriteLine("zxcvbnm" + user);
+                 Console.WriteLine("zxcvbnm" + password);
+
 
                 if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
                     return null; // Invalid username or password
