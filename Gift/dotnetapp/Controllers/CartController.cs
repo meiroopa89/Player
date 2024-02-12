@@ -45,10 +45,10 @@ namespace dotnetapp.Controllers
         {
             var cart = _cartService.getCartByCustomerId(customerId);
 
-            // if (cart == null)
-            // {
-            //     return NotFound(new { Message = "Cart not found." });
-            // }
+            if (cart == null)
+            {
+                return NotFound(new { Message = "Cart not found." });
+            }
 
             return Ok(cart);
 
