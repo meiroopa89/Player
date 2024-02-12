@@ -91,13 +91,16 @@ public class CartRepository
         //         .FirstOrDefault(c => c.CustomerId == customerId);
     }
 
-    public IQueryable<Customer> IncludeUser()
-        {
-            return _context.Carts
-                .Include(c => c.User) // Include the Customer navigation property
-                .Include(c => c.Gifts)    // Include the Gifts navigation property
-                .FirstOrDefault(c => c.CustomerId == customerId);
-        }
+public IQueryable<Cart> IncludeUserAndGifts(long customerId)
+{
+    return _context.Carts
+        .Include(c => c.Customer)
+            .ThenInclude(customer => customer.User)  // Include the User navigation property
+        .Include(c => c.Gifts)    // Include the Gifts navigation property
+        .Where(c => c.CustomerId == customerId);
+}
+
+
 }
 
 

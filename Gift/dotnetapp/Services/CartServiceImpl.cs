@@ -55,12 +55,13 @@ namespace dotnetapp.Services
         }
 
        public Cart getCartByCustomerId(long customerId)
-        {
-            var cart = _cartRepository.IncludeUser()
-                                    .getCartByCustomerId(customerId);
+{
+    var cart = _cartRepository.IncludeUserAndGifts(customerId)
+                               .FirstOrDefault();
 
-            return cart;
-        }
+    return cart;
+}
+
 
     }
 }

@@ -17,8 +17,9 @@ namespace dotnetapp.Services
             return _giftRepository.addGift(gift);
         }
 
-        public List<Gift> viewAllGifts()
+       public List<Gift> viewAllGifts()
         {
+            // Update to use the modified repository method
             return _giftRepository.viewAllGifts();
         }
 
