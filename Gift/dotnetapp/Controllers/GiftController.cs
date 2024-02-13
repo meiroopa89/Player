@@ -46,32 +46,20 @@ public IActionResult viewAllGifts([FromQuery] long? cartId)
 }
 
 
-        // [HttpPut("{id}")]
-        // public IActionResult updateGift(long id, [FromBody] Gift updatedGift)
-        // {
-        //     var editedGift = _giftService.updateGift(id, updatedGift);
-
-        //     if (editedGift != null)
-        //     {
-        //         return Ok(editedGift);
-        //     }
-
-        //     return NotFound(new { Message = "Gift not found." });
-        // }
-
-
-        [HttpPut("{cartId}/{giftId}")]
-        public IActionResult updateGift(long cartId, long giftId, [FromBody] Gift updatedGift)
+        [HttpPut("{id}")]
+        public IActionResult updateGift(long id, [FromBody] Gift updatedGift)
         {
-            var editedGift = _giftService.updateGift(cartId, giftId, updatedGift);
+            var editedGift = _giftService.updateGift(id, updatedGift);
 
             if (editedGift != null)
             {
                 return Ok(editedGift);
             }
 
-            return NotFound(new { Message = "Gift not found or update failed." });
+            return NotFound(new { Message = "Gift not found." });
         }
+
+
 
         [HttpDelete("{id}")]
         public IActionResult deleteGift(long id)

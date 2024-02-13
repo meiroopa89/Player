@@ -8,7 +8,7 @@ namespace dotnetapp.Services
     {
         Gift addGift(Gift gift);
         List<Gift> viewAllGifts(long? cartId = null);
-        Gift updateGift(long cartId, long giftId, Gift updatedGift);
+        Gift updateGift(long id, Gift updatedGift);
         Gift deleteGift(long giftId);
 
         

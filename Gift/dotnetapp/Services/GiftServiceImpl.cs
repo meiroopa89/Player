@@ -87,15 +87,15 @@ namespace dotnetapp.Services
         //     return _giftRepository.updateGift(cartId, giftId, updatedGift);
         // }
 
-        public Gift updateGift(long cartId, long giftId, Gift updatedGift)
+        public Gift updateGift(long id, Gift updatedGift)
         {
             // Ensure the gift belongs to the specified cart before updating
-            var giftInCart = _cartService.getGiftById(cartId, giftId);
+            var giftInCart = _cartService.getGiftById(giftId);
 
             if (giftInCart != null)
             {
                 // Perform the update on the gift
-                return _giftRepository.updateGift(cartId, giftId, updatedGift);
+                return _giftRepository.updateGift(giftId, updatedGift);
             }
 
             return null; // Gift not found or not associated with the specified cart
@@ -107,12 +107,12 @@ namespace dotnetapp.Services
             return _giftRepository.deleteGift(giftId);
         }
 
-        // public Gift getGiftById(long cartId, long giftId)
-        // {
-        //     var gift = _giftRepository.IncludeCart()
-        //                               .FirstOrDefault(c => c.GiftId == giftId);
+        public Gift getGiftById(long giftId)
+        {
+            var gift = _giftRepository.IncludeCart()
+                                      .FirstOrDefault(c => c.GiftId == giftId);
 
-        //     return gift;
-        // }
+            return gift;
+        }
     }
 }
