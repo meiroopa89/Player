@@ -11,9 +11,6 @@ namespace dotnetapp.Services
         Gift updateGift(long giftId, Gift updatedGift);
         Gift deleteGift(long giftId);
 
-        
-
-
 
     }
 }

@@ -110,38 +110,50 @@ private readonly ApplicationDbContext _context;
         return null;
     }
 
-    // public Cart getCartByCustomerId(long customerId)
-    // {
-    //     return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
-    // }
-
     public Cart getCartByCustomerId(long customerId)
-{
-    var cart = _context.Carts
-        .Include(cart => cart.Gifts)
-        .FirstOrDefault(c => c.CustomerId == customerId);
-
-    if (cart == null)
     {
-        // Log or handle the case where the cart is null.
-        return null;
+        return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
     }
 
-    return cart;
-}
+//     public Cart getCartByCustomerId(long customerId)
+// {
+//     var cart = _context.Carts
+//         .Include(cart => cart.Gifts)
+//         .FirstOrDefault(c => c.CustomerId == customerId);
+
+//     if (cart == null)
+//     {
+//         // Log or handle the case where the cart is null.
+//         return null;
+//     }
+
+//     return cart;
+// }
 
 
-    public List<Gift> getAllGiftsByCustomerId(long customerId)
+public List<Gift> getAllGiftsByCustomerId(long customerId)
+{
+    var cart = getCartByCustomerId(customerId);
+
+    if (cart != null)
     {
-        var cart = getCartByCustomerId(customerId);
-        
-        if (cart != null)
+        if (cart.Gifts != null)
         {
             return cart.Gifts.ToList();
         }
-
-        return null;
+        else
+        {
+            Console.WriteLine("Cart has no associated gifts.");
+        }
     }
+    else
+    {
+        Console.WriteLine($"Cart not found for customer ID: {customerId}");
+    }
+
+    return new List<Gift>(); // Return an empty list if there are no gifts or the cart is null
+}
+
 
 }
 
