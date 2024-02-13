@@ -1,5 +1,5 @@
-using BookStoreDBFirst.Models;
-using BookStoreDBFirst.Services;
+using dotnetapp.Models;
+using dotnetapp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,16 +8,18 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
+using dotnetapp.Data;
+using dotnetapp.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<JobApplicationDbContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Gift")));
 // Configure JWT authentication
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
         .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<JobApplicationDbContext>()
+        .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
 builder.Services.AddCors(options =>

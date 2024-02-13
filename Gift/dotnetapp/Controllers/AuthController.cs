@@ -59,7 +59,7 @@ using dotnetapp.Data;
 
 namespace dotnetapp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -132,19 +132,19 @@ namespace dotnetapp.Controllers
         }
 
 
-        [Authorize(Roles = "admin")]
-        [HttpGet("admin")]
-        public IActionResult AdminProtected()
-        {
-            return Ok("This is an admin-protected endpoint.");
-        }
+        // [Authorize(Roles = "admin")]
+        // [HttpGet("admin")]
+        // public IActionResult AdminProtected()
+        // {
+        //     return Ok("This is an admin-protected endpoint.");
+        // }
 
-        [Authorize(Roles = "applicant")]
-        [HttpGet("applicant")]
-        public IActionResult applicantProtected()
-        {
-            return Ok("This is an applicant-protected endpoint.");
-        }
+        // [Authorize(Roles = "applicant")]
+        // [HttpGet("applicant")]
+        // public IActionResult applicantProtected()
+        // {
+        //     return Ok("This is an applicant-protected endpoint.");
+        // }
     }
 }
 
