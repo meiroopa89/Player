@@ -225,7 +225,14 @@ namespace dotnetapp.Services
     Console.WriteLine("Roles: " + string.Join(", ", roles));
 
     // Add role claims to the JWT token using ClaimTypes.Role
-    claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+    // claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+    foreach (var role in roles)
+{
+    var roleClaim = new Claim(ClaimTypes.Role, role);
+    Console.WriteLine($"Adding role claim: {roleClaim.Type} - {roleClaim.Value}");
+    claims.Add(roleClaim);
+}
 
     var token = new JwtSecurityToken(
         _configuration["Jwt:Issuer"],
@@ -234,6 +241,7 @@ namespace dotnetapp.Services
         expires: DateTime.Now.AddHours(2),
         signingCredentials: credentials
     );
+    Console.WriteLine("Token generated successfully: " + token);
 
     return new JwtSecurityTokenHandler().WriteToken(token);
 }
