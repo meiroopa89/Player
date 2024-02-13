@@ -56,67 +56,42 @@ private readonly ApplicationDbContext _context;
         _context = context;
     }
 
-//         public Cart addCart(Cart cart)
-// {
-//     if (cart.CustomerId > 0)
-//     {
-//         Console.WriteLine(cart);
+    // public Cart addCart(Cart cart)
+    // {
+    //     _context.Carts.Add(cart);
+    //     _context.SaveChanges();
+    //     return cart;
+    // }
 
-//         // Fetch customer details based on the provided customerId
-//         // var customer = _context.Customers.FirstOrDefault(c => c.CustomerId == cart.CustomerId);
-//         var customer = _context.Customers
-//             .Include(c => c.User) // Include any related entities you want to load
-//             .FirstOrDefault(c => c.CustomerId == cart.CustomerId);
-
-//         if (customer == null)
-//         {
-//             // Handle the case where customer is not found
-//             // You might want to return an error response or throw an exception
-//             // For now, returning null as an indication that the operation failed
-//             return null;
-//         }
-
-//         // Assign the customer details to the cart
-//         cart.CustomerId = customer.CustomerId;
-//         cart.Customer = customer;
-//     }
-
-//     _context.Carts.Add(cart);
-//     _context.SaveChanges();
-//     return cart;
-// }
-
-public Cart addCart(Cart cart)
+    public Cart addCart(Cart cart)
 {
     if (cart.CustomerId > 0)
     {
+        Console.WriteLine(cart);
+
         // Fetch customer details based on the provided customerId
+        // var customer = _context.Customers.FirstOrDefault(c => c.CustomerId == cart.CustomerId);
         var customer = _context.Customers
-            .Include(c => c.User)
+            .Include(c => c.User) // Include any related entities you want to load
             .FirstOrDefault(c => c.CustomerId == cart.CustomerId);
 
         if (customer == null)
         {
-            // Handle the case where the customer is not found
+            // Handle the case where customer is not found
+            // You might want to return an error response or throw an exception
+            // For now, returning null as an indication that the operation failed
             return null;
         }
 
+        // Assign the customer details to the cart
         cart.CustomerId = customer.CustomerId;
         cart.Customer = customer;
-        if (cart.Gifts != null)
-        {
-            foreach (var gift in cart.Gifts)
-            {
-                gift.Cart = cart;
-            }
-        }
     }
 
     _context.Carts.Add(cart);
     _context.SaveChanges();
     return cart;
 }
-
 
     public Cart updateCart(Cart updatedCart)
     {
@@ -135,10 +110,10 @@ public Cart addCart(Cart cart)
         return null;
     }
 
-    // public Cart getCartByCustomerId(long customerId)
-    // {
-    //     return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
-    // }
+    public Cart getCartByCustomerId(long customerId)
+    {
+        return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
+    }
 
 //     public Cart getCartByCustomerId(long customerId)
 // {
