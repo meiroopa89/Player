@@ -115,9 +115,11 @@ using Microsoft.AspNetCore.Identity;
 
 public class Program
 {
+    IConfiguration _configuration;
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        _configuration = builder.Configuration;
 
         // Add services to the container.
         builder.Services.AddCors(options =>
@@ -150,7 +152,8 @@ public class Program
         builder.Services.AddScoped<CartService, CartServiceImpl>();
 
         // Add JWT authentication
-        var key = Encoding.ASCII.GetBytes("MySuperSecretKey123!$%^&*");
+        // var key = Encoding.ASCII.GetBytes("MySuperSecretKey123!$%^&*");
+          var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
         builder.Services.AddAuthentication(x =>
         {
             x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
