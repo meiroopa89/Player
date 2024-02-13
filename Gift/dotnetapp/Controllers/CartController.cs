@@ -22,7 +22,8 @@ namespace dotnetapp.Controllers
     [HttpPost("add")]
     public IActionResult addCart([FromBody] Cart cart)
     {
-        var addedCart = _cartService.addCart(cart);
+        // var addedCart = _cartService.addCart(cart);
+        var addedCart = _cartService.addCartWithInclude(cart);
         return Ok(addedCart);
     }
 
@@ -57,6 +58,13 @@ namespace dotnetapp.Controllers
     {
         var carts = _cartService.IncludeUserAndGifts(customerId);
         return Ok(carts);
+    }
+
+    [HttpPost("addWithCustomerId/{customerId}")]
+    public IActionResult addCartWithCustomerId(long customerId, [FromBody] Cart cart)
+    {
+        var addedCart = _cartService.addCartWithCustomerId(customerId, cart);
+        return Ok(addedCart);
     }
     }
 }

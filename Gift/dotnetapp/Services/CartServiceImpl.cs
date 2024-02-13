@@ -38,6 +38,7 @@ namespace dotnetapp.Services
     public class CartServiceImpl : CartService
     {
         private readonly CartRepository _cartRepository;
+         private readonly CustomerService _customerService;
 
     public CartServiceImpl(CartRepository cartRepository)
     {
@@ -63,5 +64,26 @@ namespace dotnetapp.Services
     {
         return _cartRepository.IncludeUserAndGifts(customerId);
     }
+
+    public Cart addCartWithCustomerId(long customerId, Cart cart)
+        {
+            // Fetch customer details based on the provided customerId
+            var customer = _customerService.getCustomerById(customerId);
+
+            if (customer == null)
+            {
+                return null; // or handle accordingly, e.g., return NotFound("Customer not found");
+            }
+
+            // Assign the customer details to the cart
+            cart.CustomerId = customer.CustomerId;
+            cart.Customer = customer;
+
+            // Save the new cart to the database
+            _cartRepository.addCart(cart);
+
+            return cart;
+        }
+
     }
 }

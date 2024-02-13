@@ -94,6 +94,12 @@ private readonly ApplicationDbContext _context;
             .Where(c => c.CustomerId == customerId);
     }
 
+    public Cart getCartByCustomerId(long customerId)
+    {
+        return _context.Carts
+            .Include(c => c.Customer)
+            .FirstOrDefault(c => c.CustomerId == customerId);
+    }
 
 }
 
