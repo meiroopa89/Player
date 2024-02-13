@@ -28,6 +28,7 @@ namespace dotnetapp.Controllers
         [HttpGet]
         public IActionResult viewAllGifts()
         {
+            Console.WriteLine("gift controller");
             var gifts = _giftService.viewAllGifts();
 
             return Ok(gifts);

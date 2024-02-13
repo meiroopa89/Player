@@ -68,6 +68,7 @@ namespace dotnetapp.Services
         {
             // Update to use the modified repository method
             return _giftRepository.IncludeCart().ToList();
+            // return _giftRepository.viewAllGifts();
         }
 
         public Gift updateGift(long giftId, Gift updatedGift)
