@@ -110,16 +110,17 @@ private readonly ApplicationDbContext _context;
         return null;
     }
 
-    // public Cart getCartByCustomerId(long customerId)
-    // {
-    //     return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
-    // }
     public Cart getCartByCustomerId(long customerId)
     {
-    return _context.Carts
-        .Include(cart => cart.Gifts)  // Include the associated gifts
-        .FirstOrDefault(c => c.CustomerId == customerId);
+        return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
     }
+    
+    // public Cart getCartByCustomerId(long customerId)
+    // {
+    // return _context.Carts
+    //     .Include(cart => cart.Gifts)  // Include the associated gifts
+    //     .FirstOrDefault(c => c.CustomerId == customerId);
+    // }
 
 }
 
