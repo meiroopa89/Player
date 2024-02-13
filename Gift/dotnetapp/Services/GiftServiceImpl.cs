@@ -36,11 +36,11 @@
 
 //         public Gift getGiftById(long giftId)
 //         {
-//             var gift = _giftRepository.IncludeCart()
-//                                       .FirstOrDefault(c => c.GiftId == giftId);
-
+//             var gift = _giftRepository.viewAllGifts()
+//                                     .FirstOrDefault(c => c.GiftId == giftId);
 //             return gift;
 //         }
+
 //     }
 // }
 
