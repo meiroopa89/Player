@@ -12,9 +12,9 @@ namespace dotnetapp.Controllers
     [Route("api/cart")]  
     public class CartController : ControllerBase
     {
-        private readonly CartServiceImpl _cartService;
+        private readonly CartService _cartService;
 
-    public CartController(CartServiceImpl cartService)
+    public CartController(CartService cartService)
     {
         _cartService = cartService;
     }
