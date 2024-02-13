@@ -19,32 +19,62 @@ public class GiftRepository
         return gift;
     }
 
-    public List<Gift> viewAllGifts()
+   public List<Gift> viewAllGifts(long? cartId = null)
+{
+    Console.WriteLine("gift repo");
+    // If cartId is provided, filter gifts based on the specified cartId
+    if (cartId.HasValue)
     {
-        Console.WriteLine("gift repo");
-        // return _context.Gifts.ToList();
         return _context.Gifts.Where(g => g.CartId == cartId).ToList();
     }
 
-    public Gift updateGift(long giftId, Gift updatedGift)
+    // If no cartId is provided, return all gifts
+    return _context.Gifts.ToList();
+}
+
+
+    // public Gift updateGift(long giftId, Gift updatedGift)
+    // {
+    //     var existingGift = _context.Gifts.Find(giftId);
+
+    //     if (existingGift != null)
+    //     {
+    //         existingGift.GiftType = updatedGift.GiftType;
+    //         existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
+    //         existingGift.GiftDetails = updatedGift.GiftDetails;
+    //         existingGift.GiftPrice = updatedGift.GiftPrice;
+    //         existingGift.Quantity = updatedGift.Quantity;
+    //         // Add any other properties to update
+
+    //         _context.SaveChanges();
+    //         return existingGift;
+    //     }
+
+    //     return null;
+    // }
+
+    public Gift updateGift(long cartId, long giftId, Gift updatedGift)
+{
+    // Retrieve the gift based on both cartId and giftId
+    var existingGift = _context.Gifts.FirstOrDefault(g => g.CartId == cartId && g.GiftId == giftId);
+
+    if (existingGift != null)
     {
-        var existingGift = _context.Gifts.Find(giftId);
+        existingGift.GiftType = updatedGift.GiftType;
+        existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
+        existingGift.GiftDetails = updatedGift.GiftDetails;
+        existingGift.GiftPrice = updatedGift.GiftPrice;
+        existingGift.Quantity = updatedGift.Quantity;
+        // Add any other properties to update
 
-        if (existingGift != null)
-        {
-            existingGift.GiftType = updatedGift.GiftType;
-            existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
-            existingGift.GiftDetails = updatedGift.GiftDetails;
-            existingGift.GiftPrice = updatedGift.GiftPrice;
-            existingGift.Quantity = updatedGift.Quantity;
-            // Add any other properties to update
-
-            _context.SaveChanges();
-            return existingGift;
-        }
-
-        return null;
+        _context.SaveChanges();
+        Console.WriteLine("repo");
+        return existingGift;
     }
+
+    return null;
+}
+
 
     public Gift deleteGift(long giftId)
     {

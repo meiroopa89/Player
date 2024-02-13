@@ -46,17 +46,32 @@ public IActionResult viewAllGifts([FromQuery] long? cartId)
 }
 
 
+        // [HttpPut("{id}")]
+        // public IActionResult updateGift(long id, [FromBody] Gift updatedGift)
+        // {
+        //     var editedGift = _giftService.updateGift(id, updatedGift);
+
+        //     if (editedGift != null)
+        //     {
+        //         return Ok(editedGift);
+        //     }
+
+        //     return NotFound(new { Message = "Gift not found." });
+        // }
+
+        // [HttpPut("{cartId}/{giftId}")]
         [HttpPut("{id}")]
-        public IActionResult updateGift(long id, [FromBody] Gift updatedGift)
+        public IActionResult updateGift(long cartId, long giftId, [FromBody] Gift updatedGift)
         {
-            var editedGift = _giftService.updateGift(id, updatedGift);
+            Console.WriteLine("update");
+            var editedGift = _giftService.updateGift(cartId, giftId, updatedGift);
 
             if (editedGift != null)
             {
                 return Ok(editedGift);
             }
 
-            return NotFound(new { Message = "Gift not found." });
+            return NotFound(new { Message = "Gift not found or update failed." });
         }
 
         [HttpDelete("{id}")]
@@ -71,5 +86,7 @@ public IActionResult viewAllGifts([FromQuery] long? cartId)
 
             return NotFound(new { Message = "Gift not found." });
         }
+
+
     }
 }

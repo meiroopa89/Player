@@ -85,5 +85,15 @@ Console.WriteLine(customer);
             return _cartRepository.getCartByCustomerId(customerId);
         }
 
+        public List<Gift> viewAllGifts(long cartId)
+        {
+            // Retrieve the gifts in the specified cart using your logic
+            // You may need to access the gifts associated with the cart in your data model
+            // and return them as a list
+            // Example:
+            var cartGifts = _context.Gifts.Where(g => g.CartId == cartId).ToList();
+            return cartGifts;
+        }
+
     }
 }

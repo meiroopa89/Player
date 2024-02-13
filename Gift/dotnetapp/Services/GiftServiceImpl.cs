@@ -82,9 +82,9 @@ namespace dotnetapp.Services
             }
         }
 
-        public Gift updateGift(long giftId, Gift updatedGift)
+        public Gift updateGift(long cartId, long giftId, Gift updatedGift)
         {
-            return _giftRepository.updateGift(giftId, updatedGift);
+            return _giftRepository.updateGift(cartId, giftId, updatedGift);
         }
 
         public Gift deleteGift(long giftId)

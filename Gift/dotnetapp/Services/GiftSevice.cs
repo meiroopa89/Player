@@ -7,11 +7,11 @@ namespace dotnetapp.Services
     public interface GiftService
     {
         Gift addGift(Gift gift);
-        List<Gift> viewAllGifts();
-        Gift updateGift(long giftId, Gift gift);
+        List<Gift> viewAllGifts(long? cartId = null);
+        Gift updateGift(long cartId, long giftId, Gift updatedGift);
         Gift deleteGift(long giftId);
 
-        
+
     }
 }
 
