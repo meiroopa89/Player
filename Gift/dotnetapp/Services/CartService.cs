@@ -8,7 +8,7 @@ namespace dotnetapp.Services
         Cart addCart(Cart cart);
         // Cart addCartWithCustomerId(long customerId, Cart cart);
         Cart updateCart(Cart updatedCart);
-        Cart customer(long customerId);
+        Cart getCustomerById(long customerId);
         // IQueryable<Cart> IncludeUserAndGifts(long customerId);
     }
 }

@@ -80,26 +80,10 @@ private readonly ApplicationDbContext _context;
         return null;
     }
 
-    public Cart customer(long customerId)
+    public Cart getCustomerById(long customerId)
     {
         return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
     }
-
-
-    // public Cart addCartWithCustomerId(long customerId, Cart cart)
-    // {
-    //     var existingCustomer = _context.Customers.Find(customerId);
-
-    //     if (existingCustomer != null)
-    //     {
-    //         cart.Customer = existingCustomer;
-    //         _context.Carts.Add(cart);
-    //         _context.SaveChanges();
-    //         return cart;
-    //     }
-
-    //     return null; // Customer not found
-    // }
 
 }
 

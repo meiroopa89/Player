@@ -40,50 +40,43 @@ namespace dotnetapp.Services
     public class CartServiceImpl : CartService
     {
         private readonly CartRepository _cartRepository;
-        //  private readonly CustomerService _customerService;
-         private readonly ApplicationDbContext _context;
+        private readonly CustomerService _customerService;
+        private readonly ApplicationDbContext _context;
 
-    public CartServiceImpl(CartRepository cartRepository)
-    {
-        _cartRepository = cartRepository;
-    }
+        public CartServiceImpl(CartRepository cartRepository, CustomerService customerService, ApplicationDbContext context)
+        {
+            _cartRepository = cartRepository;
+            _customerService = customerService;
+            _context = context;
+        }
 
-    public Cart addCart(Cart cart)
-    {
-        return _cartRepository.addCart(cart);
-    }
+        public Cart addCart(Cart cart)
+        {
+            if (cart.CustomerId > 0)
+            {
+                var customer = _customerService.getCustomerById(cart.CustomerId);
 
-    public Cart updateCart(Cart updatedCart)
-    {
-        return _cartRepository.updateCart(updatedCart);
-    }
+                if (customer == null)
+                {
+                    return null;
+                }
 
-    public Cart customer(long customerId)
-    {
-        return _cartRepository.customer(customerId);
-    }
+                cart.CustomerId = customer.CustomerId;
+                cart.Customer = customer;
+            }
 
-//     public Cart addCartWithCustomerId(long customerId, Cart cart)
-// {
-//     // Fetch customer details based on the provided customerId
-//     var customer = _context.Customers.Find(customerId);
+            _cartRepository.addCart(cart);
+            return cart;
+        }
 
-//     if (customer == null)
-//     {
-//         return null; // or handle accordingly, e.g., return NotFound("Customer not found");
-//     }
+        public Cart updateCart(Cart updatedCart)
+        {
+            return _cartRepository.updateCart(updatedCart);
+        }
 
-//     // Assign the customer details to the cart
-//     cart.CustomerId = customer.CustomerId;
-//     cart.Customer = customer;
-
-//     // Save the new cart to the database
-//     _context.Carts.Add(cart);
-//     _context.SaveChanges();
-
-//     return cart;
-// }
-
-
+        public Cart getCustomerById(long customerId)
+        {
+            return _context.Customers.FirstOrDefault(c => c.CustomerId == customerId);
+        }
     }
 }

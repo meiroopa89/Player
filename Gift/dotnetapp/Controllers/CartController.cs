@@ -13,19 +13,43 @@ namespace dotnetapp.Controllers
     public class CartController : ControllerBase
     {
         private readonly CartService _cartService;
+        private readonly CustomerService _customerService;
 
-    public CartController(CartService cartService)
+    public CartController(CartService cartService, CustomerService customerService)
     {
         _cartService = cartService;
+        _customerService = customerService;
     }
 
-    [HttpPost("add")]
-    public IActionResult addCart([FromBody] Cart cart)
+    // [HttpPost("add")]
+    // public IActionResult addCart([FromBody] Cart cart)
+    // {
+    //     // var addedCart = _cartService.addCart(cart);
+    //     var addedCart = _cartService.addCart(cart);
+    //     return Ok(addedCart);
+    // }
+
+        [HttpPost("add")]
+public IActionResult addCart([FromBody] Cart cart)
+{
+    if (cart.CustomerId > 0)
     {
-        // var addedCart = _cartService.addCart(cart);
-        var addedCart = _cartService.addCart(cart);
-        return Ok(addedCart);
+        // Fetch customer details based on the provided customerId
+        var customer = _customerService.getCustomerById(cart.CustomerId);
+
+        if (customer == null)
+        {
+            return NotFound("Customer not found");
+        }
+
+        // Assign the customer details to the cart
+        cart.CustomerId = customer.CustomerId;
+        cart.Customer = customer;
     }
+
+    var addedCart = _cartService.addCart(cart);
+    return Ok(addedCart);
+}
 
     [HttpPost("update")]
     public IActionResult updateCart([FromBody] Cart updatedCart)
@@ -41,9 +65,9 @@ namespace dotnetapp.Controllers
     }
 
     [HttpGet("customer/{customerId}")]
-    public IActionResult customer(long customerId)
+    public IActionResult getCustomerById(long customerId)
     {
-        var cart = _cartService.customer(customerId);
+        var cart = _cartService.getCustomerById(customerId);
 
         if (cart != null)
         {
