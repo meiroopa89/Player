@@ -26,14 +26,25 @@ namespace dotnetapp.Controllers
         }
 
         [HttpGet]
-        public IActionResult viewAllGifts()
-        {
-            Console.WriteLine("gift controller");
-            var gifts = _giftService.viewAllGifts();
+public IActionResult viewAllGifts([FromQuery] long? cartId)
+{
+    Console.WriteLine("gift controller");
 
-            return Ok(gifts);
-            
-        }
+    var gifts = _giftService.viewAllGifts(cartId);
+
+    if (gifts != null)
+    {
+        return Ok(gifts);
+    }
+
+    if (cartId.HasValue)
+    {
+        return NotFound("Gifts not found in the specified cart");
+    }
+
+    return NotFound("Gifts not found.");
+}
+
 
         [HttpPut("{id}")]
         public IActionResult updateGift(long id, [FromBody] Gift updatedGift)

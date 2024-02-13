@@ -43,20 +43,23 @@
 
 //     }
 // }
-
-
+// GiftServiceImpl.cs
 using System.Collections.Generic;
 using dotnetapp.Models;
+using dotnetapp.Repositories;
+using dotnetapp.Services;
 
 namespace dotnetapp.Services
 {
     public class GiftServiceImpl : GiftService
     {
         private readonly GiftRepository _giftRepository;
+        private readonly CartService _cartService;
 
-        public GiftServiceImpl(GiftRepository giftRepository)
+        public GiftServiceImpl(GiftRepository giftRepository, CartService cartService)
         {
             _giftRepository = giftRepository;
+            _cartService = cartService;
         }
 
         public Gift addGift(Gift gift)
@@ -64,11 +67,19 @@ namespace dotnetapp.Services
             return _giftRepository.addGift(gift);
         }
 
-        public List<Gift> viewAllGifts()
+        public List<Gift> viewAllGifts(long? cartId = null)
         {
-            // Update to use the modified repository method
-            return _giftRepository.IncludeCart().ToList();
-            // return _giftRepository.viewAllGifts();
+            if (cartId.HasValue)
+            {
+                // If cartId is provided, fetch gifts inside the specified cart
+                var giftsInCart = _cartService.viewAllGifts(cartId.Value);
+                return giftsInCart;
+            }
+            else
+            {
+                // If no cartId is provided, fetch all gifts
+                return _giftRepository.viewAllGifts();
+            }
         }
 
         public Gift updateGift(long giftId, Gift updatedGift)
@@ -90,4 +101,3 @@ namespace dotnetapp.Services
         }
     }
 }
- 

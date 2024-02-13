@@ -22,10 +22,8 @@ public class GiftRepository
     public List<Gift> viewAllGifts()
     {
         Console.WriteLine("gift repo");
-        return _context.Gifts.ToList();
-        // return _context.Gifts
-        // .Include(g => g.Cart)
-        // .ToList();
+        // return _context.Gifts.ToList();
+        return _context.Gifts.Where(g => g.CartId == cartId).ToList();
     }
 
     public Gift updateGift(long giftId, Gift updatedGift)

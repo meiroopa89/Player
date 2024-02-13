@@ -10,6 +10,8 @@ namespace dotnetapp.Services
         List<Gift> viewAllGifts();
         Gift updateGift(long giftId, Gift gift);
         Gift deleteGift(long giftId);
+
+        
     }
 }
 
