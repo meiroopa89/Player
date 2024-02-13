@@ -69,5 +69,18 @@ public IActionResult getCartByCustomerId(long customerId)
     return NotFound("Cart not found");
 }
 
+[HttpGet("customer/{customerId}/gifts")]
+public IActionResult getAllGiftsByCustomerId(long customerId)
+{
+    var gifts = _cartService.getAllGiftsByCustomerId(customerId);
+
+    if (gifts != null)
+    {
+        return Ok(gifts);
+    }
+
+    return NotFound("Gifts not found for the specified customer");
+}
+
     }
 }

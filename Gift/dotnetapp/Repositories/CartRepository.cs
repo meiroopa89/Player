@@ -110,17 +110,38 @@ private readonly ApplicationDbContext _context;
         return null;
     }
 
-    public Cart getCartByCustomerId(long customerId)
-    {
-        return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
-    }
-    
     // public Cart getCartByCustomerId(long customerId)
     // {
-    // return _context.Carts
-    //     .Include(cart => cart.Gifts)  // Include the associated gifts
-    //     .FirstOrDefault(c => c.CustomerId == customerId);
+    //     return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
     // }
+
+    public Cart getCartByCustomerId(long customerId)
+{
+    var cart = _context.Carts
+        .Include(cart => cart.Gifts)
+        .FirstOrDefault(c => c.CustomerId == customerId);
+
+    if (cart == null)
+    {
+        // Log or handle the case where the cart is null.
+        return null;
+    }
+
+    return cart;
+}
+
+
+    public List<Gift> getAllGiftsByCustomerId(long customerId)
+    {
+        var cart = getCartByCustomerId(customerId);
+        
+        if (cart != null)
+        {
+            return cart.Gifts.ToList();
+        }
+
+        return null;
+    }
 
 }
 
