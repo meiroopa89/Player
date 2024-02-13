@@ -23,11 +23,6 @@ public class GiftRepository
 {
     Console.WriteLine("gift repo");
     // If cartId is provided, filter gifts based on the specified cartId
-    if (cartId.HasValue)
-    {
-        return _context.Gifts.Where(g => g.CartId == cartId).ToList();
-    }
-
     // If no cartId is provided, return all gifts
     return _context.Gifts.ToList();
 }

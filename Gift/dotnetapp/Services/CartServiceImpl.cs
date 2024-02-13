@@ -28,6 +28,7 @@
 //         }
 //     }
 // }
+
 using System.Collections.Generic;
 using dotnetapp.Models;
 using dotnetapp.Repositories;
@@ -55,8 +56,6 @@ namespace dotnetapp.Services
         {
             if (cart.CustomerId > 0)
             {
-Console.WriteLine("service"+cart);
-
                 // var customer = _customerService.getCustomerById(cart.CustomerId);
                  var customer = _context.Customers
                 .Include(c => c.User) // Include any related entities you want to load
@@ -86,21 +85,29 @@ Console.WriteLine(customer);
         }
 
         public List<Gift> viewAllGifts(long cartId)
+    {
+        // Implement logic to fetch all gifts associated with the specified cartId
+        var cart = _cartRepository.getGiftById(cartId);
+        
+        if (cart != null)
         {
-            // Retrieve the gifts in the specified cart using your logic
-            // You may need to access the gifts associated with the cart in your data model
-            // and return them as a list
-            // Example:
-            var cartGifts = _context.Gifts.Where(g => g.CartId == cartId).ToList();
-            return cartGifts;
+            return cart.Gifts.ToList();
         }
 
-        public Gift getGiftById(long cartId, long giftId)
+        return null;
+    }
+     public Gift getGiftById(long cartId, long giftId)
+    {
+        // Implement logic to fetch a gift based on both cartId and giftId
+        var cart = _cartRepository.getGiftById(cartId);
+
+        if (cart != null)
         {
-            // Implement logic to fetch a gift based on both cartId and giftId
-            return _context.Gifts
-                .Where(g => g.CartId == cartId && g.GiftId == giftId)
-                .FirstOrDefault();
+            return cart.Gifts.FirstOrDefault(g => g.GiftId == giftId);
         }
+
+        return null;
+    }
+
     }
 }
