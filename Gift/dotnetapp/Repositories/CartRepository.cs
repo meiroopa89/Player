@@ -80,7 +80,7 @@ private readonly ApplicationDbContext _context;
         return null;
     }
 
-    public Cart getCustomerById(long customerId)
+    public Cart getCartByCustomerId(long customerId)
     {
         return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
     }

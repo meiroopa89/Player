@@ -28,7 +28,6 @@
 //         }
 //     }
 // }
-
 using System.Collections.Generic;
 using dotnetapp.Models;
 using dotnetapp.Repositories;
@@ -74,9 +73,10 @@ namespace dotnetapp.Services
             return _cartRepository.updateCart(updatedCart);
         }
 
-        public Cart getCustomerById(long customerId)
+        public Cart getCartByCustomerId(long customerId)
         {
-            return _context.Customers.FirstOrDefault(c => c.CustomerId == customerId);
+            return _cartRepository.getCartByCustomerId(customerId);
         }
+
     }
 }
