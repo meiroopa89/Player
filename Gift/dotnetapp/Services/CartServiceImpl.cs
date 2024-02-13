@@ -1,15 +1,21 @@
 using System.Collections.Generic;
 using dotnetapp.Models;
+using dotnetapp.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotnetapp.Services
 {
     public class CartServiceImpl : CartService
     {
         private readonly CartRepository _cartRepository;
+        private readonly ApplicationDbContext _context;
+        private readonly CustomerService _customerService;
 
-        public CartServiceImpl(CartRepository cartRepository)
+        public CartServiceImpl(CartRepository cartRepository, ApplicationDbContext context, CustomerService customerService)
         {
             _cartRepository = cartRepository;
+            _context = context;
+            _customerService = customerService;
         }
 
         public Cart addCart(Cart cart)
@@ -22,9 +28,16 @@ namespace dotnetapp.Services
             return _cartRepository.updateCart(updatedCart);
         }
 
-        public Cart getCartByCustomerId(long customerId)
+        // public Cart getCartByCustomerId(long customerId)
+        // {
+        //     return _cartRepository.getCartByCustomerId(customerId);
+        // }
+
+         public Cart getCartByCustomerId(long customerId)
         {
-            return _cartRepository.getCartByCustomerId(customerId);
+            return _context.Carts
+                .Include(cart => cart.Gifts)  // Include the associated gifts
+                .FirstOrDefault(c => c.CustomerId == customerId);
         }
     }
 }

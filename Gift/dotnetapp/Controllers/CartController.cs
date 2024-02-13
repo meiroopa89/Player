@@ -57,16 +57,17 @@ namespace dotnetapp.Controllers
     }
 
     [HttpGet("customer/{customerId}")]
-    public IActionResult getCartByCustomerId(long customerId)
+public IActionResult getCartByCustomerId(long customerId)
+{
+    var cart = _cartService.getCartByCustomerId(customerId);
+
+    if (cart != null)
     {
-        var cart = _cartService.getCartByCustomerId(customerId);
-
-        if (cart != null)
-        {
-            return Ok(cart);
-        }
-
-        return NotFound("Cart not found");
+        return Ok(cart);
     }
+
+    return NotFound("Cart not found");
+}
+
     }
 }
