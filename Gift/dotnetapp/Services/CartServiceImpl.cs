@@ -39,24 +39,29 @@ namespace dotnetapp.Services
     {
         private readonly CartRepository _cartRepository;
 
-        public CartServiceImpl(CartRepository cartRepository)
-        {
-            _cartRepository = cartRepository;
-        }
+    public CartServiceImpl(CartRepository cartRepository)
+    {
+        _cartRepository = cartRepository;
+    }
 
-        public Cart addCart(Cart cart)
-        {
-            return _cartRepository.addCart(cart);
-        }
+    public Cart addCart(Cart cart)
+    {
+        return _cartRepository.addCart(cart);
+    }
 
-        public Cart updateCart(Cart updatedCart)
-        {
-            return _cartRepository.updateCart(updatedCart);
-        }
+    public Cart updateCart(Cart updatedCart)
+    {
+        return _cartRepository.updateCart(updatedCart);
+    }
 
-        public Cart getCartByCustomerId(long customerId)
-        {
-            return _cartRepository.getCartByCustomerId(customerId);
-        }
+    public Cart getCartByCustomerId(long customerId)
+    {
+        return _cartRepository.getCartByCustomerId(customerId);
+    }
+
+    public IQueryable<Cart> IncludeUserAndGifts(long customerId)
+    {
+        return _cartRepository.IncludeUserAndGifts(customerId);
+    }
     }
 }

@@ -12,54 +12,51 @@ namespace dotnetapp.Controllers
     [Route("api/cart")]  
     public class CartController : ControllerBase
     {
-        private readonly CartService _cartService;
+        private readonly CartServiceImpl _cartService;
 
-        public CartController(CartService cartService)
+    public CartController(CartServiceImpl cartService)
+    {
+        _cartService = cartService;
+    }
+
+    [HttpPost("add")]
+    public IActionResult addCart([FromBody] Cart cart)
+    {
+        var addedCart = _cartService.addCart(cart);
+        return Ok(addedCart);
+    }
+
+    [HttpPost("update")]
+    public IActionResult updateCart([FromBody] Cart updatedCart)
+    {
+        var result = _cartService.updateCart(updatedCart);
+
+        if (result != null)
         {
-            _cartService = cartService;
+            return Ok(result);
         }
 
-        [HttpPost]
-        public IActionResult addCart([FromBody] Cart cart)
+        return NotFound("Cart not found");
+    }
+
+    [HttpGet("getByCustomerId/{customerId}")]
+    public IActionResult getCartByCustomerId(long customerId)
+    {
+        var cart = _cartService.getCartByCustomerId(customerId);
+
+        if (cart != null)
         {
-            var addedCart = _cartService.addCart(cart);
-
-            return CreatedAtAction(nameof(addCart), new { id = addedCart.CartId }, addedCart);
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult updateCart(long id, [FromBody] Cart updatedCart)
-        {
-            var editedCart = _cartService.updateCart(updatedCart);
-
-            if (editedCart != null)
-            {
-                return Ok(editedCart);
-            }
-
-            return NotFound(new { Message = "Cart not found." });
-        }
-
-        [HttpGet("customer/{customerId}")]
-        public IActionResult getCartByCustomerId(long customerId)
-        {
-            var cart = _cartService.getCartByCustomerId(customerId);
-
-            if (cart == null)
-            {
-                return NotFound(new { Message = "Cart not found." });
-            }
-
             return Ok(cart);
-
-        //     var jsonOptions = new JsonSerializerOptions
-        // {
-        //     ReferenceHandler = ReferenceHandler.Preserve,
-        //     // You can add other options as needed...
-        // };
-
-        // var json = JsonSerializer.Serialize(cart, jsonOptions);
-        // return Ok(json);
         }
+
+        return NotFound("Cart not found");
+    }
+
+    [HttpGet("includeUserAndGifts/{customerId}")]
+    public IActionResult IncludeUserAndGifts(long customerId)
+    {
+        var carts = _cartService.IncludeUserAndGifts(customerId);
+        return Ok(carts);
+    }
     }
 }
