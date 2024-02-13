@@ -25,25 +25,23 @@ namespace dotnetapp.Controllers
             return CreatedAtAction(nameof(viewAllGifts), new { id = addedGift.GiftId }, addedGift);
         }
 
-        [HttpGet]
-public IActionResult viewAllGifts([FromQuery] long? cartId)
+
+ [HttpGet]
+public IActionResult viewAllGifts()
 {
     Console.WriteLine("gift controller");
 
-    var gifts = _giftService.viewAllGifts(cartId);
+    var gifts = _giftService.viewAllGifts();
 
     if (gifts != null)
     {
         return Ok(gifts);
     }
 
-    if (cartId.HasValue)
-    {
-        return NotFound("Gifts not found in the specified cart");
-    }
-
-    return NotFound("Gifts not found.");
+    // If gifts is null, return an empty list instead of NotFound
+    return Ok(new List<Gift>());
 }
+
 
 
         [HttpPut("{id}")]
