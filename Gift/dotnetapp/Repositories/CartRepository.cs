@@ -117,17 +117,9 @@ private readonly ApplicationDbContext _context;
 
 //     public Cart getCartByCustomerId(long customerId)
 // {
-//     var cart = _context.Carts
-//         .Include(cart => cart.Gifts)
+//     return _context.Carts
+//         .Include(cart => cart.Gifts)  // Include the associated gifts
 //         .FirstOrDefault(c => c.CustomerId == customerId);
-
-//     if (cart == null)
-//     {
-//         // Log or handle the case where the cart is null.
-//         return null;
-//     }
-
-//     return cart;
 // }
 
 
