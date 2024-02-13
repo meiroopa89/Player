@@ -80,26 +80,26 @@ private readonly ApplicationDbContext _context;
         return null;
     }
 
-    public Cart getCartByCustomerId(long customerId)
+    public Cart customer(long customerId)
     {
         return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
     }
 
-    public IQueryable<Cart> IncludeUserAndGifts(long customerId)
-    {
-        return _context.Carts
-            .Include(c => c.Customer)
-                .ThenInclude(customer => customer.User)
-            .Include(c => c.Gifts)
-            .Where(c => c.CustomerId == customerId);
-    }
 
-    public Cart getCartByCustomerId(long customerId)
-    {
-        return _context.Carts
-            .Include(c => c.Customer)
-            .FirstOrDefault(c => c.CustomerId == customerId);
-    }
+    // public Cart addCartWithCustomerId(long customerId, Cart cart)
+    // {
+    //     var existingCustomer = _context.Customers.Find(customerId);
+
+    //     if (existingCustomer != null)
+    //     {
+    //         cart.Customer = existingCustomer;
+    //         _context.Carts.Add(cart);
+    //         _context.SaveChanges();
+    //         return cart;
+    //     }
+
+    //     return null; // Customer not found
+    // }
 
 }
 

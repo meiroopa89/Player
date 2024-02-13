@@ -32,13 +32,16 @@
 using System.Collections.Generic;
 using dotnetapp.Models;
 using dotnetapp.Repositories;
+using dotnetapp.Services;
+using dotnetapp.Data;
 
 namespace dotnetapp.Services
 {
     public class CartServiceImpl : CartService
     {
         private readonly CartRepository _cartRepository;
-         private readonly CustomerService _customerService;
+        //  private readonly CustomerService _customerService;
+         private readonly ApplicationDbContext _context;
 
     public CartServiceImpl(CartRepository cartRepository)
     {
@@ -55,35 +58,32 @@ namespace dotnetapp.Services
         return _cartRepository.updateCart(updatedCart);
     }
 
-    public Cart getCartByCustomerId(long customerId)
+    public Cart customer(long customerId)
     {
-        return _cartRepository.getCartByCustomerId(customerId);
+        return _cartRepository.customer(customerId);
     }
 
-    public IQueryable<Cart> IncludeUserAndGifts(long customerId)
-    {
-        return _cartRepository.IncludeUserAndGifts(customerId);
-    }
+//     public Cart addCartWithCustomerId(long customerId, Cart cart)
+// {
+//     // Fetch customer details based on the provided customerId
+//     var customer = _context.Customers.Find(customerId);
 
-    public Cart addCartWithCustomerId(long customerId, Cart cart)
-        {
-            // Fetch customer details based on the provided customerId
-            var customer = _customerService.getCustomerById(customerId);
+//     if (customer == null)
+//     {
+//         return null; // or handle accordingly, e.g., return NotFound("Customer not found");
+//     }
 
-            if (customer == null)
-            {
-                return null; // or handle accordingly, e.g., return NotFound("Customer not found");
-            }
+//     // Assign the customer details to the cart
+//     cart.CustomerId = customer.CustomerId;
+//     cart.Customer = customer;
 
-            // Assign the customer details to the cart
-            cart.CustomerId = customer.CustomerId;
-            cart.Customer = customer;
+//     // Save the new cart to the database
+//     _context.Carts.Add(cart);
+//     _context.SaveChanges();
 
-            // Save the new cart to the database
-            _cartRepository.addCart(cart);
+//     return cart;
+// }
 
-            return cart;
-        }
 
     }
 }

@@ -6,8 +6,9 @@ namespace dotnetapp.Services
     public interface CartService
     {
         Cart addCart(Cart cart);
+        // Cart addCartWithCustomerId(long customerId, Cart cart);
         Cart updateCart(Cart updatedCart);
-        Cart getCartByCustomerId(long customerId);
-        IQueryable<Cart> IncludeUserAndGifts(long customerId);
+        Cart customer(long customerId);
+        // IQueryable<Cart> IncludeUserAndGifts(long customerId);
     }
 }

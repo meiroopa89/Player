@@ -23,7 +23,7 @@ namespace dotnetapp.Controllers
     public IActionResult addCart([FromBody] Cart cart)
     {
         // var addedCart = _cartService.addCart(cart);
-        var addedCart = _cartService.addCartWithInclude(cart);
+        var addedCart = _cartService.addCart(cart);
         return Ok(addedCart);
     }
 
@@ -40,10 +40,10 @@ namespace dotnetapp.Controllers
         return NotFound("Cart not found");
     }
 
-    [HttpGet("getByCustomerId/{customerId}")]
-    public IActionResult getCartByCustomerId(long customerId)
+    [HttpGet("customer/{customerId}")]
+    public IActionResult customer(long customerId)
     {
-        var cart = _cartService.getCartByCustomerId(customerId);
+        var cart = _cartService.customer(customerId);
 
         if (cart != null)
         {
@@ -53,18 +53,11 @@ namespace dotnetapp.Controllers
         return NotFound("Cart not found");
     }
 
-    [HttpGet("includeUserAndGifts/{customerId}")]
-    public IActionResult IncludeUserAndGifts(long customerId)
-    {
-        var carts = _cartService.IncludeUserAndGifts(customerId);
-        return Ok(carts);
-    }
-
-    [HttpPost("addWithCustomerId/{customerId}")]
-    public IActionResult addCartWithCustomerId(long customerId, [FromBody] Cart cart)
-    {
-        var addedCart = _cartService.addCartWithCustomerId(customerId, cart);
-        return Ok(addedCart);
-    }
+    // [HttpPost("addWithCustomerId/{customerId}")]
+    // public IActionResult addCartWithCustomerId(long customerId, [FromBody] Cart cart)
+    // {
+    //     var addedCart = _cartService.addCartWithCustomerId(customerId, cart);
+    //     return Ok(addedCart);
+    // }
     }
 }
