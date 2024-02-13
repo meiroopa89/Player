@@ -103,36 +103,22 @@ public Cart addCart(Cart cart)
 
         cart.CustomerId = customer.CustomerId;
         cart.Customer = customer;
-
         if (cart.Gifts != null)
         {
             foreach (var gift in cart.Gifts)
             {
-                if (gift.GiftId == 0)
-                {
-                    // Gift is new, add it to the context
-                    _context.Gifts.Add(gift);
-                }
-                else
-                {
-                    // Gift already exists, attach it to the context
-                    _context.Gifts.Attach(gift);
-                }
-
                 gift.Cart = cart;
             }
         }
-
-        _context.Carts.Add(cart);
-        _context.SaveChanges();
-        return cart;
     }
 
-    return null;
+    _context.Carts.Add(cart);
+    _context.SaveChanges();
+    return cart;
 }
 
 
-public Cart updateCart(Cart updatedCart)
+    public Cart updateCart(Cart updatedCart)
     {
         var existingCart = _context.Carts.Find(updatedCart.CartId);
 
