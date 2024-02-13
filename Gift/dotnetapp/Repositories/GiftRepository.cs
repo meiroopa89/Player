@@ -56,8 +56,9 @@ public class GiftRepository
     public Gift updateGift(long cartId, long giftId, Gift updatedGift)
 {
     // Retrieve the gift based on both cartId and giftId
+    Console.WriteLine($"Input: cartId={cartId}, giftId={giftId}");
     var existingGift = _context.Gifts.FirstOrDefault(g => g.CartId == cartId && g.GiftId == giftId);
-
+    Console.WriteLine("repo"+existingGift);
     if (existingGift != null)
     {
         existingGift.GiftType = updatedGift.GiftType;

@@ -82,10 +82,25 @@ namespace dotnetapp.Services
             }
         }
 
+        // public Gift updateGift(long cartId, long giftId, Gift updatedGift)
+        // {
+        //     return _giftRepository.updateGift(cartId, giftId, updatedGift);
+        // }
+
         public Gift updateGift(long cartId, long giftId, Gift updatedGift)
         {
-            return _giftRepository.updateGift(cartId, giftId, updatedGift);
+            // Ensure the gift belongs to the specified cart before updating
+            var giftInCart = _cartService.getGiftById(cartId, giftId);
+
+            if (giftInCart != null)
+            {
+                // Perform the update on the gift
+                return _giftRepository.updateGift(giftId, updatedGift);
+            }
+
+            return null; // Gift not found or not associated with the specified cart
         }
+
 
         public Gift deleteGift(long giftId)
         {
