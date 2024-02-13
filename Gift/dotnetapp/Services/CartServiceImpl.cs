@@ -33,6 +33,8 @@ using dotnetapp.Models;
 using dotnetapp.Repositories;
 using dotnetapp.Services;
 using dotnetapp.Data;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace dotnetapp.Services
 {
@@ -53,8 +55,13 @@ namespace dotnetapp.Services
         {
             if (cart.CustomerId > 0)
             {
-                var customer = _customerService.getCustomerById(cart.CustomerId);
+Console.WriteLine(cart);
 
+                // var customer = _customerService.getCustomerById(cart.CustomerId);
+                 var customer = _context.Customers
+                .Include(c => c.User) // Include any related entities you want to load
+                .FirstOrDefault(c => c.CustomerId == cart.CustomerId);
+Console.WriteLine(customer);
                 if (customer == null)
                 {
                     return null;

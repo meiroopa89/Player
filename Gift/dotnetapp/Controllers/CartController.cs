@@ -19,13 +19,27 @@ namespace dotnetapp.Controllers
         _cartService = cartService;
     }
 
+    // [HttpPost("add")]
+    // public IActionResult addCart([FromBody] Cart cart)
+    // {
+    //     // var addedCart = _cartService.addCart(cart);
+    //     var addedCart = _cartService.addCart(cart);
+    //     return Ok(addedCart);
+    // }
+
     [HttpPost("add")]
-    public IActionResult addCart([FromBody] Cart cart)
-    {
-        // var addedCart = _cartService.addCart(cart);
-        var addedCart = _cartService.addCart(cart);
-        return Ok(addedCart);
-    }
+        public IActionResult addCart([FromBody] Cart cart)
+        {
+            var addedCart = _cartService.addCart(cart);
+
+            if (addedCart == null)
+            {
+                // Handle the case where the operation failed (e.g., customer not found)
+                return NotFound("Customer not found or other error occurred");
+            }
+
+            return Ok(addedCart);
+        }
 
     [HttpPost("update")]
     public IActionResult updateCart([FromBody] Cart updatedCart)
