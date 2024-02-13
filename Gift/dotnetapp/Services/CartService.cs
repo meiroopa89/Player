@@ -9,5 +9,6 @@ namespace dotnetapp.Services
         Cart updateCart(Cart updatedCart);
         Cart getCartByCustomerId(long customerId);
         List<Gift> viewAllGifts(long cartId);
+        Gift getGiftById(long cartId, long giftId);
     }
 }

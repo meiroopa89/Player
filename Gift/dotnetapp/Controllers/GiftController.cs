@@ -59,11 +59,10 @@ public IActionResult viewAllGifts([FromQuery] long? cartId)
         //     return NotFound(new { Message = "Gift not found." });
         // }
 
-        // [HttpPut("{cartId}/{giftId}")]
-        [HttpPut("{id}")]
+
+        [HttpPut("{cartId}/{giftId}")]
         public IActionResult updateGift(long cartId, long giftId, [FromBody] Gift updatedGift)
         {
-            Console.WriteLine("update");
             var editedGift = _giftService.updateGift(cartId, giftId, updatedGift);
 
             if (editedGift != null)

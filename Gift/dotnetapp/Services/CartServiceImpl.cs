@@ -95,5 +95,12 @@ Console.WriteLine(customer);
             return cartGifts;
         }
 
+        public Gift getGiftById(long cartId, long giftId)
+        {
+            // Implement logic to fetch a gift based on both cartId and giftId
+            return _context.Gifts
+                .Where(g => g.CartId == cartId && g.GiftId == giftId)
+                .FirstOrDefault();
+        }
     }
 }
