@@ -55,7 +55,7 @@ namespace dotnetapp.Services
         {
             if (cart.CustomerId > 0)
             {
-Console.WriteLine(cart);
+Console.WriteLine("service"+cart);
 
                 // var customer = _customerService.getCustomerById(cart.CustomerId);
                  var customer = _context.Customers

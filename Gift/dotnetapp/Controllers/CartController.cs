@@ -30,6 +30,8 @@ namespace dotnetapp.Controllers
     [HttpPost("add")]
         public IActionResult addCart([FromBody] Cart cart)
         {
+            Console.WriteLine("controller");
+
             var addedCart = _cartService.addCart(cart);
 
             if (addedCart == null)
