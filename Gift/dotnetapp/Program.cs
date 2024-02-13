@@ -143,11 +143,11 @@ public class Program
         builder.Services.AddScoped<CustomerRepository>();
         // builder.Services.AddScoped<UserRepository>();
         builder.Services.AddScoped<GiftRepository>();
-        builder.Services.AddScoped<CartRepository>();  // Add this line for CartRepository
+        // builder.Services.AddScoped<CartRepository>();  // Add this line for CartRepository
         builder.Services.AddScoped<GiftService, GiftServiceImpl>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<CustomerService, CustomerServiceImpl>();
-        builder.Services.AddScoped<CartService, CartServiceImpl>();
+        // builder.Services.AddScoped<CartService, CartServiceImpl>();
 
         // Add JWT authentication
         // var key = Encoding.ASCII.GetBytes("MySuperSecretKey123!$%^&*");
