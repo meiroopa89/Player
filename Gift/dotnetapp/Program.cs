@@ -131,7 +131,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<CustomerRepository>();
 builder.Services.AddScoped<GiftRepository>();
 builder.Services.AddScoped<CartRepository>();
-builder.Services.AddScoped<ReviewRepo>();
+builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
 builder.Services.AddScoped<GiftService, GiftServiceImpl>();
 builder.Services.AddScoped<CustomerService, CustomerServiceImpl>();
 builder.Services.AddScoped<CartService, CartServiceImpl>();
@@ -162,9 +162,9 @@ using (var scope = app.Services.CreateScope())
         await roleManager.CreateAsync(new IdentityRole("admin"));
     }
 
-    if (!await roleManager.RoleExistsAsync("applicant"))
+    if (!await roleManager.RoleExistsAsync("customer"))
     {
-        await roleManager.CreateAsync(new IdentityRole("applicant"));
+        await roleManager.CreateAsync(new IdentityRole("customer"));
     }
 }
 

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using dotnetapp.Models;
-using dotnetapp.Service;
+using dotnetapp.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,7 +19,7 @@ namespace dotnetapp.Controllers
             _reviewService = reviewService;
         }
                
-        [Authorize(Roles = "Admin,Customer")]
+        [Authorize(Roles = "admin,customer")]
         [HttpGet]
         public async Task<IActionResult> GetAllReviews()
         {
@@ -34,7 +34,7 @@ namespace dotnetapp.Controllers
             }
         }
  
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "customer")]
         [HttpPost]
         public async Task<IActionResult> AddReview([FromBody] Review review)
         {
@@ -42,7 +42,7 @@ namespace dotnetapp.Controllers
             return Ok(addedReview);
         }
  
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "customer")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateReview(int id, [FromBody] Review review)
         {
@@ -61,7 +61,7 @@ namespace dotnetapp.Controllers
             }
         }
  
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "customer")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReview(int id)
         {
