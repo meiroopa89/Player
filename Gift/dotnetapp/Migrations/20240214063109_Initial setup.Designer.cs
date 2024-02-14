@@ -12,8 +12,8 @@ using dotnetapp.Data;
 namespace dotnetapp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240213050506_initial setup")]
-    partial class initialsetup
+    [Migration("20240214063109_Initial setup")]
+    partial class Initialsetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,31 @@ namespace dotnetapp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("dotnetapp.Models.Cart", b =>
+                {
+                    b.Property<long>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CartId"), 1L, 1);
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("GiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("TotalAmount")
+                        .HasColumnType("float");
+
+                    b.HasKey("CartId");
+
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
+
+                    b.ToTable("Carts");
+                });
 
             modelBuilder.Entity("dotnetapp.Models.Customer", b =>
                 {
@@ -59,6 +84,9 @@ namespace dotnetapp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("GiftId"), 1L, 1);
 
+                    b.Property<long?>("CartId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("GiftDetails")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -78,6 +106,8 @@ namespace dotnetapp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("GiftId");
+
+                    b.HasIndex("CartId");
 
                     b.ToTable("Gifts");
                 });
@@ -313,6 +343,17 @@ namespace dotnetapp.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("dotnetapp.Models.Cart", b =>
+                {
+                    b.HasOne("dotnetapp.Models.Customer", "Customer")
+                        .WithOne()
+                        .HasForeignKey("dotnetapp.Models.Cart", "CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("dotnetapp.Models.Customer", b =>
                 {
                     b.HasOne("dotnetapp.Models.User", "User")
@@ -322,6 +363,15 @@ namespace dotnetapp.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("dotnetapp.Models.Gift", b =>
+                {
+                    b.HasOne("dotnetapp.Models.Cart", "Cart")
+                        .WithMany("Gifts")
+                        .HasForeignKey("CartId");
+
+                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -373,6 +423,11 @@ namespace dotnetapp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("dotnetapp.Models.Cart", b =>
+                {
+                    b.Navigation("Gifts");
                 });
 #pragma warning restore 612, 618
         }
