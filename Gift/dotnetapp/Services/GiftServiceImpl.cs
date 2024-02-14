@@ -49,7 +49,7 @@
 //new
 using System.Collections.Generic;
 using dotnetapp.Models;
-
+using dotnetapp.Services;
 public class GiftServiceImpl : GiftService
 {
     private readonly GiftRepository _giftRepository;
