@@ -212,6 +212,7 @@ public class CartRepository
 
     //     return null;
     // }
+
 // public Cart updateCart(Cart updatedCart)
 // {
 //     var existingCart = _context.Carts
@@ -234,6 +235,46 @@ public class CartRepository
 
 //     return null;
 // }
+
+public Cart updateCart(Cart updatedCart)
+{
+    var existingCart = _context.Carts
+        .Include(c => c.Gifts) // Include the Gifts collection
+        .FirstOrDefault(c => c.CartId == updatedCart.CartId);
+
+    if (existingCart != null)
+    {
+        // Update individual properties of Cart
+        existingCart.CustomerId = updatedCart.CustomerId;
+
+        // Update existing gifts based on the updated ones
+        foreach (var updatedGift in updatedCart.Gifts)
+        {
+            var existingGift = existingCart.Gifts.FirstOrDefault(g => g.GiftId == updatedGift.GiftId);
+
+            if (existingGift != null)
+            {
+                existingGift.GiftType = updatedGift.GiftType;
+                existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
+                existingGift.GiftDetails = updatedGift.GiftDetails;
+                existingGift.GiftPrice = updatedGift.GiftPrice;
+                existingGift.Quantity = updatedGift.Quantity;
+            }
+            else
+            {
+                // Handle case where the gift is not found in the existingCart
+                // You may choose to add it or skip it depending on your requirements
+            }
+        }
+
+        _context.SaveChanges();
+
+        return existingCart;
+    }
+
+    return null;
+}
+
 
 
     
