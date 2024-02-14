@@ -134,6 +134,7 @@ public class CartController : ControllerBase
     public IActionResult UpdateCart([FromBody] Cart updatedCart)
     {
         var updated = _cartService.updateCart(updatedCart);
+        
         if (updated != null)
         {
             return Ok(updated);
