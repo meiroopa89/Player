@@ -10,6 +10,8 @@ namespace dotnetapp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "admin,customer")]
+
     public class ReviewController : ControllerBase
     {
         private readonly ReviewService _reviewService;
@@ -19,7 +21,6 @@ namespace dotnetapp.Controllers
             _reviewService = reviewService;
         }
                
-        [Authorize(Roles = "admin,customer")]
         [HttpGet]
         public async Task<IActionResult> GetAllReviews()
         {
