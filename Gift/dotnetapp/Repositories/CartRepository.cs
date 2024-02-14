@@ -193,22 +193,44 @@ public class CartRepository
         return cart;
     }
 
-    public Cart updateCart(Cart updatedCart)
+    // public Cart updateCart(Cart updatedCart)
+    // {
+    //     var existingCart = _context.Carts.Find(updatedCart.CartId);
+
+    //     if (existingCart != null)
+    //     {
+    //         existingCart.Gifts = updatedCart.Gifts;
+    //         existingCart.CustomerId = updatedCart.CustomerId;
+
+    //         _context.SaveChanges();
+
+    //         return existingCart;
+    //     }
+
+    //     return null;
+    // }
+public Cart updateCart(Cart updatedCart)
+{
+    var existingCart = _context.Carts
+        .Include(c => c.Gifts) // Include the Gifts collection
+        .FirstOrDefault(c => c.CartId == updatedCart.CartId);
+
+    if (existingCart != null)
     {
-        var existingCart = _context.Carts.Find(updatedCart.CartId);
+        // Update individual properties of Cart
+        existingCart.CustomerId = updatedCart.CustomerId;
 
-        if (existingCart != null)
-        {
-            existingCart.Gifts = updatedCart.Gifts;
-            existingCart.CustomerId = updatedCart.CustomerId;
+        // Clear existing gifts and add the updated ones
+        existingCart.Gifts.Clear();
+        existingCart.Gifts.AddRange(updatedCart.Gifts);
 
-            _context.SaveChanges();
+        _context.SaveChanges();
 
-            return existingCart;
-        }
-
-        return null;
+        return existingCart;
     }
+
+    return null;
+}
 
     public Cart getCartByCustomerId(long customerId)
     {
