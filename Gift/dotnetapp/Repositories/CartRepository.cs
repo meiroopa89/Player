@@ -212,7 +212,11 @@ public class CartRepository
 
     public Cart getCartByCustomerId(long customerId)
     {
-        return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
+        // return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
+        return _context.Carts
+        .Include(c => c.Customer)  // Include the associated customer details
+        .Include(c => c.Gifts)     // Include the associated gifts
+        .FirstOrDefault(c => c.CustomerId == customerId);
     }
 
     public List<Gift> getAllGiftsByCustomerId(long customerId)
