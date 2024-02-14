@@ -169,64 +169,31 @@ public class CartRepository
         _context = context;
     }
 
-    public Cart addCart(Cart cart)
-    {
-        if (cart.CustomerId > 0)
-        {
-            Console.WriteLine(cart);
+    // public Cart addCart(Cart cart)
+    // {
+    //     if (cart.CustomerId > 0)
+    //     {
+    //         Console.WriteLine(cart);
 
-            var customer = _context.Customers
-                .Include(c => c.User)
-                .FirstOrDefault(c => c.CustomerId == cart.CustomerId);
+    //         var customer = _context.Customers
+    //             .Include(c => c.User)
+    //             .FirstOrDefault(c => c.CustomerId == cart.CustomerId);
 
-            if (customer == null)
-            {
-                return null;
-            }
+    //         if (customer == null)
+    //         {
+    //             return null;
+    //         }
 
-            cart.CustomerId = customer.CustomerId;
-            cart.Customer = customer;
-        }
+    //         cart.CustomerId = customer.CustomerId;
+    //         cart.Customer = customer;
+    //     }
 
-        _context.Carts.Add(cart);
-        _context.SaveChanges();
-        return cart;
-    }
+    //     _context.Carts.Add(cart);
+    //     _context.SaveChanges();
+    //     return cart;
+    // }
 
-//     public Cart addCart(Cart cart, long giftId)
-// {
-//     // Check if a customer is associated with the cart
-//     if (cart.CustomerId > 0)
-//     {
-//         // Fetch the customer and include the necessary navigation properties
-//         var customer = _context.Customers
-//             .Include(c => c.User)
-//             .FirstOrDefault(c => c.CustomerId == cart.CustomerId);
 
-//         if (customer == null)
-//         {
-//             return null; // Customer not found
-//         }
-
-//         // Update the cart properties with the fetched customer information
-//         cart.CustomerId = customer.CustomerId;
-//         cart.Customer = customer;
-//     }
-
-//     // Associate the cart with a specific gift using the provided giftId
-//     var gift = _context.Gifts.Find(giftId);
-
-//     if (gift != null)
-//     {
-//         cart.Gifts = new List<Gift> { gift };
-//     }
-
-//     // Add the cart to the context and save changes
-//     _context.Carts.Add(cart);
-//     _context.SaveChanges();
-
-//     return cart;
-// }
 
 
     // public Cart updateCart(Cart updatedCart)
@@ -245,29 +212,31 @@ public class CartRepository
 
     //     return null;
     // }
-public Cart updateCart(Cart updatedCart)
-{
-    var existingCart = _context.Carts
-        .Include(c => c.Gifts) // Include the Gifts collection
-        .FirstOrDefault(c => c.CartId == updatedCart.CartId);
+// public Cart updateCart(Cart updatedCart)
+// {
+//     var existingCart = _context.Carts
+//         .Include(c => c.Gifts) // Include the Gifts collection
+//         .FirstOrDefault(c => c.CartId == updatedCart.CartId);
 
-    if (existingCart != null)
-    {
-        // Update individual properties of Cart
-        existingCart.CustomerId = updatedCart.CustomerId;
+//     if (existingCart != null)
+//     {
+//         // Update individual properties of Cart
+//         existingCart.CustomerId = updatedCart.CustomerId;
 
-        // Clear existing gifts and add the updated ones
-        existingCart.Gifts.Clear();
-        existingCart.Gifts.AddRange(updatedCart.Gifts);
+//         // Clear existing gifts and add the updated ones
+//         existingCart.Gifts.Clear();
+//         existingCart.Gifts.AddRange(updatedCart.Gifts);
 
-        _context.SaveChanges();
+//         _context.SaveChanges();
 
-        return existingCart;
-    }
+//         return existingCart;
+//     }
 
-    return null;
-}
+//     return null;
+// }
 
+
+    
     public Cart getCartByCustomerId(long customerId)
     {
         // return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);

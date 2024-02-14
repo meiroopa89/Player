@@ -15,28 +15,14 @@ public class CartController : ControllerBase
         _cartService = cartService;
     }
 
-    [HttpPost("add")]
-    public IActionResult AddCart([FromBody] Cart cart)
-    {
-        var addedCart = _cartService.addCart(cart);
-        if (addedCart != null)
-        {
-            return Ok(addedCart);
-        }
-        return BadRequest("Failed to add cart");
-    }
-
-
-    // [HttpPost("add/{giftId}")]
-    // public IActionResult AddCart([FromBody] Cart cart, long giftId)
+    // [HttpPost("add")]
+    // public IActionResult AddCart([FromBody] Cart cart)
     // {
-    //     var addedCart = _cartService.addCart(cart, giftId);
-
+    //     var addedCart = _cartService.addCart(cart);
     //     if (addedCart != null)
     //     {
     //         return Ok(addedCart);
     //     }
-
     //     return BadRequest("Failed to add cart");
     // }
 

@@ -64,10 +64,10 @@ public class CartServiceImpl : CartService
         // _context = context;
     }
 
-    public Cart addCart(Cart cart)
-    {
-        return _cartRepository.addCart(cart);
-    }
+    // public Cart addCart(Cart cart)
+    // {
+    //     return _cartRepository.addCart(cart);
+    // }
 
     // public override Cart addCart(Cart cart, long giftId)
     // {
