@@ -121,7 +121,8 @@ public class GiftRepository
 
     //     return null; // Gift not found
     // }
-public Gift editGift(long giftId, Gift updatedGift)
+
+    public Gift editGift(long giftId, Gift updatedGift)
 {
     var existingGift = _context.Gifts
         .Include(g => g.Cart) // Include the associated Cart
@@ -135,12 +136,23 @@ public Gift editGift(long giftId, Gift updatedGift)
         existingGift.GiftPrice = updatedGift.GiftPrice;
         existingGift.Quantity = updatedGift.Quantity;
 
-        // Fetch the latest CartId directly from the Cart table
-        existingGift.CartId = _context.Carts
-            .Where(c => c.CustomerId == existingGift.Cart.CustomerId)
-            .OrderByDescending(c => c.CartId)
-            .Select(c => c.CartId)
-            .FirstOrDefault();
+        // If the input provides a new CartId, update it
+        if (updatedGift.CartId != 0)
+        {
+            existingGift.CartId = updatedGift.CartId;
+        }
+        else
+        {
+            // Fetch the latest CartId directly from the Cart table
+            var latestCartId = _context.Carts
+                .Where(c => c.CustomerId == existingGift.Cart.CustomerId)
+                .OrderByDescending(c => c.CartId)
+                .Select(c => c.CartId)
+                .FirstOrDefault();
+
+            // Update the CartId in the existingGift
+            existingGift.CartId = latestCartId;
+        }
 
         _context.SaveChanges();
         return existingGift;
@@ -148,10 +160,6 @@ public Gift editGift(long giftId, Gift updatedGift)
 
     return null; // Gift not found
 }
-
-
-
-
 
     public Gift deleteGift(long giftId)
     {
