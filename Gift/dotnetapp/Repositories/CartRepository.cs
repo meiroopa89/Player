@@ -193,6 +193,42 @@ public class CartRepository
         return cart;
     }
 
+//     public Cart addCart(Cart cart, long giftId)
+// {
+//     // Check if a customer is associated with the cart
+//     if (cart.CustomerId > 0)
+//     {
+//         // Fetch the customer and include the necessary navigation properties
+//         var customer = _context.Customers
+//             .Include(c => c.User)
+//             .FirstOrDefault(c => c.CustomerId == cart.CustomerId);
+
+//         if (customer == null)
+//         {
+//             return null; // Customer not found
+//         }
+
+//         // Update the cart properties with the fetched customer information
+//         cart.CustomerId = customer.CustomerId;
+//         cart.Customer = customer;
+//     }
+
+//     // Associate the cart with a specific gift using the provided giftId
+//     var gift = _context.Gifts.Find(giftId);
+
+//     if (gift != null)
+//     {
+//         cart.Gifts = new List<Gift> { gift };
+//     }
+
+//     // Add the cart to the context and save changes
+//     _context.Carts.Add(cart);
+//     _context.SaveChanges();
+
+//     return cart;
+// }
+
+
     // public Cart updateCart(Cart updatedCart)
     // {
     //     var existingCart = _context.Carts.Find(updatedCart.CartId);

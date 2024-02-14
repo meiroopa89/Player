@@ -27,6 +27,20 @@ public class CartController : ControllerBase
     }
 
 
+    // [HttpPost("add/{giftId}")]
+    // public IActionResult AddCart([FromBody] Cart cart, long giftId)
+    // {
+    //     var addedCart = _cartService.addCart(cart, giftId);
+
+    //     if (addedCart != null)
+    //     {
+    //         return Ok(addedCart);
+    //     }
+
+    //     return BadRequest("Failed to add cart");
+    // }
+
+
     [HttpPut("update/{cartId}")]
     public IActionResult UpdateCart([FromBody] Cart updatedCart)
     {
