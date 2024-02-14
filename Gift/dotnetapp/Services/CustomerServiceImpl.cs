@@ -1,47 +1,84 @@
-// Services/CustomerServiceImpl.cs
+// using System;
+// using dotnetapp.Models;
+// using dotnetapp.Repositories;
+// using Microsoft.EntityFrameworkCore;
+// using dotnetapp.Data;
+
+// namespace dotnetapp.Services
+// {
+//     public class CustomerServiceImpl : CustomerService
+//     {
+//         private readonly CustomerRepository _customerRepository;
+//         private readonly ApplicationDbContext _context;
+
+//         public CustomerServiceImpl(CustomerRepository customerRepository, ApplicationDbContext context)
+//         {
+//             _customerRepository = customerRepository;
+//             _context = context;
+//         }
+
+//         public Customer registerCustomer(Customer customer)
+//         {
+//             // Perform any necessary validation or business logic
+//             // before calling the repository method.
+            
+//             return _customerRepository.registerCustomer(customer);
+//         }
+
+//         public Customer viewCustomerById(long customerId)
+//         {
+//             // Perform any necessary validation or business logic
+//             // before calling the repository method.
+
+//             var customer = _customerRepository.IncludeUser()
+//                                               .FirstOrDefault(c => c.CustomerId == customerId);
+
+//             return customer;
+//         }
+
+//          public Customer getCustomerById(long customerId)
+//         {
+//             // Implement the logic to retrieve a customer by ID
+//             return _context.Customers.FirstOrDefault(c => c.CustomerId == customerId);
+//         }
+    
+//     }
+// }
+
+
+//new
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using dotnetapp.Models;
-using dotnetapp.Repositories;
-using Microsoft.EntityFrameworkCore;
 using dotnetapp.Data;
 
-namespace dotnetapp.Services
+public class CartServiceImpl : ICartService
 {
-    public class CustomerServiceImpl : CustomerService
+    private readonly CartRepository _cartRepository;
+
+    public CartServiceImpl(ApplicationDbContext context)
     {
-        private readonly CustomerRepository _customerRepository;
-        private readonly ApplicationDbContext _context;
+        _cartRepository = new CartRepository(context);
+    }
 
-        public CustomerServiceImpl(CustomerRepository customerRepository, ApplicationDbContext context)
-        {
-            _customerRepository = customerRepository;
-            _context = context;
-        }
+    public Cart addCart(Cart cart)
+    {
+        return _cartRepository.addCart(cart);
+    }
 
-        public Customer registerCustomer(Customer customer)
-        {
-            // Perform any necessary validation or business logic
-            // before calling the repository method.
-            
-            return _customerRepository.registerCustomer(customer);
-        }
+    public Cart updateCart(Cart updatedCart)
+    {
+        return _cartRepository.updateCart(updatedCart);
+    }
 
-        public Customer viewCustomerById(long customerId)
-        {
-            // Perform any necessary validation or business logic
-            // before calling the repository method.
+    public Cart getCartByCustomerId(long customerId)
+    {
+        return _cartRepository.getCartByCustomerId(customerId);
+    }
 
-            var customer = _customerRepository.IncludeUser()
-                                              .FirstOrDefault(c => c.CustomerId == customerId);
-
-            return customer;
-        }
-
-         public Customer getCustomerById(long customerId)
-        {
-            // Implement the logic to retrieve a customer by ID
-            return _context.Customers.FirstOrDefault(c => c.CustomerId == customerId);
-        }
-    
+    public List<Gift> getAllGiftsByCustomerId(long customerId)
+    {
+        return _cartRepository.getAllGiftsByCustomerId(customerId);
     }
 }
