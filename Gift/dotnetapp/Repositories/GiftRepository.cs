@@ -95,55 +95,61 @@ public class GiftRepository
         return gift;
     }
 
+
+
     public List<Gift> getAllGifts()
     {
         Console.WriteLine("gift repo");
         return _context.Gifts.ToList();
     }
 
-    public Gift editGift(long giftId, Gift updatedGift)
+    // public Gift editGift(long giftId, Gift updatedGift)
+    // {
+    //     var existingGift = _context.Gifts.Find(giftId);
+
+    //     if (existingGift != null)
+    //     {
+    //         existingGift.GiftType = updatedGift.GiftType;
+    //         existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
+    //         existingGift.GiftDetails = updatedGift.GiftDetails;
+    //         existingGift.GiftPrice = updatedGift.GiftPrice;
+    //         existingGift.Quantity = updatedGift.Quantity;
+
+    //         _context.SaveChanges();
+    //         return existingGift;
+    //     }
+
+    //     return null; // Gift not found
+    // }
+public Gift editGift(long giftId, Gift updatedGift)
+{
+    var existingGift = _context.Gifts
+        .Include(g => g.Cart) // Include the associated Cart
+        .FirstOrDefault(g => g.GiftId == giftId);
+
+    if (existingGift != null)
     {
-        var existingGift = _context.Gifts.Find(giftId);
+        existingGift.GiftType = updatedGift.GiftType;
+        existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
+        existingGift.GiftDetails = updatedGift.GiftDetails;
+        existingGift.GiftPrice = updatedGift.GiftPrice;
+        existingGift.Quantity = updatedGift.Quantity;
 
-        if (existingGift != null)
-        {
-            existingGift.GiftType = updatedGift.GiftType;
-            existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
-            existingGift.GiftDetails = updatedGift.GiftDetails;
-            existingGift.GiftPrice = updatedGift.GiftPrice;
-            existingGift.Quantity = updatedGift.Quantity;
+        // Fetch the latest CartId directly from the Cart table
+        existingGift.CartId = _context.Carts
+            .Where(c => c.CustomerId == existingGift.Cart.CustomerId)
+            .OrderByDescending(c => c.CartId)
+            .Select(c => c.CartId)
+            .FirstOrDefault();
 
-            _context.SaveChanges();
-            return existingGift;
-        }
-
-        return null; // Gift not found
+        _context.SaveChanges();
+        return existingGift;
     }
 
-// public Gift editGift(long giftId, Gift updatedGift)
-// {
-//     var existingGift = _context.Gifts
-//         .Include(g => g.Cart) // Include the associated Cart
-//         .ThenInclude(c => c.Customer) // Include the associated Customer in Cart
-//         .FirstOrDefault(g => g.GiftId == giftId);
+    return null; // Gift not found
+}
 
-//     if (existingGift != null)
-//     {
-//         existingGift.GiftType = updatedGift.GiftType;
-//         existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
-//         existingGift.GiftDetails = updatedGift.GiftDetails;
-//         existingGift.GiftPrice = updatedGift.GiftPrice;
-//         existingGift.Quantity = updatedGift.Quantity;
 
-//         // Update the CartId based on the Customer's latest Cart
-//         existingGift.CartId = existingGift.Cart.Customer.Carts.OrderByDescending(c => c.CartId).FirstOrDefault()?.CartId ?? 0;
-
-//         _context.SaveChanges();
-//         return existingGift;
-//     }
-
-//     return null; // Gift not found
-// }
 
 
 
