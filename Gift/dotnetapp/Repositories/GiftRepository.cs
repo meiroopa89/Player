@@ -89,6 +89,7 @@ public class GiftRepository
 
     public Gift addGift(Gift gift)
     {
+        // gift.CartId = ;
         _context.Gifts.Add(gift);
         _context.SaveChanges();
         return gift;

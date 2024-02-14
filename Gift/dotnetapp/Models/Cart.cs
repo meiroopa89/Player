@@ -8,7 +8,7 @@ public class Cart
     {
         [Key]
         public long CartId { get; set; }
-        public long GiftId { get; set; } // Foreign key
+        // public long GiftId { get; set; } // Foreign key
         public List<Gift>? Gifts { get; set; }
         public long CustomerId { get; set; } // Foreign key
         public Customer? Customer { get; set; }

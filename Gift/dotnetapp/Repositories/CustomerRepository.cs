@@ -78,6 +78,8 @@ namespace dotnetapp.Repositories
 
         public Customer registerCustomer(Customer customer)
         {
+            Console.Write("sss"+customer.CustomerId);
+            
             _context.Customers.Add(customer);
             _context.SaveChanges();
             return customer;

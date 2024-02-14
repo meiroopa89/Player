@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using dotnetapp.Models;
 using dotnetapp.Services;
+using dotnetapp.Data;
 
 namespace dotnetapp.Controllers
 {
@@ -9,17 +10,29 @@ namespace dotnetapp.Controllers
     [Route("api/customer")]
     public class CustomerController : ControllerBase
     {
+        private readonly ApplicationDbContext _context;
         private readonly CustomerService _customerService;
 
-        public CustomerController(CustomerService customerService)
+        public CustomerController(CustomerService customerService, ApplicationDbContext _context)
         {
             _customerService = customerService;
+            _context = _context;
         }
 
         [HttpPost]
         public IActionResult registerCustomer([FromBody] Customer customer)
         {
             var registeredCustomer = _customerService.registerCustomer(customer);
+            Console.WriteLine("cusid"+registeredCustomer.CustomerId);
+            Cart newCart = new Cart
+            {
+                CustomerId = customer.CustomerId,
+                Gifts = new List<Gift>(), // Assuming Gifts is initialized as an empty list
+                TotalAmount = 0.0
+            };
+
+            _context.Carts.Add(newCart);
+            _context.SaveChanges();
 
             return CreatedAtAction(nameof(registerCustomer), new { id = registeredCustomer.CustomerId }, registeredCustomer);
         }
