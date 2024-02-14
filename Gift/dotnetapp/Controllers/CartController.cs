@@ -130,11 +130,12 @@ public class CartController : ControllerBase
         return BadRequest("Failed to add cart");
     }
 
-    [HttpPut("update")]
+    [HttpPut("update/{cartId}")]
     public IActionResult UpdateCart([FromBody] Cart updatedCart)
     {
-        var updated = _cartService.updateCart(updatedCart);
         
+        var updated = _cartService.updateCart(updatedCart);
+
         if (updated != null)
         {
             return Ok(updated);
