@@ -120,6 +120,33 @@ public class GiftRepository
         return null; // Gift not found
     }
 
+// public Gift editGift(long giftId, Gift updatedGift)
+// {
+//     var existingGift = _context.Gifts
+//         .Include(g => g.Cart) // Include the associated Cart
+//         .ThenInclude(c => c.Customer) // Include the associated Customer in Cart
+//         .FirstOrDefault(g => g.GiftId == giftId);
+
+//     if (existingGift != null)
+//     {
+//         existingGift.GiftType = updatedGift.GiftType;
+//         existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
+//         existingGift.GiftDetails = updatedGift.GiftDetails;
+//         existingGift.GiftPrice = updatedGift.GiftPrice;
+//         existingGift.Quantity = updatedGift.Quantity;
+
+//         // Update the CartId based on the Customer's latest Cart
+//         existingGift.CartId = existingGift.Cart.Customer.Carts.OrderByDescending(c => c.CartId).FirstOrDefault()?.CartId ?? 0;
+
+//         _context.SaveChanges();
+//         return existingGift;
+//     }
+
+//     return null; // Gift not found
+// }
+
+
+
     public Gift deleteGift(long giftId)
     {
         var giftToRemove = _context.Gifts.Find(giftId);
