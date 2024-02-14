@@ -131,9 +131,13 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<CustomerRepository>();
 builder.Services.AddScoped<GiftRepository>();
 builder.Services.AddScoped<CartRepository>();
+builder.Services.AddScoped<ReviewRepo>();
 builder.Services.AddScoped<GiftService, GiftServiceImpl>();
 builder.Services.AddScoped<CustomerService, CustomerServiceImpl>();
 builder.Services.AddScoped<CartService, CartServiceImpl>();
+builder.Services.AddScoped<ReviewService, ReviewServiceImpl>();
+
+// builder.Services.AddScoped<UserService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
