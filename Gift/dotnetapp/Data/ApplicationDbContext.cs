@@ -59,6 +59,8 @@ namespace dotnetapp.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Gift> Gifts { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
