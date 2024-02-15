@@ -85,6 +85,7 @@ using dotnetapp.Models;
 using dotnetapp.Services;
 using Microsoft.AspNetCore.Authorization;
 
+    [Authorize]
 
 [Route("api/[controller]")]
 [ApiController]
@@ -97,7 +98,6 @@ public class GiftController : ControllerBase
         _giftService = giftService;
     }
 
-    [Authorize]
     [HttpPost]
     public IActionResult AddGift([FromBody] Gift gift)
     {

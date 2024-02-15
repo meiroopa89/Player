@@ -101,6 +101,19 @@ app.UseCors("AllowOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseJwtBearerAuthentication(new JwtBearerOptions
+{
+    TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-secret-key")), // Change this to your actual secret key
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true
+    }
+});
+
+
 app.MapControllers();
 Console.WriteLine("bye");
 
