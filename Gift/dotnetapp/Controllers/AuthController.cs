@@ -169,7 +169,7 @@ namespace dotnetapp.Controllers
         {
             if (request == null || string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
                 return BadRequest("Invalid login request");
- 
+            Console.WriteLine("controller" + request.Email);
             var token = await _userService.LoginAsync(request.Email, request.Password);
  
             if (token == null)

@@ -82,6 +82,7 @@ public async Task<string> LoginAsync(string email, string password)
  
         if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
         {
+            Console.WriteLine("service");
             Console.WriteLine("Invalid username or password"); // Debug output
             return null; // Invalid username or password
         }
@@ -115,9 +116,6 @@ public async Task<string> LoginAsync(string email, string password)
     var roles = _userManager.GetRolesAsync(user).Result;
  
     Console.WriteLine("Roles: " + string.Join(", ", roles));
- 
-    // Add role claims to the JWT token using ClaimTypes.Role
-    // claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
  
     foreach (var role in roles)
 {
