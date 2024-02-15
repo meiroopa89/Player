@@ -76,6 +76,7 @@ public async Task<string> LoginAsync(string email, string password)
         {
              try
     {
+        Console.WriteLine(email);
         var user = await _userManager.FindByEmailAsync(email);
         Console.WriteLine("User: " + user?.Email); // Debug output
         Console.WriteLine("Password: " + password); // Debug output
