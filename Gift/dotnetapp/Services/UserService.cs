@@ -112,8 +112,8 @@ namespace dotnetapp.Services
     //     }
 
 
-        public async Task<string> LoginAsync(string email, string password)
-{
+    public async Task<string> LoginAsync(string email, string password)
+    {
     try
     {
         var user = await _userManager.FindByEmailAsync(email);
@@ -180,37 +180,32 @@ namespace dotnetapp.Services
 // }
 
 private string GenerateJwtToken(IdentityUser user)
-{
-    Console.WriteLine("User: " + user.Email); // Adjusted output for email
-    
-    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-    
-    var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, user.Email), // Adjusted claim for email
-    };
+        {
+            Console.WriteLine("User: " + user.Email);
 
-    // Retrieve roles for the user
-    var roles = _userManager.GetRolesAsync(user).Result;
-    
-    Console.WriteLine("Roles: " + string.Join(", ", roles));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.Email),
+            };
 
-    // Add role claims to the JWT token using ClaimTypes.Role
-    claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-    
-    var token = new JwtSecurityToken(
-        _configuration["Jwt:Issuer"],
-        _configuration["Jwt:Audience"],
-        claims,
-        expires: DateTime.Now.AddHours(2),
-        signingCredentials: credentials
-    );
-    Console.WriteLine("Token generated successfully: " + token);
+            var roles = _userManager.GetRolesAsync(user).Result;
+            Console.WriteLine("Roles: " + string.Join(", ", roles));
 
-    return new JwtSecurityTokenHandler().WriteToken(token);
-}
- 
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+            var token = new JwtSecurityToken(
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddHours(2),
+                signingCredentials: credentials
+            );
+            Console.WriteLine("Token generated successfully: " + token);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
     }
 }
  
