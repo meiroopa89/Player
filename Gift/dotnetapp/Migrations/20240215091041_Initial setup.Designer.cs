@@ -12,7 +12,7 @@ using dotnetapp.Data;
 namespace dotnetapp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240214063109_Initial setup")]
+    [Migration("20240215091041_Initial setup")]
     partial class Initialsetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,6 @@ namespace dotnetapp.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CartId"), 1L, 1);
 
                     b.Property<long>("CustomerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("GiftId")
                         .HasColumnType("bigint");
 
                     b.Property<double>("TotalAmount")
@@ -110,6 +107,38 @@ namespace dotnetapp.Migrations
                     b.HasIndex("CartId");
 
                     b.ToTable("Gifts");
+                });
+
+            modelBuilder.Entity("dotnetapp.Models.Review", b =>
+                {
+                    b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"), 1L, 1);
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ReviewId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("dotnetapp.Models.User", b =>
@@ -372,6 +401,17 @@ namespace dotnetapp.Migrations
                         .HasForeignKey("CartId");
 
                     b.Navigation("Cart");
+                });
+
+            modelBuilder.Entity("dotnetapp.Models.Review", b =>
+                {
+                    b.HasOne("dotnetapp.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
