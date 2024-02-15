@@ -117,146 +117,72 @@ namespace dotnetapp.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-    //     private readonly ApplicationDbContext _context;
-    //     private readonly UserManager<IdentityUser> _userManager;
-
-    //     private readonly UserService _userService;
-
-    //     public AuthController(UserService userService, ApplicationDbContext context, UserManager<IdentityUser> userManager)
-    //     {
-    //         _userManager = userManager;
-    //         _userService = userService;
-    //         _context = context;
-    //     }
-
-    //     [HttpPost("register")]
-    //     public async Task<IActionResult> Register([FromBody] User user)
-    //     {
-    //         if (user == null)
-    //             return BadRequest("Invalid user data");
-
-    //         if (user.Role == "admin" || user.Role == "customer")
-    //         {
-    //             Console.WriteLine("asd  " + user.Role);
-
-    //             var isRegistered = await _userService.RegisterAsync(user);
-    //             Console.WriteLine("status" + isRegistered);
-
-    //             if (isRegistered)
-    //             {
-    //                 var customUser = new User
-    //                 {
-    //                     Username = user.Username,
-    //                     Password = user.Password,
-    //                     Email = user.Email,
-    //                     MobileNumber = user.MobileNumber,
-    //                     Role = user.Role,
-    //                 };
-
-    //                 // Add the customUser to the DbSet and save it
-    //                 _context.Users.Add(customUser);
-    //                 await _context.SaveChangesAsync();
-
-    //                 return Ok(user);
-    //             }
-    //         }
-
-    //         return BadRequest("Registration failed. Username may already exist.");
-    //     }
-
-    //    [HttpPost("login")]
-    //     public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
-    //     {
-    //         if (request == null || string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
-    //             return BadRequest("Invalid login request");
-    //         Console.WriteLine("controller" + request.Email);
-    //         var token = await _userService.LoginAsync(request.Email, request.Password);
- 
-    //         if (token == null)
-    //             return Unauthorized("Invalid email or password");
- 
-    //         // Retrieve the user from UserManager to get their roles
-    //         var user = await _userManager.FindByNameAsync(request.Email);
-    //         Console.WriteLine("role"+user);
-    //         var roles = await _userManager.GetRolesAsync(user);
- 
-    //         return Ok(new { Token = token, Roles = roles });
-    //     }
-
-
-    private readonly IUserService _authService;
-        private readonly ILogger<AuthController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AuthController(IUserService authService, ILogger<AuthController> logger, ApplicationDbContext context)
+        private readonly UserService _userService;
+
+        public AuthController(UserService userService, ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
-            _authService = authService;
-            _logger = logger;
+            _userManager = userManager;
+            _userService = userService;
             _context = context;
         }
 
-
-        [HttpPost]
-        [Route("login")]
-        public async Task<IActionResult> Login(LoginModel model)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] User user)
         {
-            try
+            if (user == null)
+                return BadRequest("Invalid user data");
+
+            if (user.Role == "admin" || user.Role == "customer")
             {
-                if (!ModelState.IsValid)
-                    return BadRequest("Invalid payload");
-                var (status, message) = await _authService.Login(model);
-                if (status == 0)
-                    return BadRequest(message);
-                return Ok(message);
+                Console.WriteLine("asd  " + user.Role);
+
+                var isRegistered = await _userService.RegisterAsync(user);
+                Console.WriteLine("status" + isRegistered);
+
+                if (isRegistered)
+                {
+                    var customUser = new User
+                    {
+                        Username = user.Username,
+                        Password = user.Password,
+                        Email = user.Email,
+                        MobileNumber = user.MobileNumber,
+                        Role = user.Role,
+                    };
+
+                    // Add the customUser to the DbSet and save it
+                    _context.Users.Add(customUser);
+                    await _context.SaveChangesAsync();
+
+                    return Ok(user);
+                }
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+
+            return BadRequest("Registration failed. Username may already exist.");
         }
 
-        [HttpPost]
-        [Route("registeration")]
-        public async Task<IActionResult> Register(RegisterModel model)
+       [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
-            try
-            {
-
-                if (!ModelState.IsValid)
-                    return BadRequest("Invalid payload");
-                if (model.Role == "Admin" || model.Role == "User")
-                {
-                    var (status, message) = await _authService.Register(model, model.Role);
-                    if (status == 0)
-                    {
-                        return BadRequest(message);
-                    }
-                    var user = new User
-                    {
-                        Username = model.Username,
-                        Password = model.Password,
-                        Email = model.Email,
-                        Role = model.Role,
-                    };
-                    _context.Users.Add(user);
-                    await _context.SaveChangesAsync();
-                    //return CreatedAtAction(nameof(Register), model);
-                    return Ok(message);
-                }
-                else
-                {
-                    return BadRequest("Invalid Role");
-                }
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            if (request == null || string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+                return BadRequest("Invalid login request");
+            Console.WriteLine("controller" + request.Email);
+            var token = await _userService.LoginAsync(request.Email, request.Password);
+ 
+            if (token == null)
+                return Unauthorized("Invalid email or password");
+ 
+            // Retrieve the user from UserManager to get their roles
+            var user = await _userManager.FindByNameAsync(request.Email);
+            Console.WriteLine("role"+user);
+            var roles = await _userManager.GetRolesAsync(user);
+ 
+            return Ok(new { Token = token, Roles = roles });
+    
         }
     }
 }
-
 

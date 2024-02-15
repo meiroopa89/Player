@@ -39,41 +39,41 @@ public class CartRepository
     //     return cart;
     // }
 
-    public Cart AddCart(Cart cart, int giftId, int customerId)
-{
-    if (customerId > 0)
-    {
-        Console.WriteLine(cart);
+//     public Cart AddCart(Cart cart, int giftId, int customerId)
+// {
+//     if (customerId > 0)
+//     {
+//         Console.WriteLine(cart);
 
-        var customer = _context.Customers
-            .Include(c => c.User)
-            .FirstOrDefault(c => c.CustomerId == customerId);
+//         var customer = _context.Customers
+//             .Include(c => c.User)
+//             .FirstOrDefault(c => c.CustomerId == customerId);
 
-        if (customer == null)
-        {
-            return null; // Or handle the situation where the customer is not found
-        }
+//         if (customer == null)
+//         {
+//             return null; // Or handle the situation where the customer is not found
+//         }
 
-        cart.CustomerId = customer.CustomerId;
-        cart.Customer = customer;
-    }
+//         cart.CustomerId = customer.CustomerId;
+//         cart.Customer = customer;
+//     }
 
-    // Now, let's associate the gift with the cart
-    var gift = _context.Gifts.FirstOrDefault(g => g.GiftId == giftId);
+//     // Now, let's associate the gift with the cart
+//     var gift = _context.Gifts.FirstOrDefault(g => g.GiftId == giftId);
 
-    if (gift == null)
-    {
-        return null; // Or handle the situation where the gift is not found
-    }
+//     if (gift == null)
+//     {
+//         return null; // Or handle the situation where the gift is not found
+//     }
 
-    // Assuming you have a navigation property in your Cart model to represent the gifts in the cart
-    cart.Gifts.Add(gift);
+//     // Assuming you have a navigation property in your Cart model to represent the gifts in the cart
+//     cart.Gifts.Add(gift);
 
-    _context.Carts.Add(cart);
-    _context.SaveChanges();
+//     _context.Carts.Add(cart);
+//     _context.SaveChanges();
     
-    return cart;
-}
+//     return cart;
+// }
 
 
 

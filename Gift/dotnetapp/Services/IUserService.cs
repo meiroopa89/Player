@@ -19,7 +19,7 @@ namespace dotnetapp.Services
 {
     public interface IUserService
     {
-        Task<(int, string)> Register(RegisterModel model, string role);
-        Task<(int, string)> Login(LoginModel model);
+        Task<bool> RegisterAsync(User user);
+        Task<string> LoginAsync(string email, string password);
     }
 }
