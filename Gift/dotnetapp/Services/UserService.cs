@@ -113,9 +113,10 @@ namespace dotnetapp.Services
 
 
     public async Task<string> LoginAsync(string email, string password)
-    {
+{
     try
     {
+        Console.WriteLine("Email Received: " + email);
         var user = await _userManager.FindByEmailAsync(email);
         Console.WriteLine("User: " + user?.Email); // Debug output
         Console.WriteLine("Password: " + password); // Debug output
@@ -134,11 +135,12 @@ namespace dotnetapp.Services
     }
     catch (Exception ex)
     {
-        Console.WriteLine("zxcvbnm" + ex.Message);
+        Console.WriteLine("Exception: " + ex.Message);
         // Handle exceptions appropriately (e.g., logging)
         return null; // Login failed
     }
 }
+
 
  
 //             private string GenerateJwtToken(IdentityUser user)

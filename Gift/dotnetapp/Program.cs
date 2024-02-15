@@ -148,7 +148,7 @@ builder.Services.AddScoped<CustomerService, CustomerServiceImpl>();
 builder.Services.AddScoped<CartService, CartServiceImpl>();
 builder.Services.AddScoped<ReviewService, ReviewServiceImpl>();
 
-// builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<UserService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
