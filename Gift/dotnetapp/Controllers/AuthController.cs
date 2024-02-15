@@ -115,6 +115,7 @@ namespace dotnetapp.Controllers
 {
     [Route("api/")]
     [ApiController]
+    
     public class AuthController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -130,6 +131,7 @@ namespace dotnetapp.Controllers
         }
 
         [HttpPost("register")]
+        // [Authorize(Roles = "admin,customer")]
         public async Task<IActionResult> Register([FromBody] User user)
         {
             if (user == null)
@@ -164,6 +166,7 @@ namespace dotnetapp.Controllers
             return BadRequest("Registration failed. Username may already exist.");
         }
 
+    //    [Authorize(Roles = "admin,customer")]
        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {

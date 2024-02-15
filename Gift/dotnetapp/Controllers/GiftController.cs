@@ -83,6 +83,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using dotnetapp.Models;
 using dotnetapp.Services;
+using Microsoft.AspNetCore.Authorization;
+
 
 [Route("api/[controller]")]
 [ApiController]
@@ -95,6 +97,7 @@ public class GiftController : ControllerBase
         _giftService = giftService;
     }
 
+    [Authorize]
     [HttpPost]
     public IActionResult AddGift([FromBody] Gift gift)
     {

@@ -35,7 +35,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 builder.Services.AddCors(options =>
     {
-        options.AddPolicy("AllowAll",
+        options.AddPolicy("AllowOrigin",
             builder =>
             {
                 builder.AllowAnyOrigin()
@@ -95,7 +95,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseCors("AllowAll");
+app.UseCors("AllowOrigin");
 
 // Add authentication and authorization middleware
 app.UseAuthentication();

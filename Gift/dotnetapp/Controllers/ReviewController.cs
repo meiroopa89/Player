@@ -8,9 +8,10 @@ using System.Threading.Tasks;
  
 namespace dotnetapp.Controllers
 {
-    // [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "admin,customer")]
+
     public class ReviewController : ControllerBase
     {
         private readonly ReviewService _reviewService;
