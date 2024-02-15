@@ -143,15 +143,17 @@ namespace dotnetapp.Services
 
 
  
-//             private string GenerateJwtToken(IdentityUser user)
-// {
-//     Console.WriteLine("User: " + user.UserName);
+//         private string GenerateJwtToken(IdentityUser user)
+//     {
+//     // Console.WriteLine("User: " + user.UserName);
+//     Console.WriteLine("User: " + user.Email);
  
 //     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
 //     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 //     var claims = new List<Claim>
 //     {
-//         new Claim(ClaimTypes.Name, user.UserName),
+//         // new Claim(ClaimTypes.Name, user.UserName),
+//     new Claim(ClaimTypes.Email, user.Email),
 //     };
  
 //     // Retrieve roles for the user
@@ -181,33 +183,82 @@ namespace dotnetapp.Services
 //     return new JwtSecurityTokenHandler().WriteToken(token);
 // }
 
+// private string GenerateJwtToken(IdentityUser user)
+// {
+//     try
+//     {
+//         Console.WriteLine("User: " + user.Email);
+
+//         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+//         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+//         var claims = new List<Claim>
+//         {
+//             new Claim(ClaimTypes.Email, user.Email),
+//         };
+
+//         // Retrieve roles for the user
+//         var roles = _userManager.GetRolesAsync(user).Result;
+
+//         Console.WriteLine("Roles: " + string.Join(", ", roles));
+
+//         foreach (var role in roles)
+//         {
+//             var roleClaim = new Claim(ClaimTypes.Role, role);
+//             Console.WriteLine($"Adding role claim: {roleClaim.Type} - {roleClaim.Value}");
+//             claims.Add(roleClaim);
+//         }
+
+//         var token = new JwtSecurityToken(
+//             _configuration["Jwt:Issuer"],
+//             _configuration["Jwt:Audience"],
+//             claims,
+//             expires: DateTime.Now.AddHours(2),
+//             signingCredentials: credentials
+//         );
+//         Console.WriteLine("Token generated successfully: " + token);
+
+//         return new JwtSecurityTokenHandler().WriteToken(token);
+//     }
+//     catch (Exception ex)
+//     {
+//         Console.WriteLine("Exception: " + ex.Message);
+//         return null;
+//     }
+// }
+
 private string GenerateJwtToken(IdentityUser user)
+{
+    try
+    {
+        Console.WriteLine("User: " + user.Email);
+
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+        var claims = new List<Claim>
         {
-            Console.WriteLine("User: " + user.Email);
+            new Claim(ClaimTypes.Email, user.Email),
+        };
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Email),
-            };
+        var token = new JwtSecurityToken(
+            _configuration["Jwt:Issuer"],
+            _configuration["Jwt:Audience"],
+            claims,
+            expires: DateTime.Now.AddHours(2),
+            signingCredentials: credentials
+        );
+        Console.WriteLine("Token generated successfully: " + token);
 
-            var roles = _userManager.GetRolesAsync(user).Result;
-            Console.WriteLine("Roles: " + string.Join(", ", roles));
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Exception: " + ex.Message);
+        return null;
+    }
+}
 
-            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-            var token = new JwtSecurityToken(
-                _configuration["Jwt:Issuer"],
-                _configuration["Jwt:Audience"],
-                claims,
-                expires: DateTime.Now.AddHours(2),
-                signingCredentials: credentials
-            );
-            Console.WriteLine("Token generated successfully: " + token);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
     }
 }
  
