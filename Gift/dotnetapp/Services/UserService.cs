@@ -83,91 +83,122 @@ namespace dotnetapp.Services
             }
         }
  
-        public async Task<string> LoginAsync(string username, string password)
-        {
-             try
-    {
-        var user = await _userManager.FindByNameAsync(username);
-        Console.WriteLine("User: " + user?.UserName); // Debug output
-        Console.WriteLine("Password: " + password); // Debug output
+    //     public async Task<string> LoginAsync(string username, string password)
+    //     {
+    //          try
+    // {
+    //     var user = await _userManager.FindByNameAsync(username);
+    //     Console.WriteLine("User: " + user?.UserName); // Debug output
+    //     Console.WriteLine("Password: " + password); // Debug output
  
+    //     if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
+    //     {
+    //         Console.WriteLine("Invalid username or password"); // Debug output
+    //         return null; // Invalid username or password
+    //     }
+ 
+    //     // Generate a JWT token
+    //     var token = GenerateJwtToken(user);
+    //     Console.WriteLine("Token: " + token); // Debug output
+ 
+    //     return token;
+    // }
+    //         catch (Exception ex)
+    //         {
+    //             Console.WriteLine("zxcvbnm" + ex.Message);
+    //             // Handle exceptions appropriately (e.g., logging)
+    //             return null; // Login failed
+    //         }
+    //     }
+
+
+        public async Task<string> LoginAsync(string email, string password)
+{
+    try
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        Console.WriteLine("User: " + user?.Email); // Debug output
+        Console.WriteLine("Password: " + password); // Debug output
+
         if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
         {
-            Console.WriteLine("Invalid username or password"); // Debug output
-            return null; // Invalid username or password
+            Console.WriteLine("Invalid email or password"); // Debug output
+            return null; // Invalid email or password
         }
- 
+
         // Generate a JWT token
         var token = GenerateJwtToken(user);
         Console.WriteLine("Token: " + token); // Debug output
- 
+
         return token;
     }
-            catch (Exception ex)
-            {
-                Console.WriteLine("zxcvbnm" + ex.Message);
-                // Handle exceptions appropriately (e.g., logging)
-                return null; // Login failed
-            }
-        }
+    catch (Exception ex)
+    {
+        Console.WriteLine("zxcvbnm" + ex.Message);
+        // Handle exceptions appropriately (e.g., logging)
+        return null; // Login failed
+    }
+}
 
+ 
+//             private string GenerateJwtToken(IdentityUser user)
+// {
+//     Console.WriteLine("User: " + user.UserName);
+ 
+//     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+//     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+//     var claims = new List<Claim>
+//     {
+//         new Claim(ClaimTypes.Name, user.UserName),
+//     };
+ 
+//     // Retrieve roles for the user
+//     var roles = _userManager.GetRolesAsync(user).Result;
+ 
+//     Console.WriteLine("Roles: " + string.Join(", ", roles));
+ 
+//     // Add role claims to the JWT token using ClaimTypes.Role
+//     // claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+ 
+//     foreach (var role in roles)
+// {
+//     var roleClaim = new Claim(ClaimTypes.Role, role);
+//     Console.WriteLine($"Adding role claim: {roleClaim.Type} - {roleClaim.Value}");
+//     claims.Add(roleClaim);
+// }
+ 
+//     var token = new JwtSecurityToken(
+//         _configuration["Jwt:Issuer"],
+//         _configuration["Jwt:Audience"],
+//         claims,
+//         expires: DateTime.Now.AddHours(2),
+//         signingCredentials: credentials
+//     );
+//     Console.WriteLine("Token generated successfully: " + token);
+ 
+//     return new JwtSecurityTokenHandler().WriteToken(token);
+// }
 
- 
-    //     private string GenerateJwtToken(IdentityUser user)
-    //     {
-    //         Console.WriteLine("asdf"+user.UserName);
-    //         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-    //         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-    //         var claims = new List<Claim>
-    // {
-    //     new Claim(ClaimTypes.Name, user.UserName),
-    // };
- 
-    //         // Retrieve roles for the user
-    //         var roles = _userManager.GetRolesAsync(user).Result;
- 
-    //         Console.WriteLine("summa"+roles);
- 
-    //         // Add role claims to the JWT token
-    //         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
- 
-    //         var token = new JwtSecurityToken(
-    //             _configuration["Jwt:Issuer"],
-    //             _configuration["Jwt:Audience"],
-    //             claims,
-    //             expires: DateTime.Now.AddHours(2), // Token expiry time
-    //             signingCredentials: credentials
-    //         );
- 
-    //         return new JwtSecurityTokenHandler().WriteToken(token);
-    //     }
- 
-            private string GenerateJwtToken(IdentityUser user)
+private string GenerateJwtToken(IdentityUser user)
 {
-    Console.WriteLine("User: " + user.UserName);
- 
+    Console.WriteLine("User: " + user.Email); // Adjusted output for email
+    
     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+    
     var claims = new List<Claim>
     {
-        new Claim(ClaimTypes.Name, user.UserName),
+        new Claim(ClaimTypes.Name, user.Email), // Adjusted claim for email
     };
- 
+
     // Retrieve roles for the user
     var roles = _userManager.GetRolesAsync(user).Result;
- 
+    
     Console.WriteLine("Roles: " + string.Join(", ", roles));
- 
+
     // Add role claims to the JWT token using ClaimTypes.Role
-    // claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
- 
-    foreach (var role in roles)
-{
-    var roleClaim = new Claim(ClaimTypes.Role, role);
-    Console.WriteLine($"Adding role claim: {roleClaim.Type} - {roleClaim.Value}");
-    claims.Add(roleClaim);
-}
- 
+    claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+    
     var token = new JwtSecurityToken(
         _configuration["Jwt:Issuer"],
         _configuration["Jwt:Audience"],
@@ -176,7 +207,7 @@ namespace dotnetapp.Services
         signingCredentials: credentials
     );
     Console.WriteLine("Token generated successfully: " + token);
- 
+
     return new JwtSecurityTokenHandler().WriteToken(token);
 }
  
