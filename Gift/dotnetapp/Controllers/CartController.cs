@@ -2,6 +2,8 @@
 using dotnetapp.Models;
 using Microsoft.AspNetCore.Mvc;
 using dotnetapp.Services;
+using Microsoft.AspNetCore.Authorization;
+
 
 
 [Route("api/[controller]")]
@@ -28,7 +30,7 @@ public class CartController : ControllerBase
     //     return Ok(result);
     // }
 
-
+    [Authorize(Roles = "customer")]      
     [HttpPut("update/{cartId}")]
     public IActionResult UpdateCart([FromBody] Cart updatedCart)
     {
@@ -42,6 +44,7 @@ public class CartController : ControllerBase
         return BadRequest("Cart not found");
     }
 
+    [Authorize(Roles = "customer")]      
     [HttpGet("get/{customerId}")]
     public IActionResult GetCartByCustomerId(long customerId)
     {
@@ -53,6 +56,7 @@ public class CartController : ControllerBase
         return NotFound($"Cart not found for customer ID: {customerId}");
     }
 
+    [Authorize(Roles = "customer")] 
     [HttpGet("gifts/{customerId}")]
     public IActionResult GetAllGiftsByCustomerId(long customerId)
     {
@@ -60,6 +64,7 @@ public class CartController : ControllerBase
         return Ok(gifts);
     }
 
+    [Authorize(Roles = "admin,customer")] 
     [HttpGet("customer/{customerId}/total")]
     public IActionResult GetCustomerCartTotalAmount(long customerId)
     {

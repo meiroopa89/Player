@@ -16,14 +16,15 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowOrigin",
         builder =>
         {
-            builder.AllowAnyOrigin()
-                   .AllowAnyMethod()
-                   .AllowAnyHeader();
+            builder.WithOrigins()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
         });
 });
 
