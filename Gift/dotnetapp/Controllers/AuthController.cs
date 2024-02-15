@@ -164,26 +164,22 @@ namespace dotnetapp.Controllers
             return BadRequest("Registration failed. Username may already exist.");
         }
 
-        [HttpPost("login")]
+       [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
             if (request == null || string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
                 return BadRequest("Invalid login request");
-
+ 
             var token = await _userService.LoginAsync(request.Email, request.Password);
-            Console.WriteLine("User Retrieved controller: " +request.Email);
-
-
+ 
             if (token == null)
                 return Unauthorized("Invalid email or password");
-
+ 
             // Retrieve the user from UserManager to get their roles
-            Console.WriteLine("User Retrieved controller: " +request.Email);
-            var user = await _userManager.FindByEmailAsync(request.Email);
-            Console.WriteLine("User Retrieved controller: " + user?.Email);
-            Console.WriteLine("role" + user);
+            var user = await _userManager.FindByNameAsync(request.Email);
+            Console.WriteLine("role"+user);
             var roles = await _userManager.GetRolesAsync(user);
-
+ 
             return Ok(new { Token = token, Roles = roles });
         }
     }

@@ -72,12 +72,12 @@ namespace dotnetapp.Services
         }
 
 
-public async Task<string> LoginAsync(string username, string password)
+public async Task<string> LoginAsync(string email, string password)
         {
              try
     {
-        var user = await _userManager.FindByNameAsync(username);
-        Console.WriteLine("User: " + user?.UserName); // Debug output
+        var user = await _userManager.FindByNameAsync(email);
+        Console.WriteLine("User: " + user?.Email); // Debug output
         Console.WriteLine("Password: " + password); // Debug output
  
         if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
@@ -102,13 +102,13 @@ public async Task<string> LoginAsync(string username, string password)
 
     private string GenerateJwtToken(IdentityUser user)
 {
-    Console.WriteLine("User: " + user.UserName);
+    Console.WriteLine("User: " + user.Email);
  
     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
     var claims = new List<Claim>
     {
-        new Claim(ClaimTypes.Name, user.UserName),
+        new Claim(ClaimTypes.Email, user.Email),
     };
  
     // Retrieve roles for the user
