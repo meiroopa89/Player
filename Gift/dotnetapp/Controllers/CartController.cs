@@ -15,16 +15,18 @@ public class CartController : ControllerBase
         _cartService = cartService;
     }
 
-    // [HttpPost("add")]
-    // public IActionResult AddCart([FromBody] Cart cart)
-    // {
-    //     var addedCart = _cartService.addCart(cart);
-    //     if (addedCart != null)
-    //     {
-    //         return Ok(addedCart);
-    //     }
-    //     return BadRequest("Failed to add cart");
-    // }
+    [HttpPost("add")]
+    public IActionResult AddToCart([FromBody] Cart cart, [FromQuery] int giftId, [FromQuery] int customerId)
+    {
+        var result = _cartService.AddCart(cart, giftId, customerId);
+
+        if (result == null)
+        {
+            return NotFound("Customer or Gift not found"); // Or handle accordingly
+        }
+
+        return Ok(result);
+    }
 
 
     [HttpPut("update/{cartId}")]
