@@ -36,9 +36,11 @@ namespace dotnetapp.Services
                 var identityUser = new IdentityUser
                 {
                     UserName = user.Username,
+                    Email = user.Email
                 };
  
                 Console.WriteLine(identityUser.UserName);
+                Console.WriteLine(identityUser.Email);
  
  
                 var result = await _userManager.CreateAsync(identityUser, user.Password);
