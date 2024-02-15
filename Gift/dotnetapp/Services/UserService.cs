@@ -32,18 +32,6 @@ namespace dotnetapp.Services
         {
             try
             {
-                //var customUser = new User
-                //{
-                //    Username = user.Username,
-                //    Password = user.Password,
-                //    Role = user.Role,
-                //    // Set any additional properties you have in your custom User entity
-                //};
- 
-                //// Add the customUser to the DbSet and save it
-                //_context.Users.Add(customUser);
-                //await _context.SaveChangesAsync();
- 
  
                 var identityUser = new IdentityUser
                 {
@@ -82,119 +70,45 @@ namespace dotnetapp.Services
                 return false; // Registration failed
             }
         }
- 
-    //     public async Task<string> LoginAsync(string username, string password)
-    //     {
-    //          try
-    // {
-    //     var user = await _userManager.FindByNameAsync(username);
-    //     Console.WriteLine("User: " + user?.UserName); // Debug output
-    //     Console.WriteLine("Password: " + password); // Debug output
- 
-    //     if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
-    //     {
-    //         Console.WriteLine("Invalid username or password"); // Debug output
-    //         return null; // Invalid username or password
-    //     }
- 
-    //     // Generate a JWT token
-    //     var token = GenerateJwtToken(user);
-    //     Console.WriteLine("Token: " + token); // Debug output
- 
-    //     return token;
-    // }
-    //         catch (Exception ex)
-    //         {
-    //             Console.WriteLine("zxcvbnm" + ex.Message);
-    //             // Handle exceptions appropriately (e.g., logging)
-    //             return null; // Login failed
-    //         }
-    //     }
 
 
-//     public async Task<string> LoginAsync(string email, string password)
-// {
-//     try
-//     {
-//         Console.WriteLine("Email Received: " + email);
-//         var user = await _userManager.FindByEmailAsync(email);
-//         Console.WriteLine("User: " + user?.Email); // Debug output
-//         Console.WriteLine("Password: " + password); // Debug output
-
-//         if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
-//         {
-//             Console.WriteLine("Invalid email or password"); // Debug output
-//             return null; // Invalid email or password
-//         }
-
-//         // Generate a JWT token
-//         var token = GenerateJwtToken(user);
-//         Console.WriteLine("Token: " + token); // Debug output
-
-//         return token;
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine("Exception: " + ex.Message);
-//         // Handle exceptions appropriately (e.g., logging)
-//         return null; // Login failed
-//     }
-// }
-
-public async Task<string> LoginAsync(string email, string password)
-{
-    try
+public async Task<string> LoginAsync(string username, string password)
+        {
+             try
     {
-        Console.WriteLine("Email Received: " + email);
-        var user = await _userManager.FindByEmailAsync(model.Email);
-        // var user = await _userManager.FindByEmailAsync(email.ToLower());
-
-        // Check if the user exists
-        if (user == null)
-        {
-            Console.WriteLine("User not found");
-            return null; // User not found
-        }
-
-        Console.WriteLine("User Retrieved: " + user?.Email);
+        var user = await _userManager.FindByNameAsync(username);
+        Console.WriteLine("User: " + user?.UserName); // Debug output
         Console.WriteLine("Password: " + password); // Debug output
-
-        // Use SignInManager to check the password
-        var signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, false);
-
-        if (!signInResult.Succeeded)
+ 
+        if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
         {
-            Console.WriteLine("Invalid email or password");
-            return null; // Invalid email or password
+            Console.WriteLine("Invalid username or password"); // Debug output
+            return null; // Invalid username or password
         }
-
+ 
         // Generate a JWT token
         var token = GenerateJwtToken(user);
         Console.WriteLine("Token: " + token); // Debug output
-
+ 
         return token;
     }
-    catch (Exception ex)
-    {
-        Console.WriteLine("Exception: " + ex.Message);
-        return null; // Login failed
-    }
-}
+            catch (Exception ex)
+            {
+                Console.WriteLine("zxcvbnm" + ex.Message);
+                // Handle exceptions appropriately (e.g., logging)
+                return null; // Login failed
+            }
+        }
 
-
-
- 
     private string GenerateJwtToken(IdentityUser user)
-    {
-    // Console.WriteLine("User: " + user.UserName);
-    Console.WriteLine("User: " + user.Email);
+{
+    Console.WriteLine("User: " + user.UserName);
  
     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
     var claims = new List<Claim>
     {
-        // new Claim(ClaimTypes.Name, user.UserName),
-    new Claim(ClaimTypes.Email, user.Email),
+        new Claim(ClaimTypes.Name, user.UserName),
     };
  
     // Retrieve roles for the user
@@ -223,40 +137,6 @@ public async Task<string> LoginAsync(string email, string password)
  
     return new JwtSecurityTokenHandler().WriteToken(token);
 }
-
-
-
-// private string GenerateJwtToken(IdentityUser user)
-// {
-//     try
-//     {
-//         Console.WriteLine("User: " + user.UserName);
-//         Console.WriteLine("User: " + user.Email);
-
-//         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-//         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-//         var claims = new List<Claim>
-//         {
-//             new Claim(ClaimTypes.Email, user.Email),
-//         };
-
-//         var token = new JwtSecurityToken(
-//             _configuration["Jwt:Issuer"],
-//             _configuration["Jwt:Audience"],
-//             claims,
-//             expires: DateTime.Now.AddHours(2),
-//             signingCredentials: credentials
-//         );
-//         Console.WriteLine("Token generated successfully: " + token);
-
-//         return new JwtSecurityTokenHandler().WriteToken(token);
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine("Exception: " + ex.Message);
-//         return null;
-//     }
-// }
 
     }
 }
