@@ -176,7 +176,7 @@ namespace dotnetapp.Controllers
                 return Unauthorized("Invalid email or password");
  
             // Retrieve the user from UserManager to get their roles
-            var user = await _userManager.FindByNameAsync(request.Email);
+            var user = await _userManager.FindByEmailAsync(request.Email);
             Console.WriteLine("role"+user);
             var roles = await _userManager.GetRolesAsync(user);
  
