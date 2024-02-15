@@ -146,7 +146,7 @@ public async Task<string> LoginAsync(string email, string password)
     try
     {
         Console.WriteLine("Email Received: " + email);
-        var user = await _userManager.FindByEmailAsync(email);
+        var user = await _userManager.FindByEmailAsync(model.Email);
         // var user = await _userManager.FindByEmailAsync(email.ToLower());
 
         // Check if the user exists
