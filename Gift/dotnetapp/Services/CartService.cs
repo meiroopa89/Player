@@ -10,5 +10,6 @@ namespace dotnetapp.Services
         Cart updateCart(Cart updatedCart);
         Cart getCartByCustomerId(long customerId);
         List<Gift> getAllGiftsByCustomerId(long customerId);
+        double CalculateTotalAmount(long customerId);
     }
 }

@@ -5,7 +5,7 @@ using dotnetapp.Models;
 using dotnetapp.Services;
 using Microsoft.AspNetCore.Authorization;
 
-    [Authorize]
+// [Authorize]
 
 [Route("api/[controller]")]
 [ApiController]

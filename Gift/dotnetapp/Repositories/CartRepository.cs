@@ -151,4 +151,28 @@ public Cart updateCart(Cart updatedCart)
 
         return new List<Gift>();
     }
+
+    public double CalculateTotalAmount(long customerId)
+{
+    var cart = getCartByCustomerId(customerId);
+
+    if (cart != null)
+    {
+        if (cart.Gifts != null)
+        {
+            return cart.Gifts.Sum(g => g.GiftPrice * g.Quantity);
+        }
+        else
+        {
+            Console.WriteLine("Cart has no associated gifts.");
+        }
+    }
+    else
+    {
+        Console.WriteLine($"Cart not found for customer ID: {customerId}");
+    }
+
+    return 0;
+}
+
 }

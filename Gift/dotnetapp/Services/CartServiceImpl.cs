@@ -136,4 +136,9 @@ public class CartServiceImpl : CartService
     {
         return _cartRepository.getAllGiftsByCustomerId(customerId);
     }
+
+    public double CalculateTotalAmount(long customerId)
+    {
+        return _cartRepository.CalculateTotalAmount(customerId);
+    }
 }

@@ -59,4 +59,12 @@ public class CartController : ControllerBase
         var gifts = _cartService.getAllGiftsByCustomerId(customerId);
         return Ok(gifts);
     }
+
+    [HttpGet("customer/{customerId}/total")]
+    public IActionResult GetCustomerCartTotalAmount(long customerId)
+    {
+        double totalAmount = _cartService.CalculateTotalAmount(customerId);
+
+        return Ok(new { TotalAmount = totalAmount });
+    }
 }
