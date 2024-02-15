@@ -112,18 +112,58 @@ namespace dotnetapp.Services
     //     }
 
 
-    public async Task<string> LoginAsync(string email, string password)
+//     public async Task<string> LoginAsync(string email, string password)
+// {
+//     try
+//     {
+//         Console.WriteLine("Email Received: " + email);
+//         var user = await _userManager.FindByEmailAsync(email);
+//         Console.WriteLine("User: " + user?.Email); // Debug output
+//         Console.WriteLine("Password: " + password); // Debug output
+
+//         if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
+//         {
+//             Console.WriteLine("Invalid email or password"); // Debug output
+//             return null; // Invalid email or password
+//         }
+
+//         // Generate a JWT token
+//         var token = GenerateJwtToken(user);
+//         Console.WriteLine("Token: " + token); // Debug output
+
+//         return token;
+//     }
+//     catch (Exception ex)
+//     {
+//         Console.WriteLine("Exception: " + ex.Message);
+//         // Handle exceptions appropriately (e.g., logging)
+//         return null; // Login failed
+//     }
+// }
+
+public async Task<string> LoginAsync(string email, string password)
 {
     try
     {
         Console.WriteLine("Email Received: " + email);
         var user = await _userManager.FindByEmailAsync(email);
-        Console.WriteLine("User: " + user?.Email); // Debug output
+
+        // Check if the user exists
+        if (user == null)
+        {
+            Console.WriteLine("User not found");
+            return null; // User not found
+        }
+
+        Console.WriteLine("User Retrieved: " + user?.Email);
         Console.WriteLine("Password: " + password); // Debug output
 
-        if (user == null || !(await _signInManager.CheckPasswordSignInAsync(user, password, false)).Succeeded)
+        // Use SignInManager to check the password
+        var signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, false);
+
+        if (!signInResult.Succeeded)
         {
-            Console.WriteLine("Invalid email or password"); // Debug output
+            Console.WriteLine("Invalid email or password");
             return null; // Invalid email or password
         }
 
@@ -136,10 +176,10 @@ namespace dotnetapp.Services
     catch (Exception ex)
     {
         Console.WriteLine("Exception: " + ex.Message);
-        // Handle exceptions appropriately (e.g., logging)
         return null; // Login failed
     }
 }
+
 
 
  
@@ -230,6 +270,7 @@ private string GenerateJwtToken(IdentityUser user)
 {
     try
     {
+        Console.WriteLine("User: " + user.UserName);
         Console.WriteLine("User: " + user.Email);
 
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
@@ -256,8 +297,6 @@ private string GenerateJwtToken(IdentityUser user)
         return null;
     }
 }
-
-
 
     }
 }
