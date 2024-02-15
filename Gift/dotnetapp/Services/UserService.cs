@@ -147,6 +147,7 @@ public async Task<string> LoginAsync(string email, string password)
     {
         Console.WriteLine("Email Received: " + email);
         var user = await _userManager.FindByEmailAsync(email);
+        // var user = await _userManager.FindByEmailAsync(email.ToLower());
 
         // Check if the user exists
         if (user == null)
@@ -183,50 +184,53 @@ public async Task<string> LoginAsync(string email, string password)
 
 
  
-//         private string GenerateJwtToken(IdentityUser user)
-//     {
-//     // Console.WriteLine("User: " + user.UserName);
-//     Console.WriteLine("User: " + user.Email);
+    private string GenerateJwtToken(IdentityUser user)
+    {
+    // Console.WriteLine("User: " + user.UserName);
+    Console.WriteLine("User: " + user.Email);
  
-//     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-//     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-//     var claims = new List<Claim>
-//     {
-//         // new Claim(ClaimTypes.Name, user.UserName),
-//     new Claim(ClaimTypes.Email, user.Email),
-//     };
+    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+    var claims = new List<Claim>
+    {
+        // new Claim(ClaimTypes.Name, user.UserName),
+    new Claim(ClaimTypes.Email, user.Email),
+    };
  
-//     // Retrieve roles for the user
-//     var roles = _userManager.GetRolesAsync(user).Result;
+    // Retrieve roles for the user
+    var roles = _userManager.GetRolesAsync(user).Result;
  
-//     Console.WriteLine("Roles: " + string.Join(", ", roles));
+    Console.WriteLine("Roles: " + string.Join(", ", roles));
  
-//     // Add role claims to the JWT token using ClaimTypes.Role
-//     // claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+    // Add role claims to the JWT token using ClaimTypes.Role
+    // claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
  
-//     foreach (var role in roles)
-// {
-//     var roleClaim = new Claim(ClaimTypes.Role, role);
-//     Console.WriteLine($"Adding role claim: {roleClaim.Type} - {roleClaim.Value}");
-//     claims.Add(roleClaim);
-// }
+    foreach (var role in roles)
+{
+    var roleClaim = new Claim(ClaimTypes.Role, role);
+    Console.WriteLine($"Adding role claim: {roleClaim.Type} - {roleClaim.Value}");
+    claims.Add(roleClaim);
+}
  
-//     var token = new JwtSecurityToken(
-//         _configuration["Jwt:Issuer"],
-//         _configuration["Jwt:Audience"],
-//         claims,
-//         expires: DateTime.Now.AddHours(2),
-//         signingCredentials: credentials
-//     );
-//     Console.WriteLine("Token generated successfully: " + token);
+    var token = new JwtSecurityToken(
+        _configuration["Jwt:Issuer"],
+        _configuration["Jwt:Audience"],
+        claims,
+        expires: DateTime.Now.AddHours(2),
+        signingCredentials: credentials
+    );
+    Console.WriteLine("Token generated successfully: " + token);
  
-//     return new JwtSecurityTokenHandler().WriteToken(token);
-// }
+    return new JwtSecurityTokenHandler().WriteToken(token);
+}
+
+
 
 // private string GenerateJwtToken(IdentityUser user)
 // {
 //     try
 //     {
+//         Console.WriteLine("User: " + user.UserName);
 //         Console.WriteLine("User: " + user.Email);
 
 //         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
@@ -235,18 +239,6 @@ public async Task<string> LoginAsync(string email, string password)
 //         {
 //             new Claim(ClaimTypes.Email, user.Email),
 //         };
-
-//         // Retrieve roles for the user
-//         var roles = _userManager.GetRolesAsync(user).Result;
-
-//         Console.WriteLine("Roles: " + string.Join(", ", roles));
-
-//         foreach (var role in roles)
-//         {
-//             var roleClaim = new Claim(ClaimTypes.Role, role);
-//             Console.WriteLine($"Adding role claim: {roleClaim.Type} - {roleClaim.Value}");
-//             claims.Add(roleClaim);
-//         }
 
 //         var token = new JwtSecurityToken(
 //             _configuration["Jwt:Issuer"],
@@ -265,38 +257,6 @@ public async Task<string> LoginAsync(string email, string password)
 //         return null;
 //     }
 // }
-
-private string GenerateJwtToken(IdentityUser user)
-{
-    try
-    {
-        Console.WriteLine("User: " + user.UserName);
-        Console.WriteLine("User: " + user.Email);
-
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Email, user.Email),
-        };
-
-        var token = new JwtSecurityToken(
-            _configuration["Jwt:Issuer"],
-            _configuration["Jwt:Audience"],
-            claims,
-            expires: DateTime.Now.AddHours(2),
-            signingCredentials: credentials
-        );
-        Console.WriteLine("Token generated successfully: " + token);
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine("Exception: " + ex.Message);
-        return null;
-    }
-}
 
     }
 }
