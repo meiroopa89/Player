@@ -139,10 +139,10 @@ public class Tests
        // Use a dynamic and unique userName for admin (appending timestamp)
        string uniqueGiftTitle = $"giftTitle_{uniquetitle}";
 
-       string jobJson = $"{{\"GiftType\":\"{uniqueGiftTitle}\",\"GiftImageUrl\":\"test\",\"GiftDetails\":\"test\",\"GiftPrice\":10,\"Quantity\":1}}";
+       string giftJson = $"{{\"GiftType\":\"{uniqueGiftTitle}\",\"GiftImageUrl\":\"test\",\"GiftDetails\":\"test\",\"GiftPrice\":10,\"Quantity\":1}}";
        _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
        HttpResponseMessage response = await _httpClient.PostAsync("/api/gift",
-           new StringContent(jobJson, Encoding.UTF8, "application/json"));
+           new StringContent(giftJson, Encoding.UTF8, "application/json"));
 
        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
@@ -185,47 +185,54 @@ public class Tests
        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
 
-    [Test, Order(5)]
-    public async Task Backend_TestAddCustomer()
+[Test, Order(5)]
+public async Task Backend_TestAddCustomer()
+{
+    string uniqueId = Guid.NewGuid().ToString();
+
+    // Use a dynamic and unique userName for admin (appending timestamp)
+    string uniqueusername = $"abcd_{uniqueId}";
+    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+    // Assume you have a valid admin registration method, adjust the request body accordingly
+    string adminRegistrationRequestBody = $"{{\"password\": \"abc@123A\", \"userName\": \"{uniqueusername}\",\"role\": \"admin\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("api/register", new StringContent(adminRegistrationRequestBody, Encoding.UTF8, "application/json"));
+
+    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+
+    // Now, perform the login for the admin user
+    string adminLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"abc@123A\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
+
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+    string responseBody = await loginResponse.Content.ReadAsStringAsync();
+
+    dynamic responseMap = JsonConvert.DeserializeObject(responseBody);
+
+    string token = responseMap.token;
+
+    Assert.IsNotNull(token);
+
+    // Use a dynamic and unique userName for admin (appending timestamp)
+    string uniqueCustomerName = $"CustomerName_{uniqueId}";
+    string uniqueAddress = $"Address_{uniqueId}";
+
+    // Include the "User" field in the request body
+    string giftJson = $"{{\"User\": {{\"CustomerName\": \"{uniqueCustomerName}\",\"Address\": \"{uniqueAddress}\"}}}}";
+    
+    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+    HttpResponseMessage response = await _httpClient.PostAsync("/api/customer",
+        new StringContent(giftJson, Encoding.UTF8, "application/json"));
+
+    if (response.StatusCode != HttpStatusCode.OK)
     {
-       string uniqueId = Guid.NewGuid().ToString();
-
-       // Use a dynamic and unique userName for admin (appending timestamp)
-       string uniqueusername = $"abcd_{uniqueId}";
-        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-
-       // Assume you have a valid admin registration method, adjust the request body accordingly
-       string adminRegistrationRequestBody = $"{{\"password\": \"abc@123A\", \"userName\": \"{uniqueusername}\",\"role\": \"admin\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
-       HttpResponseMessage registrationResponse = await _httpClient.PostAsync("api/register", new StringContent(adminRegistrationRequestBody, Encoding.UTF8, "application/json"));
-
-       Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
-
-       // Now, perform the login for the admin user
-       string adminLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"abc@123A\"}}";
-       HttpResponseMessage loginResponse = await _httpClient.PostAsync("api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
-
-       Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-       string responseBody = await loginResponse.Content.ReadAsStringAsync();
-
-       dynamic responseMap = JsonConvert.DeserializeObject(responseBody);
-
-       string token = responseMap.token;
-
-       Assert.IsNotNull(token);
-
-       string uniquetitle = Guid.NewGuid().ToString();
-
-       // Use a dynamic and unique userName for admin (appending timestamp)
-       string uniqueGiftTitle = $"giftTitle_{uniquetitle}";
-
-       string jobJson = $"{{\"GiftType\":\"{uniqueGiftTitle}\",\"GiftImageUrl\":\"test\",\"GiftDetails\":\"test\",\"GiftPrice\":10,\"Quantity\":1}}";
-       _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-       HttpResponseMessage response = await _httpClient.PostAsync("/api/customer",
-           new StringContent(jobJson, Encoding.UTF8, "application/json"));
-
-       Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        string errorResponse = await response.Content.ReadAsStringAsync();
+        Console.WriteLine($"Error response: {errorResponse}");
     }
+
+    Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+}
+
 
 
 
