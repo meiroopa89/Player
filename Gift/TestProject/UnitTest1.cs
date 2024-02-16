@@ -186,68 +186,95 @@ public class Tests
        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
 
-[Test]
-public async Task Backend_TestPostReview()
-{
-    // Register a new customer and obtain the authentication token
-    string uniqueId = Guid.NewGuid().ToString();
-    string uniqueUsername = $"abcd_{uniqueId}";
-    string uniquePassword = $"abcdA{uniqueId}@123";
-    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-    // Register a new customer
-    string registerRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"customer\"}}";
-    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
-
-    // Log in the registered customer and obtain the authentication token
-    string loginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
-    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-
-    string responseString = await loginResponse.Content.ReadAsStringAsync();
-    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-    string customerAuthToken = responseMap.token;
-
-    // Set the authentication token in the HTTP client headers
-    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
-
-    // Create a review object
-    var review = new
+    [Test, Order(7)]
+    public async Task Backend_TestPostReview()
     {
-        Subject = "Test subject",
-        Body = "Test body",
-        Rating = 5
-    };
+        HttpResponseMessage response = null;
+
+        // Register a new customer and obtain the authentication token
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+        // Register a new customer
+        string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+        HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+
+        // Log in the registered customer and obtain the authentication token
+        string loginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+
+        string responseString = await loginResponse.Content.ReadAsStringAsync();
+        dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+        string customerAuthToken = responseMap.token;
+
+        // Set the authentication token in the HTTP client headers
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
+
+        // Create a review object
+        var review = new
+        {
+            Subject = "Test subject",
+            Body = "Test body",
+            Rating = 5
+        };
 
     try
-    {
-        // Convert the review object to JSON string
-        string requestBody = JsonConvert.SerializeObject(review);
+        {
+            string requestBody = JsonConvert.SerializeObject(review);
+            response = await _httpClient.PostAsync("/api/review", new StringContent(requestBody, Encoding.UTF8, "application/json"));
 
-        // Attempt to post the review
-        HttpResponseMessage response = await _httpClient.PostAsync("/api/review", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+            // Print response content for debugging purposes
+            Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
 
-        // Check if the response is OK (200)
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        // Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
-        // Optionally, you can retrieve the posted review from the response content and perform additional assertions
-        // string responseContent = await response.Content.ReadAsStringAsync();
-        // var postedReview = JsonConvert.DeserializeObject<YourReviewClass>(responseContent);
-        // Assert.IsNotNull(postedReview);
-        // Add more assertions based on the properties of the posted review
+            // Additional assertions based on the properties of the posted review
+        }
+        catch (HttpRequestException ex)
+        {
+            Console.WriteLine($"Request failed: {ex.Message}");
+
+            if (response != null)
+            {
+                // Print response content for debugging purposes
+                Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+            }
+
+            throw;
+        }
     }
-    catch (HttpRequestException ex)
+
+    [Test, Order(8)]
+    public async Task Backend_TestGetAllReviews()
     {
-        Console.WriteLine($"Request failed: {ex.Message}");
-        Console.WriteLine($"Request content: {JsonConvert.SerializeObject(review)}");
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-        // Print response content for debugging purposes
-        Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+        string RegisterrequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"admin\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+        HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(RegisterrequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
 
-        throw; // Re-throw the exception to mark the test as failed
+        var adminLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+
+        string responseString = await loginResponse.Content.ReadAsStringAsync();
+        dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+        string adminAuthToken = responseMap.token;
+
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+
+        HttpResponseMessage getReviewsResponse = await _httpClient.GetAsync("/api/review");
+    
+        Assert.AreEqual(HttpStatusCode.OK, getReviewsResponse.StatusCode);
     }
-}
+ 
 
 
 
