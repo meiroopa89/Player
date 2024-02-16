@@ -184,35 +184,47 @@ public class Tests
 
        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
-
-[Test, Order(7)]
-public async Task Backend_TestGetCartByCustomerId()
+    
+[Test]
+public async Task Backend_TestPostReviews()
 {
-    // Assuming customerId is the ID of an existing customer with a known cart
-    long customerId = 1; // Replace with the actual customer ID
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueUsername = $"abcd_{uniqueId}";
+    string uniquePassword = $"abcdA{uniqueId}@123";
+    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-    // Assuming authentication and token retrieval logic here...
+    string RegisterrequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"Customer\"}}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(RegisterrequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
 
-    // Set up authorization header with the obtained token
-    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + YOUR_ACCESS_TOKEN);
+    var customerLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(customerLoginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
 
-    // Perform the GET request to retrieve the cart by customer ID
-    HttpResponseMessage response = await _httpClient.GetAsync($"/api/customer/{customerId}");
+    string responseString = await loginResponse.Content.ReadAsStringAsync();
+    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+    string customerAuthToken = responseMap.token;
 
-    // Assert the expected status code
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
+
+    var review = new
+    {
+        Subject = "Test subject",
+        Body = "Test body",
+        Rating = 5
+    };
+
+    string requestBody = JsonConvert.SerializeObject(review);
+    HttpResponseMessage response = await _httpClient.PostAsync("/api/review", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+
+    if (response.StatusCode != HttpStatusCode.OK)
+    {
+        // Print response content for debugging purposes
+        Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+    }
+
     Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-
-    // If needed, assert or process the response content as required
-    string responseBody = await response.Content.ReadAsStringAsync();
-    // Add assertions based on the expected response content or structure
-
-    // Optionally, deserialize the response content if it's JSON and perform further assertions
-    // Example:
-    // var cart = JsonConvert.DeserializeObject<Cart>(responseBody);
-    // Assert.IsNotNull(cart);
-    // Add more assertions based on the properties of the Cart object
 }
-
 
 
     [TearDown]

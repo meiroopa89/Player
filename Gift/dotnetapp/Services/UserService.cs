@@ -107,6 +107,7 @@ public async Task<string> LoginAsync(string email, string password)
     private string GenerateJwtToken(IdentityUser user)
 {
     Console.WriteLine("User: " + user.Email);
+    // user = _userManager.FindByIdAsync(user.Id).Result;
  
     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -114,7 +115,7 @@ public async Task<string> LoginAsync(string email, string password)
     {
         new Claim(ClaimTypes.Email, user.Email),
         // new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-        new Claim(ClaimTypes.NameIdentifier, user.Id)
+        // new Claim(ClaimTypes.NameIdentifier, user.Id)
     };
  
     // Retrieve roles for the user
