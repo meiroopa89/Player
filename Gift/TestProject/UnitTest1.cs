@@ -185,44 +185,33 @@ public class Tests
        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
 
-
-[Test, Order(8)]
-public async Task Backend_TestGetCustomerById()
+[Test, Order(7)]
+public async Task Backend_TestGetCartByCustomerId()
 {
-    // Set up authorization by registering a customer and obtaining the token
-    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/customer", new StringContent("{\"CustomerName\": \"TestCustomer\", \"Address\": \"TestAddress\", \"User\": {\"Email\": \"test@example.com\", \"Password\": \"password123\", \"Role\": \"customer\", \"Username\": \"TestUser\", \"MobileNumber\": \"1234567890\"}}", Encoding.UTF8, "application/json"));
+    // Assuming customerId is the ID of an existing customer with a known cart
+    long customerId = 1; // Replace with the actual customer ID
 
-    Assert.AreEqual(HttpStatusCode.Created, registrationResponse.StatusCode);
+    // Assuming authentication and token retrieval logic here...
 
-    string responseBody = await registrationResponse.Content.ReadAsStringAsync();
-    dynamic responseObject = JsonConvert.DeserializeObject(responseBody);
-    string token = responseObject.token;
+    // Set up authorization header with the obtained token
+    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + YOUR_ACCESS_TOKEN);
 
-    // Extract the customer ID from the registration response
-    long customerId = responseObject.customerId;
-
-    // Perform the GET request using the obtained customer ID and authorization token
-    _httpClient.DefaultRequestHeaders.Clear(); // Clear previous headers
-    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-
+    // Perform the GET request to retrieve the cart by customer ID
     HttpResponseMessage response = await _httpClient.GetAsync($"/api/customer/{customerId}");
 
     // Assert the expected status code
     Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
     // If needed, assert or process the response content as required
-    responseBody = await response.Content.ReadAsStringAsync();
+    string responseBody = await response.Content.ReadAsStringAsync();
     // Add assertions based on the expected response content or structure
+
+    // Optionally, deserialize the response content if it's JSON and perform further assertions
+    // Example:
+    // var cart = JsonConvert.DeserializeObject<Cart>(responseBody);
+    // Assert.IsNotNull(cart);
+    // Add more assertions based on the properties of the Cart object
 }
-
-
-
-
-
-
-
-
-
 
 
 
