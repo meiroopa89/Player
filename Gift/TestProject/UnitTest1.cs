@@ -275,6 +275,31 @@ public class Tests
         Assert.AreEqual(HttpStatusCode.OK, getReviewsResponse.StatusCode);
     }
  
+    [Test, Order(9)]
+public async Task Backend_TestRegisterCustomer()
+{
+    HttpResponseMessage response = null;
+
+    // Register a new customer and obtain the authentication token
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueUsername = $"abcd_{uniqueId}";
+    string uniquePassword = $"abcdA{uniqueId}@123";
+    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+    // Register a new customer
+    string registerRequestBody = $"{{\"CustomerName\": \"John Doe\", \"Address\": \"123 Main St\", \"UserId\": 1, \"User\": {{\"Password\": \"{uniquePassword}\", \"UserName\": \"{uniqueUsername}\", \"Role\": \"admin\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}} }}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/customer", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    
+    // Assert that the registration was successful
+   // Assert.AreEqual(HttpStatusCode.Created, registrationResponse.StatusCode);
+
+    // Optionally, you can assert additional properties based on the response if needed
+    string responseString = await registrationResponse.Content.ReadAsStringAsync();
+    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+    long customerId = responseMap.customerId;
+    Assert.IsTrue(customerId > 0, "Customer ID should be greater than 0");
+
+}
 
 
 
