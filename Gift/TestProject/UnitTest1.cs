@@ -185,8 +185,8 @@ public class Tests
        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
 
-[Test, Order(5)]
-public async Task Backend_TestAddCustomer()
+    [Test, Order(7)]
+public async Task Backend_TestAddReview()
 {
     string uniqueId = Guid.NewGuid().ToString();
 
@@ -213,16 +213,15 @@ public async Task Backend_TestAddCustomer()
 
     Assert.IsNotNull(token);
 
-    // Use a dynamic and unique userName for admin (appending timestamp)
-    string uniqueCustomerName = $"CustomerName_{uniqueId}";
-    string uniqueAddress = $"Address_{uniqueId}";
+    string uniqueSubject = $"ReviewSubject_{uniqueId}";
+    string uniqueBody = $"ReviewBody_{uniqueId}";
+    int uniqueRating = 5; 
 
-    // Include the "User" field in the request body
-    string giftJson = $"{{\"User\": {{\"CustomerName\": \"{uniqueCustomerName}\",\"Address\": \"{uniqueAddress}\"}}}}";
-    
+    string reviewJson = $"{{\"Subject\":\"{uniqueSubject}\",\"Body\":\"{uniqueBody}\",\"Rating\":{uniqueRating}}}";
+
     _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-    HttpResponseMessage response = await _httpClient.PostAsync("/api/customer",
-        new StringContent(giftJson, Encoding.UTF8, "application/json"));
+    HttpResponseMessage response = await _httpClient.PostAsync("/api/review",
+        new StringContent(reviewJson, Encoding.UTF8, "application/json"));
 
     if (response.StatusCode != HttpStatusCode.OK)
     {
@@ -232,6 +231,7 @@ public async Task Backend_TestAddCustomer()
 
     Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 }
+    
 
 
 
