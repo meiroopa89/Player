@@ -93,6 +93,48 @@ public async Task Backend_TestRegisterAdmin()
     // Add your assertions based on the response if needed
 }
 
+[Test, Order(5)]
+public async Task Backend_TestAddGiftAdmin()
+{
+    string uniqueId = Guid.NewGuid().ToString();
+
+    // Use a dynamic and unique userName for admin (appending timestamp)
+    string uniqueUsername = $"admin_{uniqueId}";
+    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+    // Assume you have a valid admin registration method, adjust the request body accordingly
+    string adminRegistrationRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"abc@123A\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\", \"Role\": \"admin\"}}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(adminRegistrationRequestBody, Encoding.UTF8, "application/json"));
+
+    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+
+    // Now, perform the login for the admin user
+    string adminLoginRequestBody = $"{{\"Email\": \"{uniqueUsername}\", \"Password\": \"abc@123A\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
+
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+    string responseBody = await loginResponse.Content.ReadAsStringAsync();
+
+    dynamic responseMap = JsonConvert.DeserializeObject(responseBody);
+
+    string token = responseMap.Token;
+
+    Assert.IsNotNull(token);
+
+    string uniqueTitle = Guid.NewGuid().ToString();
+
+    // Use a dynamic and unique title for the gift (appending timestamp)
+    string uniqueGiftTitle = $"giftTitle_{uniqueTitle}";
+
+    string giftJson = $"{{\"GiftType\":\"{uniqueGiftTitle}\",\"GiftImageUrl\":\"test\",\"GiftDetails\":\"test\",\"GiftPrice\":10,\"Quantity\":1}}";
+    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+    HttpResponseMessage response = await _httpClient.PostAsync("/api/Gift",
+        new StringContent(giftJson, Encoding.UTF8, "application/json"));
+
+    Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+}
+
+
 
     [TearDown]
     public void TearDown()
