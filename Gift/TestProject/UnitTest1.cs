@@ -93,6 +93,7 @@ public async Task Backend_TestRegisterAdmin()
     // Add your assertions based on the response if needed
 }
 
+
 [Test, Order(5)]
 public async Task Backend_TestAddGiftAdmin()
 {
@@ -109,13 +110,15 @@ public async Task Backend_TestAddGiftAdmin()
     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
 
     // Now, perform the login for the admin user
-    string adminLoginRequestBody = $"{{\"Email\": \"{uniqueUsername}\", \"Password\": \"abc@123A\"}}";
+    string adminLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"abc@123A\"}}";
     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
 
     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-    string responseBody = await loginResponse.Content.ReadAsStringAsync();
+    string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
 
-    dynamic responseMap = JsonConvert.DeserializeObject(responseBody);
+    // Validate the structure of the response
+    dynamic responseMap = JsonConvert.DeserializeObject(loginResponseBody);
+    Assert.IsNotNull(responseMap.Token, "Response does not contain a 'Token' property");
 
     string token = responseMap.Token;
 
