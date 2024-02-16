@@ -186,58 +186,39 @@ public class Tests
     }
 
 
-    [Test, Order(7)]
-    public async Task Backend_TestAddCustomer()
+[Test, Order(8)]
+public async Task Backend_TestGetCustomerById()
 {
-    string uniqueId = Guid.NewGuid().ToString();
+    // Set up authorization by registering a customer and obtaining the token
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/customer", new StringContent("{\"CustomerName\": \"TestCustomer\", \"Address\": \"TestAddress\", \"User\": {\"Email\": \"test@example.com\", \"Password\": \"password123\", \"Role\": \"customer\", \"Username\": \"TestUser\", \"MobileNumber\": \"1234567890\"}}", Encoding.UTF8, "application/json"));
 
-    // Use a dynamic and unique userName for admin (appending timestamp)
-    string uniqueusername = $"abcd_{uniqueId}";
-    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+    Assert.AreEqual(HttpStatusCode.Created, registrationResponse.StatusCode);
 
-    // Assume you have a valid admin registration method, adjust the request body accordingly
-    string adminRegistrationRequestBody = $"{{\"password\": \"abc@123A\", \"userName\": \"{uniqueusername}\",\"role\": \"admin\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
-    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("api/register", new StringContent(adminRegistrationRequestBody, Encoding.UTF8, "application/json"));
+    string responseBody = await registrationResponse.Content.ReadAsStringAsync();
+    dynamic responseObject = JsonConvert.DeserializeObject(responseBody);
+    string token = responseObject.token;
 
-    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+    // Extract the customer ID from the registration response
+    long customerId = responseObject.customerId;
 
-    // Now, perform the login for the admin user
-    string adminLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"abc@123A\"}}";
-    HttpResponseMessage loginResponse = await _httpClient.PostAsync("api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
-
-    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-    string responseBody = await loginResponse.Content.ReadAsStringAsync();
-
-    dynamic responseMap = JsonConvert.DeserializeObject(responseBody);
-
-    string token = responseMap.token;
-
-    Assert.IsNotNull(token);
-
-    // Use a dynamic and unique userName for admin (appending timestamp)
-    // ...
-
-string uniqueCustomerName = $"CustomerName_{uniqueId}";
-string uniqueAddress = $"Address_{uniqueId}";
-
-// Adjust the request body to include the required fields
-string customerJson = $"{{\"customer\":{{\"CustomerName\": \"{uniqueCustomerName}\",\"Address\": \"{uniqueAddress}\",\"User\":{{\"Email\": \"{uniqueEmail}\",\"Password\": \"abc@123A\",\"Username\": \"{uniqueusername}\",\"MobileNumber\": \"1234567890\",\"Role\": \"customer\"}}}}}}";
-
-// ...
-
-
+    // Perform the GET request using the obtained customer ID and authorization token
+    _httpClient.DefaultRequestHeaders.Clear(); // Clear previous headers
     _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-    HttpResponseMessage response = await _httpClient.PostAsync("/api/customer",
-        new StringContent(customerJson, Encoding.UTF8, "application/json"));
 
-    if (response.StatusCode != HttpStatusCode.OK)
-    {
-        string errorResponse = await response.Content.ReadAsStringAsync();
-        Console.WriteLine($"Error response: {errorResponse}");
-    }
+    HttpResponseMessage response = await _httpClient.GetAsync($"/api/customer/{customerId}");
 
+    // Assert the expected status code
     Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+    // If needed, assert or process the response content as required
+    responseBody = await response.Content.ReadAsStringAsync();
+    // Add assertions based on the expected response content or structure
 }
+
+
+
+
+
 
 
 
