@@ -25,7 +25,7 @@ public class GiftController : ControllerBase
         return Ok(addedGift);
     }
 
-    [Authorize(Roles = "admin,customer")] 
+    // [Authorize(Roles = "admin,customer")] 
     [HttpGet]
     public IActionResult GetAllGifts()
     {
