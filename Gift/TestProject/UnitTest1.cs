@@ -184,8 +184,8 @@ public class Tests
 
        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
-    
-[Test]
+
+[Test, Order(6)]
 public async Task Backend_TestPostReviews()
 {
     string uniqueId = Guid.NewGuid().ToString();

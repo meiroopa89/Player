@@ -80,6 +80,8 @@ public async Task<string> LoginAsync(string email, string password)
     {
         Console.WriteLine(email);
         var user = await _userManager.FindByEmailAsync(email);
+        var id = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+Console.WriteLine("iddd "+id.UserId);
         Console.WriteLine("User: " + user?.Email); // Debug output
         Console.WriteLine("Password: " + password); // Debug output
  
@@ -91,7 +93,7 @@ public async Task<string> LoginAsync(string email, string password)
         }
  
         // Generate a JWT token
-        var token = GenerateJwtToken(user);
+        var token = GenerateJwtToken(user, id.UserId);
         Console.WriteLine("Token: " + token); // Debug output
  
         return token;
@@ -104,17 +106,17 @@ public async Task<string> LoginAsync(string email, string password)
             }
         }
 
-    private string GenerateJwtToken(IdentityUser user)
+    private string GenerateJwtToken(IdentityUser user, long id)
 {
     Console.WriteLine("User: " + user.Email);
-    // user = _userManager.FindByIdAsync(user.Id).Result;
+    user = _userManager.FindByIdAsync(user.Id).Result;
  
     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
     var claims = new List<Claim>
     {
         new Claim(ClaimTypes.Email, user.Email),
-        // new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+        new Claim(ClaimTypes.NameIdentifier, id.ToString()),
         // new Claim(ClaimTypes.NameIdentifier, user.Id)
     };
  
