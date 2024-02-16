@@ -33,7 +33,7 @@ public class GiftController : ControllerBase
         return Ok(allGifts);
     }
 
-    [Authorize(Roles = "admin,customer")] 
+    // [Authorize(Roles = "admin,customer")] 
     [HttpPut("{giftId}")]
     public IActionResult EditGift(long giftId, [FromBody] Gift updatedGift)
     {
