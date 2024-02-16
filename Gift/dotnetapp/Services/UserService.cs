@@ -113,6 +113,8 @@ public async Task<string> LoginAsync(string email, string password)
     var claims = new List<Claim>
     {
         new Claim(ClaimTypes.Email, user.Email),
+        // new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+        new Claim(ClaimTypes.NameIdentifier, user.Id)
     };
  
     // Retrieve roles for the user
