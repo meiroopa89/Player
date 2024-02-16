@@ -21,7 +21,7 @@ namespace dotnetapp.Controllers
             _context = context;
         }
 
-        // [Authorize(Roles = "customer")] 
+        [Authorize(Roles = "customer")] 
         [HttpPost]
         public IActionResult registerCustomer([FromBody] Customer customer)
         {

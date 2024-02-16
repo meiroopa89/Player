@@ -6,7 +6,7 @@ using dotnetapp.Services;
 using Microsoft.AspNetCore.Authorization;
 
 
-[Route("api/[controller]")]
+[Route("api/gift")]
 [ApiController]
 public class GiftController : ControllerBase
 {
