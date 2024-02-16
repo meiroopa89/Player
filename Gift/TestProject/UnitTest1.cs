@@ -51,33 +51,25 @@ public async Task Backend_TestRegisterUser()
     Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 }
 
-// [Test, Order(2)]
-// public async Task Backend_TestLoginAdmin()
-// {
-//     string uniqueId = Guid.NewGuid().ToString();
+    [Test, Order(2)]
+    public async Task Backend_TestLoginAdmin()
+    {
+        string uniqueId = Guid.NewGuid().ToString();
 
-//     string uniqueUsername = $"abcd_{uniqueId}";
-//     string uniquePassword = $"abcdA{uniqueId}@123";
-//     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-//     string uniqueRole = "admin";
+        string uniqueusername = $"abcd_{uniqueId}";
+        string uniquepassword = $"abcdA{uniqueId}@123";
+        string uniquerole = "admin";
+        string requestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"abc@123A\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\", \"Role\": \"admin\"}}";
+        HttpResponseMessage response = await _httpClient.PostAsync("/api/auth/register", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
-//     // Register a new admin user
-//     string registerRequestBody = $"{{\"Username\" : \"{uniqueUsername}\",\"Password\" : \"{uniquePassword}\",\"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"Role\" : \"{uniqueRole}\" }}";
-//     HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+        string requestBody1 = $"{{\"Username\" : \"{uniqueusername}\",\"Password\" : \"{uniquepassword}\"}}";
+        HttpResponseMessage response1 = await _httpClient.PostAsync("/api/auth/login", new StringContent(requestBody1, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, response1.StatusCode);
+        string responseBody = await response1.Content.ReadAsStringAsync();
+    }
 
-//     // Login with the registered admin user
-//     string loginRequestBody = $"{{\"Email\" : \"{uniqueUsername}\",\"Password\" : \"{uniquePassword}\"}}";
-//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-
-//     // Additional assertions or actions based on the login response
-//     string responseBody = await loginResponse.Content.ReadAsStringAsync();
-//     // Add your assertions or further processing based on the login response body
-// }
-
-
-[Test, Order(2)]
+[Test, Order(3)]
 public async Task Backend_TestRegisterAdmin()
 {
     string uniqueId = Guid.NewGuid().ToString();
