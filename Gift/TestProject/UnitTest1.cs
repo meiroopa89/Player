@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 
+
 [TestFixture]
 public class Tests
 {
@@ -185,28 +186,33 @@ public class Tests
        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
     }
 
-[Test, Order(6)]
-public async Task Backend_TestPostReviews()
+[Test]
+public async Task Backend_TestPostReview()
 {
+    // Register a new customer and obtain the authentication token
     string uniqueId = Guid.NewGuid().ToString();
     string uniqueUsername = $"abcd_{uniqueId}";
     string uniquePassword = $"abcdA{uniqueId}@123";
     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-    string RegisterrequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"Customer\"}}";
-    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(RegisterrequestBody, Encoding.UTF8, "application/json"));
+    // Register a new customer
+    string registerRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\", \"Username\": \"{uniqueUsername}\", \"UserRole\": \"customer\"}}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
 
-    var customerLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
-    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(customerLoginRequestBody, Encoding.UTF8, "application/json"));
+    // Log in the registered customer and obtain the authentication token
+    string loginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
 
     string responseString = await loginResponse.Content.ReadAsStringAsync();
     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
     string customerAuthToken = responseMap.token;
 
+    // Set the authentication token in the HTTP client headers
     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
 
+    // Create a review object
     var review = new
     {
         Subject = "Test subject",
@@ -214,17 +220,36 @@ public async Task Backend_TestPostReviews()
         Rating = 5
     };
 
-    string requestBody = JsonConvert.SerializeObject(review);
-    HttpResponseMessage response = await _httpClient.PostAsync("/api/review", new StringContent(requestBody, Encoding.UTF8, "application/json"));
-
-    if (response.StatusCode != HttpStatusCode.OK)
+    try
     {
+        // Convert the review object to JSON string
+        string requestBody = JsonConvert.SerializeObject(review);
+
+        // Attempt to post the review
+        HttpResponseMessage response = await _httpClient.PostAsync("/api/review", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+
+        // Check if the response is OK (200)
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+        // Optionally, you can retrieve the posted review from the response content and perform additional assertions
+        // string responseContent = await response.Content.ReadAsStringAsync();
+        // var postedReview = JsonConvert.DeserializeObject<YourReviewClass>(responseContent);
+        // Assert.IsNotNull(postedReview);
+        // Add more assertions based on the properties of the posted review
+    }
+    catch (HttpRequestException ex)
+    {
+        Console.WriteLine($"Request failed: {ex.Message}");
+        Console.WriteLine($"Request content: {JsonConvert.SerializeObject(review)}");
+
         // Print response content for debugging purposes
         Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
-    }
 
-    Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        throw; // Re-throw the exception to mark the test as failed
+    }
 }
+
+
 
 
     [TearDown]
