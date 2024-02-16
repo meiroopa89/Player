@@ -32,31 +32,35 @@ public class CartController : ControllerBase
     //     return Ok(result);
     // }
 
-   [HttpPost("addgift")]
-public async Task<IActionResult> AddGiftToCart([FromBody] long giftId)
-{
-    try
-    {
-        // Get the customer ID from the token or any other means of authentication
-        long customerId = GetCustomerIdFromToken();
+// [HttpPost("addgift")]
+// public async Task<IActionResult> AddToCart([FromBody] long giftId)
+// {
+//     try
+//     {
+//         // Retrieve the customer ID from the current user's claims
+//         long customerId = long.Parse(User.FindFirst("sub")?.Value);
 
-        // Retrieve the gift by ID
-        Gift gift = await _giftService.GetGiftByIdAsync(giftId);
-        if (gift == null)
-        {
-            return NotFound("Gift not found");
-        }
+//         // Create a new cart instance (you can modify this if needed)
+//         Cart cart = new Cart();
 
-        // Add the gift to the customer's cart using the CartService
-        Cart cart = await _cartService.AddGiftToCartAsync(customerId, gift);
+//         // Call the updated AddCart method to add the gift to the cart
+//         Cart updatedCart = _cartService.AddCart(cart, giftId, customerId);
 
-        return Ok(cart); // You might want to return the updated cart or a success message
-    }
-    catch (Exception ex)
-    {
-        return StatusCode(500, $"An error occurred while adding the gift to the cart: {ex.Message}");
-    }
-}
+//         if (updatedCart == null)
+//         {
+//             return BadRequest("Failed to add gift to cart");
+//         }
+
+//         return Ok(updatedCart); // You might want to return the updated cart or a success message
+//     }
+//     catch (Exception ex)
+//     {
+//         return StatusCode(500, $"An error occurred while adding the gift to the cart: {ex.Message}");
+//     }
+// }
+
+
+
 
     [Authorize(Roles = "customer")]      
     [HttpPut("update/{cartId}")]

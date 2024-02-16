@@ -89,38 +89,47 @@ public class CartServiceImpl : CartService
     //     return _cartRepository.addCart(cart);
     // }
 
-    public Cart AddCart(Cart cart, int giftId, int customerId)
-    {
-        if (customerId > 0)
-        {
-            var customer = _context.Customers
-                .Include(c => c.User)
-                .FirstOrDefault(c => c.CustomerId == customerId);
+//     public Cart AddCart(Cart cart, long giftId, int customerId)
+// {
+//     if (customerId > 0)
+//     {
+//         var customer = _context.Customers
+//             .Include(c => c.User)
+//             .FirstOrDefault(c => c.CustomerId == customerId);
 
-            if (customer == null)
-            {
-                return null; // Or handle the situation where the customer is not found
-            }
+//         if (customer == null)
+//         {
+//             return null; // Or handle the situation where the customer is not found
+//         }
 
-            cart.CustomerId = customer.CustomerId;
-            cart.Customer = customer;
-        }
+//         cart.CustomerId = customer.CustomerId;
+//         cart.Customer = customer;
+//     }
 
-        var gift = _context.Gifts.FirstOrDefault(g => g.GiftId == giftId);
+//     var gift = _context.Gifts.FirstOrDefault(g => g.GiftId == giftId);
 
-        if (gift == null)
-        {
-            return null; // Or handle the situation where the gift is not found
-        }
+//     if (gift == null)
+//     {
+//         return null; // Or handle the situation where the gift is not found
+//     }
 
-        // Assuming you have a navigation property in your Cart model to represent the gifts in the cart
-        cart.Gifts.Add(gift);
+//     // Assuming you have a navigation property in your Cart model to represent the gifts in the cart
+//     cart.Gifts.Add(gift);
 
-        _context.Carts.Add(cart);
-        _context.SaveChanges();
+//     // Check if the cart already exists for the customer
+//     var existingCart = _context.Carts.FirstOrDefault(c => c.CustomerId == cart.CustomerId);
 
-        return cart;
-    }
+//     if (existingCart == null)
+//     {
+//         // If the cart doesn't exist, add it to the context
+//         _context.Carts.Add(cart);
+//     }
+
+//     _context.SaveChanges();
+
+//     return cart;
+// }
+
 
     public Cart updateCart(Cart updatedCart)
     {
