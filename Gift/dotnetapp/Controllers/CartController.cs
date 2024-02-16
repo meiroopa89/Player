@@ -11,10 +11,12 @@ using Microsoft.AspNetCore.Authorization;
 public class CartController : ControllerBase
 {
     private readonly CartService _cartService;
+    private readonly GiftService _giftService;
 
-    public CartController(CartService cartService)
+    public CartController(CartService cartService, GiftService giftService)
     {
         _cartService = cartService;
+        _giftService = giftService;
     }
 
     // [HttpPost("add")]
@@ -29,6 +31,32 @@ public class CartController : ControllerBase
 
     //     return Ok(result);
     // }
+
+   [HttpPost("addgift")]
+public async Task<IActionResult> AddGiftToCart([FromBody] long giftId)
+{
+    try
+    {
+        // Get the customer ID from the token or any other means of authentication
+        long customerId = GetCustomerIdFromToken();
+
+        // Retrieve the gift by ID
+        Gift gift = await _giftService.GetGiftByIdAsync(giftId);
+        if (gift == null)
+        {
+            return NotFound("Gift not found");
+        }
+
+        // Add the gift to the customer's cart using the CartService
+        Cart cart = await _cartService.AddGiftToCartAsync(customerId, gift);
+
+        return Ok(cart); // You might want to return the updated cart or a success message
+    }
+    catch (Exception ex)
+    {
+        return StatusCode(500, $"An error occurred while adding the gift to the cart: {ex.Message}");
+    }
+}
 
     [Authorize(Roles = "customer")]      
     [HttpPut("update/{cartId}")]
