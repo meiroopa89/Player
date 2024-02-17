@@ -336,7 +336,6 @@ public async Task Backend_TestDeleteEvent()
     Assert.AreEqual("Event deleted successfully", deleteEventResponseMap.message.ToString());
 }
 
-
 [Test]
 public async Task Backend_TestAddPlayer_Successful()
 {
@@ -349,10 +348,18 @@ public async Task Backend_TestAddPlayer_Successful()
     // Register a player
     var player = new Player
     {
-        Username = uniqueUsername,
-        Password = uniquePassword,
-        Email = uniqueEmail,
-        // Add more properties as needed
+        PlayerName = "John Doe",
+        Age = 25,
+        Country = "United States",
+        BattingStyle = "Right-Handed",
+        BowlingStyle = "Medium Pace",
+        DateOfBirth = new DateTime(1997, 5, 15),
+        Role = "Batsman",
+        TotalMatchesPlayed = 50,
+        TotalRunsScored = 1500,
+        TotalWicketsTaken = 20,
+        TotalCatches = 10,
+        TeamId = 1
     };
 
     string addPlayerRequestBody = JsonConvert.SerializeObject(player);
