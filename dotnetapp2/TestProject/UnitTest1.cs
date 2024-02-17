@@ -587,6 +587,174 @@ public async Task Backend_TestGetRefereeById()
     }
 }
 
+// [Test]
+// public async Task Backend_TestUpdateReferee()
+// {
+//     try
+//     {
+//         // Generate unique identifiers
+//         string uniqueId = Guid.NewGuid().ToString();
+//         string uniqueUsername = $"abcd_{uniqueId}";
+//         string uniquePassword = $"abcdA{uniqueId}@123";
+//         string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+//         // Register a user (assuming they have necessary permissions, e.g., Admin)
+//         string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+//         HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+//         Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+//         // Login the registered user
+//         string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+//         HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+//         Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+//         string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+//         dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+//         string userAuthToken = loginResponseMap.token;
+
+//         // Use the obtained token in the request to add a referee
+//         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
+//         Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+
+//         // Add a referee to update
+//         var initialRefereeDetails = new
+//         {
+//             // Populate with initial values
+//         };
+
+//         string initialRefereeRequestBody = JsonConvert.SerializeObject(initialRefereeDetails);
+//         HttpResponseMessage addRefereeResponse = await _httpClient.PostAsync("/api/referee", new StringContent(initialRefereeRequestBody, Encoding.UTF8, "application/json"));
+//         Assert.AreEqual(HttpStatusCode.OK, addRefereeResponse.StatusCode);
+
+//         // Get the added referee details
+//         string addRefereeResponseBody = await addRefereeResponse.Content.ReadAsStringAsync();
+//         dynamic addRefereeResponseMap = JsonConvert.DeserializeObject(addRefereeResponseBody);
+
+//         // Handle the potential null value for the referee ID
+//         int? refereeId = addRefereeResponseMap?.refereeId;
+
+//         if (refereeId.HasValue)
+//         {
+//             // Update the referee with the correct refereeId
+//             var updatedRefereeDetails = new
+//             {
+//                 RefereeId = refereeId,
+//                 // Populate with updated values
+//             };
+
+//             string updateRefereeRequestBody = JsonConvert.SerializeObject(updatedRefereeDetails);
+//             HttpResponseMessage updateRefereeResponse = await _httpClient.PutAsync($"/api/referee/{refereeId}", new StringContent(updateRefereeRequestBody, Encoding.UTF8, "application/json"));
+
+//             // Assert that the referee is updated successfully
+//             if (updateRefereeResponse.StatusCode != HttpStatusCode.OK)
+//             {
+//                 // Additional information about the response
+//                 string responseContent = await updateRefereeResponse.Content.ReadAsStringAsync();
+//                 Console.WriteLine($"Response Content: {responseContent}");
+//             }
+
+//             Assert.AreEqual(HttpStatusCode.OK, updateRefereeResponse.StatusCode);
+//         }
+//         else
+//         {
+//             // Log additional information for debugging
+//             string responseContent = await addRefereeResponse.Content.ReadAsStringAsync();
+//             Console.WriteLine($"Add Referee Response Content: {responseContent}");
+
+//             Assert.Fail("Referee ID is null or not found in the response.");
+//         }
+//     }
+//     catch (HttpRequestException httpEx)
+//     {
+//         // Log HTTP exception details
+//         Console.WriteLine($"HTTP Exception: {httpEx.Message}");
+//         if (httpEx.InnerException != null)
+//         {
+//             Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
+//         }
+
+//         // Re-throw the exception to mark the test as failed
+//         throw;
+//     }
+//     catch (Exception ex)
+//     {
+//         // Log general exception details
+//         Console.WriteLine($"Exception: {ex.Message}");
+//         Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+//         // Re-throw the exception to mark the test as failed
+//         throw;
+//     }
+// }
+
+[Test]
+public async Task Backend_TestDeleteReferee()
+{
+    try
+    {
+        // Generate unique identifiers
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+        // Register a user with admin role
+        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+        // Login the registered user
+        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+        string userAuthToken = loginResponseMap.token;
+
+        // Use the obtained token in the request to delete a referee
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
+
+        // Assume there is an existing referee with ID 1
+        int refereeId = 1;
+
+        // Make a request to delete the referee
+        HttpResponseMessage deleteRefereeResponse = await _httpClient.DeleteAsync($"/api/referee/{refereeId}");
+
+        // Check for successful deletion status code
+        Assert.AreEqual(HttpStatusCode.OK, deleteRefereeResponse.StatusCode);
+
+        // Check for valid response content
+        string deleteRefereeResponseBody = await deleteRefereeResponse.Content.ReadAsStringAsync();
+        dynamic deleteRefereeResponseMap = JsonConvert.DeserializeObject(deleteRefereeResponseBody);
+
+        // Assuming the response contains a message indicating success
+        Assert.AreEqual("Referee deleted successfully", deleteRefereeResponseMap.message.ToString());
+    }
+    catch (HttpRequestException httpEx)
+    {
+        // Log HTTP exception details
+        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
+        if (httpEx.InnerException != null)
+        {
+            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
+        }
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+    catch (Exception ex)
+    {
+        // Log general exception details
+        Console.WriteLine($"Exception: {ex.Message}");
+        Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+}
+
+
+
+
 
 
 // [Test]

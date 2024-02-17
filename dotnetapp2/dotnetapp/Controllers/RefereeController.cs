@@ -27,7 +27,7 @@ namespace dotnetapp.Controllers
             var referees = await _refereeService.GetAllReferees();
             return Ok(referees);
         }
-        
+
         [Authorize(Roles = "Admin")]
 
         [HttpGet("{refereeId}")]
@@ -89,6 +89,7 @@ namespace dotnetapp.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+        
         [Authorize(Roles = "Admin")]
 
         [HttpDelete("{refereeId}")]
