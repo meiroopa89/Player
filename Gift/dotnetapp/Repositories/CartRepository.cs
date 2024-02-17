@@ -129,6 +129,7 @@ public Cart updateCart(Cart updatedCart)
         .FirstOrDefault(c => c.CustomerId == customerId);
     }
 
+
     public List<Gift> getAllGiftsByCustomerId(long customerId)
     {
         var cart = getCartByCustomerId(customerId);
