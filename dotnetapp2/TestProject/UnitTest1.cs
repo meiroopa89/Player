@@ -459,6 +459,135 @@ public async Task Backend_TestAddReferee()
     }
 }
 
+[Test]
+public async Task Backend_TestGetAllReferees()
+{
+    try
+    {
+        // Generate unique identifiers
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+        // Register a user (assuming they have necessary permissions, e.g., Admin)
+        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+        // Login the registered user
+        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+        string userAuthToken = loginResponseMap.token;
+
+        // Use the obtained token in the request to get all referees
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
+
+        HttpResponseMessage getAllRefereesResponse = await _httpClient.GetAsync("api/referee");
+
+        // Check for successful status code
+        Assert.AreEqual(HttpStatusCode.OK, getAllRefereesResponse.StatusCode);
+
+        // Check for valid response content
+        string getAllRefereesResponseBody = await getAllRefereesResponse.Content.ReadAsStringAsync();
+        var referees = JsonConvert.DeserializeObject<List<Referee>>(getAllRefereesResponseBody);
+
+        // Assuming referees is a non-null list, you can perform further assertions as needed
+        Assert.IsNotNull(referees);
+        Assert.IsTrue(referees.Any());
+    }
+    catch (HttpRequestException httpEx)
+    {
+        // Log HTTP exception details
+        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
+        if (httpEx.InnerException != null)
+        {
+            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
+        }
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+    catch (Exception ex)
+    {
+        // Log general exception details
+        Console.WriteLine($"Exception: {ex.Message}");
+        Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+}
+
+
+[Test]
+public async Task Backend_TestGetRefereeById()
+{
+    try
+    {
+        // Generate unique identifiers
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+        // Register a user (assuming they have necessary permissions, e.g., Admin)
+        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+        // Login the registered user
+        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+        string userAuthToken = loginResponseMap.token;
+
+        // Use the obtained token in the request to get referee by ID
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
+
+        // Make a request to get referee by ID (assuming refereeId is a valid ID)
+        int refereeId = 1; // Replace with a valid referee ID
+        HttpResponseMessage getRefereeByIdResponse = await _httpClient.GetAsync($"api/referee/{refereeId}");
+
+        // Check for successful status code
+        Assert.AreEqual(HttpStatusCode.OK, getRefereeByIdResponse.StatusCode);
+
+        // Check for valid response content
+        string getRefereeByIdResponseBody = await getRefereeByIdResponse.Content.ReadAsStringAsync();
+        var referee = JsonConvert.DeserializeObject<Referee>(getRefereeByIdResponseBody);
+
+        // Assuming referee is not null, you can perform further assertions as needed
+        Assert.IsNotNull(referee);
+    }
+    catch (HttpRequestException httpEx)
+    {
+        // Log HTTP exception details
+        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
+        if (httpEx.InnerException != null)
+        {
+            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
+        }
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+    catch (Exception ex)
+    {
+        // Log general exception details
+        Console.WriteLine($"Exception: {ex.Message}");
+        Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+}
+
+
 
 // [Test]
 // public async Task Backend_TestGetAddonsAsCustomer()
