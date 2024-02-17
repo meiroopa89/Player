@@ -769,17 +769,53 @@ public async Task Backend_TestUpdateCart()
     // Assume you have a cartId to test (replace with an actual existing cartId)
     long cartId = 1;
 
-    // Create an updated cart object
+    // Create an updated cart object with the provided JSON structure
     var updatedCart = new
     {
         CartId = cartId,
-        // Add other properties of the Cart object as needed for the update
+        Gifts = new[]
+        {
+            new
+            {
+                GiftId = 1, // Replace with an actual giftId
+                GiftType = "UpdatedGift",
+                GiftImageUrl = "UpdatedImageUrl",
+                GiftDetails = "UpdatedDetails",
+                GiftPrice = 29.99,
+                Quantity = 3,
+                CartId = cartId,
+                Cart = "UpdatedCart"
+            }
+            // Add more gifts as needed
+        },
+        CustomerId = 1, // Replace with an actual customer ID
+        Customer = new
+        {
+            CustomerId = 1, // Replace with an actual customer ID
+            CustomerName = "UpdatedCustomerName",
+            Address = "UpdatedAddress",
+            UserId = 1, // Replace with an actual user ID
+            User = new
+            {
+                UserId = 1, // Replace with an actual user ID
+                Email = "UpdatedEmail",
+                Password = "UpdatedPassword",
+                Username = "UpdatedUsername",
+                MobileNumber = "UpdatedMobileNumber",
+                Role = "UpdatedRole"
+            }
+        },
+        TotalAmount = 89.97 // Adjust the total amount based on the updated gift details
     };
 
     try
     {
-        // Convert updatedCart object to JSON string
-        string requestBody = JsonConvert.SerializeObject(updatedCart);
+        // Convert updatedCart object to JSON string with ReferenceHandler
+        string requestBody = JsonConvert.SerializeObject(updatedCart, new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.None
+        });
 
         // Send PUT request to update the cart
         response = await _httpClient.PutAsync($"/api/cart/update/{cartId}", new StringContent(requestBody, Encoding.UTF8, "application/json"));
