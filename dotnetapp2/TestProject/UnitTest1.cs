@@ -104,38 +104,40 @@ public async Task Backend_TestAddEvent()
 {
     // Generate unique identifiers
     string uniqueId = Guid.NewGuid().ToString();
-    string uniqueusername = $"abcd_{uniqueId}";
-    string uniquepassword = $"abcdA{uniqueId}@123";
+    string uniqueUsername = $"abcd_{uniqueId}";
+    string uniquePassword = $"abcdA{uniqueId}@123";
     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-    // Register a customer
-    string registerRequestBody = $"{{\"Username\": \"{uniqueusername}\", \"Password\": \"{uniquepassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+    // Register an organizer
+    string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Organizer\" }}";
     HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
 
-    // Login the registered customer
-    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquepassword}\"}}";
+    // Login the registered organizer
+    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
     string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
     dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
-    string customerAuthToken = loginResponseMap.token;
+    string organizerAuthToken = loginResponseMap.token;
 
-    // Use the obtained token in the request to add an addon
-    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
+    // Use the obtained token in the request to add an event
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", organizerAuthToken);
 
-    var review = new
+    var eventToAdd = new
     {
-        AddonValidity = "Test subject",
-        AddonDetails = "Test body",
-        AddonPrice = 5,
-        AddonName = "sample name"
+        EventName = "Sample Event",
+        StartDate = DateTime.UtcNow.AddDays(1),
+        EndDate = DateTime.UtcNow.AddDays(2),
+        EventImageURL = "https://example.com/image.jpg",
+        Description = "Event description"
     };
 
-    string addonRequestBody = JsonConvert.SerializeObject(review);
-    HttpResponseMessage addonResponse = await _httpClient.PostAsync("api/addAddon", new StringContent(addonRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, addonResponse.StatusCode);
+    string eventRequestBody = JsonConvert.SerializeObject(eventToAdd);
+    HttpResponseMessage eventResponse = await _httpClient.PostAsync("api/AddEvent", new StringContent(eventRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, eventResponse.StatusCode);
 }
+
 
 // [Test]
 // public async Task Backend_TestGetAddonsAsAdmin()
