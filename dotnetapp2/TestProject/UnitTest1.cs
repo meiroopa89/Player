@@ -336,59 +336,84 @@ public async Task Backend_TestDeleteEvent()
     Assert.AreEqual("Event deleted successfully", deleteEventResponseMap.message.ToString());
 }
 
-
 // [Test]
 // public async Task Backend_TestAddPlayer()
 // {
-//     // Generate unique identifiers
-//     string uniqueId = Guid.NewGuid().ToString();
-//     string uniqueUsername = $"abcd_{uniqueId}";
-//     string uniquePassword = $"abcdA{uniqueId}@123";
-//     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-//     // Register an organizer
-//     string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
-//     HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
-
-//     // Login the registered organizer
-//     string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-//     string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-//     dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
-//     string organizerAuthToken = loginResponseMap.token;
-
-//     // Use the obtained token in the request to add an event
-//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", organizerAuthToken);
-
-//     var playerToAdd = new
+//     try
 //     {
-//         PlayerName = "John Doe",
-//         Age = 25,
-//         Country = "United States",
-//         BattingStyle = "Right-Handed",
-//         BowlingStyle = "Medium Pace",
-//         DateOfBirth = new DateTime(1997, 5, 15),
-//         Role = "Batsman",
-//         TotalMatchesPlayed = 50,
-//         TotalRunsScored = 1500,
-//         TotalWicketsTaken = 20,
-//         TotalCatches = 10,
-//         TeamId = 1,
-//     };
+//         // Generate unique identifiers
+//         string uniqueId = Guid.NewGuid().ToString();
+//         string uniqueUsername = $"abcd_{uniqueId}";
+//         string uniquePassword = $"abcdA{uniqueId}@123";
+//         string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-//     string playerRequestBody = JsonConvert.SerializeObject(playerToAdd);
-//     HttpResponseMessage playerResponse = await _httpClient.PostAsync("api/player", new StringContent(playerRequestBody, Encoding.UTF8, "application/json"));
+//         // Register an admin user
+//         string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+//         HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+//         Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
 
-//     // Check for successful status code
-//     Assert.AreEqual(HttpStatusCode.OK, playerResponse.StatusCode);
+//         // Login the registered admin user
+//         string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+//         HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+//         Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+//         string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+//         dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+//         string adminAuthToken = loginResponseMap.token;
 
-//     // Check for valid response content
-//     string playerResponseBody = await playerResponse.Content.ReadAsStringAsync();
-//     dynamic playerResponseMap = JsonConvert.DeserializeObject(playerResponseBody);
+//         // Use the obtained token in the request to add a player
+//         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
 
-//     Assert.AreEqual("Player added successfully", playerResponseMap.message.ToString());
+//         // Add a player
+//         var playerToAdd = new Player
+//         {
+//             PlayerName = "John Doe",
+//             Age = 25,
+//             Country = "United States",
+//             BattingStyle = "Right-Handed",
+//             BowlingStyle = "Medium Pace",
+//             DateOfBirth = new DateTime(1997, 5, 15),
+//             Role = "Batsman",
+//             TotalMatchesPlayed = 50,
+//             TotalRunsScored = 1500,
+//             TotalWicketsTaken = 20,
+//             TotalCatches = 10,
+//             TeamId = 1,
+//         };
+
+//         string playerRequestBody = JsonConvert.SerializeObject(playerToAdd);
+//         HttpResponseMessage playerResponse = await _httpClient.PostAsync("/api/player", new StringContent(playerRequestBody, Encoding.UTF8, "application/json"));
+
+//         // Check for successful status code
+//         Assert.AreEqual(HttpStatusCode.OK, playerResponse.StatusCode);
+
+//         // Check for valid response content
+//         string playerResponseBody = await playerResponse.Content.ReadAsStringAsync();
+//         dynamic playerResponseMap = JsonConvert.DeserializeObject(playerResponseBody);
+
+//         // Assuming the response contains a message indicating success
+//         Assert.AreEqual("Player added successfully", playerResponseMap.message.ToString());
+//     }
+//     catch (HttpRequestException httpEx)
+//     {
+//         // Log HTTP exception details
+//         Console.WriteLine($"HTTP Exception: {httpEx.Message}");
+//         if (httpEx.InnerException != null)
+//         {
+//             Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
+//         }
+
+//         // Re-throw the exception to mark the test as failed
+//         throw;
+//     }
+//     catch (Exception ex)
+//     {
+//         // Log general exception details
+//         Console.WriteLine($"Exception: {ex.Message}");
+//         Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+//         // Re-throw the exception to mark the test as failed
+//         throw;
+//     }
 // }
 
 [Test]
@@ -523,72 +548,8 @@ public async Task Backend_TestGetAllReferees()
 }
 
 
-[Test]
-public async Task Backend_TestGetRefereeById()
-{
-    try
-    {
-        // Generate unique identifiers
-        string uniqueId = Guid.NewGuid().ToString();
-        string uniqueUsername = $"abcd_{uniqueId}";
-        string uniquePassword = $"abcdA{uniqueId}@123";
-        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-        // Register a user (assuming they have necessary permissions, e.g., Admin)
-        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
-        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
-
-        // Login the registered user
-        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
-        string userAuthToken = loginResponseMap.token;
-
-        // Use the obtained token in the request to get referee by ID
-        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
-
-        // Make a request to get referee by ID (assuming refereeId is a valid ID)
-        int refereeId = 1; // Replace with a valid referee ID
-        HttpResponseMessage getRefereeByIdResponse = await _httpClient.GetAsync($"api/referee/{refereeId}");
-
-        // Check for successful status code
-        Assert.AreEqual(HttpStatusCode.OK, getRefereeByIdResponse.StatusCode);
-
-        // Check for valid response content
-        string getRefereeByIdResponseBody = await getRefereeByIdResponse.Content.ReadAsStringAsync();
-        var referee = JsonConvert.DeserializeObject<Referee>(getRefereeByIdResponseBody);
-
-        // Assuming referee is not null, you can perform further assertions as needed
-        Assert.IsNotNull(referee);
-    }
-    catch (HttpRequestException httpEx)
-    {
-        // Log HTTP exception details
-        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
-        if (httpEx.InnerException != null)
-        {
-            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
-        }
-
-        // Re-throw the exception to mark the test as failed
-        throw;
-    }
-    catch (Exception ex)
-    {
-        // Log general exception details
-        Console.WriteLine($"Exception: {ex.Message}");
-        Console.WriteLine($"StackTrace: {ex.StackTrace}");
-
-        // Re-throw the exception to mark the test as failed
-        throw;
-    }
-}
-
 // [Test]
-// public async Task Backend_TestUpdateReferee()
+// public async Task Backend_TestGetRefereeById()
 // {
 //     try
 //     {
@@ -611,57 +572,22 @@ public async Task Backend_TestGetRefereeById()
 //         dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
 //         string userAuthToken = loginResponseMap.token;
 
-//         // Use the obtained token in the request to add a referee
+//         // Use the obtained token in the request to get referee by ID
 //         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
-//         Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
 
-//         // Add a referee to update
-//         var initialRefereeDetails = new
-//         {
-//             // Populate with initial values
-//         };
+//         // Make a request to get referee by ID (assuming refereeId is a valid ID)
+//         int refereeId = 1; // Replace with a valid referee ID
+//         HttpResponseMessage getRefereeByIdResponse = await _httpClient.GetAsync($"api/referee/{refereeId}");
 
-//         string initialRefereeRequestBody = JsonConvert.SerializeObject(initialRefereeDetails);
-//         HttpResponseMessage addRefereeResponse = await _httpClient.PostAsync("/api/referee", new StringContent(initialRefereeRequestBody, Encoding.UTF8, "application/json"));
-//         Assert.AreEqual(HttpStatusCode.OK, addRefereeResponse.StatusCode);
+//         // Check for successful status code
+//         Assert.AreEqual(HttpStatusCode.OK, getRefereeByIdResponse.StatusCode);
 
-//         // Get the added referee details
-//         string addRefereeResponseBody = await addRefereeResponse.Content.ReadAsStringAsync();
-//         dynamic addRefereeResponseMap = JsonConvert.DeserializeObject(addRefereeResponseBody);
+//         // Check for valid response content
+//         string getRefereeByIdResponseBody = await getRefereeByIdResponse.Content.ReadAsStringAsync();
+//         var referee = JsonConvert.DeserializeObject<Referee>(getRefereeByIdResponseBody);
 
-//         // Handle the potential null value for the referee ID
-//         int? refereeId = addRefereeResponseMap?.refereeId;
-
-//         if (refereeId.HasValue)
-//         {
-//             // Update the referee with the correct refereeId
-//             var updatedRefereeDetails = new
-//             {
-//                 RefereeId = refereeId,
-//                 // Populate with updated values
-//             };
-
-//             string updateRefereeRequestBody = JsonConvert.SerializeObject(updatedRefereeDetails);
-//             HttpResponseMessage updateRefereeResponse = await _httpClient.PutAsync($"/api/referee/{refereeId}", new StringContent(updateRefereeRequestBody, Encoding.UTF8, "application/json"));
-
-//             // Assert that the referee is updated successfully
-//             if (updateRefereeResponse.StatusCode != HttpStatusCode.OK)
-//             {
-//                 // Additional information about the response
-//                 string responseContent = await updateRefereeResponse.Content.ReadAsStringAsync();
-//                 Console.WriteLine($"Response Content: {responseContent}");
-//             }
-
-//             Assert.AreEqual(HttpStatusCode.OK, updateRefereeResponse.StatusCode);
-//         }
-//         else
-//         {
-//             // Log additional information for debugging
-//             string responseContent = await addRefereeResponse.Content.ReadAsStringAsync();
-//             Console.WriteLine($"Add Referee Response Content: {responseContent}");
-
-//             Assert.Fail("Referee ID is null or not found in the response.");
-//         }
+//         // Assuming referee is not null, you can perform further assertions as needed
+//         Assert.IsNotNull(referee);
 //     }
 //     catch (HttpRequestException httpEx)
 //     {
@@ -685,75 +611,6 @@ public async Task Backend_TestGetRefereeById()
 //         throw;
 //     }
 // }
-
-[Test]
-public async Task Backend_TestDeleteReferee()
-{
-    try
-    {
-        // Generate unique identifiers
-        string uniqueId = Guid.NewGuid().ToString();
-        string uniqueUsername = $"abcd_{uniqueId}";
-        string uniquePassword = $"abcdA{uniqueId}@123";
-        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-        // Register a user with admin role
-        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
-        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
-
-        // Login the registered user
-        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
-        string userAuthToken = loginResponseMap.token;
-
-        // Use the obtained token in the request to delete a referee
-        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
-
-        // Assume there is an existing referee with ID 1
-        int refereeId = 1;
-
-        // Make a request to delete the referee
-        HttpResponseMessage deleteRefereeResponse = await _httpClient.DeleteAsync($"/api/referee/{refereeId}");
-
-        // Check for successful deletion status code
-        Assert.AreEqual(HttpStatusCode.OK, deleteRefereeResponse.StatusCode);
-
-        // Check for valid response content
-        string deleteRefereeResponseBody = await deleteRefereeResponse.Content.ReadAsStringAsync();
-        dynamic deleteRefereeResponseMap = JsonConvert.DeserializeObject(deleteRefereeResponseBody);
-
-        // Assuming the response contains a message indicating success
-        Assert.AreEqual("Referee deleted successfully", deleteRefereeResponseMap.message.ToString());
-    }
-    catch (HttpRequestException httpEx)
-    {
-        // Log HTTP exception details
-        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
-        if (httpEx.InnerException != null)
-        {
-            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
-        }
-
-        // Re-throw the exception to mark the test as failed
-        throw;
-    }
-    catch (Exception ex)
-    {
-        // Log general exception details
-        Console.WriteLine($"Exception: {ex.Message}");
-        Console.WriteLine($"StackTrace: {ex.StackTrace}");
-
-        // Re-throw the exception to mark the test as failed
-        throw;
-    }
-}
-
-
-
 
 
 
