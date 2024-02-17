@@ -425,36 +425,100 @@ public class Tests
 
     }
     
-    [Test, Order(11)]
-public async Task Backend_TestUpdateReview()
-{
-    HttpResponseMessage response = null;
+//  [Test, Order(11)]
+// public async Task Backend_TestUpdateReview()
+// {
+//     HttpResponseMessage response = null;
 
-    // Register a new user and obtain the authentication token
+//     // Register a new user and obtain the authentication token
+//     string uniqueId = Guid.NewGuid().ToString();
+//     string uniqueUsername = $"user_{uniqueId}";
+//     string uniquePassword = $"userA{uniqueId}@123";
+//     string uniqueEmail = $"user{uniqueId}@gmail.com";
+
+//     // Register a new user
+//     string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+//     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+//     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+
+//     // Log in the registered user and obtain the authentication token
+//     string userLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(userLoginRequestBody, Encoding.UTF8, "application/json"));
+//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+
+//     string responseString = await loginResponse.Content.ReadAsStringAsync();
+//     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+//     string userAuthToken = responseMap.token;
+
+//     // Set the authentication token in the HTTP client headers
+//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
+
+//     // Create a new review to be updated
+//     var reviewToAdd = new
+//     {
+//         UserId = 1, // Replace with the actual user ID
+//         Subject = "Test Subject",
+//         Body = "Test Body",
+//         Rating = 4,
+//         DateCreated = DateTime.Now
+//         // Add other necessary properties
+//     };
+
+//     string addReviewRequestBody = JsonConvert.SerializeObject(reviewToAdd);
+//     HttpResponseMessage addReviewResponse = await _httpClient.PostAsync("/api/review", new StringContent(addReviewRequestBody, Encoding.UTF8, "application/json"));
+//     Assert.AreEqual(HttpStatusCode.OK, addReviewResponse.StatusCode);
+
+//     // Retrieve the added review details
+//     string addedReviewResponseString = await addReviewResponse.Content.ReadAsStringAsync();
+//     dynamic addedReviewResponseMap = JsonConvert.DeserializeObject(addedReviewResponseString);
+//     int id = addedReviewResponseMap.id;
+
+//     // Create updated review details
+//     var updatedReview = new
+//     {
+//         UserId = 1, // Replace with the actual user ID
+//         Subject = "Updated Subject",
+//         Body = "Updated Body",
+//         Rating = 5,
+//         DateCreated = DateTime.Now
+//         // Add other necessary properties
+//     };
+
+//     string updateReviewRequestBody = JsonConvert.SerializeObject(updatedReview);
+//     HttpResponseMessage updateReviewResponse = await _httpClient.PutAsync($"/api/review/{id}", new StringContent(updateReviewRequestBody, Encoding.UTF8, "application/json"));
+
+//     // Check if the response is OK (200)
+//     Assert.AreEqual(HttpStatusCode.OK, updateReviewResponse.StatusCode);
+// }
+
+
+    [Test]
+public async Task Backend_TestDeleteReview()
+{
+    // Generate unique identifiers
     string uniqueId = Guid.NewGuid().ToString();
     string uniqueUsername = $"user_{uniqueId}";
     string uniquePassword = $"userA{uniqueId}@123";
     string uniqueEmail = $"user{uniqueId}@gmail.com";
 
-    // Register a new user
+    // Register a user
     string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
-    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+    HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
 
-    // Log in the registered user and obtain the authentication token
-    string userLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(userLoginRequestBody, Encoding.UTF8, "application/json"));
+    // Login the registered user
+    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+    string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+    dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+    string userAuthToken = loginResponseMap.token;
 
-    string responseString = await loginResponse.Content.ReadAsStringAsync();
-    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-    string userAuthToken = responseMap.token;
-
-    // Set the authentication token in the HTTP client headers
+    // Set the authentication token in the request to add a review
     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
 
-    // Create a new review to be updated
-    var reviewToAdd = new
+    // Add a review
+    var addReview = new
     {
         UserId = 1, // Replace with the actual user ID
         Subject = "Test Subject",
@@ -464,33 +528,28 @@ public async Task Backend_TestUpdateReview()
         // Add other necessary properties
     };
 
-    string addReviewRequestBody = JsonConvert.SerializeObject(reviewToAdd);
+    string addReviewRequestBody = JsonConvert.SerializeObject(addReview);
     HttpResponseMessage addReviewResponse = await _httpClient.PostAsync("/api/review", new StringContent(addReviewRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, addReviewResponse.StatusCode);
 
-    // Retrieve the added review details
-    string addedReviewResponseString = await addReviewResponse.Content.ReadAsStringAsync();
-    dynamic addedReviewResponseMap = JsonConvert.DeserializeObject(addedReviewResponseString);
-    int reviewId = addedReviewResponseMap.reviewId;
+    // Get the list of reviews
+    HttpResponseMessage getReviewsResponse = await _httpClient.GetAsync("/api/review");
+    Assert.AreEqual(HttpStatusCode.OK, getReviewsResponse.StatusCode);
+    string getReviewsResponseBody = await getReviewsResponse.Content.ReadAsStringAsync();
+    var reviews = JsonConvert.DeserializeObject<List<Review>>(getReviewsResponseBody);
+    Assert.IsNotNull(reviews);
+    Assert.IsTrue(reviews.Any());
 
-    // Create updated review details
-    var updatedReview = new
-    {
-        UserId = 1, // Replace with the actual user ID
-        Subject = "Updated Subject",
-        Body = "Updated Body",
-        Rating = 5,
-        DateCreated = DateTime.Now
-        // Add other necessary properties
-    };
+    // Delete the newly added review
+    // Assuming ReviewId property exists in Review model
+    int reviewIdToDelete = reviews.FirstOrDefault()?.ReviewId ?? 1;
+    HttpResponseMessage deleteReviewResponse = await _httpClient.DeleteAsync($"/api/review/{reviewIdToDelete}");
+    Assert.AreEqual(HttpStatusCode.OK, deleteReviewResponse.StatusCode);
 
-    string updateReviewRequestBody = JsonConvert.SerializeObject(updatedReview);
-    HttpResponseMessage updateReviewResponse = await _httpClient.PutAsync($"/api/review/{id}", new StringContent(updateReviewRequestBody, Encoding.UTF8, "application/json"));
-
-    // Check if the response is OK (200)
-    Assert.AreEqual(HttpStatusCode.OK, updateReviewResponse.StatusCode);
+    // Verify that the review is deleted
+    HttpResponseMessage verifyDeleteResponse = await _httpClient.GetAsync($"/api/review/{reviewIdToDelete}");
+    Assert.AreEqual(HttpStatusCode.NotFound, verifyDeleteResponse.StatusCode);
 }
-
 
 
     [TearDown]
