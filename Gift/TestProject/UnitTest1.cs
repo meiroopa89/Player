@@ -679,6 +679,133 @@ public async Task Backend_TestPostCustomer()
         throw;
     }
 }
+
+[Test]
+public async Task Backend_TestGetCustomerById()
+{
+    HttpResponseMessage response = null;
+
+    // Register a new admin and obtain the authentication token
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueUsername = $"admin_{uniqueId}";
+    string uniquePassword = $"adminA{uniqueId}@123";
+    string uniqueEmail = $"admin{uniqueId}@gmail.com";
+
+    // Register a new admin
+    string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"admin\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+
+    // Log in the registered admin and obtain the authentication token
+    string adminLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+
+    string responseString = await loginResponse.Content.ReadAsStringAsync();
+    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+    string adminAuthToken = responseMap.token;
+
+    // Set the authentication token in the HTTP client headers
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+
+    // Assume you have a customerId to test (replace with an actual existing customerId)
+    long customerId = 1;
+
+    try
+    {
+        // Send GET request to retrieve customer by ID
+        response = await _httpClient.GetAsync($"/api/customer/{customerId}");
+
+        // Print response content for debugging purposes
+        Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+
+        // Assert the GET response
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+        // Additional assertions based on the properties of the retrieved customer
+    }
+    catch (HttpRequestException ex)
+    {
+        Console.WriteLine($"Request failed: {ex.Message}");
+
+        if (response != null)
+        {
+            // Print response content for debugging purposes
+            Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+        }
+
+        throw;
+    }
+}
+
+[Test]
+public async Task Backend_TestUpdateCart()
+{
+    HttpResponseMessage response = null;
+
+    // Register a new customer and obtain the authentication token
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueUsername = $"customer_{uniqueId}";
+    string uniquePassword = $"customerA{uniqueId}@123";
+    string uniqueEmail = $"customer{uniqueId}@gmail.com";
+
+    // Register a new customer
+    string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+
+    // Log in the registered customer and obtain the authentication token
+    string customerLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(customerLoginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+
+    string responseString = await loginResponse.Content.ReadAsStringAsync();
+    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+    string customerAuthToken = responseMap.token;
+
+    // Set the authentication token in the HTTP client headers
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
+
+    // Assume you have a cartId to test (replace with an actual existing cartId)
+    long cartId = 1;
+
+    // Create an updated cart object
+    var updatedCart = new
+    {
+        CartId = cartId,
+        // Add other properties of the Cart object as needed for the update
+    };
+
+    try
+    {
+        // Convert updatedCart object to JSON string
+        string requestBody = JsonConvert.SerializeObject(updatedCart);
+
+        // Send PUT request to update the cart
+        response = await _httpClient.PutAsync($"/api/cart/update/{cartId}", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+
+        // Print response content for debugging purposes
+        Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+
+        // Assert the PUT response
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+        // Additional assertions based on the properties of the updated cart
+    }
+    catch (HttpRequestException ex)
+    {
+        Console.WriteLine($"Request failed: {ex.Message}");
+
+        if (response != null)
+        {
+            // Print response content for debugging purposes
+            Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+        }
+
+        throw;
+    }
+}
+
     [TearDown]
     public void TearDown()
     {

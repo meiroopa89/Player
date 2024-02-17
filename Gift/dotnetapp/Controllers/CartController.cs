@@ -77,7 +77,7 @@ public class CartController : ControllerBase
     }
 
     [Authorize(Roles = "customer")]      
-    [HttpGet("get/{customerId}")]
+    [HttpGet("customer/{customerId}")]
     public IActionResult GetCartByCustomerId(long customerId)
     {
         var cart = _cartService.getCartByCustomerId(customerId);
