@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using dotnetapp.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TestProject;
 
@@ -137,43 +139,151 @@ public async Task Backend_TestAddEvent()
     HttpResponseMessage eventResponse = await _httpClient.PostAsync("api/event", new StringContent(eventRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, eventResponse.StatusCode);
 }
+        [Test]
+        public async Task Backend_TestGetAllEvents()
+        {
+            // Generate unique identifiers
+            string uniqueId = Guid.NewGuid().ToString();
+            string uniqueusername = $"abcd_{uniqueId}";
+            string uniquepassword = $"abcdA{uniqueId}@123";
+            string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
+            // Register a customer
+            string registerRequestBody = $"{{\"Username\": \"{uniqueusername}\", \"Password\": \"{uniquepassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Organizer\" }}";
+            HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+            Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
 
-// [Test]
-// public async Task Backend_TestGetAddonsAsAdmin()
-// {
-//     // Generate unique identifiers
-//     string uniqueId = Guid.NewGuid().ToString();
-//     string uniqueusername = $"abcd_{uniqueId}";
-//     string uniquepassword = $"abcdA{uniqueId}@123";
-//     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+            // Login the registered customer
+            string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquepassword}\"}}";
+            HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+            Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+            string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+            dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+            string customerAuthToken = loginResponseMap.token;
 
-//     // Register a customer
-//     string registerRequestBody = $"{{\"Username\": \"{uniqueusername}\", \"Password\": \"{uniquepassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"Role\" : \"admin\" }}";
-//     HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+            // Use the obtained token in the request to get events
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
 
-//     // Login the registered customer
-//     string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquepassword}\"}}";
-//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-//     string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-//     dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
-//     string customerAuthToken = loginResponseMap.token;
+            // Make a request to get events
+            HttpResponseMessage getEventsResponse = await _httpClient.GetAsync("api/event");
+            Assert.AreEqual(HttpStatusCode.OK, getEventsResponse.StatusCode);
 
-//     // Use the obtained token in the request to get addons
-//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
+            // Validate the response content (assuming the response is a JSON array of events)
+            string getEventsResponseBody = await getEventsResponse.Content.ReadAsStringAsync();
+            var events = JsonConvert.DeserializeObject<List<Event>>(getEventsResponseBody);
+            Assert.IsNotNull(events);
+            Assert.IsTrue(events.Any());
+        }
 
-//     // Make a request to get addons
-//     HttpResponseMessage getAddonsResponse = await _httpClient.GetAsync("api/getAddon");
-//     Assert.AreEqual(HttpStatusCode.OK, getAddonsResponse.StatusCode);
+[Test]
+public async Task Backend_TestGetEventById()
+{
+    // Generate unique identifiers
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueusername = $"abcd_{uniqueId}";
+    string uniquepassword = $"abcdA{uniqueId}@123";
+    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-//     // Validate the response content (assuming the response is a JSON array of addons)
-//     string getAddonsResponseBody = await getAddonsResponse.Content.ReadAsStringAsync();
-//     var addons = JsonConvert.DeserializeObject<List<Addon>>(getAddonsResponseBody);
-//     Assert.IsNotNull(addons);
-//     Assert.IsTrue(addons.Any());
-// }
+    // Register a customer
+    string registerRequestBody = $"{{\"Username\": \"{uniqueusername}\", \"Password\": \"{uniquepassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Organizer\" }}";
+    HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+    // Login the registered customer
+    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquepassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+    string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+    dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+    string organizerAuthToken = loginResponseMap.token;
+
+    // Use the obtained token in the request to get the organizer's event
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", organizerAuthToken);
+
+    // Make a request to get the events
+    HttpResponseMessage getEventsResponse = await _httpClient.GetAsync("api/event");
+    Assert.AreEqual(HttpStatusCode.OK, getEventsResponse.StatusCode);
+
+    // Validate the response content (assuming the response is a JSON array of events)
+    string getEventsResponseBody = await getEventsResponse.Content.ReadAsStringAsync();
+    var events = JsonConvert.DeserializeObject<List<Event>>(getEventsResponseBody);
+    Assert.IsNotNull(events);
+    Assert.IsTrue(events.Any());
+
+    // Get the first event ID from the response
+    int eventId = events.First().EventId;
+
+    // Make a request to get a specific event by ID
+    HttpResponseMessage getEventByIdResponse = await _httpClient.GetAsync($"api/event/{eventId}");
+    Assert.AreEqual(HttpStatusCode.OK, getEventByIdResponse.StatusCode);
+
+    // Validate the response content for the specific event
+    string getEventByIdResponseBody = await getEventByIdResponse.Content.ReadAsStringAsync();
+    var specificEvent = JsonConvert.DeserializeObject<Event>(getEventByIdResponseBody);
+    Assert.IsNotNull(specificEvent);
+    Assert.AreEqual(eventId, specificEvent.EventId);
+}
+
+[Test]
+public async Task Backend_TestUpdateEvent()
+{
+    // Generate unique identifiers
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueusername = $"abcd_{uniqueId}";
+    string uniquepassword = $"abcdA{uniqueId}@123";
+    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+    // Register an organizer
+    string registerRequestBody = $"{{\"Username\": \"{uniqueusername}\", \"Password\": \"{uniquepassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Organizer\" }}";
+    HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+    // Login the registered organizer
+    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquepassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+    string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+    dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+    string organizerAuthToken = loginResponseMap.token;
+
+    // Use the obtained token in the request to get the organizer's events
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", organizerAuthToken);
+
+    // Make a request to get the organizer's events
+    HttpResponseMessage getEventsResponse = await _httpClient.GetAsync("api/event");
+    Assert.AreEqual(HttpStatusCode.OK, getEventsResponse.StatusCode);
+
+    // Validate the response content (assuming the response is a JSON array of events)
+    string getEventsResponseBody = await getEventsResponse.Content.ReadAsStringAsync();
+    var events = JsonConvert.DeserializeObject<List<Event>>(getEventsResponseBody);
+    Assert.IsNotNull(events);
+    Assert.IsTrue(events.Any());
+
+    // Get the first event ID from the response
+    int eventId = events.First().EventId;
+
+    // Generate updated event data
+    var updatedEvent = new Event
+    {
+        EventName = "Updated Event",
+        StartDate = DateTime.UtcNow,
+        EndDate = DateTime.UtcNow.AddDays(2),
+        EventImageURL = "updated-image-url.jpg",
+        Description = "Updated event description"
+        // Add more properties as needed
+    };
+
+    // Make a request to update the event
+    string updateEventRequestBody = JsonConvert.SerializeObject(updatedEvent);
+    HttpResponseMessage updateEventResponse = await _httpClient.PutAsync($"api/event/{eventId}", new StringContent(updateEventRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, updateEventResponse.StatusCode);
+
+    // Validate the response content
+    string updateEventResponseBody = await updateEventResponse.Content.ReadAsStringAsync();
+    dynamic updateEventResponseMap = JsonConvert.DeserializeObject(updateEventResponseBody);
+    Assert.AreEqual("Event updated successfully", updateEventResponseMap.message);
+}
+
 
 // [Test]
 // public async Task Backend_TestGetAddonsAsCustomer()
