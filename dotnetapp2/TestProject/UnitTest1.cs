@@ -420,11 +420,8 @@ public async Task Backend_TestAddReferee()
 
         var refereeToAdd = new
         {
-            // Properties of the Referee object
-            // Example:
             RefereeName = "John Doe",
             Country = "United States",
-            // Add other properties as needed
         };
 
         string refereeRequestBody = JsonConvert.SerializeObject(refereeToAdd);
