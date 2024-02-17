@@ -345,7 +345,26 @@ public async Task Backend_TestAddPlayer_Successful()
     string uniquePassword = $"abcdA{uniqueId}@123";
     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-    // Register a player
+    // Register an organizer
+    string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+    HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+    // Login the registered organizer
+    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+    
+    // Check for a valid token in the response
+    string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+    dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+    Assert.IsNotNull(loginResponseMap.token);
+    string organizerAuthToken = loginResponseMap.token;
+
+    // Use the obtained token in the request to add a player
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", organizerAuthToken);
+
+    // Add a player with valid data
     var player = new Player
     {
         PlayerName = "John Doe",
@@ -359,19 +378,23 @@ public async Task Backend_TestAddPlayer_Successful()
         TotalRunsScored = 1500,
         TotalWicketsTaken = 20,
         TotalCatches = 10,
-        TeamId = 1
+        TeamId = 1, // Assuming a valid TeamId
+        // Add more properties as needed
     };
 
     string addPlayerRequestBody = JsonConvert.SerializeObject(player);
     HttpResponseMessage addPlayerResponse = await _httpClient.PostAsync("/api/player", new StringContent(addPlayerRequestBody, Encoding.UTF8, "application/json"));
 
+    // Check for successful status code
     Assert.AreEqual(HttpStatusCode.OK, addPlayerResponse.StatusCode);
 
+    // Check for valid response content
     string addPlayerResponseBody = await addPlayerResponse.Content.ReadAsStringAsync();
     dynamic addPlayerResponseMap = JsonConvert.DeserializeObject(addPlayerResponseBody);
 
     Assert.AreEqual("Player added successfully", addPlayerResponseMap.message.ToString());
 }
+
 
 
 
