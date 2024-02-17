@@ -485,7 +485,7 @@ public async Task Backend_TestUpdateReview()
     };
 
     string updateReviewRequestBody = JsonConvert.SerializeObject(updatedReview);
-    HttpResponseMessage updateReviewResponse = await _httpClient.PutAsync($"/api/review/{reviewId}", new StringContent(updateReviewRequestBody, Encoding.UTF8, "application/json"));
+    HttpResponseMessage updateReviewResponse = await _httpClient.PutAsync($"/api/review/{id}", new StringContent(updateReviewRequestBody, Encoding.UTF8, "application/json"));
 
     // Check if the response is OK (200)
     Assert.AreEqual(HttpStatusCode.OK, updateReviewResponse.StatusCode);
