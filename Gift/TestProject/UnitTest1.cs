@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-
+using dotnetapp.Models;
 
 
 [TestFixture]
@@ -492,64 +492,70 @@ public class Tests
 // }
 
 
-    [Test]
-public async Task Backend_TestDeleteReview()
-{
-    // Generate unique identifiers
-    string uniqueId = Guid.NewGuid().ToString();
-    string uniqueUsername = $"user_{uniqueId}";
-    string uniquePassword = $"userA{uniqueId}@123";
-    string uniqueEmail = $"user{uniqueId}@gmail.com";
-
-    // Register a user
-    string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
-    HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
-
-    // Login the registered user
-    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-    string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-    dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
-    string userAuthToken = loginResponseMap.token;
-
-    // Set the authentication token in the request to add a review
-    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
-
-    // Add a review
-    var addReview = new
+[Test, Order(9)]
+    public async Task Backend_TestEditGift()
     {
-        UserId = 1, // Replace with the actual user ID
-        Subject = "Test Subject",
+        HttpResponseMessage response = null;
+
+        // Register a new admin and obtain the authentication token
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"admin_{uniqueId}";
+        string uniquePassword = $"adminA{uniqueId}@123";
+        string uniqueEmail = $"admin{uniqueId}@gmail.com";
+
+        // Register a new admin
+        string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"admin\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+        HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+
+        // Log in the registered admin and obtain the authentication token
+        string adminLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+
+        string responseString = await loginResponse.Content.ReadAsStringAsync();
+        dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+        string adminAuthToken = responseMap.token;
+
+        // Set the authentication token in the HTTP client headers
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+
+        // Create a new gift to be updated
+        var ReviewAdd = new
+        {
+            Subject = "Test Subject",
         Body = "Test Body",
         Rating = 4,
         DateCreated = DateTime.Now
-        // Add other necessary properties
-    };
+        };
 
-    string addReviewRequestBody = JsonConvert.SerializeObject(addReview);
-    HttpResponseMessage addReviewResponse = await _httpClient.PostAsync("/api/review", new StringContent(addReviewRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, addReviewResponse.StatusCode);
+        string addGiftRequestBody = JsonConvert.SerializeObject(ReviewAdd);
+        HttpResponseMessage addGiftResponse = await _httpClient.PostAsync("/api/gift", new StringContent(addGiftRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, addGiftResponse.StatusCode);
 
-    // Get the list of reviews
-    HttpResponseMessage getReviewsResponse = await _httpClient.GetAsync("/api/review");
-    Assert.AreEqual(HttpStatusCode.OK, getReviewsResponse.StatusCode);
-    string getReviewsResponseBody = await getReviewsResponse.Content.ReadAsStringAsync();
-    var reviews = JsonConvert.DeserializeObject<List<Review>>(getReviewsResponseBody);
-    Assert.IsNotNull(reviews);
-    Assert.IsTrue(reviews.Any());
+        // Retrieve the added gift details
+        string addedGiftResponseString = await addGiftResponse.Content.ReadAsStringAsync();
+        dynamic addedGiftResponseMap = JsonConvert.DeserializeObject(addedGiftResponseString);
+        long giftId = addedGiftResponseMap.giftId;
 
-    // Delete the newly added review
-    // Assuming ReviewId property exists in Review model
-    int reviewIdToDelete = reviews.FirstOrDefault()?.ReviewId ?? 1;
-    HttpResponseMessage deleteReviewResponse = await _httpClient.DeleteAsync($"/api/review/{reviewIdToDelete}");
-    Assert.AreEqual(HttpStatusCode.OK, deleteReviewResponse.StatusCode);
+        // Create updated gift details
+        var updatedGift = new
+        {
+            GiftType = "Updated Gift",
+            GiftImageUrl = "updated_image.jpg",
+            GiftDetails = "Updated details",
+            GiftPrice = 25.0,
+            Quantity = 8
+        };
 
-    // Verify that the review is deleted
-    HttpResponseMessage verifyDeleteResponse = await _httpClient.GetAsync($"/api/review/{reviewIdToDelete}");
-    Assert.AreEqual(HttpStatusCode.NotFound, verifyDeleteResponse.StatusCode);
-}
+        string updateGiftRequestBody = JsonConvert.SerializeObject(updatedGift);
+        HttpResponseMessage updateGiftResponse = await _httpClient.PutAsync($"/api/gift/{giftId}", new StringContent(updateGiftRequestBody, Encoding.UTF8, "application/json"));
+
+        // Check if the response is OK (200)
+        Assert.AreEqual(HttpStatusCode.OK, updateGiftResponse.StatusCode);
+
+    }
+
 
 
     [TearDown]
