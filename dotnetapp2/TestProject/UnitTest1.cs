@@ -229,17 +229,17 @@ public async Task Backend_TestUpdateEvent()
 {
     // Generate unique identifiers
     string uniqueId = Guid.NewGuid().ToString();
-    string uniqueusername = $"abcd_{uniqueId}";
-    string uniquepassword = $"abcdA{uniqueId}@123";
+    string uniqueUsername = $"abcd_{uniqueId}";
+    string uniquePassword = $"abcdA{uniqueId}@123";
     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
     // Register an organizer
-    string registerRequestBody = $"{{\"Username\": \"{uniqueusername}\", \"Password\": \"{uniquepassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Organizer\" }}";
+    string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Organizer\" }}";
     HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
 
     // Login the registered organizer
-    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquepassword}\"}}";
+    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
     string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
@@ -260,7 +260,7 @@ public async Task Backend_TestUpdateEvent()
     Assert.IsTrue(events.Any());
 
     // Get the first event ID from the response
-    int eventId = events.First().EventId;
+    int eventId= events.First().EventId;
 
     // Generate updated event data
     var updatedEvent = new Event
@@ -281,8 +281,11 @@ public async Task Backend_TestUpdateEvent()
     // Validate the response content
     string updateEventResponseBody = await updateEventResponse.Content.ReadAsStringAsync();
     dynamic updateEventResponseMap = JsonConvert.DeserializeObject(updateEventResponseBody);
-    Assert.AreEqual("Event updated successfully", updateEventResponseMap.message);
+
+    // Corrected assertion for the response message
+    Assert.AreEqual("Event updated successfully", updateEventResponseMap.message.ToString());
 }
+
 
 
 // [Test]
