@@ -612,6 +612,81 @@ public async Task Backend_TestGetAllReferees()
 //     }
 // }
 
+[Test]
+public async Task Backend_TestAddSchedule()
+{
+    try
+    {
+        // Generate unique identifiers
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+        // Register an organizer user
+        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Organizer\" }}";
+        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+        // Login the registered organizer user
+        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+        string organizerAuthToken = loginResponseMap.token;
+
+        // Use the obtained token in the request to add a schedule
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", organizerAuthToken);
+
+        // Add a schedule
+        var scheduleToAdd = new Schedule
+        {
+            MatchDateTime = DateTime.Now.AddHours(24), // Set match date and time 24 hours from now
+            EventId = 1, // Replace with a valid event ID
+            VenueId = 1, // Replace with a valid venue ID
+            RefereeId = 1, // Replace with a valid referee ID
+            Team1Id = 1, // Replace with a valid team ID
+            Team2Id = 2, // Replace with another valid team ID
+        };
+
+        string scheduleRequestBody = JsonConvert.SerializeObject(scheduleToAdd);
+        HttpResponseMessage scheduleResponse = await _httpClient.PostAsync("/api/schedule", new StringContent(scheduleRequestBody, Encoding.UTF8, "application/json"));
+
+        // Check for successful status code
+        Assert.AreEqual(HttpStatusCode.OK, scheduleResponse.StatusCode);
+
+        // Check for valid response content
+        string scheduleResponseBody = await scheduleResponse.Content.ReadAsStringAsync();
+        dynamic scheduleResponseMap = JsonConvert.DeserializeObject(scheduleResponseBody);
+
+        // Assuming the response contains a message indicating success
+        Assert.AreEqual("Schedule added successfully", scheduleResponseMap.message.ToString());
+    }
+    catch (HttpRequestException httpEx)
+    {
+        // Log HTTP exception details
+        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
+        if (httpEx.InnerException != null)
+        {
+            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
+        }
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+    catch (Exception ex)
+    {
+        // Log general exception details
+        Console.WriteLine($"Exception: {ex.Message}");
+        Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+}
+
+
 
 
 // [Test]

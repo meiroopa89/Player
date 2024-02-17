@@ -41,6 +41,7 @@ namespace dotnetapp.Controllers
 
             return Ok(schedule);
         }
+        
         [Authorize(Roles = "Organizer")]
 
         [HttpPost]
