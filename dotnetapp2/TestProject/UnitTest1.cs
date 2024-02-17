@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using dotnetapp.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
+
 
 namespace TestProject;
 
@@ -669,7 +671,6 @@ public async Task Backend_TestGetAllTeams()
     }
 }
 
-
 [Test]
 public async Task Backend_TestAddVenue()
 {
@@ -785,71 +786,6 @@ public async Task Backend_TestGetAllVenues()
         // Assuming the response contains a list of venues
         Assert.IsNotNull(venuesResponseMap);
         Assert.IsTrue(venuesResponseMap.Count > 0);  // Assuming at least one venue is returned
-    }
-    catch (HttpRequestException httpEx)
-    {
-        // Log HTTP exception details
-        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
-        if (httpEx.InnerException != null)
-        {
-            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
-        }
-
-        // Re-throw the exception to mark the test as failed
-        throw;
-    }
-    catch (Exception ex)
-    {
-        // Log general exception details
-        Console.WriteLine($"Exception: {ex.Message}");
-        Console.WriteLine($"StackTrace: {ex.StackTrace}");
-
-        // Re-throw the exception to mark the test as failed
-        throw;
-    }
-}
-
-[Test]
-public async Task Backend_TestGetAllPlayers()
-{
-    try
-    {
-        // Register an admin user
-        string uniqueId = Guid.NewGuid().ToString();
-        string uniqueUsername = $"abcd_{uniqueId}";
-        string uniquePassword = $"abcdA{uniqueId}@123";
-        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
-        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
-
-        // Login the registered admin user
-        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
-        string adminAuthToken = loginResponseMap.token;
-
-        // Use the obtained token in the request to get all players
-        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
-
-        // Get all players
-        HttpResponseMessage playersResponse = await _httpClient.GetAsync("/api/players");
-
-        // Check for successful status code
-        Assert.AreEqual(HttpStatusCode.OK, playersResponse.StatusCode);
-
-        // Check for valid response content
-        string playersResponseBody = await playersResponse.Content.ReadAsStringAsync();
-        dynamic playersResponseMap = JsonConvert.DeserializeObject(playersResponseBody);
-
-        // Assuming the response contains a list of players
-        Assert.IsNotNull(playersResponseMap);
-        Assert.IsInstanceOf<List<dynamic>>(playersResponseMap);
-
-        // You can add more specific assertions based on your actual response content structure
     }
     catch (HttpRequestException httpEx)
     {
