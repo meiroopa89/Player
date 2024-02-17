@@ -134,7 +134,7 @@ public async Task Backend_TestAddEvent()
     };
 
     string eventRequestBody = JsonConvert.SerializeObject(eventToAdd);
-    HttpResponseMessage eventResponse = await _httpClient.PostAsync("api/AddEvent", new StringContent(eventRequestBody, Encoding.UTF8, "application/json"));
+    HttpResponseMessage eventResponse = await _httpClient.PostAsync("api/event", new StringContent(eventRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, eventResponse.StatusCode);
 }
 
