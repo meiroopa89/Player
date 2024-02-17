@@ -738,11 +738,11 @@ public async Task Backend_TestGetCustomerById()
     }
 }
 
-[Test]
-public async Task Backend_TestUpdateCart()
-{
-    HttpResponseMessage response = null;
 
+
+[Test]
+public async Task Backend_TestPostAndThenUpdateCart()
+{
     // Register a new customer and obtain the authentication token
     string uniqueId = Guid.NewGuid().ToString();
     string uniqueUsername = $"customer_{uniqueId}";
@@ -766,65 +766,119 @@ public async Task Backend_TestUpdateCart()
     // Set the authentication token in the HTTP client headers
     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
 
-    // Assume you have a cartId to test (replace with an actual existing cartId)
-    long cartId = 1;
-
-    // Create an updated cart object with the provided JSON structure
-    var updatedCart = new
-    {
-        CartId = cartId,
-        Gifts = new[]
-        {
-            new
-            {
-                GiftId = 1, // Replace with an actual giftId
-                GiftType = "UpdatedGift",
-                GiftImageUrl = "UpdatedImageUrl",
-                GiftDetails = "UpdatedDetails",
-                GiftPrice = 29.99,
-                Quantity = 3,
-                CartId = cartId,
-                Cart = "UpdatedCart"
-            }
-            // Add more gifts as needed
-        },
-        CustomerId = 1, // Replace with an actual customer ID
-        Customer = new
-        {
-            CustomerId = 1, // Replace with an actual customer ID
-            CustomerName = "UpdatedCustomerName",
-            Address = "UpdatedAddress",
-            UserId = 1, // Replace with an actual user ID
-            User = new
-            {
-                UserId = 1, // Replace with an actual user ID
-                Email = "UpdatedEmail",
-                Password = "UpdatedPassword",
-                Username = "UpdatedUsername",
-                MobileNumber = "UpdatedMobileNumber",
-                Role = "UpdatedRole"
-            }
-        },
-        TotalAmount = 89.97 // Adjust the total amount based on the updated gift details
-    };
-
     try
     {
+        // Create an initial cart object with the provided JSON structure
+        var initialCart = new
+        {
+            Gifts = new[]
+            {
+                new
+                {
+                    GiftId = 1, // Replace with an actual giftId
+                    GiftType = "InitialGift",
+                    GiftImageUrl = "InitialImageUrl",
+                    GiftDetails = "InitialDetails",
+                    GiftPrice = 19.99,
+                    Quantity = 2,
+                    CartId = 0,
+                    Cart = "InitialCart"
+                }
+                // Add more gifts as needed
+            },
+            CustomerId = 1, // Replace with an actual customer ID
+            Customer = new
+            {
+                CustomerId = 1, // Replace with an actual customer ID
+                CustomerName = "InitialCustomerName",
+                Address = "InitialAddress",
+                UserId = 1, // Replace with an actual user ID
+                User = new
+                {
+                    UserId = 1, // Replace with an actual user ID
+                    Email = "InitialEmail",
+                    Password = "InitialPassword",
+                    Username = "InitialUsername",
+                    MobileNumber = "InitialMobileNumber",
+                    Role = "InitialRole"
+                }
+            },
+            TotalAmount = 49.98 // Adjust the total amount based on the initial gift details
+        };
+
+        // Convert initialCart object to JSON string with ReferenceHandler
+        string postRequestBody = JsonConvert.SerializeObject(initialCart, new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            PreserveReferencesHandling = PreserveReferencesHandling.None
+        });
+
+        // Send POST request to create the cart
+        postResponse = await _httpClient.PostAsync("/api/cart", new StringContent(postRequestBody, Encoding.UTF8, "application/json"));
+
+        // Print response content for debugging purposes
+        Console.WriteLine($"Post Response Content: {await postResponse.Content.ReadAsStringAsync()}");
+
+        // Assert the POST response
+        Assert.AreEqual(HttpStatusCode.Created, postResponse.StatusCode);
+
+        // Extract the created cart ID from the response for the update
+        var createdCartId = JsonConvert.DeserializeObject<dynamic>(await postResponse.Content.ReadAsStringAsync()).cartId;
+
+        // Create an updated cart object with the provided JSON structure
+        var updatedCart = new
+        {
+            CartId = createdCartId,
+            Gifts = new[]
+            {
+                new
+                {
+                    GiftId = 1, // Replace with an actual giftId
+                    GiftType = "UpdatedGift",
+                    GiftImageUrl = "UpdatedImageUrl",
+                    GiftDetails = "UpdatedDetails",
+                    GiftPrice = 29.99,
+                    Quantity = 3,
+                    CartId = createdCartId,
+                    Cart = "UpdatedCart"
+                }
+                // Add more gifts as needed
+            },
+            CustomerId = 1, // Replace with an actual customer ID
+            Customer = new
+            {
+                CustomerId = 1, // Replace with an actual customer ID
+                CustomerName = "UpdatedCustomerName",
+                Address = "UpdatedAddress",
+                UserId = 1, // Replace with an actual user ID
+                User = new
+                {
+                    UserId = 1, // Replace with an actual user ID
+                    Email = "UpdatedEmail",
+                    Password = "UpdatedPassword",
+                    Username = "UpdatedUsername",
+                    MobileNumber = "UpdatedMobileNumber",
+                    Role = "UpdatedRole"
+                }
+            },
+            TotalAmount = 89.97 // Adjust the total amount based on the updated gift details
+        };
+
         // Convert updatedCart object to JSON string with ReferenceHandler
-        string requestBody = JsonConvert.SerializeObject(updatedCart, new JsonSerializerSettings
+        string updateRequestBody = JsonConvert.SerializeObject(updatedCart, new JsonSerializerSettings
         {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             PreserveReferencesHandling = PreserveReferencesHandling.None
         });
 
         // Send PUT request to update the cart
-        response = await _httpClient.PutAsync($"/api/cart/update/{cartId}", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+        updateResponse = await _httpClient.PutAsync($"/api/cart/update/{createdCartId}", new StringContent(updateRequestBody, Encoding.UTF8, "application/json"));
 
         // Print response content for debugging purposes
-        Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+        Console.WriteLine($"Update Response Content: {await updateResponse.Content.ReadAsStringAsync()}");
 
         // Assert the PUT response
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, updateResponse.StatusCode);
 
         // Additional assertions based on the properties of the updated cart
     }
@@ -832,10 +886,16 @@ public async Task Backend_TestUpdateCart()
     {
         Console.WriteLine($"Request failed: {ex.Message}");
 
-        if (response != null)
+        if (postResponse != null)
         {
             // Print response content for debugging purposes
-            Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+            Console.WriteLine($"Post Response Content: {await postResponse.Content.ReadAsStringAsync()}");
+        }
+
+        if (updateResponse != null)
+        {
+            // Print response content for debugging purposes
+            Console.WriteLine($"Update Response Content: {await updateResponse.Content.ReadAsStringAsync()}");
         }
 
         throw;
