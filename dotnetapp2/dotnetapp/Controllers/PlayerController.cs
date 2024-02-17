@@ -41,8 +41,8 @@ namespace dotnetapp.Controllers
 
             return Ok(player);
         }
+        
         [Authorize(Roles = "Admin")]
-
         [HttpPost]
         public async Task<ActionResult> AddPlayer([FromBody] Player player)
         {
@@ -64,7 +64,7 @@ namespace dotnetapp.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        
+
         [Authorize(Roles = "Admin")]
 
         [HttpPut("{playerId}")]
