@@ -27,6 +27,7 @@ namespace dotnetapp.Controllers
             var teams = await _teamService.GetAllTeams();
             return Ok(teams);
         }
+        
         [Authorize(Roles = "Admin")]
 
         [HttpGet("{teamId}")]
@@ -41,6 +42,7 @@ namespace dotnetapp.Controllers
 
             return Ok(team);
         }
+
         [Authorize(Roles = "Admin")]
 
         [HttpPost]

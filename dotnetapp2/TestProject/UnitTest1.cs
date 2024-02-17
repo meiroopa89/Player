@@ -612,8 +612,82 @@ public async Task Backend_TestGetAllReferees()
 //     }
 // }
 
+// [Test]
+// public async Task Backend_TestAddSchedule()
+// {
+//     try
+//     {
+//         // Generate unique identifiers
+//         string uniqueId = Guid.NewGuid().ToString();
+//         string uniqueUsername = $"abcd_{uniqueId}";
+//         string uniquePassword = $"abcdA{uniqueId}@123";
+//         string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+//         // Register an organizer user
+//         string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Organizer\" }}";
+//         HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+//         Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+//         // Login the registered organizer user
+//         string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+//         HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+//         Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+//         string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+//         dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+//         string organizerAuthToken = loginResponseMap.token;
+
+//         // Use the obtained token in the request to add a schedule
+//         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", organizerAuthToken);
+
+//         // Add a schedule
+//         var scheduleToAdd = new Schedule
+//         {
+//             MatchDateTime = DateTime.Now.AddHours(24), // Set match date and time 24 hours from now
+//             EventId = 1, // Replace with a valid event ID
+//             VenueId = 1, // Replace with a valid venue ID
+//             RefereeId = 1, // Replace with a valid referee ID
+//             Team1Id = 1, // Replace with a valid team ID
+//             Team2Id = 2, // Replace with another valid team ID
+//         };
+
+//         string scheduleRequestBody = JsonConvert.SerializeObject(scheduleToAdd);
+//         HttpResponseMessage scheduleResponse = await _httpClient.PostAsync("/api/schedule", new StringContent(scheduleRequestBody, Encoding.UTF8, "application/json"));
+
+//         // Check for successful status code
+//         Assert.AreEqual(HttpStatusCode.OK, scheduleResponse.StatusCode);
+
+//         // Check for valid response content
+//         string scheduleResponseBody = await scheduleResponse.Content.ReadAsStringAsync();
+//         dynamic scheduleResponseMap = JsonConvert.DeserializeObject(scheduleResponseBody);
+
+//         // Assuming the response contains a message indicating success
+//         Assert.AreEqual("Schedule added successfully", scheduleResponseMap.message.ToString());
+//     }
+//     catch (HttpRequestException httpEx)
+//     {
+//         // Log HTTP exception details
+//         Console.WriteLine($"HTTP Exception: {httpEx.Message}");
+//         if (httpEx.InnerException != null)
+//         {
+//             Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
+//         }
+
+//         // Re-throw the exception to mark the test as failed
+//         throw;
+//     }
+//     catch (Exception ex)
+//     {
+//         // Log general exception details
+//         Console.WriteLine($"Exception: {ex.Message}");
+//         Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+//         // Re-throw the exception to mark the test as failed
+//         throw;
+//     }
+// }
+
 [Test]
-public async Task Backend_TestAddSchedule()
+public async Task Backend_TestGetAllSchedules()
 {
     try
     {
@@ -636,32 +710,23 @@ public async Task Backend_TestAddSchedule()
         dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
         string organizerAuthToken = loginResponseMap.token;
 
-        // Use the obtained token in the request to add a schedule
+        // Use the obtained token in the request to get all schedules
         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", organizerAuthToken);
 
-        // Add a schedule
-        var scheduleToAdd = new Schedule
-        {
-            MatchDateTime = DateTime.Now.AddHours(24), // Set match date and time 24 hours from now
-            EventId = 1, // Replace with a valid event ID
-            VenueId = 1, // Replace with a valid venue ID
-            RefereeId = 1, // Replace with a valid referee ID
-            Team1Id = 1, // Replace with a valid team ID
-            Team2Id = 2, // Replace with another valid team ID
-        };
-
-        string scheduleRequestBody = JsonConvert.SerializeObject(scheduleToAdd);
-        HttpResponseMessage scheduleResponse = await _httpClient.PostAsync("/api/schedule", new StringContent(scheduleRequestBody, Encoding.UTF8, "application/json"));
+        // Get all schedules
+        HttpResponseMessage getAllSchedulesResponse = await _httpClient.GetAsync("/api/schedule");
 
         // Check for successful status code
-        Assert.AreEqual(HttpStatusCode.OK, scheduleResponse.StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, getAllSchedulesResponse.StatusCode);
 
-        // Check for valid response content
-        string scheduleResponseBody = await scheduleResponse.Content.ReadAsStringAsync();
-        dynamic scheduleResponseMap = JsonConvert.DeserializeObject(scheduleResponseBody);
+        // Check for valid response content (assuming it returns a list of schedules)
+        string schedulesResponseBody = await getAllSchedulesResponse.Content.ReadAsStringAsync();
+        List<Schedule> schedules = JsonConvert.DeserializeObject<List<Schedule>>(schedulesResponseBody);
 
-        // Assuming the response contains a message indicating success
-        Assert.AreEqual("Schedule added successfully", scheduleResponseMap.message.ToString());
+        // Assert that the returned list is not null
+        Assert.IsNotNull(schedules);
+
+        // You can add more specific assertions based on your application logic
     }
     catch (HttpRequestException httpEx)
     {
@@ -686,6 +751,284 @@ public async Task Backend_TestAddSchedule()
     }
 }
 
+
+[Test]
+public async Task Backend_TestAddTeam()
+{
+    try
+    {
+        // Generate unique identifiers
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+        // Register an admin user
+        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+        // Login the registered admin user
+        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+        string adminAuthToken = loginResponseMap.token;
+
+        // Use the obtained token in the request to add a team
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+
+        // Add a team
+        var teamToAdd = new Team
+        {
+            TeamName = "Sample Team",
+            teamDescription = "This is a sample team for testing purposes.",
+            // You can add other properties based on your actual Team model
+        };
+
+        string teamRequestBody = JsonConvert.SerializeObject(teamToAdd);
+        HttpResponseMessage teamResponse = await _httpClient.PostAsync("/api/team", new StringContent(teamRequestBody, Encoding.UTF8, "application/json"));
+
+        // Check for successful status code
+        Assert.AreEqual(HttpStatusCode.OK, teamResponse.StatusCode);
+
+        // Check for valid response content
+        string teamResponseBody = await teamResponse.Content.ReadAsStringAsync();
+        dynamic teamResponseMap = JsonConvert.DeserializeObject(teamResponseBody);
+
+        // Assuming the response contains a message indicating success
+        Assert.AreEqual("Team added successfully", teamResponseMap.message.ToString());
+    }
+    catch (HttpRequestException httpEx)
+    {
+        // Log HTTP exception details
+        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
+        if (httpEx.InnerException != null)
+        {
+            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
+        }
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+    catch (Exception ex)
+    {
+        // Log general exception details
+        Console.WriteLine($"Exception: {ex.Message}");
+        Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+}
+
+[Test]
+public async Task Backend_TestGetAllTeams()
+{
+    try
+    {
+        // Generate unique identifiers
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+        // Register an admin user
+        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+        // Login the registered admin user
+        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+        string adminAuthToken = loginResponseMap.token;
+
+        // Use the obtained token in the request to get all teams
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+
+        // Get all teams
+        HttpResponseMessage teamsResponse = await _httpClient.GetAsync("/api/team");
+        
+        // Check for successful status code
+        Assert.AreEqual(HttpStatusCode.OK, teamsResponse.StatusCode);
+
+        // Check for valid response content
+        string teamsResponseBody = await teamsResponse.Content.ReadAsStringAsync();
+        dynamic teamsResponseMap = JsonConvert.DeserializeObject(teamsResponseBody);
+
+        // Assuming the response contains a list of teams
+        Assert.IsNotNull(teamsResponseMap);
+        Assert.IsInstanceOf<IEnumerable<dynamic>>(teamsResponseMap);
+    }
+    catch (HttpRequestException httpEx)
+    {
+        // Log HTTP exception details
+        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
+        if (httpEx.InnerException != null)
+        {
+            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
+        }
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+    catch (Exception ex)
+    {
+        // Log general exception details
+        Console.WriteLine($"Exception: {ex.Message}");
+        Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+}
+
+
+[Test]
+public async Task Backend_TestGetTeamById_ExistingTeam()
+{
+    try
+    {
+        // Register an admin user
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+        // Login the registered admin user
+        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+        string adminAuthToken = loginResponseMap.token;
+
+        // Use the obtained token in the request to get team by ID
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+
+        // Assume there is an existing team with ID 1
+        int teamId = 1;
+
+        // Get team by ID
+        HttpResponseMessage teamResponse = await _httpClient.GetAsync($"/api/team/{teamId}");
+
+        // Check for successful status code
+        Assert.AreEqual(HttpStatusCode.OK, teamResponse.StatusCode);
+
+        // Check for valid response content
+        string teamResponseBody = await teamResponse.Content.ReadAsStringAsync();
+        dynamic teamResponseMap = JsonConvert.DeserializeObject<Team>(teamResponseBody);
+
+        // Assuming the response contains team details
+        Assert.IsNotNull(teamResponseMap);
+        Assert.AreEqual(teamId, teamResponseMap.TeamId);
+    }
+    catch (HttpRequestException httpEx)
+    {
+        // Log HTTP exception details
+        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
+        if (httpEx.InnerException != null)
+        {
+            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
+        }
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+    catch (Exception ex)
+    {
+        // Log general exception details
+        Console.WriteLine($"Exception: {ex.Message}");
+        Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+}
+
+
+[Test]
+public async Task Backend_TestUpdateTeam_ExistingTeam()
+{
+    try
+    {
+        // Register an admin user
+        string uniqueId = Guid.NewGuid().ToString();
+        string uniqueUsername = $"abcd_{uniqueId}";
+        string uniquePassword = $"abcdA{uniqueId}@123";
+        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+        // Login the registered admin user
+        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+        string adminAuthToken = loginResponseMap.token;
+
+        // Use the obtained token in the request to add a team (for existing team data)
+        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+
+        // Assume there is an existing team with ID 1
+        int existingTeamId = 1;
+
+        // Get the existing team details
+        HttpResponseMessage getTeamResponse = await _httpClient.GetAsync($"/api/team/{existingTeamId}");
+        Assert.AreEqual(HttpStatusCode.OK, getTeamResponse.StatusCode);
+        string existingTeamResponseBody = await getTeamResponse.Content.ReadAsStringAsync();
+        dynamic existingTeamResponseMap = JsonConvert.DeserializeObject<Team>(existingTeamResponseBody);
+        Assert.IsNotNull(existingTeamResponseMap);
+
+        // Modify some properties of the existing team
+        existingTeamResponseMap.TeamName = "Updated Team Name";
+        existingTeamResponseMap.teamDescription = "Updated Team Description";
+
+        // Update the team
+        HttpResponseMessage updateTeamResponse = await _httpClient.PutAsync($"/api/team/{existingTeamId}", new StringContent(JsonConvert.SerializeObject(existingTeamResponseMap), Encoding.UTF8, "application/json"));
+        Assert.AreEqual(HttpStatusCode.OK, updateTeamResponse.StatusCode);
+
+        // Check for valid response content
+        string updateTeamResponseBody = await updateTeamResponse.Content.ReadAsStringAsync();
+        dynamic updateTeamResponseMap = JsonConvert.DeserializeObject(updateTeamResponseBody);
+
+        // Assuming the response contains a message indicating success
+        Assert.IsNotNull(updateTeamResponseMap);
+        Assert.AreEqual("Team updated successfully", updateTeamResponseMap.message.ToString());
+    }
+    catch (HttpRequestException httpEx)
+    {
+        // Log HTTP exception details
+        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
+        if (httpEx.InnerException != null)
+        {
+            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
+        }
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+    catch (Exception ex)
+    {
+        // Log general exception details
+        Console.WriteLine($"Exception: {ex.Message}");
+        Console.WriteLine($"StackTrace: {ex.StackTrace}");
+
+        // Re-throw the exception to mark the test as failed
+        throw;
+    }
+}
 
 
 
