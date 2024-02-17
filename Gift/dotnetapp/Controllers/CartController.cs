@@ -62,7 +62,7 @@ public class CartController : ControllerBase
 
 
 
-    [Authorize(Roles = "customer")]      
+    // [Authorize(Roles = "customer")]      
     [HttpPut("update/{cartId}")]
     public IActionResult UpdateCart([FromBody] Cart updatedCart)
     {
