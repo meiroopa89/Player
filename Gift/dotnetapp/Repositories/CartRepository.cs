@@ -15,69 +15,6 @@ public class CartRepository
         _context = context;
     }
 
-    // public Cart addCart(Cart cart)
-    // {
-    //     if (cart.CustomerId > 0)
-    //     {
-    //         Console.WriteLine(cart);
-
-    //         var customer = _context.Customers
-    //             .Include(c => c.User)
-    //             .FirstOrDefault(c => c.CustomerId == cart.CustomerId);
-
-    //         if (customer == null)
-    //         {
-    //             return null;
-    //         }
-
-    //         cart.CustomerId = customer.CustomerId;
-    //         cart.Customer = customer;
-    //     }
-
-    //     _context.Carts.Add(cart);
-    //     _context.SaveChanges();
-    //     return cart;
-    // }
-
-//     public Cart AddCart(Cart cart, int giftId, int customerId)
-// {
-//     if (customerId > 0)
-//     {
-//         Console.WriteLine(cart);
-
-//         var customer = _context.Customers
-//             .Include(c => c.User)
-//             .FirstOrDefault(c => c.CustomerId == customerId);
-
-//         if (customer == null)
-//         {
-//             return null; // Or handle the situation where the customer is not found
-//         }
-
-//         cart.CustomerId = customer.CustomerId;
-//         cart.Customer = customer;
-//     }
-
-//     // Now, let's associate the gift with the cart
-//     var gift = _context.Gifts.FirstOrDefault(g => g.GiftId == giftId);
-
-//     if (gift == null)
-//     {
-//         return null; // Or handle the situation where the gift is not found
-//     }
-
-//     // Assuming you have a navigation property in your Cart model to represent the gifts in the cart
-//     cart.Gifts.Add(gift);
-
-//     _context.Carts.Add(cart);
-//     _context.SaveChanges();
-    
-//     return cart;
-// }
-
-
-
-
 public Cart updateCart(Cart updatedCart)
 {
     var existingCart = _context.Carts
@@ -130,28 +67,28 @@ public Cart updateCart(Cart updatedCart)
     }
 
 
-    public List<Gift> getAllGiftsByCustomerId(long customerId)
-    {
-        var cart = getCartByCustomerId(customerId);
+    // public List<Gift> getAllGiftsByCustomerId(long customerId)
+    // {
+    //     var cart = getCartByCustomerId(customerId);
 
-        if (cart != null)
-        {
-            if (cart.Gifts != null)
-            {
-                return cart.Gifts.ToList();
-            }
-            else
-            {
-                Console.WriteLine("Cart has no associated gifts.");
-            }
-        }
-        else
-        {
-            Console.WriteLine($"Cart not found for customer ID: {customerId}");
-        }
+    //     if (cart != null)
+    //     {
+    //         if (cart.Gifts != null)
+    //         {
+    //             return cart.Gifts.ToList();
+    //         }
+    //         else
+    //         {
+    //             Console.WriteLine("Cart has no associated gifts.");
+    //         }
+    //     }
+    //     else
+    //     {
+    //         Console.WriteLine($"Cart not found for customer ID: {customerId}");
+    //     }
 
-        return new List<Gift>();
-    }
+    //     return new List<Gift>();
+    // }
 
     public double CalculateTotalAmount(long customerId)
 {
@@ -175,5 +112,20 @@ public Cart updateCart(Cart updatedCart)
 
     return 0;
 }
+
+public bool DeleteCartById(int cartId)
+{
+    var cartToDelete = _context.Carts.FirstOrDefault(c => c.CartId == cartId);
+
+    if (cartToDelete != null)
+    {
+        _context.Carts.Remove(cartToDelete);
+        _context.SaveChanges();
+        return true; // Indicate successful deletion
+    }
+
+    return false; // Cart with specified ID not found
+}
+
 
 }

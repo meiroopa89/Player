@@ -5,11 +5,10 @@ namespace dotnetapp.Services
 {
     public interface CartService
     {
-        // Cart addCart(Cart cart);
-        // Cart AddCart(Cart cart, long giftId, int customerId);
+
         Cart updateCart(Cart updatedCart);
         Cart getCartByCustomerId(long customerId);
-        List<Gift> getAllGiftsByCustomerId(long customerId);
         double CalculateTotalAmount(long customerId);
+        bool DeleteCartById(int cartId);
     }
 }
