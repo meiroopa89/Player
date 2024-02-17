@@ -37,9 +37,8 @@ public class CartServiceImpl : CartService
     {
         return _cartRepository.CalculateTotalAmount(customerId);
     }
-    public bool DeleteCartById(int cartId)
+    public bool DeleteGiftFromCartById(int cartId, int giftId)
     {
-        return _cartRepository.DeleteCartById(cartId);
+        return _cartRepository.DeleteGiftFromCartById(cartId, giftId);
     }
-
 }

@@ -113,19 +113,29 @@ public Cart updateCart(Cart updatedCart)
     return 0;
 }
 
-public bool DeleteCartById(int cartId)
+public bool DeleteGiftFromCartById(int cartId, int giftId)
 {
-    var cartToDelete = _context.Carts.FirstOrDefault(c => c.CartId == cartId);
+    var cartToUpdate = _context.Carts.Include(c => c.Gifts).FirstOrDefault(c => c.CartId == cartId);
 
-    if (cartToDelete != null)
+    if (cartToUpdate != null)
     {
-        _context.Carts.Remove(cartToDelete);
-        _context.SaveChanges();
-        return true; // Indicate successful deletion
+        var giftToDelete = cartToUpdate.Gifts.FirstOrDefault(g => g.GiftId == giftId);
+
+        if (giftToDelete != null)
+        {
+            cartToUpdate.Gifts.Remove(giftToDelete);
+            _context.SaveChanges();
+            return true; // Indicate successful deletion
+        }
+
+        // Gift with specified ID not found in the cart
+        return false;
     }
 
-    return false; // Cart with specified ID not found
+    // Cart with specified ID not found
+    return false;
 }
+
 
 
 }

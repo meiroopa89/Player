@@ -33,7 +33,7 @@ public class CartController : ControllerBase
         return BadRequest("Cart not found");
     }
 
-    [Authorize(Roles = "customer")]      
+    // [Authorize(Roles = "customer")]      
     [HttpGet("customer/{customerId}")]
     public IActionResult GetCartByCustomerId(long customerId)
     {
@@ -54,18 +54,18 @@ public class CartController : ControllerBase
         return Ok(new { TotalAmount = totalAmount });
     }
 
-    [HttpDelete("{cartId}")]
-    public IActionResult DeleteCartById(int cartId)
+    [HttpDelete("{cartId}/gift/{giftId}")]
+    public IActionResult DeleteGiftFromCartById(int cartId, int giftId)
     {
-        var success = _cartService.DeleteCartById(cartId);
+        var success = _cartService.DeleteGiftFromCartById(cartId, giftId);
 
         if (success)
         {
-            return Ok("Cart deleted successfully.");
+            return Ok("Gift deleted successfully from the cart.");
         }
         else
         {
-            return NotFound("Cart not found for the specified ID.");
+            return NotFound("Gift or Cart not found for the specified IDs.");
         }
     }
 }

@@ -9,6 +9,6 @@ namespace dotnetapp.Services
         Cart updateCart(Cart updatedCart);
         Cart getCartByCustomerId(long customerId);
         double CalculateTotalAmount(long customerId);
-        bool DeleteCartById(int cartId);
+        bool DeleteGiftFromCartById(int cartId, int giftId);
     }
 }
