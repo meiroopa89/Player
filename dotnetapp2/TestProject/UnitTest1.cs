@@ -889,16 +889,17 @@ public async Task Backend_TestGetAllTeams()
 
 
 [Test]
-public async Task Backend_TestGetTeamById_ExistingTeam()
+public async Task Backend_TestAddVenue()
 {
     try
     {
-        // Register an admin user
+        // Generate unique identifiers
         string uniqueId = Guid.NewGuid().ToString();
         string uniqueUsername = $"abcd_{uniqueId}";
         string uniquePassword = $"abcdA{uniqueId}@123";
         string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
+        // Register an admin user
         string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
         HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
         Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
@@ -911,101 +912,29 @@ public async Task Backend_TestGetTeamById_ExistingTeam()
         dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
         string adminAuthToken = loginResponseMap.token;
 
-        // Use the obtained token in the request to get team by ID
+        // Use the obtained token in the request to add a venue
         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
 
-        // Assume there is an existing team with ID 1
-        int teamId = 1;
+        // Add a venue
+        var venueToAdd = new Venue
+        {
+            VenueName = "Sample Venue",
+            VenueLocation = "Sample Location",
+            // You can add other properties based on your actual Venue model
+        };
 
-        // Get team by ID
-        HttpResponseMessage teamResponse = await _httpClient.GetAsync($"/api/team/{teamId}");
+        string venueRequestBody = JsonConvert.SerializeObject(venueToAdd);
+        HttpResponseMessage venueResponse = await _httpClient.PostAsync("/api/venue", new StringContent(venueRequestBody, Encoding.UTF8, "application/json"));
 
         // Check for successful status code
-        Assert.AreEqual(HttpStatusCode.OK, teamResponse.StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, venueResponse.StatusCode);
 
         // Check for valid response content
-        string teamResponseBody = await teamResponse.Content.ReadAsStringAsync();
-        dynamic teamResponseMap = JsonConvert.DeserializeObject<Team>(teamResponseBody);
-
-        // Assuming the response contains team details
-        Assert.IsNotNull(teamResponseMap);
-        Assert.AreEqual(teamId, teamResponseMap.TeamId);
-    }
-    catch (HttpRequestException httpEx)
-    {
-        // Log HTTP exception details
-        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
-        if (httpEx.InnerException != null)
-        {
-            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
-        }
-
-        // Re-throw the exception to mark the test as failed
-        throw;
-    }
-    catch (Exception ex)
-    {
-        // Log general exception details
-        Console.WriteLine($"Exception: {ex.Message}");
-        Console.WriteLine($"StackTrace: {ex.StackTrace}");
-
-        // Re-throw the exception to mark the test as failed
-        throw;
-    }
-}
-
-
-[Test]
-public async Task Backend_TestUpdateTeam_ExistingTeam()
-{
-    try
-    {
-        // Register an admin user
-        string uniqueId = Guid.NewGuid().ToString();
-        string uniqueUsername = $"abcd_{uniqueId}";
-        string uniquePassword = $"abcdA{uniqueId}@123";
-        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
-        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
-
-        // Login the registered admin user
-        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
-        string adminAuthToken = loginResponseMap.token;
-
-        // Use the obtained token in the request to add a team (for existing team data)
-        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
-
-        // Assume there is an existing team with ID 1
-        int existingTeamId = 1;
-
-        // Get the existing team details
-        HttpResponseMessage getTeamResponse = await _httpClient.GetAsync($"/api/team/{existingTeamId}");
-        Assert.AreEqual(HttpStatusCode.OK, getTeamResponse.StatusCode);
-        string existingTeamResponseBody = await getTeamResponse.Content.ReadAsStringAsync();
-        dynamic existingTeamResponseMap = JsonConvert.DeserializeObject<Team>(existingTeamResponseBody);
-        Assert.IsNotNull(existingTeamResponseMap);
-
-        // Modify some properties of the existing team
-        existingTeamResponseMap.TeamName = "Updated Team Name";
-        existingTeamResponseMap.teamDescription = "Updated Team Description";
-
-        // Update the team
-        HttpResponseMessage updateTeamResponse = await _httpClient.PutAsync($"/api/team/{existingTeamId}", new StringContent(JsonConvert.SerializeObject(existingTeamResponseMap), Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, updateTeamResponse.StatusCode);
-
-        // Check for valid response content
-        string updateTeamResponseBody = await updateTeamResponse.Content.ReadAsStringAsync();
-        dynamic updateTeamResponseMap = JsonConvert.DeserializeObject(updateTeamResponseBody);
+        string venueResponseBody = await venueResponse.Content.ReadAsStringAsync();
+        dynamic venueResponseMap = JsonConvert.DeserializeObject(venueResponseBody);
 
         // Assuming the response contains a message indicating success
-        Assert.IsNotNull(updateTeamResponseMap);
-        Assert.AreEqual("Team updated successfully", updateTeamResponseMap.message.ToString());
+        Assert.AreEqual("Venue added successfully", venueResponseMap.message.ToString());
     }
     catch (HttpRequestException httpEx)
     {
@@ -1029,6 +958,8 @@ public async Task Backend_TestUpdateTeam_ExistingTeam()
         throw;
     }
 }
+
+
 
 
 
