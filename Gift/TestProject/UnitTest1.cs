@@ -18,18 +18,10 @@ public class Tests
     public void Setup()
     {
          _httpClient = new HttpClient();
-        // _httpClient.BaseAddress = new Uri("https://localhost:7266"); 
-        // _httpClient.BaseAddress = new Uri("https://api.example.com/"); 
-        _httpClient.BaseAddress = new Uri("https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/"); 
+        _httpClient.BaseAddress = new Uri("http://localhost:8080"); 
 
 
     }
-
-    // [Test]
-    // public void Test1()
-    // {
-    //     Assert.Pass();
-    // }
 
     
     [Test, Order(1)]

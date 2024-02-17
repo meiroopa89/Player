@@ -286,6 +286,86 @@ public async Task Backend_TestUpdateEvent()
     Assert.AreEqual("Event updated successfully", updateEventResponseMap.message.ToString());
 }
 
+[Test]
+public async Task Backend_TestDeleteEvent()
+{
+    // Generate unique identifiers
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueUsername = $"abcd_{uniqueId}";
+    string uniquePassword = $"abcdA{uniqueId}@123";
+    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+    // Register an organizer
+    string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Organizer\" }}";
+    HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+    // Login the registered organizer
+    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+    string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+    dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+    string organizerAuthToken = loginResponseMap.token;
+
+    // Use the obtained token in the request to get the organizer's events
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", organizerAuthToken);
+
+    // Make a request to get the organizer's events
+    HttpResponseMessage getEventsResponse = await _httpClient.GetAsync("api/event");
+    Assert.AreEqual(HttpStatusCode.OK, getEventsResponse.StatusCode);
+
+    // Validate the response content (assuming the response is a JSON array of events)
+    string getEventsResponseBody = await getEventsResponse.Content.ReadAsStringAsync();
+    var events = JsonConvert.DeserializeObject<List<Event>>(getEventsResponseBody);
+    Assert.IsNotNull(events);
+    Assert.IsTrue(events.Any());
+
+    // Get the first event ID from the response
+    int eventIdToDelete = events.First().EventId;
+
+    // Make a request to delete the event
+    HttpResponseMessage deleteEventResponse = await _httpClient.DeleteAsync($"api/event/{eventIdToDelete}");
+    Assert.AreEqual(HttpStatusCode.OK, deleteEventResponse.StatusCode);
+
+    // Validate the response content
+    string deleteEventResponseBody = await deleteEventResponse.Content.ReadAsStringAsync();
+    dynamic deleteEventResponseMap = JsonConvert.DeserializeObject(deleteEventResponseBody);
+    
+    // Assert that the event was deleted successfully
+    Assert.AreEqual("Event deleted successfully", deleteEventResponseMap.message.ToString());
+}
+
+
+[Test]
+public async Task Backend_TestAddPlayer_Successful()
+{
+    // Generate unique identifiers
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueUsername = $"abcd_{uniqueId}";
+    string uniquePassword = $"abcdA{uniqueId}@123";
+    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+    // Register a player
+    var player = new Player
+    {
+        Username = uniqueUsername,
+        Password = uniquePassword,
+        Email = uniqueEmail,
+        // Add more properties as needed
+    };
+
+    string addPlayerRequestBody = JsonConvert.SerializeObject(player);
+    HttpResponseMessage addPlayerResponse = await _httpClient.PostAsync("/api/player", new StringContent(addPlayerRequestBody, Encoding.UTF8, "application/json"));
+
+    Assert.AreEqual(HttpStatusCode.OK, addPlayerResponse.StatusCode);
+
+    string addPlayerResponseBody = await addPlayerResponse.Content.ReadAsStringAsync();
+    dynamic addPlayerResponseMap = JsonConvert.DeserializeObject(addPlayerResponseBody);
+
+    Assert.AreEqual("Player added successfully", addPlayerResponseMap.message.ToString());
+}
+
 
 
 // [Test]

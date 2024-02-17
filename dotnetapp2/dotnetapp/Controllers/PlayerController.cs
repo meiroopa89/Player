@@ -64,6 +64,7 @@ namespace dotnetapp.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+        
         [Authorize(Roles = "Admin")]
 
         [HttpPut("{playerId}")]
