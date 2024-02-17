@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 
 
-[Route("api/[controller]")]
+[Route("api/cart")]
 [ApiController]
 public class CartController : ControllerBase
 {

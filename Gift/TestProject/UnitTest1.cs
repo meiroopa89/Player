@@ -425,6 +425,72 @@ public class Tests
 
     }
     
+    [Test, Order(11)]
+public async Task Backend_TestUpdateReview()
+{
+    HttpResponseMessage response = null;
+
+    // Register a new user and obtain the authentication token
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueUsername = $"user_{uniqueId}";
+    string uniquePassword = $"userA{uniqueId}@123";
+    string uniqueEmail = $"user{uniqueId}@gmail.com";
+
+    // Register a new user
+    string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+
+    // Log in the registered user and obtain the authentication token
+    string userLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(userLoginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+
+    string responseString = await loginResponse.Content.ReadAsStringAsync();
+    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+    string userAuthToken = responseMap.token;
+
+    // Set the authentication token in the HTTP client headers
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
+
+    // Create a new review to be updated
+    var reviewToAdd = new
+    {
+        UserId = 1, // Replace with the actual user ID
+        Subject = "Test Subject",
+        Body = "Test Body",
+        Rating = 4,
+        DateCreated = DateTime.Now
+        // Add other necessary properties
+    };
+
+    string addReviewRequestBody = JsonConvert.SerializeObject(reviewToAdd);
+    HttpResponseMessage addReviewResponse = await _httpClient.PostAsync("/api/review", new StringContent(addReviewRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, addReviewResponse.StatusCode);
+
+    // Retrieve the added review details
+    string addedReviewResponseString = await addReviewResponse.Content.ReadAsStringAsync();
+    dynamic addedReviewResponseMap = JsonConvert.DeserializeObject(addedReviewResponseString);
+    int reviewId = addedReviewResponseMap.reviewId;
+
+    // Create updated review details
+    var updatedReview = new
+    {
+        UserId = 1, // Replace with the actual user ID
+        Subject = "Updated Subject",
+        Body = "Updated Body",
+        Rating = 5,
+        DateCreated = DateTime.Now
+        // Add other necessary properties
+    };
+
+    string updateReviewRequestBody = JsonConvert.SerializeObject(updatedReview);
+    HttpResponseMessage updateReviewResponse = await _httpClient.PutAsync($"/api/review/{reviewId}", new StringContent(updateReviewRequestBody, Encoding.UTF8, "application/json"));
+
+    // Check if the response is OK (200)
+    Assert.AreEqual(HttpStatusCode.OK, updateReviewResponse.StatusCode);
+}
+
 
 
     [TearDown]

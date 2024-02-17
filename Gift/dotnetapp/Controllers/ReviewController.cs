@@ -8,7 +8,7 @@ using System.Threading.Tasks;
  
 namespace dotnetapp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/review")]
     [ApiController]
     
 
