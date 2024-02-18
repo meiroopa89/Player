@@ -39,9 +39,14 @@ namespace dotnetapp.Data
                 .HasForeignKey<Cart>(c => c.CustomerId);
 
             modelBuilder.Entity<Order>()
-                .HasOne(o => o.Customer)
-                .WithMany(c => c.Orders)
-                .HasForeignKey(o => o.CustomerId);
+            .HasMany(o => o.Gifts)  // An order can have many gifts
+            .WithOne(g => g.Order)  // A gift belongs to one order
+            .HasForeignKey(g => g.OrderId)  // Foreign key in the Gift table
+            .OnDelete(DeleteBehavior.Cascade);  // Optional: Cascade delete if an order is deleted
+
+            modelBuilder.Entity<Gift>()
+        .Property(g => g.GiftId)
+        .ValueGeneratedOnAdd();
 
         }
     }

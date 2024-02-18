@@ -101,9 +101,6 @@ namespace dotnetapp.Migrations
                     b.Property<long?>("OrderId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("OrdersId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -431,7 +428,8 @@ namespace dotnetapp.Migrations
 
                     b.HasOne("dotnetapp.Models.Order", "Order")
                         .WithMany("Gifts")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Cart");
 

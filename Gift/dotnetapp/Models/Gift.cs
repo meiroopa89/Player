@@ -14,7 +14,7 @@ public class Gift
         public int Quantity { get; set; }
         public long? CartId { get; set; } // Foreign key
         public Cart? Cart { get; set; }
-        public long? OrdersId { get; set; } // Foreign key
+        public long? OrderId { get; set; } // Foreign key
         public Order? Order { get; set; }
     }
 }

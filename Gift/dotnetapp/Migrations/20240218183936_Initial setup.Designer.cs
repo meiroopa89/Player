@@ -12,8 +12,8 @@ using dotnetapp.Data;
 namespace dotnetapp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240218170903_initial setup")]
-    partial class initialsetup
+    [Migration("20240218183936_Initial setup")]
+    partial class Initialsetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -101,9 +101,6 @@ namespace dotnetapp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("OrderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("OrdersId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("Quantity")
@@ -433,7 +430,8 @@ namespace dotnetapp.Migrations
 
                     b.HasOne("dotnetapp.Models.Order", "Order")
                         .WithMany("Gifts")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Cart");
 

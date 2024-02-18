@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dotnetapp.Migrations
 {
-    public partial class initialsetup : Migration
+    public partial class Initialsetup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -266,7 +266,6 @@ namespace dotnetapp.Migrations
                     GiftPrice = table.Column<double>(type: "float", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     CartId = table.Column<long>(type: "bigint", nullable: true),
-                    OrdersId = table.Column<long>(type: "bigint", nullable: true),
                     OrderId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
@@ -281,7 +280,8 @@ namespace dotnetapp.Migrations
                         name: "FK_Gifts_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "OrderId");
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
