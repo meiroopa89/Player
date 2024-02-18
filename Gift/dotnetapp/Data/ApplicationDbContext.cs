@@ -48,6 +48,8 @@ namespace dotnetapp.Data
         .Property(g => g.GiftId)
         .ValueGeneratedOnAdd();
 
+        
+
         }
     }
 }

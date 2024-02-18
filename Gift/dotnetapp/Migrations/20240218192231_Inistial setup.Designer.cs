@@ -12,8 +12,8 @@ using dotnetapp.Data;
 namespace dotnetapp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240218183936_Initial setup")]
-    partial class Initialsetup
+    [Migration("20240218192231_Inistial setup")]
+    partial class Inistialsetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
