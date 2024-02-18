@@ -7,6 +7,8 @@ using dotnetapp.Data;
 using dotnetapp.Models;
 using Microsoft.EntityFrameworkCore;
 
+namespace dotnetapp.Repositories
+{
 public class OrderRepository
 {
     private readonly ApplicationDbContext _context;
@@ -28,12 +30,12 @@ public class OrderRepository
         return _context.Orders.ToList();
     }
 
-    public Order GetOrderById(int orderId)
+    public Order GetOrderById(long orderId)
     {
         return _context.Orders.FirstOrDefault(o => o.OrderId == orderId);
     }
 
-    public Order DeleteOrder(int orderId)
+    public Order DeleteOrder(long orderId)
     {
         var orderToDelete = _context.Orders.FirstOrDefault(o => o.OrderId == orderId);
 
@@ -50,4 +52,5 @@ public class OrderRepository
     {
         return _context.Orders.Where(o => o.CustomerId == customerId).ToList();
     }
+}
 }

@@ -1,43 +1,43 @@
-using System;
+// OrderServiceImpl.cs
+
+using System.Collections.Generic;
 using dotnetapp.Models;
 using dotnetapp.Repositories;
-using Microsoft.EntityFrameworkCore;
-using dotnetapp.Data;
 
 namespace dotnetapp.Services
 {
-public class OrderServiceImpl : IOrderService
-{
-    private readonly OrderRepository _orderRepository;
-
-    public OrderServiceImpl(OrderRepository orderRepository)
+    public class OrderServiceImpl : IOrderService
     {
-        _orderRepository = orderRepository;
-    }
+        private readonly OrderRepository _orderRepository;
 
-    public Order AddOrder(Order order)
-    {
-        return _orderRepository.AddOrder(order);
-    }
+        public OrderServiceImpl(OrderRepository orderRepository)
+        {
+            _orderRepository = orderRepository;
+        }
 
-    public List<Order> GetAllOrders()
-    {
-        return _orderRepository.GetAllOrders();
-    }
+        public Order AddOrder(Order order)
+        {
+            return _orderRepository.AddOrder(order);
+        }
 
-    public Order GetOrderById(long orderId)
-    {
-        return _orderRepository.GetOrderById(orderId);
-    }
+        public List<Order> GetAllOrders()
+        {
+            return _orderRepository.GetAllOrders();
+        }
 
-    public Order DeleteOrder(long orderId)
-    {
-        return _orderRepository.DeleteOrder(orderId);
-    }
+        public Order GetOrderById(long orderId)
+        {
+            return _orderRepository.GetOrderById(orderId);
+        }
 
-    public List<Order> GetOrdersByCustomerId(long customerId)
-    {
-        return _orderRepository.GetOrdersByCustomerId(customerId);
+        public Order DeleteOrder(long orderId)
+        {
+            return _orderRepository.DeleteOrder(orderId);
+        }
+
+        public List<Order> GetOrdersByCustomerId(long customerId)
+        {
+            return _orderRepository.GetOrdersByCustomerId(customerId);
+        }
     }
-}
 }
