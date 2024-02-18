@@ -19,18 +19,18 @@ namespace dotnetapp.Controllers
         }
 
          [HttpPost]
-    public ActionResult<Order> AddOrder([FromBody] Order order, [FromQuery] long giftId)
-    {
-        var gift = _orderService.GetGiftById(giftId); // Implement this method in your IOrderService
-        var result = _orderService.AddOrder(order, gift);
-
-        if (result != null)
+    [HttpPost]
+        public ActionResult<Order> AddOrder([FromBody] Order order)
         {
-            return Ok(result);
-        }
+            var result = _orderService.AddOrder(order);
 
-        return BadRequest("Failed to add order.");
-    }
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest("Failed to add order.");
+        }
 
         [HttpGet]
         public ActionResult<List<Order>> GetAllOrders()
