@@ -11,13 +11,15 @@ namespace dotnetapp.Repositories
     public class OrderRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly GiftRepository _giftRepository;
 
-        public OrderRepository(ApplicationDbContext context)
+        public OrderRepository(ApplicationDbContext context, GiftRepository _giftRepository)
         {
             _context = context;
+            _giftRepository = giftRepository;
         }
 
-        public Order AddOrder(Order order, int giftId)
+        public Order AddOrder(Order order, long giftId)
         {
             // Retrieve the gift by giftId
             var giftToAdd = _context.Gifts.FirstOrDefault(g => g.GiftId == giftId);

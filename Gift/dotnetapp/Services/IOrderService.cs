@@ -5,7 +5,7 @@ namespace dotnetapp.Services
 
 public interface IOrderService
 {
-    Order AddOrder(Order order);
+    Order AddOrder(Order order, long giftId);
     List<Order> GetAllOrders();
     Order GetOrderById(long orderId);
     Order DeleteOrder(long orderId);
