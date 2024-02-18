@@ -237,68 +237,160 @@ public async Task Backend_TestGetAllAccounts()
     }
 }
 
-
-public async Task<ActionResult<Account>> GetAccountById(long accountId)
+[Test]
+public async Task Backend_TestGetAccountById()
 {
-    try
-    {
-        // Generate unique identifiers
-        string uniqueId = Guid.NewGuid().ToString();
-        string uniqueUsername = $"abcd_{uniqueId}";
-        string uniquePassword = $"abcdA{uniqueId}@123";
-        string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+    // Generate unique identifiers
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueUsername = $"abcd_{uniqueId}";
+    string uniquePassword = $"abcdA{uniqueId}@123";
+    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-        // Register an admin user
-        string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
-        HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+    // Register an admin user
+    string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Admin\" }}";
+    HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
 
-        // Login the registered admin user
-        string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-        HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-        Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-        string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-        dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
-        string adminAuthToken = loginResponseMap.token;
+    // Login the registered admin user
+    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+    string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+    dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+    string adminAuthToken = loginResponseMap.token;
 
-        // Use the obtained token in the request to get an account by ID
-        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+    // Use the obtained token in the request to get the account
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
 
-        HttpResponseMessage accountResponse = await _httpClient.GetAsync($"/api/account/{accountId}");
-        
-        // Check for successful status code
-        Assert.AreEqual(HttpStatusCode.OK, accountResponse.StatusCode);
+    // Make a request to get the accounts
+    HttpResponseMessage getAccountsResponse = await _httpClient.GetAsync("/api/account");
+    Assert.AreEqual(HttpStatusCode.OK, getAccountsResponse.StatusCode);
 
-        // Check for valid response content
-        string accountResponseBody = await accountResponse.Content.ReadAsStringAsync();
-        dynamic accountResponseMap = JsonConvert.DeserializeObject(accountResponseBody);
+    // Validate the response content (assuming the response is a JSON array of accounts)
+    string getAccountsResponseBody = await getAccountsResponse.Content.ReadAsStringAsync();
+    var accounts = JsonConvert.DeserializeObject<List<Account>>(getAccountsResponseBody);
+    Assert.IsNotNull(accounts);
+    Assert.IsTrue(accounts.Any());
 
-        // Assuming the response contains an account
-        Assert.IsNotNull(accountResponseMap);
-        Assert.AreEqual(accountId, accountResponseMap.AccountId);
-    }
-    catch (HttpRequestException httpEx)
-    {
-        // Log HTTP exception details
-        Console.WriteLine($"HTTP Exception: {httpEx.Message}");
-        if (httpEx.InnerException != null)
-        {
-            Console.WriteLine($"Inner Exception: {httpEx.InnerException.Message}");
-        }
+    // Get the first account ID from the response
+    long accountId = accounts.First().AccountId;
 
-        // Re-throw the exception to mark the test as failed
-        throw;
-    }
-    catch (Exception ex)
-    {
-        // Log general exception details
-        Console.WriteLine($"Exception: {ex.Message}");
-        Console.WriteLine($"StackTrace: {ex.StackTrace}");
+    // Make a request to get a specific account by ID
+    HttpResponseMessage getAccountByIdResponse = await _httpClient.GetAsync($"/api/account/{accountId}");
+    Assert.AreEqual(HttpStatusCode.OK, getAccountByIdResponse.StatusCode);
 
-        // Re-throw the exception to mark the test as failed
-        throw;
-    }
+    // Validate the response content for the specific account
+    string getAccountByIdResponseBody = await getAccountByIdResponse.Content.ReadAsStringAsync();
+    var specificAccount = JsonConvert.DeserializeObject<Account>(getAccountByIdResponseBody);
+    Assert.IsNotNull(specificAccount);
+    Assert.AreEqual(accountId, specificAccount.AccountId);
 }
+
+
+// [Test]
+// public async Task Backend_TestUpdateAccount()
+// {
+//     // Generate unique identifiers
+//     string uniqueId = Guid.NewGuid().ToString();
+//     string uniqueUsername = $"abcd_{uniqueId}";
+//     string uniquePassword = $"abcdA{uniqueId}@123";
+//     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+//     // Register a customer
+//     string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Customer\" }}";
+//     HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+//     Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+//     // Login the registered customer
+//     string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+//     string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+//     dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+//     string customerAuthToken = loginResponseMap.token;
+
+//     // Use the obtained token in the request to get the customer's accounts
+//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
+
+//     // Make a request to get the customer's accounts
+//     HttpResponseMessage getAccountsResponse = await _httpClient.GetAsync("/api/account");
+//     Assert.AreEqual(HttpStatusCode.OK, getAccountsResponse.StatusCode);
+
+//     // Validate the response content (assuming the response is a JSON array of accounts)
+//     string getAccountsResponseBody = await getAccountsResponse.Content.ReadAsStringAsync();
+//     var accounts = JsonConvert.DeserializeObject<List<Account>>(getAccountsResponseBody);
+//     Assert.IsNotNull(accounts);
+//     Assert.IsTrue(accounts.Any());
+
+//     // Get the first account ID from the response
+//     long accountId = accounts.First().AccountId;
+
+//     // Generate updated account data
+//     var updatedAccount = new Account
+//     {
+//         Balance = 1000.0m, // Update balance as needed
+//         AccountType = "Savings", // Update account type as needed
+//         // Add more properties as needed
+//     };
+
+//     // Make a request to update the account
+//     string updateAccountRequestBody = JsonConvert.SerializeObject(updatedAccount);
+//     HttpResponseMessage updateAccountResponse = await _httpClient.PutAsync($"/api/account/{accountId}", new StringContent(updateAccountRequestBody, Encoding.UTF8, "application/json"));
+//     Assert.AreEqual(HttpStatusCode.OK, updateAccountResponse.StatusCode);
+
+//     // Validate the response content
+//     string updateAccountResponseBody = await updateAccountResponse.Content.ReadAsStringAsync();
+//     dynamic updateAccountResponseMap = JsonConvert.DeserializeObject(updateAccountResponseBody);
+
+//     // Corrected assertion for the response message
+//     Assert.AreEqual("Account updated successfully", updateAccountResponseMap.message.ToString());
+// }
+
+
+// [Test]
+// public async Task Backend_TestAddFDRequest()
+// {
+//     // Generate unique identifiers
+//     string uniqueId = Guid.NewGuid().ToString();
+//     string uniqueUsername = $"abcd_{uniqueId}";
+//     string uniquePassword = $"abcdA{uniqueId}@123";
+//     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+
+//     // Register a customer
+//     string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Customer\" }}";
+//     HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+//     Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+
+//     // Login the registered customer
+//     string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+//     string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+//     dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
+//     string customerAuthToken = loginResponseMap.token;
+
+//     // Use the obtained token in the request to add an FDRequest
+//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
+
+//     var fdRequestToAdd = new
+//     {
+//         FDRequestId = 0, // This value will be replaced with the actual ID assigned by the server
+//         FixedDepositId = 0, // Provide the appropriate FixedDepositId
+//         Status = "Pending",
+//         // Additional properties as needed
+//         // ...
+//     };
+
+//     string fdRequestRequestBody = JsonConvert.SerializeObject(fdRequestToAdd);
+//     HttpResponseMessage fdRequestResponse = await _httpClient.PostAsync("api/fdrequest", new StringContent(fdRequestRequestBody, Encoding.UTF8, "application/json"));
+//     Assert.AreEqual(HttpStatusCode.OK, fdRequestResponse.StatusCode);
+
+//     // Validate the response content
+//     string fdRequestResponseBody = await fdRequestResponse.Content.ReadAsStringAsync();
+//     dynamic fdRequestResponseMap = JsonConvert.DeserializeObject(fdRequestResponseBody);
+
+//     Assert.AreEqual("FDRequest added successfully", fdRequestResponseMap.message.ToString());
+// }
 
 
 }
