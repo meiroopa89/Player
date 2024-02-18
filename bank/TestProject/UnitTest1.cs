@@ -459,73 +459,69 @@ public async Task Backend_TestGetAllFixedDeposits()
 }
 
 
-    // [Test]
-    // public async Task Backend_TestPostReview()
-    // {
-    //     HttpResponseMessage response = null;
+[Test]
+public async Task Backend_TestGetAllTransactions()
+{
+    HttpResponseMessage response = null;
 
-    //     // Register a new customer and obtain the authentication token
-    //     string uniqueId = Guid.NewGuid().ToString();
-    //     string uniqueUsername = $"abcd_{uniqueId}";
-    //     string uniquePassword = $"abcdA{uniqueId}@123";
-    //     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
+    // Register a new customer and obtain the authentication token
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueUsername = $"abcd_{uniqueId}";
+    string uniquePassword = $"abcdA{uniqueId}@123";
+    string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-    //     // Register a new customer
-    //     string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
-    //     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-    //     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+    // Register a new customer
+    string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
 
-    //     // Log in the registered customer and obtain the authentication token
-    //     string loginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
-    //     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
-    //     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+    // Log in the registered customer and obtain the authentication token
+    string loginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
 
-    //     string responseString = await loginResponse.Content.ReadAsStringAsync();
-    //     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-    //     string customerAuthToken = responseMap.token;
+    string responseString = await loginResponse.Content.ReadAsStringAsync();
+    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+    string customerAuthToken = responseMap.token;
 
-    //     // Set the authentication token in the HTTP client headers
-    //     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
+    // Set the authentication token in the HTTP client headers
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
 
-    //     // Create a review object
-    //     var review = new
-    //     {
-    //         Subject = "Test subject",
-    //         Body = "Test body",
-    //         Rating = 5
-    //     };
+    try
+    {
+        // Make a request to get all transactions
+        response = await _httpClient.GetAsync("/api/transactions");
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
-    // try
-    //     {
-    //         string requestBody = JsonConvert.SerializeObject(review);
-    //         response = await _httpClient.PostAsync("/api/review", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+        // Validate the response content (assuming the response is a JSON array of transactions)
+        string responseContent = await response.Content.ReadAsStringAsync();
+        var transactions = JsonConvert.DeserializeObject<List<Transaction>>(responseContent);
+        Assert.IsNotNull(transactions, "The list of transactions should not be null");
+        Assert.IsTrue(transactions.Any(), "There should be at least one transaction in the list");
 
-    //         // Print response content for debugging purposes
-    //         Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+        // Additional assertions based on the properties of the retrieved transactions
+        foreach (var transaction in transactions)
+        {
+            Assert.IsNotNull(transaction.TransactionId, "TransactionId should not be null");
+            Assert.IsNotNull(transaction.AccountId, "AccountId should not be null");
+            Assert.IsNotNull(transaction.Type, "Type should not be null");
+            Assert.IsNotNull(transaction.Amount, "Amount should not be null");
+            Assert.IsNotNull(transaction.Timestamp, "Timestamp should not be null");
+            // Add additional assertions for other properties if needed
+        }
+    }
+    catch (HttpRequestException ex)
+    {
+        Console.WriteLine($"Request failed: {ex.Message}");
 
-    //     // Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        if (response != null)
+        {
+            // Print response content for debugging purposes
+            Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+        }
 
-    //         // Additional assertions based on the properties of the posted review
-    //     }
-    //     catch (HttpRequestException ex)
-    //     {
-    //         Console.WriteLine($"Request failed: {ex.Message}");
-
-    //         if (response != null)
-    //         {
-    //             // Print response content for debugging purposes
-    //             Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
-    //         }
-
-    //         throw;
-    //     }
-    // }
-
-
-
-
-
-
-
+        throw;
+    }
+}
 
 }

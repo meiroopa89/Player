@@ -104,43 +104,76 @@ public class Tests
     }
 
 [Test]
-public async Task Backend_TestAddEvent()
+public async Task Backend_TestAddTransaction()
 {
-    // Generate unique identifiers
+    HttpResponseMessage response = null;
+
+    // Register a new customer and obtain the authentication token
     string uniqueId = Guid.NewGuid().ToString();
     string uniqueUsername = $"abcd_{uniqueId}";
     string uniquePassword = $"abcdA{uniqueId}@123";
     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
-    // Register an organizer
-    string registerRequestBody = $"{{\"Username\": \"{uniqueUsername}\", \"Password\": \"{uniquePassword}\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\",\"UserRole\" : \"Organizer\" }}";
-    HttpResponseMessage registerResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, registerResponse.StatusCode);
+    // Register a new customer
+    string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
 
-    // Login the registered organizer
-    string loginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+    // Log in the registered customer and obtain the authentication token
+    string loginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(loginRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-    string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-    dynamic loginResponseMap = JsonConvert.DeserializeObject(loginResponseBody);
-    string organizerAuthToken = loginResponseMap.token;
 
-    // Use the obtained token in the request to add an event
-    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", organizerAuthToken);
+    string responseString = await loginResponse.Content.ReadAsStringAsync();
+    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+    string customerAuthToken = responseMap.token;
 
-    var eventToAdd = new
+    // Set the authentication token in the HTTP client headers
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
+
+    // Create a transaction object
+    var transaction = new
     {
-        EventName = "Sample Event",
-        StartDate = DateTime.UtcNow.AddDays(1),
-        EndDate = DateTime.UtcNow.AddDays(2),
-        EventImageURL = "https://example.com/image.jpg",
-        Description = "Event description"
+        AccountId = 1, // Assuming you have a valid account ID
+        Type = "Credit",
+        Amount = 100.0m,
+        Timestamp = DateTime.UtcNow
     };
 
-    string eventRequestBody = JsonConvert.SerializeObject(eventToAdd);
-    HttpResponseMessage eventResponse = await _httpClient.PostAsync("api/event", new StringContent(eventRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, eventResponse.StatusCode);
+    try
+    {
+        string requestBody = JsonConvert.SerializeObject(transaction);
+        response = await _httpClient.PostAsync("/api/transaction", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+
+        // Assert that the transaction was successfully added
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+        // Additional assertions based on the properties of the added transaction
+        string responseContent = await response.Content.ReadAsStringAsync();
+        dynamic addedTransaction = JsonConvert.DeserializeObject(responseContent);
+
+        // Assert specific properties of the added transaction
+        Assert.IsNotNull(addedTransaction.TransactionId);
+        Assert.AreEqual(transaction.AccountId, Convert.ToInt64(addedTransaction.AccountId));
+        Assert.AreEqual(transaction.Type, addedTransaction.Type.ToString());
+        Assert.AreEqual(transaction.Amount, Convert.ToDecimal(addedTransaction.Amount));
+        Assert.AreEqual(transaction.Timestamp, DateTime.Parse(addedTransaction.Timestamp.ToString()));
+        // Add additional assertions for other properties if needed
+    }
+    catch (HttpRequestException ex)
+    {
+        Console.WriteLine($"Request failed: {ex.Message}");
+
+        if (response != null)
+        {
+            // Print response content for debugging purposes
+            Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+        }
+
+        throw;
+    }
 }
+
         [Test]
         public async Task Backend_TestGetAllEvents()
         {
