@@ -55,7 +55,7 @@ namespace dotnetapp.Controllers
             return Ok(order);
         }
 
-        [Authorize(Roles = "customer")] 
+        // [Authorize(Roles = "customer")] 
         [HttpDelete("{orderId}")]
         public ActionResult<Order> DeleteOrder(long orderId)
         {
