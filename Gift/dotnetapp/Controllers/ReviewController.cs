@@ -36,7 +36,7 @@ namespace dotnetapp.Controllers
             }
         }
  
-        [Authorize(Roles = "customer")]
+        // [Authorize(Roles = "customer")]
         [HttpPost]
         public async Task<IActionResult> AddReview([FromBody] Review review)
         {
