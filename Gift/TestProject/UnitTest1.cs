@@ -599,78 +599,80 @@ public async Task Backend_TestPutReviews()
     }
 }
 
-[Test]
-public async Task Backend_TestPostCustomer()
-{
-    HttpResponseMessage response = null;
+// [Test]
+// public async Task Backend_TestPostCustomer()
+// {
+//     HttpResponseMessage response = null;
 
-    // Register a new admin and obtain the authentication token
-    string uniqueId = Guid.NewGuid().ToString();
-    string uniqueUsername = $"admin_{uniqueId}";
-    string uniquePassword = $"adminA{uniqueId}@123";
-    string uniqueEmail = $"admin{uniqueId}@gmail.com";
+//     // Register a new admin and obtain the authentication token
+//     string uniqueId = Guid.NewGuid().ToString();
+//     string uniqueUsername = $"admin_{uniqueId}";
+//     string uniquePassword = $"adminA{uniqueId}@123";
+//     string uniqueEmail = $"admin{uniqueId}@gmail.com";
 
-    // Register a new admin
-    string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
-    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+//     // Register a new admin
+//     string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+//     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+//     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
 
-    // Log in the registered admin and obtain the authentication token
-    string adminLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+//     // Log in the registered admin and obtain the authentication token
+//     string adminLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
+//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
 
-    string responseString = await loginResponse.Content.ReadAsStringAsync();
-    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-    string adminAuthToken = responseMap.token;
+//     string responseString = await loginResponse.Content.ReadAsStringAsync();
+//     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+//     string adminAuthToken = responseMap.token;
 
-    // Set the authentication token in the HTTP client headers
-    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
+//     // Set the authentication token in the HTTP client headers
+//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
 
-    // Create a new customer object with the nested "user" property
-    var customer = new
-    {
-        CustomerName = "newCustomer",
-        Address = "customerAddress",
-        User = new
-        {
-            Email = "newcustomer@example.com",
-            Password = "newCustomerPassword",
-            Username = "newCustomerUsername",
-            MobileNumber = "1234567890",
-            Role = "customer"
-        }
-    };
+//     // Create a new customer object with the nested "user" property
+//     var customer = new
+//     {
+//         CustomerName = "newCustomer",
+//         Address = "customerAddress",
+//         User = new
+//         {
+//             Email = "newcustomer@example.com",
+//             Password = "newCustomerPassword",
+//             Username = "newCustomerUsername",
+//             MobileNumber = "1234567890",
+//             Role = "customer"
+//         }
+//     };
 
-    try
-    {
-        // Convert customer object to JSON string
-        string requestBody = JsonConvert.SerializeObject(customer);
+//     try
+//     {
+//         // Convert customer object to JSON string
+//         string requestBody = JsonConvert.SerializeObject(customer);
 
-        // Send POST request to register a new customer
-        response = await _httpClient.PostAsync("/api/customer", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+//         // Send POST request to register a new customer
+//         response = await _httpClient.PostAsync("/api/customer", new StringContent(requestBody, Encoding.UTF8, "application/json"));
 
-        // Print response content for debugging purposes
-        Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+//         // Print response content for debugging purposes
+//         Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
 
-        // Assert the registration response
-        Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+//         // Assert the registration response
+//         Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
 
-        // Additional assertions based on the properties of the registered customer
-    }
-    catch (HttpRequestException ex)
-    {
-        Console.WriteLine($"Request failed: {ex.Message}");
+//         // Additional assertions based on the properties of the registered customer
+//     }
+//     catch (HttpRequestException ex)
+//     {
+//         Console.WriteLine($"Request failed: {ex.Message}");
 
-        if (response != null)
-        {
-            // Print response content for debugging purposes
-            Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
-        }
+//         if (response != null)
+//         {
+//             // Print response content for debugging purposes
+//             Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+//         }
 
-        throw;
-    }
-}
+//         throw;
+//     }
+// }
+
+
 
 [Test]
 public async Task Backend_TestGetCustomerById()

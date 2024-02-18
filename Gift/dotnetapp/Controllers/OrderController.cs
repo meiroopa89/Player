@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using dotnetapp.Models;
 using dotnetapp.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dotnetapp.Controllers
 {
@@ -18,7 +19,7 @@ namespace dotnetapp.Controllers
             _orderService = orderService;
         }
 
-         [HttpPost]
+    [Authorize(Roles = "customer")] 
     [HttpPost]
         public ActionResult<Order> AddOrder([FromBody] Order order)
         {
@@ -32,6 +33,7 @@ namespace dotnetapp.Controllers
             return BadRequest("Failed to add order.");
         }
 
+        [Authorize(Roles = "admin")] 
         [HttpGet]
         public ActionResult<List<Order>> GetAllOrders()
         {
@@ -39,6 +41,7 @@ namespace dotnetapp.Controllers
             return Ok(orders);
         }
 
+        [Authorize(Roles = "admin")] 
         [HttpGet("{orderId}")]
         public ActionResult<Order> GetOrderById(long orderId)
         {
@@ -52,6 +55,7 @@ namespace dotnetapp.Controllers
             return Ok(order);
         }
 
+        [Authorize(Roles = "customer")] 
         [HttpDelete("{orderId}")]
         public ActionResult<Order> DeleteOrder(long orderId)
         {
@@ -65,6 +69,7 @@ namespace dotnetapp.Controllers
             return Ok(deletedOrder);
         }
 
+        [Authorize(Roles = "admin")] 
         [HttpGet("customer/{customerId}")]
         public ActionResult<List<Order>> GetOrdersByCustomerId(long customerId)
         {
