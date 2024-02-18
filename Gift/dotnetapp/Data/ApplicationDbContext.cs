@@ -27,11 +27,6 @@ namespace dotnetapp.Data
                 .WithOne()
                 .HasForeignKey<Customer>(c => c.UserId);
 
-            // modelBuilder.Entity<Gift>()
-            //     .HasOne(g => g.Cart)
-            //     .WithMany(c => c.Gifts)
-            //     .HasForeignKey(g => g.CartId)
-            //     .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Cart>()
                 .HasOne(c => c.Customer)

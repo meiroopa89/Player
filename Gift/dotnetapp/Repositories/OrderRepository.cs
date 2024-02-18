@@ -38,18 +38,35 @@ namespace dotnetapp.Repositories
                 .FirstOrDefault(o => o.OrderId == orderId);
         }
 
+        // public Order DeleteOrder(long orderId)
+        // {
+        //     var orderToDelete = _context.Orders.FirstOrDefault(o => o.OrderId == orderId);
+
+        //     if (orderToDelete != null)
+        //     {
+        //         _context.Orders.Remove(orderToDelete);
+        //         _context.SaveChanges();
+        //     }
+
+        //     return orderToDelete;
+        // }
+
         public Order DeleteOrder(long orderId)
-        {
-            var orderToDelete = _context.Orders.FirstOrDefault(o => o.OrderId == orderId);
+{
+    var orderToDelete = _context.Orders
+        .Include(o => o.Gifts)  // Include the associated gifts
+        .FirstOrDefault(o => o.OrderId == orderId);
 
-            if (orderToDelete != null)
-            {
-                _context.Orders.Remove(orderToDelete);
-                _context.SaveChanges();
-            }
+    if (orderToDelete != null)
+    {
+        _context.Gifts.RemoveRange(orderToDelete.Gifts);  // Remove associated gifts
+        _context.Orders.Remove(orderToDelete);
+        _context.SaveChanges();
+    }
 
-            return orderToDelete;
-        }
+    return orderToDelete;
+}
+
 
         public List<Order> GetOrdersByCustomerId(long customerId)
         {
