@@ -54,7 +54,7 @@ public class CartController : ControllerBase
         return Ok(new { TotalAmount = totalAmount });
     }
 
-    // [Authorize(Roles = "customer")] 
+    [Authorize(Roles = "customer")] 
     [HttpDelete("{cartId}/gift/{giftId}")]
     public IActionResult DeleteGiftFromCartById(int cartId, int giftId)
     {
