@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using dotnetapp.Models;
 using dotnetapp.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dotnetapp.Controllers
 {

@@ -2,6 +2,7 @@
 using dotnetapp.Models;
 using dotnetapp.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dotnetapp.Controllers
 {
