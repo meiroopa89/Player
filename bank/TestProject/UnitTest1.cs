@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using dotnetapp.Models;
+// using dotnetapp.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
@@ -373,8 +373,6 @@ public async Task Backend_TestGetAccountById()
 
 
 
-
-
 [Test]
 public async Task Backend_TestAddFixedDeposit()
 {
@@ -471,7 +469,7 @@ public async Task Backend_TestGetAllTransactions()
     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
 
     // Register a new customer
-    string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+    string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"UserRole\": \"Customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
 
@@ -490,7 +488,7 @@ public async Task Backend_TestGetAllTransactions()
     try
     {
         // Make a request to get all transactions
-        response = await _httpClient.GetAsync("/api/transactions");
+        response = await _httpClient.GetAsync("/api/transaction");
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
         // Validate the response content (assuming the response is a JSON array of transactions)
@@ -523,5 +521,6 @@ public async Task Backend_TestGetAllTransactions()
         throw;
     }
 }
+
 
 }
