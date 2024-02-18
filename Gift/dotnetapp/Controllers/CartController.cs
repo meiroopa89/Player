@@ -19,7 +19,7 @@ public class CartController : ControllerBase
         _giftService = giftService;
     }
 
-    [Authorize(Roles = "customer")]      
+    // [Authorize(Roles = "customer")]      
     [HttpPut("update/{cartId}")]
     public IActionResult UpdateCart([FromBody] Cart updatedCart)
     {
@@ -33,7 +33,7 @@ public class CartController : ControllerBase
         return BadRequest("Cart not found");
     }
 
-    [Authorize(Roles = "customer")]      
+    // [Authorize(Roles = "customer")]      
     [HttpGet("customer/{customerId}")]
     public IActionResult GetCartByCustomerId(long customerId)
     {
@@ -45,7 +45,7 @@ public class CartController : ControllerBase
         return NotFound($"Cart not found for customer ID: {customerId}");
     }
 
-    [Authorize(Roles = "admin,customer")] 
+    // [Authorize(Roles = "admin,customer")] 
     [HttpGet("customer/{customerId}/total")]
     public IActionResult GetCustomerCartTotalAmount(long customerId)
     {
@@ -54,7 +54,7 @@ public class CartController : ControllerBase
         return Ok(new { TotalAmount = totalAmount });
     }
 
-    [Authorize(Roles = "customer")] 
+    // [Authorize(Roles = "customer")] 
     [HttpDelete("{cartId}/gift/{giftId}")]
     public IActionResult DeleteGiftFromCartById(int cartId, int giftId)
     {

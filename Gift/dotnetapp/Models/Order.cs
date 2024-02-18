@@ -11,8 +11,8 @@ public class Order
     
     // One-to-Many relationship with Gift
     public List<Gift> Gifts { get; set; }
-    public long CustomerId { get; set; }
+    public long? CustomerId { get; set; }
     // Many-to-One relationship with Customer
-    public Customer Customer { get; set; }
+    public Customer ?Customer { get; set; }
 }
 }

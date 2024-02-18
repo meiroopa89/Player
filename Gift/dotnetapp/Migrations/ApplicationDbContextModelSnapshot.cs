@@ -60,13 +60,14 @@ namespace dotnetapp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("UserId")
+                    b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("CustomerId");
 
                     b.HasIndex("UserId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Customers");
                 });
@@ -97,6 +98,12 @@ namespace dotnetapp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("OrdersId")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -104,7 +111,33 @@ namespace dotnetapp.Migrations
 
                     b.HasIndex("CartId");
 
+                    b.HasIndex("OrderId");
+
                     b.ToTable("Gifts");
+                });
+
+            modelBuilder.Entity("dotnetapp.Models.Order", b =>
+                {
+                    b.Property<long>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrderId"), 1L, 1);
+
+                    b.Property<long?>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("OrderPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("dotnetapp.Models.Review", b =>
@@ -385,9 +418,7 @@ namespace dotnetapp.Migrations
                 {
                     b.HasOne("dotnetapp.Models.User", "User")
                         .WithOne()
-                        .HasForeignKey("dotnetapp.Models.Customer", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("dotnetapp.Models.Customer", "UserId");
 
                     b.Navigation("User");
                 });
@@ -398,7 +429,22 @@ namespace dotnetapp.Migrations
                         .WithMany("Gifts")
                         .HasForeignKey("CartId");
 
+                    b.HasOne("dotnetapp.Models.Order", "Order")
+                        .WithMany("Gifts")
+                        .HasForeignKey("OrderId");
+
                     b.Navigation("Cart");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("dotnetapp.Models.Order", b =>
+                {
+                    b.HasOne("dotnetapp.Models.Customer", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("dotnetapp.Models.Review", b =>
@@ -464,6 +510,16 @@ namespace dotnetapp.Migrations
                 });
 
             modelBuilder.Entity("dotnetapp.Models.Cart", b =>
+                {
+                    b.Navigation("Gifts");
+                });
+
+            modelBuilder.Entity("dotnetapp.Models.Customer", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("dotnetapp.Models.Order", b =>
                 {
                     b.Navigation("Gifts");
                 });

@@ -67,11 +67,14 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<CustomerRepository>();
 builder.Services.AddScoped<GiftRepository>();
 builder.Services.AddScoped<CartRepository>();
+builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
 builder.Services.AddScoped<GiftService, GiftServiceImpl>();
 builder.Services.AddScoped<CustomerService, CustomerServiceImpl>();
 builder.Services.AddScoped<CartService, CartServiceImpl>();
 builder.Services.AddScoped<ReviewService, ReviewServiceImpl>();
+builder.Services.AddScoped<IOrderService, OrderServiceImpl>();
+
 
 builder.Services.AddScoped<UserService>();
 
