@@ -16,14 +16,36 @@ namespace dotnetapp.Repositories
             _context = context;
         }
 
-        public Customer registerCustomer(Customer customer)
-        {
-            Console.Write("sss"+customer.CustomerId);
+        // public Customer registerCustomer(Customer customer)
+        // {
+        //     Console.Write("sss"+customer.CustomerId);
             
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
-            return customer;
-        }
+        //     _context.Customers.Add(customer);
+        //     _context.SaveChanges();
+        //     return customer;
+        // }
+
+        public Customer RegisterCustomer(Customer customer, long userId)
+{
+    // Check if the provided UserId exists in the system
+    var existingUser = _context.Users.Find(customer.UserId);
+
+    if (existingUser != null)
+    {
+        // Associate the existing user with the new customer
+        customer.User = existingUser;
+        
+        // Add the customer to the context and save changes
+        _context.Customers.Add(customer);
+        _context.SaveChanges();
+
+        return customer;
+    }
+
+    // Handle the case where the provided UserId doesn't exist
+    // You might want to throw an exception, return null, or handle it based on your application's logic
+    return null;
+}
 
         public Customer viewCustomerById(long customerId)
         {
