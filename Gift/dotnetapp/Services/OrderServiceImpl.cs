@@ -15,9 +15,20 @@ namespace dotnetapp.Services
             _orderRepository = orderRepository;
         }
 
-        public Order AddOrder(Order order)
+       public Order AddOrder(Order order, int giftId)
         {
-            return _orderRepository.AddOrder(order);
+            // Retrieve the gift by giftId
+            var giftToAdd = _orderRepository.GetGiftById(giftId);
+
+            if (giftToAdd != null)
+            {
+                // Associate the gift with the order
+                order.Gifts = new List<Gift> { giftToAdd };
+                return _orderRepository.AddOrder(order);
+            }
+
+            // Handle case where the gift is not found
+            return null;
         }
 
         public List<Order> GetAllOrders()

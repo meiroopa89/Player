@@ -55,8 +55,6 @@ public Cart updateCart(Cart updatedCart)
 }
 
 
-
-    
     public Cart getCartByCustomerId(long customerId)
     {
         // return _context.Carts.FirstOrDefault(c => c.CustomerId == customerId);
