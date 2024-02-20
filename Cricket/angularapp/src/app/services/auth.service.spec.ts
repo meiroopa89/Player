@@ -21,10 +21,10 @@ describe('AuthService', () => {
   });
 
   fit('Frontend_should_call_the_API_and_register_the_user_when_register_is_called', () => {
-    const registerData = { username: 'test', password: 'password', role: 'admin', email: 'test@test.com', mobileNumber: '1234567890' };
+    const registerData = { username: 'test', password: 'password', userrole: 'admin', email: 'test@test.com', mobileNumber: '1234567890' };
     const response = { id: '1', ...registerData };
   
-    (service as any).register(registerData.username, registerData.password, registerData.role, registerData.email, registerData.mobileNumber).subscribe();
+    (service as any).register(registerData.username, registerData.password, registerData.userrole, registerData.email, registerData.mobileNumber).subscribe();
   
     const req = httpMock.expectOne(`${(service as any).apiUrl}/api/register`); // Expect a POST request to the register API
     expect(req.request.method).toBe('POST');
@@ -35,7 +35,7 @@ describe('AuthService', () => {
 
   fit('Frontend_should_call_the_API_and_authenticate_the_user_when_login_is_called', () => {
     const loginData = { email: 'test@test.com', password: 'password' };
-  const response = { username: 'test', role: 'admin', id: '1' };
+  const response = { username: 'test', userrole: 'admin', id: '1' };
 
   (service as any).login(loginData.email, loginData.password).subscribe();
 
