@@ -15,14 +15,21 @@ public class ValidationController : Controller
     [AcceptVerbs("Get", "Post")]
     public IActionResult IsGiftTypeUnique(string giftType)
     {
-        bool isUnique = !_dbContext.Gifts.Any(g => g.GiftType == giftType);
+        var isUnique = !_dbContext.Gifts.Any(g => g.GiftType == giftType);
+        return Json(isUnique);
+    }
 
-        if (!isUnique)
+    [HttpPost("register")]
+    public IActionResult Register([FromBody] Gift gift)
+    {
+        if (!ModelState.IsValid)
         {
-            ModelState.AddModelError("GiftType", "Gift Type already exists.");
-            return Json(false);
+            return BadRequest(ModelState);
         }
 
-        return Json(true);
+        _dbContext.Gifts.Add(gift);
+        _dbContext.SaveChanges();
+
+        return Ok(gift);
     }
 }

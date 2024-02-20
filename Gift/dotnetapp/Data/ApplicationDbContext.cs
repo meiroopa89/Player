@@ -40,8 +40,8 @@ namespace dotnetapp.Data
             .OnDelete(DeleteBehavior.Cascade);  // Optional: Cascade delete if an order is deleted
 
             modelBuilder.Entity<Gift>()
-        .Property(g => g.GiftId)
-        .ValueGeneratedOnAdd();
+            .Property(g => g.GiftId)
+            .ValueGeneratedOnAdd();
 
         }
     }

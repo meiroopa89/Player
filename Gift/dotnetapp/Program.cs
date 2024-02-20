@@ -74,7 +74,6 @@ builder.Services.AddScoped<CustomerService, CustomerServiceImpl>();
 builder.Services.AddScoped<CartService, CartServiceImpl>();
 builder.Services.AddScoped<ReviewService, ReviewServiceImpl>();
 builder.Services.AddScoped<IOrderService, OrderServiceImpl>();
-builder.Services.AddControllersWithViews();
 
 
 
