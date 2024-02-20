@@ -1,0 +1,31 @@
+<div id="venueInfoBody" [ngClass]="{ blur: showDeletePopup }">
+  <div class="top-head">
+      <button class="add-btn-grad" (click)="navigateToAddVenue()">Add Venue</button>
+  </div>
+  <h1>My Venues</h1>
+
+  <div class="venue-grid">
+      <div class="venue-item" *ngFor="let venue of venues">
+          <div class="venue-details">
+              <img [src]="venue.VenueImageURL" alt="Venue Image" class="venue-image" />
+              <p><strong>Venue Name:</strong> {{ venue.VenueName }}</p>
+              <p><strong>Description:</strong> {{ venue.VenueDescription }}</p>
+              <p><strong>Location:</strong> {{ venue.VenueLocation }}</p>
+          </div>
+          <div class="venue-actions">
+              <button class="delete-btn-grad btn-danger" (click)="showDeletePopup = true; selectedVenue = venue;">
+                  Delete
+              </button>
+              <button class="edit-btn-grad" (click)="navigateToEditVenue(venue)">Edit</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div *ngIf="showDeletePopup" class="delete-popup">
+  <p>Are you sure you want to delete?</p>
+  <button (click)="deleteVenue(selectedVenue); showDeletePopup = false" id="delete-btn">
+      Yes, Delete
+  </button>
+  <button (click)="showDeletePopup = false" class="cancel-btn">Cancel</button>
+</div>

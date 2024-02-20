@@ -1,0 +1,9 @@
+<nav>
+  <ul class="nav-links">
+    <ng-container *ngIf="isLoggedIn">
+      <li><a routerLink="/organizer/event/dashboard" *ngIf="isOrganizer">Event</a></li>
+      <li><a routerLink="/organizer/review/add-review" *ngIf="isOrganizer">Review</a></li>
+    </ng-container>
+  </ul>
+</nav>
+

@@ -1,0 +1,112 @@
+#adminPlayerDashboard {
+    padding: 20px;
+  }
+
+  .add-btn-grad,.edit-btn-grad,.delete-btn-grad,#delete-btn{
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+    margin: 10px;
+    min-width:70px;
+  }
+
+  .top-head {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+  }
+
+  .add-btn-grad{
+    background-color: #4caf50;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .player-grid {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    /* text-align: left; */
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .no-records {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .delete-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    text-align: center;
+  }
+  
+  .delete-popup p {
+    margin-bottom: 20px;
+  }
+  
+  .delete-popup button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .cancel-btn {
+    background-color: #ddd;
+  }
+  
+  .delete-btn-grad {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+  }
+  
+  .edit-btn-grad {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+  }
+  
+  .blur {
+    filter: blur(4px);
+  }
+  
+  #delete-btn{
+    background-color: #e74c3c;
+  }
+
+  .cancel-btn{
+    color:black;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+    min-width:70px;
+    border: 1px solid black;
+  }

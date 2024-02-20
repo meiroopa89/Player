@@ -1,0 +1,12 @@
+<nav>
+    <ul class="nav-links">
+      <h1>Admin</h1>
+      <ng-container *ngIf="isLoggedIn">
+        <li><a routerLink="/admin/venue/dashboard" *ngIf="isAdmin">Venue</a></li>
+        <li><a routerLink="/admin/referee/dashboard" *ngIf="isAdmin">Referee</a></li>
+        <li><a routerLink="/admin/team/dashboard" *ngIf="isAdmin">Team</a></li>
+      </ng-container>
+    </ul>
+  </nav>
+  
+  

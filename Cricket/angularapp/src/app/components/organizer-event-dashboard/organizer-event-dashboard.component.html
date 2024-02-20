@@ -1,0 +1,41 @@
+<div id="organizerEventDashboard" [ngClass]="{ blur: showDeletePopup }">
+    <div class="top-head">
+      <button class="add-btn-grad" (click)="navigateToAddEvent()">Add Event</button>
+    </div>
+    <h1>Event Dashboard</h1>
+  
+    <div class="event-grid">
+      <!-- <div *ngIf="events.length > 0; else noRecords"> -->
+        <div class="event-item" *ngFor="let event of events">
+          <div class="event-details">
+            <img [src]="event.EventImageURL" alt="Event Image" class="event-image" />
+            <h2>{{ event.EventName }}</h2>
+            <p>{{ event.Description }}</p>
+          </div>
+          <div class="event-actions">
+            <button class="delete-btn-grad btn-danger" (click)="showDeletePopup = true; selectedEvent = event;">
+              Delete
+            </button>
+            <button class="edit-btn-grad" (click)="navigateToEditEvent(event.EventId)">Edit</button>
+            <!-- Add more actions as needed -->
+          </div>
+        </div>
+      <!-- </div> -->
+      <!-- <ng-template #noRecords>
+        <div id="no-records">
+          <img src="https://cdni.iconscout.com/illustration/premium/thumb/no-data-found-8867280-7265556.png?f=webp"
+            alt="No Records Found" />
+          <h1>No records found</h1>
+        </div>
+      </ng-template> -->
+    </div>
+  </div>
+  
+  <div *ngIf="showDeletePopup" class="delete-popup">
+    <p>Are you sure you want to delete?</p>
+    <button (click)="deleteEvent(selectedEvent.EventId); showDeletePopup = false" id="delete-btn">
+      Yes, Delete
+    </button>
+    <button (click)="showDeletePopup = false" class="cancel-btn">Cancel</button>
+  </div>
+  
