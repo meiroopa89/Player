@@ -23,19 +23,19 @@ describe('PlayerService', () => {
 
   fit('Frontend_should_call_the_API_and_add_a_player', () => {
     const playerData = {
-      playerId: 1,
       playerName: 'John Doe',
       Age: 25,
       Country: 'USA',
       BattingStyle: 'Right-handed',
       BowlingStyle: 'Medium',
-      DateOfBirth: '1997-01-15',
+      DateOfBirth: new Date(),
       Role: 'Batsman',
       TotalMatchesPlayed: 50,
       TotalRunsScored: 2000,
       TotalWicketsTaken: 5,
       TotalCatches: 20,
     };
+    const response = { PlayerId: 1, ...playerData};
 
     service.addPlayer(playerData).subscribe();
 
@@ -44,7 +44,7 @@ describe('PlayerService', () => {
     expect(req.request.headers.get('Authorization')).toBeTruthy();
     expect(req.request.body).toEqual(playerData);
 
-    req.flush({}); 
+    req.flush(response);
   });
 
   fit('Frontend_should_call_the_API_and_get_all_players', () => {
