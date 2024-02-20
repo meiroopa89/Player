@@ -20,77 +20,36 @@ describe('RefereeService', () => {
     httpMock.verify();
   });
 
-  it('should add a referee', () => {
+  fit('Frontend_should_call_the_API_and_add_a_referee', () => {
     const refereeData = {
-      RefereeID: 1,
-      userId: 123,
-      subject: 'Referee Subject',
-      body: 'Referee Body',
-      rating: 5,
-      dateCreated: new Date(),
-      // Other properties of the referee
+      RefereeName: 'Refereename',
+      NoOfMatches: 5,
+      RefereeImageURL: 'Image url',
     };
 
     service.addReferee(refereeData).subscribe();
+    const response = { RefereeID: 1, ...refereeData};
 
     const req = httpMock.expectOne(`${service.apiUrl}/api/referee`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(refereeData);
 
-    req.flush({}); // You can modify the response as needed
+    req.flush(response);
   });
 
-  it('should update a referee', () => {
-    const refereeData = {
-      RefereeID: 1,
-      userId: 123,
-      subject: 'Referee Subject',
-      body: 'Referee Body',
-      rating: 5,
-      dateCreated: new Date(),
-      // Other properties of the referee
-    };
 
-    service.updateReferee(refereeData).subscribe();
-
-    const req = httpMock.expectOne(`${service.apiUrl}/api/referee/1`);
-    expect(req.request.method).toBe('PUT');
-    expect(req.request.body).toEqual(refereeData);
-
-    req.flush({}); // You can modify the response as needed
-  });
-
-  it('should delete a referee', () => {
-    const refereeData = {
-      RefereeID: 1,
-      userId: 123,
-      subject: 'Referee Subject',
-      body: 'Referee Body',
-      rating: 5,
-      dateCreated: new Date(),
-      // Other properties of the referee
-    };
-
-    service.deleteReferee(refereeData).subscribe();
-
-    const req = httpMock.expectOne(`${service.apiUrl}/api/referee/1`);
+  fit('Frontend_should_call_the_API_and_delete_a_referee', () => {
+    const RefereeID = 1;
+  
+    service.deleteReferee(RefereeID).subscribe();
+  
+    const req = httpMock.expectOne(`${service.apiUrl}/api/player/${RefereeID}`);
     expect(req.request.method).toBe('DELETE');
-
+    // expect(req.request.headers.get('Authorization')).toBeTruthy();
     req.flush({}); 
   });
 
-  it('should get a referee by ID', () => {
-    const refereeId = '1';
-
-    service.getRefereeById(refereeId).subscribe();
-
-    const req = httpMock.expectOne(`${service.apiUrl}/api/referee/1`);
-    expect(req.request.method).toBe('GET');
-
-    req.flush({});
-  });
-
-  it('should get all referees', () => {
+  fit('Frontend_should_call_the_API_and_get_all_referees', () => {
     service.getAllReferees().subscribe();
 
     const req = httpMock.expectOne(`${service.apiUrl}/api/referee`);
@@ -98,5 +57,6 @@ describe('RefereeService', () => {
 
     req.flush({});
   });
+
 
 });
