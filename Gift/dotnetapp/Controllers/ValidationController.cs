@@ -2,7 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using dotnetapp.Models;
 using dotnetapp.Data;
+using dotnetapp.Controllers;
 
+namespace dotnetapp.Controllers
+{
 public class ValidationController : Controller
 {
     private readonly ApplicationDbContext _dbContext;
@@ -32,4 +35,5 @@ public class ValidationController : Controller
 
         return Ok(gift);
     }
+}
 }
