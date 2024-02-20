@@ -16,16 +16,9 @@ export class VenueService {
     return this.http.post(`${this.apiUrl}/api/venue`, venueData);
   }
 
-
   getAllVenues(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/api/venue`);
   }
-
-
-  // getJobsByUserId(): Observable<any> {
-  //   const userId = localStorage.getItem('userId');
-  //   return this.http.get<any>(`${this.apiUrl}/api/venue/user/${userId}`);
-  // }
 
   updateVenue(venueData: any): Observable<any> {
     const id = venueData.VenueId;
@@ -42,7 +35,4 @@ export class VenueService {
     return this.http.get<any>(`${this.apiUrl}/api/venue/${id}`);
   }
 
-  // getAllUsers(): Observable<any> {
-  //   return this.http.get<any>(`${this.apiUrl}/api/users`);
-  // }
 }
