@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using dotnetapp.Models;
+using dotnetapp.Data;
 
 public class ValidationController : Controller
 {
     private readonly ApplicationDbContext _dbContext;
 
-    public ValidationController(YourDbContext dbContext)
+    public ValidationController(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -14,7 +15,14 @@ public class ValidationController : Controller
     [AcceptVerbs("Get", "Post")]
     public IActionResult IsGiftTypeUnique(string giftType)
     {
-        var isUnique = !_dbContext.Gifts.Any(g => g.GiftType == giftType);
-        return Json(isUnique);
+        bool isUnique = !_dbContext.Gifts.Any(g => g.GiftType == giftType);
+
+        if (!isUnique)
+        {
+            ModelState.AddModelError("GiftType", "Gift Type already exists.");
+            return Json(false);
+        }
+
+        return Json(true);
     }
 }

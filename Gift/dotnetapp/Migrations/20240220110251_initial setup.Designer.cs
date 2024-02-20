@@ -12,8 +12,8 @@ using dotnetapp.Data;
 namespace dotnetapp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240218192231_Inistial setup")]
-    partial class Inistialsetup
+    [Migration("20240220110251_initial setup")]
+    partial class initialsetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,7 +98,7 @@ namespace dotnetapp.Migrations
 
                     b.Property<string>("GiftType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long?>("OrderId")
                         .HasColumnType("bigint");
@@ -109,6 +109,9 @@ namespace dotnetapp.Migrations
                     b.HasKey("GiftId");
 
                     b.HasIndex("CartId");
+
+                    b.HasIndex("GiftType")
+                        .IsUnique();
 
                     b.HasIndex("OrderId");
 

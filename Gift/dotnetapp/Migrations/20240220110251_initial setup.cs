@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dotnetapp.Migrations
 {
-    public partial class Inistialsetup : Migration
+    public partial class initialsetup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -260,7 +260,7 @@ namespace dotnetapp.Migrations
                 {
                     GiftId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GiftType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GiftType = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     GiftImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GiftDetails = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GiftPrice = table.Column<double>(type: "float", nullable: false),
@@ -340,6 +340,12 @@ namespace dotnetapp.Migrations
                 name: "IX_Gifts_CartId",
                 table: "Gifts",
                 column: "CartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Gifts_GiftType",
+                table: "Gifts",
+                column: "GiftType",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Gifts_OrderId",

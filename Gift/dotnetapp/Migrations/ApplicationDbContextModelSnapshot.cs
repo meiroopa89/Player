@@ -96,7 +96,7 @@ namespace dotnetapp.Migrations
 
                     b.Property<string>("GiftType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<long?>("OrderId")
                         .HasColumnType("bigint");
@@ -107,6 +107,9 @@ namespace dotnetapp.Migrations
                     b.HasKey("GiftId");
 
                     b.HasIndex("CartId");
+
+                    b.HasIndex("GiftType")
+                        .IsUnique();
 
                     b.HasIndex("OrderId");
 
