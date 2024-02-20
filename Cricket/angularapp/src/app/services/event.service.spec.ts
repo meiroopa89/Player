@@ -25,7 +25,7 @@ describe('EventService', () => {
 
     const req = httpMock.expectOne(`${service.apiUrl}/api/event`);
     expect(req.request.method).toBe('GET');
-
+    expect(req.request.headers.get('Authorization')).toBeTruthy();
     req.flush({}); 
   });
 
