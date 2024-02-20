@@ -15,13 +15,29 @@ public class GiftRepository
         _context = context;
     }
 
-    public Gift addGift(Gift gift)
+    // public Gift addGift(Gift gift)
+    // {
+    //     // gift.CartId = ;
+    //     _context.Gifts.Add(gift);
+    //     _context.SaveChanges();
+    //     return gift;
+    // }
+
+        public Gift AddGift(Gift gift)
+{
+    // Check if the GiftType already exists in the database
+    if (_context.Gifts.Any(g => g.GiftType == gift.GiftType))
     {
-        // gift.CartId = ;
-        _context.Gifts.Add(gift);
-        _context.SaveChanges();
-        return gift;
+        // GiftType already exists, throw an exception or handle accordingly
+        throw new InvalidOperationException("Gift with the same GiftType already exists.");
     }
+
+    // GiftType is unique, add the Gift to the database
+    _context.Gifts.Add(gift);
+    _context.SaveChanges();
+
+    return gift;
+}
 
 
 
@@ -31,24 +47,6 @@ public class GiftRepository
         return _context.Gifts.ToList();
     }
 
-    // public Gift editGift(long giftId, Gift updatedGift)
-    // {
-    //     var existingGift = _context.Gifts.Find(giftId);
-
-    //     if (existingGift != null)
-    //     {
-    //         existingGift.GiftType = updatedGift.GiftType;
-    //         existingGift.GiftImageUrl = updatedGift.GiftImageUrl;
-    //         existingGift.GiftDetails = updatedGift.GiftDetails;
-    //         existingGift.GiftPrice = updatedGift.GiftPrice;
-    //         existingGift.Quantity = updatedGift.Quantity;
-
-    //         _context.SaveChanges();
-    //         return existingGift;
-    //     }
-
-    //     return null; // Gift not found
-    // }
 
     public Gift editGift(long giftId, Gift updatedGift)
 {
