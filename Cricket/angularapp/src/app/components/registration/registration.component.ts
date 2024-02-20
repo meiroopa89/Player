@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { User } from 'src/app/models/user.model';
+ 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-
+ 
   registrationForm!: FormGroup;
   username: string = "";
   password: string = "";
@@ -18,9 +19,9 @@ export class RegistrationComponent implements OnInit {
   userRole: string = "";
   email: string = "";
   passwordMismatch: boolean = false; // New property to track password mismatch
-
+ 
   constructor(private authService: AuthService, private router: Router,private fb: FormBuilder) {
-
+ 
   }
   ngOnInit() {
    this.registrationForm = this.fb.group({
@@ -33,23 +34,31 @@ export class RegistrationComponent implements OnInit {
       this.passwordMismatch = true;
       return;
     }
-
+ 
     this.passwordMismatch = false;
-
+ 
     if (!this.isPasswordComplex(this.password)) {
       return; // Password complexity check failed
     }
-
-    this.authService.register(this.username, this.password, this.userRole, this.email,this.mobileNumber).subscribe(
+ 
+    const user: User = {
+      Username: this.username,
+      Password: this.password,
+      UserRole: this.userRole,
+      Email: this.email,
+      MobileNumber: this.mobileNumber
+    }
+   
+    this.authService.register(user).subscribe(
       (user) => {
         console.log(user);
-
+ 
           this.router.navigate(['/login']);
-  
+ 
       },
       (error) => {
         console.log(error);
-
+ 
         // Handle registration error, display a message, etc.
       }
     );
@@ -59,8 +68,8 @@ export class RegistrationComponent implements OnInit {
     const hasLowercase = /[a-z]/.test(password);
     const hasDigit = /\d/.test(password);
     const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\-]/.test(password);
-
+ 
     return hasUppercase && hasLowercase && hasDigit && hasSpecialChar;
   }
-
+ 
 }
