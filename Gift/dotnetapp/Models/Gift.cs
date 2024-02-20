@@ -1,13 +1,16 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace dotnetapp.Models
 {
 public class Gift
     {
         [Key]
         public long GiftId { get; set; }
-        public string GiftType { get; set; }
+
+        [Remote("IsGiftTypeUnique", "Validation", ErrorMessage = "Gift Type already exists.")]
+         public string GiftType { get; set; }
         public string GiftImageUrl { get; set; }
         public string GiftDetails { get; set; }
         public double GiftPrice { get; set; }
