@@ -32,7 +32,7 @@ describe('TeamService', () => {
 
     const req = httpMock.expectOne(`${service.apiUrl}/api/team`);
     expect(req.request.method).toBe('POST');
-    // expect(req.request.headers.get('Authorization')).toBeTruthy();
+    expect(req.request.headers.get('Authorization')).toBeTruthy();
     expect(req.request.body).toEqual(teamData);
 
     req.flush(response);
@@ -43,7 +43,7 @@ describe('TeamService', () => {
 
     const req = httpMock.expectOne(`${service.apiUrl}/api/team`);
     expect(req.request.method).toBe('GET');
-    // expect(req.request.headers.get('Authorization')).toBeTruthy();
+    expect(req.request.headers.get('Authorization')).toBeTruthy();
     req.flush({}); 
   });
 });
