@@ -32,7 +32,7 @@ namespace dotnetapp.Services
         {
             try
             {
- 
+
                 var identityUser = new IdentityUser
                 {
                     UserName = user.Username,

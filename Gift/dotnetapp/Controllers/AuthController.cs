@@ -25,41 +25,97 @@ namespace dotnetapp.Controllers
             _context = context;
         }
 
+        // [HttpPost("register")]
+        // // [Authorize(Roles = "admin,customer")]
+        // public async Task<IActionResult> Register([FromBody] User user)
+        // {
+        //     if (user == null)
+        //         return BadRequest("Invalid user data");
+
+        //     if (user.Role == "admin" || user.Role == "customer")
+        //     {
+        //         Console.WriteLine("asd  " + user.Role);
+
+        //         var isRegistered = await _userService.RegisterAsync(user);
+        //         Console.WriteLine("status" + isRegistered);
+
+        //         if (isRegistered)
+        //         {
+        //             var customUser = new User
+        //             {
+        //                 Username = user.Username,
+        //                 Password = user.Password,
+        //                 Email = user.Email,
+        //                 MobileNumber = user.MobileNumber,
+        //                 Role = user.Role,
+        //             };
+
+        //             // Add the customUser to the DbSet and save it
+        //             _context.Users.Add(customUser);
+        //             await _context.SaveChangesAsync();
+
+        //             return Ok(user);
+        //         }
+        //     }
+
+        //     return BadRequest("Registration failed. Username may already exist.");
+        // }
+
+
+
         [HttpPost("register")]
-        // [Authorize(Roles = "admin,customer")]
-        public async Task<IActionResult> Register([FromBody] User user)
+public async Task<IActionResult> Register([FromBody] User user)
+{
+    if (user == null)
+        return BadRequest("Invalid user data");
+
+    // Check if the email already exists
+    var existingUserByEmail = await _userManager.FindByEmailAsync(user.Email);
+
+    if (existingUserByEmail != null)
+    {
+        Console.WriteLine("Email already exists");
+        return BadRequest("Registration failed. Email may already exist.");
+    }
+
+    // Check if the username already exists
+    var existingUserByUsername = await _userManager.FindByNameAsync(user.Username);
+
+    if (existingUserByUsername != null)
+    {
+        Console.WriteLine("Username already exists");
+        return BadRequest("Registration failed. Username may already exist.");
+    }
+
+    if (user.Role == "admin" || user.Role == "customer")
+    {
+        Console.WriteLine("asd  " + user.Role);
+
+        var isRegistered = await _userService.RegisterAsync(user);
+        Console.WriteLine("status" + isRegistered);
+
+        if (isRegistered)
         {
-            if (user == null)
-                return BadRequest("Invalid user data");
-
-            if (user.Role == "admin" || user.Role == "customer")
+            var customUser = new User
             {
-                Console.WriteLine("asd  " + user.Role);
+                Username = user.Username,
+                Password = user.Password,
+                Email = user.Email,
+                MobileNumber = user.MobileNumber,
+                Role = user.Role,
+            };
 
-                var isRegistered = await _userService.RegisterAsync(user);
-                Console.WriteLine("status" + isRegistered);
+            // Add the customUser to the DbSet and save it
+            _context.Users.Add(customUser);
+            await _context.SaveChangesAsync();
 
-                if (isRegistered)
-                {
-                    var customUser = new User
-                    {
-                        Username = user.Username,
-                        Password = user.Password,
-                        Email = user.Email,
-                        MobileNumber = user.MobileNumber,
-                        Role = user.Role,
-                    };
-
-                    // Add the customUser to the DbSet and save it
-                    _context.Users.Add(customUser);
-                    await _context.SaveChangesAsync();
-
-                    return Ok(user);
-                }
-            }
-
-            return BadRequest("Registration failed. Username may already exist.");
+            return Ok(user);
         }
+    }
+
+    return BadRequest("Registration failed.");
+}
+
 
     //    [Authorize(Roles = "admin,customer")]
        [HttpPost("login")]
