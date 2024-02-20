@@ -38,7 +38,7 @@ describe('AuthService', () => {
     const registerData = {
       username: 'testuser',
       password: 'testpassword',
-      userRole: 'customer',
+      userRole: 'ustomer',
       email: 'test@test.com',
       mobileNumber: '1234567890'
     };
