@@ -21,7 +21,7 @@ describe('VenueService', () => {
     httpMock.verify();
   });
 
-  fit('Frontend_should_call_the_API_and_get_all_venues', () => {
+  fit('Frontend_should_call_the_API_and_get_all_venues', () => {``
     service.getAllVenues().subscribe();
 
     const req = httpMock.expectOne(`${service.apiUrl}/api/venue`);
