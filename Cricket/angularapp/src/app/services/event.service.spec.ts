@@ -20,26 +20,6 @@ describe('EventService', () => {
     httpMock.verify();
   });
 
-  // fit('Frontend_should_call_the_API_and_add_an_event', () => {
-  //   const eventData = 
-  //   { 
-  //   eventId: 1,
-  //   eventName: 'eventname',
-  //   startDate: '1997-01-1',
-  //   endDate: '1997-01-2',
-  //   eventImageURL: 'image url',
-  //   description: 'description'
-  //   }
-
-  //   service.addEvent(eventData).subscribe();
-
-  //   const req = httpMock.expectOne(`${service.apiUrl}/api/event`);
-  //   expect(req.request.method).toBe('POST');
-  //   expect(req.request.body).toEqual(eventData);
-
-  //   req.flush({});
-  // });
-
   fit('Frontend_should_call_the_API_and_get_all_events', () => {
     service.getAllEvents().subscribe();
 
@@ -49,14 +29,4 @@ describe('EventService', () => {
     req.flush({}); 
   });
 
-  // fit('Frontend_should_call_the_API_and__get_an_event_by_id', () => {
-  //   const eventId = '123';
-
-  //   service.getEventById(eventId).subscribe();
-
-  //   const req = httpMock.expectOne(`${service.apiUrl}/api/event/${eventId}`);
-  //   expect(req.request.method).toBe('GET');
-
-  //   req.flush({}); 
-  // });
 });

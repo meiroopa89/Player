@@ -21,20 +21,20 @@ describe('PlayerService', () => {
   });
 
 
-  fit('should add a player', () => {
+  fit('Frontend_should_call_the_API_and_add_a_player', () => {
     const playerData = {
       playerId: '1',
       playerName: 'John Doe',
-      age: '25',
-      country: 'USA',
-      battingStyle: 'Right-handed',
-      bowlingStyle: 'Medium',
-      dateOfBirth: '1997-01-15',
-      role: 'Batsman',
-      totalMatchesPlayed: '50',
-      totalRunsScored: '2000',
-      totalWicketsTaken: '5',
-      totalCatches: '20',
+      Age: '25',
+      Country: 'USA',
+      BattingStyle: 'Right-handed',
+      BowlingStyle: 'Medium',
+      DateOfBirth: '1997-01-15',
+      Role: 'Batsman',
+      TotalMatchesPlayed: '50',
+      TotalRunsScored: '2000',
+      TotalWicketsTaken: '5',
+      TotalCatches: '20',
     };
 
     service.addPlayer(playerData).subscribe();
@@ -43,16 +43,28 @@ describe('PlayerService', () => {
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(playerData);
 
-    req.flush({}); // You can modify the response as needed
+    req.flush({}); 
   });
 
-  fit('should get all players', () => {
+  fit('Frontend_should_call_the_API_and_get_all_players', () => {
     service.getAllPlayers().subscribe();
 
     const req = httpMock.expectOne(`${service.apiUrl}/api/player`);
     expect(req.request.method).toBe('GET');
 
-    req.flush({}); // You can modify the response as needed
+    req.flush({}); 
   });
+
+  it('Frontend_should_call_the_API_and_delete_a_player', () => {
+    const PlayerId = 1;
+  
+    service.deletePlayer(PlayerId).subscribe();
+  
+    const req = httpMock.expectOne(`${service.apiUrl}/api/player/1`);
+    expect(req.request.method).toBe('DELETE');
+  
+    req.flush({}); 
+  });
+  
 
 });

@@ -23,20 +23,20 @@ describe('AuthService', () => {
 
   fit('Frontend_should_call_the_API_and_register_the_user_when_register_is_called', () => {
     const registerData = {
-      username: 'testuser',
-      password: 'testpassword',
-      userRole: 'Organizer',
-      email: 'test@test.com',
-      mobileNumber: '1234567890'
+      Username: 'testuser',
+      Password: 'testpassword',
+      UserRole: 'Organizer',
+      Email: 'test@test.com',
+      MobileNumber: '1234567890'
     };
     const response = { id: 1, ...registerData };  
 
     service.register(
-      registerData.username,
-      registerData.password,
-      registerData.userRole,
-      registerData.email,
-      registerData.mobileNumber
+      registerData.Username,
+      registerData.Password,
+      registerData.UserRole,
+      registerData.Email,
+      registerData.MobileNumber
     ).subscribe();
 
     const req = httpMock.expectOne(`${service.apiUrl}/api/register`);
@@ -47,11 +47,11 @@ describe('AuthService', () => {
   });
 
 
-  fit('Frontend_should_call_the_API_and_authenticate_the_user_when_login_is_called', () => {
-    const loginData = { email: 'test@test.com', password: 'password' };
-  const response = { username: 'test', userrole: 'Admin', id: 1 };
+  fit('Frontend_should_call_the_API_and_authenticate_the_admin_when_login_is_called', () => {
+    const loginData = { Email: 'test@test.com', Password: 'password' };
+  const response = { Username: 'test', userRole: 'Admin', UserId: 1 };
 
-  (service as any).login(loginData.email, loginData.password).subscribe();
+  (service as any).login(loginData.Email, loginData.Password).subscribe();
 
   const req = httpMock.expectOne(`${(service as any).apiUrl}/api/login`); // Expect a POST request to the login API
   expect(req.request.method).toBe('POST');
@@ -60,11 +60,11 @@ describe('AuthService', () => {
   req.flush(response); // Return the response object when the request is made
   });
 
-  fit('Frontend_should_call_the_API_and_authenticate_the_user_when_login_is_called', () => {
-    const loginData = { email: 'test@test.com', password: 'password' };
-  const response = { username: 'test', userrole: 'Admin', id: 1 };
+  fit('Frontend_should_call_the_API_and_authenticate_the_organizer_when_login_is_called', () => {
+    const loginData = { Email: 'test@test.com', Password: 'password' };
+  const response = { username: 'test', userRole: 'Organizer', UserId: 1 };
 
-  (service as any).login(loginData.email, loginData.password).subscribe();
+  (service as any).login(loginData.Email, loginData.Password).subscribe();
 
   const req = httpMock.expectOne(`${(service as any).apiUrl}/api/login`); // Expect a POST request to the login API
   expect(req.request.method).toBe('POST');
