@@ -18,7 +18,9 @@ public class Tests
     public void Setup()
     {
          _httpClient = new HttpClient();
-        _httpClient.BaseAddress = new Uri("http://localhost:8080"); 
+        // _httpClient.BaseAddress = new Uri("http://localhost:8080");
+        _httpClient.BaseAddress = new Uri("hhttps://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io"); 
+
 
 
     }
