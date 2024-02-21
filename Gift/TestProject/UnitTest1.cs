@@ -18,9 +18,7 @@ public class Tests
     public void Setup()
     {
          _httpClient = new HttpClient();
-        // _httpClient.BaseAddress = new Uri("http://localhost:8080");
-        _httpClient.BaseAddress = new Uri("hhttps://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io"); 
-
+        _httpClient.BaseAddress = new Uri("http://localhost:8080"); 
 
 
     }
@@ -631,72 +629,72 @@ public async Task Backend_TestGetCustomerById()
 }
 
 
-// [Test]
-// public async Task Backend_TestAddOrder()
-// {
-//     HttpResponseMessage response = null;
+[Test]
+public async Task Backend_TestAddOrder()
+{
+    HttpResponseMessage response = null;
 
-//     // Register a new user and obtain the authentication token
-//     string uniqueId = Guid.NewGuid().ToString();
-//     string uniqueUsername = $"user_{uniqueId}";
-//     string uniquePassword = $"userA{uniqueId}@123";
-//     string uniqueEmail = $"user{uniqueId}@example.com";
+    // Register a new user and obtain the authentication token
+    string uniqueId = Guid.NewGuid().ToString();
+    string uniqueUsername = $"user_{uniqueId}";
+    string uniquePassword = $"userA{uniqueId}@123";
+    string uniqueEmail = $"user{uniqueId}@example.com";
 
-//     // Register a new user
-//     string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
-//     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
+    // Register a new user
+    string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
+    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
 
-//     // Log in the registered user and obtain the authentication token
-//     string userLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(userLoginRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
+    // Log in the registered user and obtain the authentication token
+    string userLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(userLoginRequestBody, Encoding.UTF8, "application/json"));
+    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
 
-//     string responseString = await loginResponse.Content.ReadAsStringAsync();
-//     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-//     string userAuthToken = responseMap.token;
+    string responseString = await loginResponse.Content.ReadAsStringAsync();
+    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
+    string userAuthToken = responseMap.token;
 
-//     // Set the authentication token in the HTTP client headers
-//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
+    // Set the authentication token in the HTTP client headers
+    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
 
-//     // Create a new order object
-//     var order = new
-//     {
-//         OrderPrice = 50.99,
-//         Quantity = 2,
-//         CustomerId = 1, // Replace with the actual CustomerId of the registered customer
-//         Gifts = new List<object>() // You may provide gifts if needed
-//     };
+    // Create a new order object
+    var order = new
+    {
+        OrderPrice = 50.99,
+        Quantity = 2,
+        CustomerId = 1, // Replace with the actual CustomerId of the registered customer
+        Gifts = new List<object>() // You may provide gifts if needed
+    };
 
-//     try
-//     {
-//         // Convert order object to JSON string
-//         string requestBody = JsonConvert.SerializeObject(order);
+    try
+    {
+        // Convert order object to JSON string
+        string requestBody = JsonConvert.SerializeObject(order);
 
-//         // Send POST request to add a new order
-//         response = await _httpClient.PostAsync("/api/orders", new StringContent(requestBody, Encoding.UTF8, "application/json"));
+        // Send POST request to add a new order
+        response = await _httpClient.PostAsync("/api/orders", new StringContent(requestBody, Encoding.UTF8, "application/json"));
 
-//         // Print response content for debugging purposes
-//         Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+        // Print response content for debugging purposes
+        Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
 
-//         // Assert the add order response
-//         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        // Assert the add order response
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
-//         // Additional assertions based on the properties of the added order
-//     }
-//     catch (HttpRequestException ex)
-//     {
-//         Console.WriteLine($"Request failed: {ex.Message}");
+        // Additional assertions based on the properties of the added order
+    }
+    catch (HttpRequestException ex)
+    {
+        Console.WriteLine($"Request failed: {ex.Message}");
 
-//         if (response != null)
-//         {
-//             // Print response content for debugging purposes
-//             Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
-//         }
+        if (response != null)
+        {
+            // Print response content for debugging purposes
+            Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
+        }
 
-//         throw;
-//     }
-// }
+        throw;
+    }
+}
 
 [Test]
 public async Task Backend_TestGetAllOrders()
