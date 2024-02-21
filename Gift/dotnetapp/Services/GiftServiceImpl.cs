@@ -13,7 +13,7 @@ public class GiftServiceImpl : GiftService
 
     public Gift AddGift(Gift gift)
     {
-        return _giftRepository.addGift(gift);
+        return _giftRepository.AddGift(gift);
     }
 
     public List<Gift> GetAllGifts()

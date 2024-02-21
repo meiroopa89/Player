@@ -267,35 +267,6 @@ public class Tests
         Assert.AreEqual(HttpStatusCode.OK, getReviewsResponse.StatusCode);
     }
  
-// [Test, Order(9)]
-// public async Task Backend_TestRegisterCustomer()
-// {
-//     HttpResponseMessage response = null;
-
-//     // Register a new customer and obtain the authentication token
-//     string uniqueId = Guid.NewGuid().ToString();
-//     string uniqueUsername = $"abcd_{uniqueId}";
-//     string uniquePassword = $"abcdA{uniqueId}@123";
-//     string uniqueEmail = $"abcd{uniqueId}@gmail.com";
-
-//     // Register a new customer
-//     string registerRequestBody = $"{{\"CustomerName\": \"John Doe\", \"Address\": \"123 Main St\", \"UserId\": 1, \"User\": {{\"Password\": \"{uniquePassword}\", \"UserName\": \"{uniqueUsername}\", \"Role\": \"admin\", \"Email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}} }}";
-//     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/customer", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-
-//     // Assert that the registration was successful
-//     Assert.AreEqual(HttpStatusCode.Created, registrationResponse.StatusCode);
-
-//     // Optionally, you can assert additional properties based on the response if needed
-//     string responseString = await registrationResponse.Content.ReadAsStringAsync();
-//     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-
-//     // Check if the dynamic object and the property you want to access are not null
-//     Assert.IsNotNull(responseMap, "ResponseMap should not be null");
-//     Assert.IsTrue((responseMap?.customerId ?? 0) > 0, "Customer ID should be greater than 0");
-//     Console.WriteLine($"Customer ID: {responseMap?.customerId}");
-
-//     // Perform additional assertions based on the structure of the responseMap
-// }
 
     [Test, Order(9)]
     public async Task Backend_TestEditGift()
@@ -599,81 +570,6 @@ public async Task Backend_TestPutReviews()
     }
 }
 
-// [Test]
-// public async Task Backend_TestPostCustomer()
-// {
-//     HttpResponseMessage response = null;
-
-//     // Register a new admin and obtain the authentication token
-//     string uniqueId = Guid.NewGuid().ToString();
-//     string uniqueUsername = $"admin_{uniqueId}";
-//     string uniquePassword = $"adminA{uniqueId}@123";
-//     string uniqueEmail = $"admin{uniqueId}@gmail.com";
-
-//     // Register a new admin
-//     string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
-//     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
-
-//     // Log in the registered admin and obtain the authentication token
-//     string adminLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
-//     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-
-//     string responseString = await loginResponse.Content.ReadAsStringAsync();
-//     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-//     string adminAuthToken = responseMap.token;
-
-//     // Set the authentication token in the HTTP client headers
-//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
-
-//     // Create a new customer object with the nested "user" property
-//     var customer = new
-//     {
-//         CustomerName = "newCustomer",
-//         Address = "customerAddress",
-//         User = new
-//         {
-//             Email = "newcustomer@example.com",
-//             Password = "newCustomerPassword",
-//             Username = "newCustomerUsername",
-//             MobileNumber = "1234567890",
-//             Role = "customer"
-//         }
-//     };
-
-//     try
-//     {
-//         // Convert customer object to JSON string
-//         string requestBody = JsonConvert.SerializeObject(customer);
-
-//         // Send POST request to register a new customer
-//         response = await _httpClient.PostAsync("/api/customer", new StringContent(requestBody, Encoding.UTF8, "application/json"));
-
-//         // Print response content for debugging purposes
-//         Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
-
-//         // Assert the registration response
-//         Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-
-//         // Additional assertions based on the properties of the registered customer
-//     }
-//     catch (HttpRequestException ex)
-//     {
-//         Console.WriteLine($"Request failed: {ex.Message}");
-
-//         if (response != null)
-//         {
-//             // Print response content for debugging purposes
-//             Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
-//         }
-
-//         throw;
-//     }
-// }
-
-
-
 [Test]
 public async Task Backend_TestGetCustomerById()
 {
@@ -733,233 +629,72 @@ public async Task Backend_TestGetCustomerById()
 }
 
 
-
 // [Test]
-// public async Task Backend_TestPostAndThenUpdateCart()
+// public async Task Backend_TestAddOrder()
 // {
-//     // Register a new customer and obtain the authentication token
-//     string uniqueId = Guid.NewGuid().ToString();
-//     string uniqueUsername = $"customer_{uniqueId}";
-//     string uniquePassword = $"customerA{uniqueId}@123";
-//     string uniqueEmail = $"customer{uniqueId}@gmail.com";
+//     HttpResponseMessage response = null;
 
-//     // Register a new customer
+//     // Register a new user and obtain the authentication token
+//     string uniqueId = Guid.NewGuid().ToString();
+//     string uniqueUsername = $"user_{uniqueId}";
+//     string uniquePassword = $"userA{uniqueId}@123";
+//     string uniqueEmail = $"user{uniqueId}@example.com";
+
+//     // Register a new user
 //     string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
 //     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
 //     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
 
-//     // Log in the registered customer and obtain the authentication token
-//     string customerLoginRequestBody = $"{{\"Email\": \"{uniqueEmail}\", \"Password\": \"{uniquePassword}\"}}";
-//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(customerLoginRequestBody, Encoding.UTF8, "application/json"));
+//     // Log in the registered user and obtain the authentication token
+//     string userLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
+//     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(userLoginRequestBody, Encoding.UTF8, "application/json"));
 //     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
 
 //     string responseString = await loginResponse.Content.ReadAsStringAsync();
 //     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-//     string customerAuthToken = responseMap.token;
+//     string userAuthToken = responseMap.token;
 
 //     // Set the authentication token in the HTTP client headers
-//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", customerAuthToken);
+//     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
 
-//     HttpResponseMessage postResponse = null;
-//     HttpResponseMessage updateResponse = null;
+//     // Create a new order object
+//     var order = new
+//     {
+//         OrderPrice = 50.99,
+//         Quantity = 2,
+//         CustomerId = 1, // Replace with the actual CustomerId of the registered customer
+//         Gifts = new List<object>() // You may provide gifts if needed
+//     };
 
 //     try
 //     {
-//         // Create an initial cart object with the provided JSON structure
-//         var initialCart = new
-//         {
-//             Gifts = new[]
-//             {
-//                 new
-//                 {
-//                     GiftId = 1, // Replace with an actual giftId
-//                     GiftType = "InitialGift",
-//                     GiftImageUrl = "InitialImageUrl",
-//                     GiftDetails = "InitialDetails",
-//                     GiftPrice = 19.99,
-//                     Quantity = 2,
-//                     CartId = 0,
-//                     Cart = "InitialCart"
-//                 }
-//                 // Add more gifts as needed
-//             },
-//             CustomerId = 1, // Replace with an actual customer ID
-//             Customer = new
-//             {
-//                 CustomerId = 1, // Replace with an actual customer ID
-//                 CustomerName = "InitialCustomerName",
-//                 Address = "InitialAddress",
-//                 UserId = 1, // Replace with an actual user ID
-//                 User = new
-//                 {
-//                     UserId = 1, // Replace with an actual user ID
-//                     Email = "InitialEmail",
-//                     Password = "InitialPassword",
-//                     Username = "InitialUsername",
-//                     MobileNumber = "InitialMobileNumber",
-//                     Role = "InitialRole"
-//                 }
-//             },
-//             TotalAmount = 49.98 // Adjust the total amount based on the initial gift details
-//         };
+//         // Convert order object to JSON string
+//         string requestBody = JsonConvert.SerializeObject(order);
 
-//         // Convert initialCart object to JSON string with ReferenceHandler
-//         string postRequestBody = JsonConvert.SerializeObject(initialCart, new JsonSerializerSettings
-//         {
-//             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-//             PreserveReferencesHandling = PreserveReferencesHandling.None
-//         });
-
-//         // Send POST request to create the cart
-//         postResponse = await _httpClient.PostAsync("/api/cart", new StringContent(postRequestBody, Encoding.UTF8, "application/json"));
+//         // Send POST request to add a new order
+//         response = await _httpClient.PostAsync("/api/orders", new StringContent(requestBody, Encoding.UTF8, "application/json"));
 
 //         // Print response content for debugging purposes
-//         Console.WriteLine($"Post Response Content: {await postResponse.Content.ReadAsStringAsync()}");
+//         Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
 
-//         // Assert the POST response
-//         Assert.AreEqual(HttpStatusCode.Created, postResponse.StatusCode);
+//         // Assert the add order response
+//         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
-//         // Extract the created cart ID from the response for the update
-//         var createdCartId = JsonConvert.DeserializeObject<dynamic>(await postResponse.Content.ReadAsStringAsync()).cartId;
-
-//         // Create an updated cart object with the provided JSON structure
-//         var updatedCart = new
-//         {
-//             CartId = createdCartId,
-//             Gifts = new[]
-//             {
-//                 new
-//                 {
-//                     GiftId = 1, // Replace with an actual giftId
-//                     GiftType = "UpdatedGift",
-//                     GiftImageUrl = "UpdatedImageUrl",
-//                     GiftDetails = "UpdatedDetails",
-//                     GiftPrice = 29.99,
-//                     Quantity = 3,
-//                     CartId = createdCartId,
-//                     Cart = "UpdatedCart"
-//                 }
-//                 // Add more gifts as needed
-//             },
-//             CustomerId = 1, // Replace with an actual customer ID
-//             Customer = new
-//             {
-//                 CustomerId = 1, // Replace with an actual customer ID
-//                 CustomerName = "UpdatedCustomerName",
-//                 Address = "UpdatedAddress",
-//                 UserId = 1, // Replace with an actual user ID
-//                 User = new
-//                 {
-//                     UserId = 1, // Replace with an actual user ID
-//                     Email = "UpdatedEmail",
-//                     Password = "UpdatedPassword",
-//                     Username = "UpdatedUsername",
-//                     MobileNumber = "UpdatedMobileNumber",
-//                     Role = "UpdatedRole"
-//                 }
-//             },
-//             TotalAmount = 89.97 // Adjust the total amount based on the updated gift details
-//         };
-
-//         // Convert updatedCart object to JSON string with ReferenceHandler
-//         string updateRequestBody = JsonConvert.SerializeObject(updatedCart, new JsonSerializerSettings
-//         {
-//             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-//             PreserveReferencesHandling = PreserveReferencesHandling.None
-//         });
-
-//         // Send PUT request to update the cart
-//         updateResponse = await _httpClient.PutAsync($"/api/cart/update/{cartId}", new StringContent(updateRequestBody, Encoding.UTF8, "application/json"));
-
-//         // Print response content for debugging purposes
-//         Console.WriteLine($"Update Response Content: {await updateResponse.Content.ReadAsStringAsync()}");
+//         // Additional assertions based on the properties of the added order
 //     }
 //     catch (HttpRequestException ex)
 //     {
 //         Console.WriteLine($"Request failed: {ex.Message}");
 
-//         if (postResponse != null)
+//         if (response != null)
 //         {
 //             // Print response content for debugging purposes
-//             Console.WriteLine($"Post Response Content: {await postResponse.Content.ReadAsStringAsync()}");
-//         }
-
-//         if (updateResponse != null)
-//         {
-//             // Print response content for debugging purposes
-//             Console.WriteLine($"Update Response Content: {await updateResponse.Content.ReadAsStringAsync()}");
+//             Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
 //         }
 
 //         throw;
 //     }
 // }
-
-[Test]
-public async Task Backend_TestAddOrder()
-{
-    HttpResponseMessage response = null;
-
-    // Register a new user and obtain the authentication token
-    string uniqueId = Guid.NewGuid().ToString();
-    string uniqueUsername = $"user_{uniqueId}";
-    string uniquePassword = $"userA{uniqueId}@123";
-    string uniqueEmail = $"user{uniqueId}@example.com";
-
-    // Register a new user
-    string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"customer\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
-    HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
-
-    // Log in the registered user and obtain the authentication token
-    string userLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-    HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(userLoginRequestBody, Encoding.UTF8, "application/json"));
-    Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-
-    string responseString = await loginResponse.Content.ReadAsStringAsync();
-    dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-    string userAuthToken = responseMap.token;
-
-    // Set the authentication token in the HTTP client headers
-    _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userAuthToken);
-
-    // Create a new order object
-    var order = new
-    {
-        OrderPrice = 50.99,
-        Quantity = 2,
-        CustomerId = 1, // Replace with the actual CustomerId of the registered customer
-        Gifts = new List<object>() // You may provide gifts if needed
-    };
-
-    try
-    {
-        // Convert order object to JSON string
-        string requestBody = JsonConvert.SerializeObject(order);
-
-        // Send POST request to add a new order
-        response = await _httpClient.PostAsync("/api/orders", new StringContent(requestBody, Encoding.UTF8, "application/json"));
-
-        // Print response content for debugging purposes
-        Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
-
-        // Assert the add order response
-        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-
-        // Additional assertions based on the properties of the added order
-    }
-    catch (HttpRequestException ex)
-    {
-        Console.WriteLine($"Request failed: {ex.Message}");
-
-        if (response != null)
-        {
-            // Print response content for debugging purposes
-            Console.WriteLine($"Response Content: {await response.Content.ReadAsStringAsync()}");
-        }
-
-        throw;
-    }
-}
 
 [Test]
 public async Task Backend_TestGetAllOrders()
