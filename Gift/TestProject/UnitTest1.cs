@@ -739,7 +739,6 @@
 
 
 
-
 using NUnit.Framework;
 using System;
 using System.Net;
@@ -748,7 +747,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-// using dotnetapp.Models;
+using dotnetapp.Models;
 using Newtonsoft.Json.Linq;
 
 
@@ -761,7 +760,7 @@ public class Tests
     public void Setup()
     {
          _httpClient = new HttpClient();
-        _httpClient.BaseAddress = new Uri("https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io"); 
+        _httpClient.BaseAddress = new Uri("http://localhost:8080"); 
 
     }
 
@@ -1075,63 +1074,6 @@ public class Tests
 
     }
 
-    // [Test, Order(10)]
-    // public async Task Backend_TestDeleteGift()
-    // {
-    //     HttpResponseMessage response = null;
-
-    //     // Register a new admin and obtain the authentication token
-    //     string uniqueId = Guid.NewGuid().ToString();
-    //     string uniqueUsername = $"admin_{uniqueId}";
-    //     string uniquePassword = $"adminA{uniqueId}@123";
-    //     string uniqueEmail = $"admin{uniqueId}@gmail.com";
-
-    //     // Register a new admin
-    //     string registerRequestBody = $"{{\"password\": \"{uniquePassword}\", \"userName\": \"{uniqueUsername}\",\"role\": \"admin\",\"email\": \"{uniqueEmail}\", \"MobileNumber\": \"1234567890\"}}";
-    //     HttpResponseMessage registrationResponse = await _httpClient.PostAsync("/api/register", new StringContent(registerRequestBody, Encoding.UTF8, "application/json"));
-    //     Assert.AreEqual(HttpStatusCode.OK, registrationResponse.StatusCode);
-
-    //     // Log in the registered admin and obtain the authentication token
-    //     string adminLoginRequestBody = $"{{\"email\": \"{uniqueEmail}\",\"password\": \"{uniquePassword}\"}}";
-    //     HttpResponseMessage loginResponse = await _httpClient.PostAsync("/api/login", new StringContent(adminLoginRequestBody, Encoding.UTF8, "application/json"));
-    //     Assert.AreEqual(HttpStatusCode.OK, loginResponse.StatusCode);
-
-    //     string responseString = await loginResponse.Content.ReadAsStringAsync();
-    //     dynamic responseMap = JsonConvert.DeserializeObject(responseString);
-    //     string adminAuthToken = responseMap.token;
-
-    //     // Set the authentication token in the HTTP client headers
-    //     _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
-
-    //     // Create a new gift to be deleted
-    //     var giftToAdd = new
-    //     {
-    //         GiftType = "Test Gift",
-    //         GiftImageUrl = "test_image.jpg",
-    //         GiftDetails = "Original details",
-    //         GiftPrice = 20.0,
-    //         Quantity = 5
-    //     };
-
-    //     string addGiftRequestBody = JsonConvert.SerializeObject(giftToAdd);
-    //     HttpResponseMessage addGiftResponse = await _httpClient.PostAsync("/api/gift", new StringContent(addGiftRequestBody, Encoding.UTF8, "application/json"));
-    //     Assert.AreEqual(HttpStatusCode.OK, addGiftResponse.StatusCode);
-
-    //     // Retrieve the added gift details
-    //     string addedGiftResponseString = await addGiftResponse.Content.ReadAsStringAsync();
-    //     dynamic addedGiftResponseMap = JsonConvert.DeserializeObject(addedGiftResponseString);
-    //     long giftId = addedGiftResponseMap.giftId;
-
-    //     // Attempt to delete the gift
-    //     HttpResponseMessage deleteGiftResponse = await _httpClient.DeleteAsync($"/api/gift/{giftId}");
-
-    //     // Check if the response is OK (200)
-    //     Assert.AreEqual(HttpStatusCode.OK, deleteGiftResponse.StatusCode);
-
-    // }
-    
-
-    
     [Test, Order(10)]
     public async Task Backend_TestDeleteGift()
     {
@@ -1186,8 +1128,7 @@ public class Tests
         Assert.AreEqual(HttpStatusCode.OK, deleteGiftResponse.StatusCode);
 
     }
-
-
+    
     [Test]
 public async Task Backend_TestDeleteReview()
 {
