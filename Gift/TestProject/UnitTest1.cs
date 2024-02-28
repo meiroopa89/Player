@@ -1003,7 +1003,7 @@ public class Tests
 
         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", adminAuthToken);
 
-        HttpResponseMessage getReviewsResponse = await _httpClient.GetAsync("/api/review");
+        HttpResponseMessage getReviewsResponse = await _httpClient.GetAsync("/api/student/review");
     
         Assert.AreEqual(HttpStatusCode.OK, getReviewsResponse.StatusCode);
     }
@@ -1175,7 +1175,7 @@ public async Task Backend_TestDeleteReview()
     };
 
     string initialReviewRequestBody = JsonConvert.SerializeObject(initialReviewDetails);
-    HttpResponseMessage addReviewResponse = await _httpClient.PostAsync("/api/review", new StringContent(initialReviewRequestBody, Encoding.UTF8, "application/json"));
+    HttpResponseMessage addReviewResponse = await _httpClient.PostAsync("/api/student/review", new StringContent(initialReviewRequestBody, Encoding.UTF8, "application/json"));
     Assert.AreEqual(HttpStatusCode.OK, addReviewResponse.StatusCode);
 
     // Get the added review details
