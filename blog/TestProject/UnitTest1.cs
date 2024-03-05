@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using dotnetapp.Models;
 using Newtonsoft.Json.Linq;
-namespace TestProject;
-
 
 [TestFixture]
 public class Tests
