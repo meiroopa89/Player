@@ -31,7 +31,7 @@ public class OrderController : ControllerBase
         return Ok(order);
     }
 
-    [HttpPost]
+        [HttpPost]
         public IActionResult AddOrder([FromBody] Order order)
         {
             _orderService.SaveOrder(order); // Assuming SaveOrder internally calls AddOrder in the repository

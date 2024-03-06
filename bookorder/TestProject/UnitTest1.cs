@@ -265,7 +265,7 @@ public class Tests
             if (bookId.HasValue)
             {
                 // Delete the book
-                HttpResponseMessage deleteBookResponse = await _httpClient.DeleteAsync($"/api/Book/{id}");
+                HttpResponseMessage deleteBookResponse = await _httpClient.DeleteAsync($"/api/Book/{bookId}");
 
                 // Assert that the book is deleted successfully
                 Assert.AreEqual(HttpStatusCode.NoContent, deleteBookResponse.StatusCode);
@@ -280,7 +280,23 @@ public class Tests
             }
         }
 
+        [Test]
+        public async Task Backend_TestAddOrder()
+        {
+            // Create a unique customer name and total amount for the order
+            string uniqueCustomerName = Guid.NewGuid().ToString();
+            int totalAmount = 100; // Set an appropriate value for TotalAmount
 
+            // Create the order JSON request body
+            string orderJson = $"{{\"CustomerName\":\"{uniqueCustomerName}\",\"TotalAmount\":{totalAmount}}}";
+
+            // Send the POST request to add an order without authorization header
+            HttpResponseMessage addOrderResponse = await _httpClient.PostAsync("/api/Order",
+                new StringContent(orderJson, Encoding.UTF8, "application/json"));
+
+            // Check if the request was successful
+            Assert.AreEqual(HttpStatusCode.Created, addOrderResponse.StatusCode);
+        }
 
 }
 }
