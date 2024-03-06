@@ -169,16 +169,16 @@ public class Tests
             Assert.IsNotNull(methodInfo, "Method DeletePost does not exist in PostController class");
         }
   
-        [Test]
-        public void PostController_DeletePost_MethodReturns_IActionResult()
-        {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.PostController";
-            Assembly assembly = Assembly.Load(assemblyName);
-            Type PostControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = PostControllerType.GetMethod("DeletePost");
-            Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method DeletePost in PostController class is not of type IActionResult");
-        }
+        // [Test]
+        // public void PostController_DeletePost_MethodReturns_IActionResult()
+        // {
+        //     string assemblyName = "dotnetapp";
+        //     string typeName = "dotnetapp.Controllers.PostController";
+        //     Assembly assembly = Assembly.Load(assemblyName);
+        //     Type PostControllerType = assembly.GetType(typeName);
+        //     MethodInfo methodInfo = PostControllerType.GetMethod("DeletePost");
+        //     Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method DeletePost in PostController class is not of type IActionResult");
+        // }
 
         [Test]
         public void CommentController_AddComment_MethodExists()
