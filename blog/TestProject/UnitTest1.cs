@@ -13,6 +13,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Newtonsoft.Json;
+
 
 namespace TestProject
 {
@@ -252,6 +254,49 @@ public class Tests
             Assert.IsNotNull(posts);
         }
 
+        [Test]
+        public async Task Backend_TestDeletePost()
+        {
+            // Generate unique identifiers
+            string uniqueId = Guid.NewGuid().ToString();
+            string uniqueTitle = $"PostTitle_{uniqueId}";
+            string uniqueContent = $"PostContent_{uniqueId}";
+
+            // Create a post to delete
+            var initialPostDetails = new
+            {
+                Title = uniqueTitle,
+                Content = uniqueContent
+            };
+
+            string initialPostRequestBody = JsonConvert.SerializeObject(initialPostDetails);
+            HttpResponseMessage addPostResponse = await _httpClient.PostAsync("/api/Post", new StringContent(initialPostRequestBody, Encoding.UTF8, "application/json"));
+            Assert.AreEqual(HttpStatusCode.OK, addPostResponse.StatusCode);
+
+            // Get the added post details
+            string addPostResponseBody = await addPostResponse.Content.ReadAsStringAsync();
+            dynamic addPostResponseMap = JsonConvert.DeserializeObject(addPostResponseBody);
+
+            // Extract the postId for deletion
+            int? postId = addPostResponseMap?.id;
+
+            if (postId.HasValue)
+            {
+                // Delete the post
+                HttpResponseMessage deletePostResponse = await _httpClient.DeleteAsync($"/api/Post/{postId}");
+
+                // Assert that the post is deleted successfully
+                Assert.AreEqual(HttpStatusCode.NoContent, deletePostResponse.StatusCode);
+            }
+            else
+            {
+                // Log additional information for debugging
+                string responseContent = await addPostResponse.Content.ReadAsStringAsync();
+                Console.WriteLine($"Add Post Response Content: {responseContent}");
+
+                Assert.Fail("Post ID is null or not found in the response.");
+            }
+        }
 
 
 }
