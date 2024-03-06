@@ -298,6 +298,176 @@ public class Tests
             }
         }
 
+        [Test]
+        public async Task Backend_TestAddComment()
+        {
+            // Create a unique title and content for the post
+            string uniquePostTitle = Guid.NewGuid().ToString();
+            string uniquePostContent = $"Content_{uniquePostTitle}";
+
+            // Create the post JSON request body
+            string postJson = $"{{\"Title\":\"{uniquePostTitle}\",\"Content\":\"{uniquePostContent}\"}}";
+
+            // Send the POST request to add a post
+            HttpResponseMessage addPostResponse = await _httpClient.PostAsync("/api/Post",
+                new StringContent(postJson, Encoding.UTF8, "application/json"));
+            
+            // Check if the request was successful
+            Assert.AreEqual(HttpStatusCode.OK, addPostResponse.StatusCode);
+
+            // Get the added post details
+            string addPostResponseBody = await addPostResponse.Content.ReadAsStringAsync();
+            dynamic addPostResponseMap = JsonConvert.DeserializeObject(addPostResponseBody);
+
+            // Extract the postId for adding a comment
+            int? postId = addPostResponseMap?.id;
+
+            if (postId.HasValue)
+            {
+                // Create a unique comment text
+                string uniqueCommentText = Guid.NewGuid().ToString();
+
+                // Create the comment JSON request body
+                string commentJson = $"{{\"Text\":\"{uniqueCommentText}\"}}";
+
+                // Send the POST request to add a comment to the post
+                HttpResponseMessage addCommentResponse = await _httpClient.PostAsync($"/api/posts/{postId}/comments",
+                    new StringContent(commentJson, Encoding.UTF8, "application/json"));
+
+                // Check if the request was successful
+                Assert.AreEqual(HttpStatusCode.Created, addCommentResponse.StatusCode);
+            }
+            else
+            {
+                // Log additional information for debugging
+                string responseContent = await addPostResponse.Content.ReadAsStringAsync();
+                Console.WriteLine($"Add Post Response Content: {responseContent}");
+
+                Assert.Fail("Post ID is null or not found in the response.");
+            }
+        }
+
+        [Test]
+        public async Task Backend_TestGetAllComments()
+        {
+            // Create a unique title and content for the post
+            string uniquePostTitle = Guid.NewGuid().ToString();
+            string uniquePostContent = $"Content_{uniquePostTitle}";
+
+            // Create the post JSON request body
+            string postJson = $"{{\"Title\":\"{uniquePostTitle}\",\"Content\":\"{uniquePostContent}\"}}";
+
+            // Send the POST request to add a post
+            HttpResponseMessage addPostResponse = await _httpClient.PostAsync("/api/Post",
+                new StringContent(postJson, Encoding.UTF8, "application/json"));
+            
+            // Check if the request was successful
+            Assert.AreEqual(HttpStatusCode.OK, addPostResponse.StatusCode);
+
+            // Get the added post details
+            string addPostResponseBody = await addPostResponse.Content.ReadAsStringAsync();
+            dynamic addPostResponseMap = JsonConvert.DeserializeObject(addPostResponseBody);
+
+            // Extract the postId for getting comments
+            int? postId = addPostResponseMap?.id;
+
+            if (postId.HasValue)
+            {
+                // Send the GET request to get all comments for the post
+                HttpResponseMessage getAllCommentsResponse = await _httpClient.GetAsync($"/api/posts/{postId}/comments");
+
+                // Check if the request was successful
+                Assert.AreEqual(HttpStatusCode.OK, getAllCommentsResponse.StatusCode);
+
+                // Get the comments from the response
+                string getAllCommentsResponseBody = await getAllCommentsResponse.Content.ReadAsStringAsync();
+                var comments = JsonConvert.DeserializeObject<List<Comment>>(getAllCommentsResponseBody);
+
+                // Ensure that the retrieved comments are not null
+                Assert.NotNull(comments);
+            }
+            else
+            {
+                // Log additional information for debugging
+                string responseContent = await addPostResponse.Content.ReadAsStringAsync();
+                Console.WriteLine($"Add Post Response Content: {responseContent}");
+
+                Assert.Fail("Post ID is null or not found in the response.");
+            }
+        }
+
+        [Test]
+        public async Task Backend_TestDeleteComment()
+        {
+            // Create a unique title and content for the post
+            string uniquePostTitle = Guid.NewGuid().ToString();
+            string uniquePostContent = $"Content_{uniquePostTitle}";
+
+            // Create the post JSON request body
+            string postJson = $"{{\"Title\":\"{uniquePostTitle}\",\"Content\":\"{uniquePostContent}\"}}";
+
+            // Send the POST request to add a post
+            HttpResponseMessage addPostResponse = await _httpClient.PostAsync("/api/Post",
+                new StringContent(postJson, Encoding.UTF8, "application/json"));
+
+            // Check if the request was successful
+            Assert.AreEqual(HttpStatusCode.OK, addPostResponse.StatusCode);
+
+            // Get the added post details
+            string addPostResponseBody = await addPostResponse.Content.ReadAsStringAsync();
+            dynamic addPostResponseMap = JsonConvert.DeserializeObject(addPostResponseBody);
+
+            // Extract the postId for adding a comment
+            int? postId = addPostResponseMap?.id;
+
+            if (postId.HasValue)
+            {
+                // Create a unique comment text
+                string uniqueCommentText = Guid.NewGuid().ToString();
+
+                // Create the comment JSON request body
+                string commentJson = $"{{\"Text\":\"{uniqueCommentText}\"}}";
+
+                // Send the POST request to add a comment to the post
+                HttpResponseMessage addCommentResponse = await _httpClient.PostAsync($"/api/posts/{postId}/comments",
+                    new StringContent(commentJson, Encoding.UTF8, "application/json"));
+
+                // Check if the request was successful
+                Assert.AreEqual(HttpStatusCode.Created, addCommentResponse.StatusCode);
+
+                // Get the added comment details
+                string addCommentResponseBody = await addCommentResponse.Content.ReadAsStringAsync();
+                dynamic addCommentResponseMap = JsonConvert.DeserializeObject(addCommentResponseBody);
+
+                // Extract the commentId for deletion
+                int? commentId = addCommentResponseMap?.id;
+
+                if (commentId.HasValue)
+                {
+                    // Send the DELETE request to delete the comment
+                    HttpResponseMessage deleteCommentResponse = await _httpClient.DeleteAsync($"/api/posts/{postId}/comments/{commentId}");
+
+                    // Check if the request was successful
+                    Assert.AreEqual(HttpStatusCode.NoContent, deleteCommentResponse.StatusCode);
+                }
+                else
+                {
+                    // Log additional information for debugging
+                    string responseContent = await addCommentResponse.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Add Comment Response Content: {responseContent}");
+
+                    Assert.Fail("Comment ID is null or not found in the response.");
+                }
+            }
+            else
+            {
+                // Log additional information for debugging
+                string responseContent = await addPostResponse.Content.ReadAsStringAsync();
+                Console.WriteLine($"Add Post Response Content: {responseContent}");
+
+                Assert.Fail("Post ID is null or not found in the response.");
+            }
+        }
 
 }
 }
