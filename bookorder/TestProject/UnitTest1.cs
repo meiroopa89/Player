@@ -298,5 +298,22 @@ public class Tests
             Assert.AreEqual(HttpStatusCode.Created, addOrderResponse.StatusCode);
         }
 
+        [Test]
+        public async Task Backend_TestGetAllOrders()
+        {
+            // Send the GET request to get all orders
+            HttpResponseMessage getAllOrdersResponse = await _httpClient.GetAsync("/api/Order");
+
+            // Check if the request was successful
+            Assert.AreEqual(HttpStatusCode.OK, getAllOrdersResponse.StatusCode);
+
+            // Get the orders from the response
+            string getAllOrdersResponseBody = await getAllOrdersResponse.Content.ReadAsStringAsync();
+            var orders = JsonConvert.DeserializeObject<List<Order>>(getAllOrdersResponseBody);
+
+            // Ensure that the retrieved orders are not null
+            Assert.NotNull(orders);
+        }
+
 }
 }
