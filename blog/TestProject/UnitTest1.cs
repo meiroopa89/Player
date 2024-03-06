@@ -242,6 +242,17 @@ public class Tests
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
+        [Test]
+        public async Task Backend_TestGetAllPosts()
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync("/api/Post");
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            var posts = JsonConvert.DeserializeObject<List<Post>>(responseBody);
+            Assert.IsNotNull(posts);
+        }
+
+
 
 }
 }
