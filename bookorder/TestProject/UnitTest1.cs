@@ -137,5 +137,150 @@ public class Tests
             Type expectedType = propertyInfo.PropertyType;
             Assert.AreEqual(typeof(int), expectedType, "Property TotalAmount in Post class is not of type int");
         }
+
+        [Test]
+        public void BookController_AddBook_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.BookController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type BookControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = BookControllerType.GetMethod("AddBook");
+            Assert.IsNotNull(methodInfo, "Method AddBook does not exist in BookController class");
+        }
+
+        [Test]
+        public void BookController_GetAllBooks_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.BookController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type BookControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = BookControllerType.GetMethod("GetAllBooks");
+            Assert.IsNotNull(methodInfo, "Method GetAllBooks does not exist in BookController class");
+        }
+
+        [Test]
+        public void BookController_DeleteBook_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.BookController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type BookControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = BookControllerType.GetMethod("DeleteBook");
+            Assert.IsNotNull(methodInfo, "Method DeleteBook does not exist in BookController class");
+        }
+
+         [Test]
+        public void OrderController_AddOrder_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.OrderController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type OrderControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = OrderControllerType.GetMethod("AddOrder");
+            Assert.IsNotNull(methodInfo, "Method AddOrder does not exist in OrderController class");
+        }
+
+        [Test]
+        public void OrderController_GetAllOrders_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.OrderController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type OrderControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = OrderControllerType.GetMethod("GetAllOrders");
+            Assert.IsNotNull(methodInfo, "Method GetAllOrders does not exist in OrderController class");
+        }
+
+        [Test]
+        public void OrderController_DeleteOrder_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.OrderController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type OrderControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = OrderControllerType.GetMethod("DeleteOrder");
+            Assert.IsNotNull(methodInfo, "Method DeleteOrder does not exist in OrderController class");
+        }
+
+        [Test]
+        public async Task Backend_TestAddBook()
+        {
+            // Create a unique title, category, and price for the book
+            string uniqueTitle = Guid.NewGuid().ToString();
+            string uniqueCategory = $"Category_{uniqueTitle}";
+            decimal uniquePrice = new Random().Next(1, 100); // Assuming the price is a decimal
+
+            // Create the book JSON request body
+            string bookJson = $"{{\"BookName\":\"{uniqueTitle}\",\"Category\":\"{uniqueCategory}\",\"Price\":{uniquePrice}}}";
+
+            // Send the POST request to add a book without authorization header
+            HttpResponseMessage response = await _httpClient.PostAsync("/api/Book",
+                new StringContent(bookJson, Encoding.UTF8, "application/json"));
+
+            // Check if the request was successful
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+        }
+
+        [Test]
+        public async Task Backend_TestGetAllBooks()
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync("/api/Book");
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            var books = JsonConvert.DeserializeObject<List<Book>>(responseBody);
+            Assert.IsNotNull(books);
+        }
+
+        [Test]
+        public async Task Backend_TestDeleteBook()
+        {
+            // Generate unique identifiers
+            string uniqueId = Guid.NewGuid().ToString();
+            string uniqueTitle = $"BookTitle_{uniqueId}";
+            string uniqueCategory = $"BookCategory_{uniqueId}";
+            double uniquePrice = 29.99;
+
+            // Create a book to delete
+            var initialBookDetails = new
+            {
+                BookName = uniqueTitle,
+                Category = uniqueCategory,
+                Price = uniquePrice
+            };
+
+            string initialBookRequestBody = JsonConvert.SerializeObject(initialBookDetails);
+            HttpResponseMessage addBookResponse = await _httpClient.PostAsync("/api/Book", new StringContent(initialBookRequestBody, Encoding.UTF8, "application/json"));
+            Assert.AreEqual(HttpStatusCode.Created, addBookResponse.StatusCode);
+
+            // Get the added book details
+            string addBookResponseBody = await addBookResponse.Content.ReadAsStringAsync();
+            dynamic addBookResponseMap = JsonConvert.DeserializeObject(addBookResponseBody);
+
+            // Extract the bookId for deletion
+            int? id = addBookResponseMap?.bookId;
+            Console.WriteLine(bookId);
+
+            if (bookId.HasValue)
+            {
+                // Delete the book
+                HttpResponseMessage deleteBookResponse = await _httpClient.DeleteAsync($"/api/Book/{id}");
+
+                // Assert that the book is deleted successfully
+                Assert.AreEqual(HttpStatusCode.NoContent, deleteBookResponse.StatusCode);
+            }
+            else
+            {
+                // Log additional information for debugging
+                string responseContent = await addBookResponse.Content.ReadAsStringAsync();
+                Console.WriteLine($"Add Book Response Content: {responseContent}");
+
+                Assert.Fail("Book ID is null or not found in the response.");
+            }
+        }
+
+
+
 }
 }
