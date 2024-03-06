@@ -1,3 +1,7 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+
+
 namespace dotnetapp.Models
 {
 public class Book
