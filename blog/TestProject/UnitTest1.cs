@@ -4,15 +4,32 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using Microsoft.Data.SqlClient;
 using System;
-using Moq;
 using dotnetapp.Model;
 using dotnetapp.Controllers;
+using System.Net.Http;
+using System;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace TestProject
 {
 
 public class Tests
 {
+        private HttpClient _httpClient;
+        private string _adminToken;
+
+        [SetUp]
+        public void Setup()
+        {
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri("http://localhost:8080"); 
+
+        }
+
         [Test]
         public void Post_Model_ClassExists()
         {
@@ -129,34 +146,6 @@ public class Tests
             Assert.IsNotNull(methodInfo, "Method AddPost does not exist in PostController class");
         }
 
-        // [Test]
-        // public void PostController_AddPost_ReturnsOkResult()
-        // {
-        //     // Arrange
-        //     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-        //         .UseInMemoryDatabase(databaseName: "BlogDB")
-        //         .Options;
-
-        //     using (var dbContext = new ApplicationDbContext(options))
-        //     {
-        //         var postController = new PostController(new PostRepository(dbContext));
-
-        //         var validPost = new Post
-        //         {
-        //             Id = 1,
-        //             Title = "Sample Title",
-        //             Content = "Sample Content",
-        //             Comments = new List<Comment>()
-        //         };
-
-        //         // Act
-        //         var result = postController.AddPost(validPost);
-
-        //         // Assert
-        //         Assert.IsInstanceOf<OkObjectResult>(result);
-        //     }
-        // }
-
         [Test]
         public void PostController_GetAllPosts_MethodExists()
         {
@@ -234,6 +223,25 @@ public class Tests
             MethodInfo methodInfo = CommentControllerType.GetMethod("DeleteComment");
             Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method DeleteComment in CommentController class is not of type IActionResult");
         }
+
+        [Test]
+        public async Task Backend_TestAddPost()
+        {
+            // Create a unique title and content for the post
+            string uniqueTitle = Guid.NewGuid().ToString();
+            string uniqueContent = $"Content_{uniqueTitle}";
+
+            // Create the post JSON request body
+            string postJson = $"{{\"Title\":\"{uniqueTitle}\",\"Content\":\"{uniqueContent}\"}}";
+
+            // Send the POST request to add a post without authorization header
+            HttpResponseMessage response = await _httpClient.PostAsync("/api/Post",
+                new StringContent(postJson, Encoding.UTF8, "application/json"));
+
+            // Check if the request was successful
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
 
 }
 }
