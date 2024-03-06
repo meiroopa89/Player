@@ -169,14 +169,28 @@ public class Tests
         }
   
         [Test]
-        public void PostController_DeletePost_MethodReturns_ActionResult()
+        public void PostController_DeletePost_MethodReturns_IActionResult()
         {
             string assemblyName = "dotnetapp";
             string typeName = "dotnetapp.Controllers.PostController";
             Assembly assembly = Assembly.Load(assemblyName);
             Type PostControllerType = assembly.GetType(typeName);
             MethodInfo methodInfo = PostControllerType.GetMethod("DeletePost");
-            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method DeletePost in PostController class is not of type ActionResult");
+            Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method DeletePost in PostController class is not of type IActionResult");
+        }
+
+        [Test]
+        public void PostController_DeletePost_Method_Invokes_with_int_Param_Returns_ActionResult()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Repositories.PostRepository";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type PostRepositoryType = assembly.GetType(typeName);
+            object instance = Activator.CreateInstance(PostRepositoryType);
+            MethodInfo methodInfo = PostRepositoryType.GetMethod("DeletePost", new Type[] { typeof(int) });
+            object result = methodInfo.Invoke(instance, new object[] { 4562 });
+            Console.WriteLine(result.GetType().Name);  
+            Assert.IsNotNull(result, "Result should not be null");
         }
 
 }
