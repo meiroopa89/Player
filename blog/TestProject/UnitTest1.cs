@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using Microsoft.Data.SqlClient;
 using System;
+using Moq;
+using dotnetapp.Model;
+using dotnetapp.Controllers;
 
 namespace TestProject
 {
@@ -121,11 +124,60 @@ public class Tests
             string assemblyName = "dotnetapp";
             string typeName = "dotnetapp.Controllers.PostController";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type PostControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = PostControllerType.GetMethod("AddPost", Type.EmptyTypes);
+            Type postControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = postControllerType.GetMethod("AddPost");
             Assert.IsNotNull(methodInfo, "Method AddPost does not exist in PostController class");
         }
 
+        // [Test]
+        // public void PostController_AddPost_ReturnsOkResult()
+        // {
+        //     // Arrange
+        //     var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        //         .UseInMemoryDatabase(databaseName: "BlogDB")
+        //         .Options;
+
+        //     using (var dbContext = new ApplicationDbContext(options))
+        //     {
+        //         var postController = new PostController(new PostRepository(dbContext));
+
+        //         var validPost = new Post
+        //         {
+        //             Id = 1,
+        //             Title = "Sample Title",
+        //             Content = "Sample Content",
+        //             Comments = new List<Comment>()
+        //         };
+
+        //         // Act
+        //         var result = postController.AddPost(validPost);
+
+        //         // Assert
+        //         Assert.IsInstanceOf<OkObjectResult>(result);
+        //     }
+        // }
+
+        [Test]
+        public void PostController_DeletePost_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.PostController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type PostControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = PostControllerType.GetMethod("DeletePost");
+            Assert.IsNotNull(methodInfo, "Method DeletePost does not exist in PostController class");
+        }
+  
+        [Test]
+        public void PostController_DeletePost_MethodReturns_ActionResult()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.PostController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type PostControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = PostControllerType.GetMethod("DeletePost");
+            Assert.AreEqual(typeof(ActionResult), methodInfo.ReturnType, "Method DeletePost in PostController class is not of type ActionResult");
+        }
 
 }
 }
