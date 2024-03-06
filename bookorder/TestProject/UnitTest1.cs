@@ -315,5 +315,82 @@ public class Tests
             Assert.NotNull(orders);
         }
 
+        [Test]
+public async Task Backend_TestDeleteOrder()
+{
+    // Create a unique title and content for the post
+    string uniquePostTitle = Guid.NewGuid().ToString();
+    string uniquePostContent = $"Content_{uniquePostTitle}";
+
+    // Create the post JSON request body
+    string postJson = $"{{\"Title\":\"{uniquePostTitle}\",\"Content\":\"{uniquePostContent}\"}}";
+
+    // Send the POST request to add a post
+    HttpResponseMessage addPostResponse = await _httpClient.PostAsync("/api/Post",
+        new StringContent(postJson, Encoding.UTF8, "application/json"));
+
+    // Check if the request was successful
+    Assert.AreEqual(HttpStatusCode.OK, addPostResponse.StatusCode);
+
+    // Get the added post details
+    string addPostResponseBody = await addPostResponse.Content.ReadAsStringAsync();
+    dynamic addPostResponseMap = JsonConvert.DeserializeObject(addPostResponseBody);
+
+    // Extract the postId for adding a comment
+    int? postId = addPostResponseMap?.id;
+
+    if (postId.HasValue)
+    {
+        // Create a unique order
+        var orderDetails = new
+        {
+            CustomerName = "John Doe",
+            TotalAmount = 100
+        };
+
+        string orderJson = JsonConvert.SerializeObject(orderDetails);
+
+        // Send the POST request to add an order to the post
+        HttpResponseMessage addOrderResponse = await _httpClient.PostAsync($"/api/posts/{postId}/orders",
+            new StringContent(orderJson, Encoding.UTF8, "application/json"));
+
+        // Check if the request was successful
+        Assert.AreEqual(HttpStatusCode.Created, addOrderResponse.StatusCode);
+
+        // Get the added order details
+        string addOrderResponseBody = await addOrderResponse.Content.ReadAsStringAsync();
+        dynamic addOrderResponseMap = JsonConvert.DeserializeObject(addOrderResponseBody);
+
+        // Extract the orderId for deletion
+        int? orderId = addOrderResponseMap?.id;
+
+        if (orderId.HasValue)
+        {
+            // Send the DELETE request to delete the order
+            HttpResponseMessage deleteOrderResponse = await _httpClient.DeleteAsync($"/api/order/{orderId}");
+
+            // Check if the request was successful
+            Assert.AreEqual(HttpStatusCode.NoContent, deleteOrderResponse.StatusCode);
+        }
+        else
+        {
+            // Log additional information for debugging
+            string responseContent = await addOrderResponse.Content.ReadAsStringAsync();
+            Console.WriteLine($"Add Order Response Content: {responseContent}");
+
+            Assert.Fail("Order ID is null or not found in the response.");
+        }
+    }
+    else
+    {
+        // Log additional information for debugging
+        string responseContent = await addPostResponse.Content.ReadAsStringAsync();
+        Console.WriteLine($"Add Post Response Content: {responseContent}");
+
+        Assert.Fail("Post ID is null or not found in the response.");
+    }
+}
+
+
 }
 }
