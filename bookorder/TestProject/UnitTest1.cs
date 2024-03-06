@@ -259,7 +259,7 @@ public class Tests
             dynamic addBookResponseMap = JsonConvert.DeserializeObject(addBookResponseBody);
 
             // Extract the bookId for deletion
-            int? id = addBookResponseMap?.bookId;
+            int? bookId = addBookResponseMap?.bookId;
             Console.WriteLine(bookId);
 
             if (bookId.HasValue)
