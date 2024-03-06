@@ -1,3 +1,4 @@
+using dotnetapp.Model;
 public interface IPostService
 {
     List<Post> GetAllPosts();

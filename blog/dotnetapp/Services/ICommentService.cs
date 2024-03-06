@@ -1,5 +1,6 @@
 // ICommentService.cs
 using System.Collections.Generic;
+using dotnetapp.Model;
 
 namespace dotnetapp.Services
 {

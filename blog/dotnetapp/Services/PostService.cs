@@ -1,3 +1,4 @@
+using dotnetapp.Model;
 public class PostService : IPostService
 {
     private readonly PostRepository _postRepository;
