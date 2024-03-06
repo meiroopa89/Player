@@ -19,8 +19,6 @@ public class PostRepository
           .ToList();
 
 
-
-
     public Post GetPost(int id) => _dbContext.Posts.FirstOrDefault(p => p.Id == id);
 
     //  public Post GetPost(int id)

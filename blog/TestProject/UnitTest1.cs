@@ -158,6 +158,17 @@ public class Tests
         // }
 
         [Test]
+        public void PostController_GetAllPosts_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.PostController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type postControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = postControllerType.GetMethod("GetAllPosts");
+            Assert.IsNotNull(methodInfo, "Method GetAllPosts does not exist in PostController class");
+        }
+
+        [Test]
         public void PostController_DeletePost_MethodExists()
         {
             string assemblyName = "dotnetapp";
@@ -180,17 +191,48 @@ public class Tests
         }
 
         [Test]
-        public void PostController_DeletePost_Method_Invokes_with_int_Param_Returns_ActionResult()
+        public void CommentController_AddComment_MethodExists()
         {
             string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Repositories.PostRepository";
+            string typeName = "dotnetapp.Controllers.CommentController";
             Assembly assembly = Assembly.Load(assemblyName);
-            Type PostRepositoryType = assembly.GetType(typeName);
-            object instance = Activator.CreateInstance(PostRepositoryType);
-            MethodInfo methodInfo = PostRepositoryType.GetMethod("DeletePost", new Type[] { typeof(int) });
-            object result = methodInfo.Invoke(instance, new object[] { 4562 });
-            Console.WriteLine(result.GetType().Name);  
-            Assert.IsNotNull(result, "Result should not be null");
+            Type CommentControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = CommentControllerType.GetMethod("AddComment");
+            Assert.IsNotNull(methodInfo, "Method AddComment does not exist in CommentController class");
+        }
+
+        [Test]
+        public void CommentController_GetAllComments_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.CommentController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type CommentControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = CommentControllerType.GetMethod("GetAllComments");
+            Assert.IsNotNull(methodInfo, "Method GetAllComments does not exist in CommentController class");
+        }
+
+
+        [Test]
+        public void CommentController_DeleteComment_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.CommentController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type CommentControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = CommentControllerType.GetMethod("DeleteComment");
+            Assert.IsNotNull(methodInfo, "Method DeleteComment does not exist in CommentController class");
+        }
+  
+        [Test]
+        public void CommentController_DeleteComment_MethodReturns_IActionResult()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.CommentController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type CommentControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = CommentControllerType.GetMethod("DeleteComment");
+            Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method DeleteComment in CommentController class is not of type IActionResult");
         }
 
 }

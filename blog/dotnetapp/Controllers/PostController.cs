@@ -52,7 +52,7 @@ namespace dotnetapp.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Post updatedPost)
+        public IActionResult UpdatePost(int id, [FromBody] Post updatedPost)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
