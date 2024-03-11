@@ -1,0 +1,10 @@
+/* styles.css */
+
+/* Add some basic styling for better visibility */
+p {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
