@@ -25,18 +25,6 @@
     background-color: #ffdddd;
     color: #ff0000;
   }
-
-/* styles.css */
-
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f4f4;
-    margin: 0;
-  }
   
   #targetParagraph {
     max-width: 800px;
@@ -45,18 +33,9 @@ body {
     padding: 20px;
     border: 1px solid #ccc;
   }
-  
-  #changeTextBtn {
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    justify-content: ;
-  }
-  
-  #changeTextBtn:hover {
+
+  button
+  {
     background-color: #0056b3;
   }
   
