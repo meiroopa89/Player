@@ -25,17 +25,5 @@
     background-color: #ffdddd;
     color: #ff0000;
   }
-  
-  #targetParagraph {
-    max-width: 800px;
-    text-align: center;
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-  }
 
-  button
-  {
-    background-color: #0056b3;
-  }
   
