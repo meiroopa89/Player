@@ -1,10 +1,62 @@
-/* styles.css */
-
-/* Add some basic styling for better visibility */
-p {
-    margin: 10px 0;
+ 
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Container styles */
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+  
+  /* Paragraph styles */
+  p {
+    margin-top: 10px;
     padding: 10px;
     border: 1px solid #ccc;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for color change */
+  }
+  
+  p:hover {
+    background-color: #ffdddd;
+    color: #ff0000;
+  }
+
+/* styles.css */
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    margin: 0;
+  }
+  
+  #targetParagraph {
+    max-width: 800px;
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  
+  #changeTextBtn {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    justify-content: ;
+  }
+  
+  #changeTextBtn:hover {
+    background-color: #0056b3;
   }
   
