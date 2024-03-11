@@ -9,10 +9,10 @@ $(document).ready(function() {
     // Change background color on hover
     $('#targetParagraph').hover(
       function() {
-        $(this).css('background-color', 'red');
+        $(this).css('color', 'red');
       },
       function() {
-        $(this).css('background-color', '');
+        $(this).css('color', '');
       }
     );
   });
