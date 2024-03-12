@@ -38,9 +38,15 @@ public class Program
         app.UseAuthentication(); // Add this line
         app.UseAuthorization();
 
+        // app.MapControllerRoute(
+        //     name: "default",
+        //     pattern: "{controller=Home}/{action=Index}/{id?}");
+
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+            pattern: "{controller=User}/{action=Profile}/{id?}");
+
+       
 
         app.Run();
     }

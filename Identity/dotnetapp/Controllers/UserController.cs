@@ -77,13 +77,33 @@ public class UserController : Controller
     {
         var user = _userManager.GetUserAsync(User).Result;
 
-        var profileModel = new UserModel
+        if (user != null)
         {
-            UserID = user.Id,
-            UserName = user.UserName,
-            Email = user.Email
-        };
+            if (int.TryParse(user.Id, out int userId))
+            {
+                var profileModel = new UserModel
+                {
+                    UserID = userId,
+                    UserName = user.UserName,
+                    Email = user.Email
+                };
 
-        return View(profileModel);
+                return View(profileModel);
+            }
+            else
+            {
+                // Handle the case where user.Id is not a valid integer
+                // You may set a default value or take appropriate action
+                return View("Error");
+            }
+        }
+        else
+        {
+            // Handle the case where user is null
+            // You may redirect to a login page or take appropriate action
+            return RedirectToAction("Login");
+        }
     }
+
+
 }
