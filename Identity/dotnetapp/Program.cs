@@ -12,7 +12,7 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
 
         builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
             options.SignIn.RequireConfirmedAccount = true)
