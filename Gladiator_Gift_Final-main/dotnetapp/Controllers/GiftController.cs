@@ -18,7 +18,7 @@ public class GiftController : ControllerBase
         _giftService = giftService;
     }
 
-    [Authorize(Roles = "admin")] 
+    // [Authorize(Roles = "admin")] 
     [HttpPost]
     public IActionResult AddGift([FromBody] Gift gift)
     {
@@ -26,7 +26,7 @@ public class GiftController : ControllerBase
         return Ok(addedGift);
     }
 
-    [Authorize(Roles = "admin,customer")] 
+    // [Authorize(Roles = "admin,customer")] 
     [HttpGet]
     public IActionResult GetAllGifts()
     {
@@ -34,7 +34,7 @@ public class GiftController : ControllerBase
         return Ok(allGifts);
     }
 
-    [Authorize(Roles = "admin,customer")] 
+    // [Authorize(Roles = "admin,customer")] 
     [HttpPut("{giftId}")]
     public IActionResult EditGift(long giftId, [FromBody] Gift updatedGift)
     {
@@ -46,7 +46,7 @@ public class GiftController : ControllerBase
         return NotFound("Gift not found");
     }
 
-    [Authorize(Roles = "admin")] 
+    // [Authorize(Roles = "admin")] 
     [HttpDelete("{giftId}")]
     public IActionResult DeleteGift(long giftId)
     {

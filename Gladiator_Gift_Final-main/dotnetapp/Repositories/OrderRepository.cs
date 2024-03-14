@@ -37,19 +37,6 @@ namespace dotnetapp.Repositories
                 .FirstOrDefault(o => o.OrderId == orderId);
         }
  
-        // public Order DeleteOrder(long orderId)
-        // {
-        //     var orderToDelete = _context.Orders.FirstOrDefault(o => o.OrderId == orderId);
- 
-        //     if (orderToDelete != null)
-        //     {
-        //         _context.Orders.Remove(orderToDelete);
-        //         _context.SaveChanges();
-        //     }
- 
-        //     return orderToDelete;
-        // }
- 
         public List<Order> GetOrdersByCustomerId(long customerId)
         {
             return _context.Orders
