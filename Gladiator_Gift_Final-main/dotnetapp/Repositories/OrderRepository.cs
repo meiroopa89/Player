@@ -25,31 +25,30 @@ namespace dotnetapp.Repositories
 
 public Order AddOrder(Order order)
 {
-    // Iterate through gifts in the order
-    foreach (var gift in order.Gifts)
+    // Materialize the order.Gifts collection into a list
+    var giftIds = order.Gifts.Select(og => og.GiftId).ToList();
+
+    // Find existing gifts by their IDs
+    var existingGifts = _context.Gifts
+        .Where(g => giftIds.Contains(g.GiftId))
+        .ToList();
+
+    // Clear the original gifts collection in the order
+    order.Gifts.Clear();
+
+    // Add existing gifts to the order
+    foreach (var existingGift in existingGifts)
     {
-        // Check if the gift already exists in the database
-        var existingGift = _context.Gifts.FirstOrDefault(g => g.GiftId == gift.GiftId);
-        
-        if (existingGift != null)
-        {
-            // If the gift exists, associate it with the order
-            order.Gifts.Remove(gift); // Remove from order
-            order.Gifts.Add(existingGift); // Add existing gift
-        }
-        else
-        {
-            // If the gift doesn't exist, remove its ID
-            gift.GiftId = 0;
-        }
+        order.Gifts.Add(existingGift);
     }
-    
+
     // Add the order to the context and save changes
     _context.Orders.Add(order);
     _context.SaveChanges();
-    
+
     return order;
 }
+
 
  
         public List<Order> GetAllOrders()
