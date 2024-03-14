@@ -16,12 +16,41 @@ namespace dotnetapp.Repositories
             _context = context;
         }
  
-        public Order AddOrder(Order order)
+        // public Order AddOrder(Order order)
+        // {
+        //     _context.Orders.Add(order);
+        //     _context.SaveChanges();
+        //     return order;
+        // }
+
+public Order AddOrder(Order order)
+{
+    // Iterate through gifts in the order
+    foreach (var gift in order.Gifts)
+    {
+        // Check if the gift already exists in the database
+        var existingGift = _context.Gifts.FirstOrDefault(g => g.GiftId == gift.GiftId);
+        
+        if (existingGift != null)
         {
-            _context.Orders.Add(order);
-            _context.SaveChanges();
-            return order;
+            // If the gift exists, associate it with the order
+            order.Gifts.Remove(gift); // Remove from order
+            order.Gifts.Add(existingGift); // Add existing gift
         }
+        else
+        {
+            // If the gift doesn't exist, remove its ID
+            gift.GiftId = 0;
+        }
+    }
+    
+    // Add the order to the context and save changes
+    _context.Orders.Add(order);
+    _context.SaveChanges();
+    
+    return order;
+}
+
  
         public List<Order> GetAllOrders()
         {
