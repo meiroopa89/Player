@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class GiftService {
 
-  public apiUrl='https://8080-bfabeabdaebdadfccdadbafeaecccaaeccf.premiumproject.examly.io'
+  public apiUrl='https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io'
 
   constructor(private http: HttpClient) { }
 

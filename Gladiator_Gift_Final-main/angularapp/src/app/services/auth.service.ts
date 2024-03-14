@@ -126,7 +126,7 @@ import { User } from '../models/user.model';
 export class AuthService {
   private currentUserSubject: BehaviorSubject<string | null>;
   public currentUser: Observable<string | null>;
-  public apiUrl = 'https://8080-bfabeabdaebdadfccdadbafeaecccaaeccf.premiumproject.examly.io'; // Replace with your Spring Boot backend URL
+  public apiUrl = 'https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io'; // Replace with your Spring Boot backend URL
   private userRoleSubject = new BehaviorSubject<string>('');
   private userIdSubject = new BehaviorSubject<string>('');
   userRole$: Observable<string> = this.userRoleSubject.asObservable();
