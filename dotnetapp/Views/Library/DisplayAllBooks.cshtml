@@ -1,0 +1,49 @@
+@model List<dotnetapp.Models.Book>
+
+<p>
+    <a asp-action="AddBook" class="btn btn-primary">Add Book</a>
+</p>
+
+<form asp-controller="Library" asp-action="SearchBooksByTitle" method="post">
+    <div class="form-group">
+        <label for="searchQuery">Search by Title:</label>
+        <input type="text" id="searchQuery" name="query" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<h2>All Books in the Library</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Published Year</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.PublishedYear</td>
+                <td>
+                     @if (book.LibraryCardId != null)
+                    {
+                        <form asp-controller="Library" asp-action="DisplayBooksForLibraryCard" method="get">
+                            <input type="hidden" name="libraryCardId" value="@book.LibraryCardId" />
+                            <button type="submit" class="btn btn-primary">Display Books</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="GetAvailableBooks" class="btn btn-primary">Available Books</a>
+</p>
