@@ -52,8 +52,7 @@ namespace SimpleToDoList
 
                     case "2": // Mark Task as Complete
                         Console.Write("Enter the task number to mark as complete: ");
-                        int completeIndex;
-                        if (int.TryParse(Console.ReadLine(), out completeIndex) && completeIndex >= 0 && completeIndex < tasks.Count)
+                        if (int.TryParse(Console.ReadLine(), out int completeIndex) && completeIndex >= 0 && completeIndex < tasks.Count)
                         {
                             Console.WriteLine($"Task '{tasks[completeIndex]}' marked as complete.");
                             tasks.RemoveAt(completeIndex);
@@ -66,8 +65,7 @@ namespace SimpleToDoList
 
                     case "3": // Delete Task
                         Console.Write("Enter the task number to delete: ");
-                        int deleteIndex;
-                        if (int.TryParse(Console.ReadLine(), out deleteIndex) && deleteIndex >= 0 && deleteIndex < tasks.Count)
+                        if (int.TryParse(Console.ReadLine(), out int deleteIndex) && deleteIndex >= 0 && deleteIndex < tasks.Count)
                         {
                             Console.WriteLine($"Task '{tasks[deleteIndex]}' deleted.");
                             tasks.RemoveAt(deleteIndex);
@@ -82,7 +80,7 @@ namespace SimpleToDoList
                         Console.WriteLine("Tasks:");
                         for (int i = 0; i < tasks.Count; i++)
                         {
-                            Console.WriteLine($"{i}. {tasks[i]}");
+                            Console.WriteLine($"{i + 1}. {tasks[i]}"); // Fix task numbering to start from 1
                         }
                         break;
 
@@ -101,3 +99,5 @@ namespace SimpleToDoList
         }
     }
 }
+
+
