@@ -3,6 +3,7 @@ using dotnetapp.Models;
 using dotnetapp.Services;
 using Microsoft.AspNetCore.Mvc;
 // using Microsoft.AspNetCore.Authorization;
+using dotnetapp.Data;
 
  
 namespace dotnetapp.Controllers
@@ -11,14 +12,26 @@ namespace dotnetapp.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IOrderService _orderService;
-        private readonly CartService _cartService; // Change here
+        // private readonly IOrderService _orderService;
+        // private readonly CartService _cartService; // Change here
 
-        public OrderController(IOrderService orderService, CartService cartService) // Change here
+        // public OrderController(IOrderService orderService, CartService cartService) // Change here
+        // {
+        //     _orderService = orderService;
+        //     _cartService = cartService;
+        // }
+
+        private readonly ApplicationDbContext _context;
+        private readonly IOrderService _orderService;
+        private readonly CartService _cartService;
+
+        public OrderController(ApplicationDbContext context, IOrderService orderService, CartService cartService)
         {
+            _context = context;
             _orderService = orderService;
             _cartService = cartService;
         }
+
  
     // [Authorize]
     [HttpPost]
@@ -34,25 +47,56 @@ namespace dotnetapp.Controllers
         //     return BadRequest("Failed to add order.");
         // }
 
-        public ActionResult<Order> AddOrder([FromBody] Order order)
+public ActionResult<Order> AddOrder([FromBody] Order order)
 {
-    // Assuming _orderService.AddOrder returns the added order
     var addedOrder = _orderService.AddOrder(order);
 
     if (addedOrder != null)
     {
-        // Loop through the gifts in the order and add them to the cart
         foreach (var gift in order.Gifts)
         {
-            // Assuming _cartService.AddItemToCart method adds the gift to the cart
-            _cartService.AddItemToCart(gift); // Pass the gift object here
+            var existingGift = _context.Gifts.FirstOrDefault(g => g.GiftId == gift.GiftId);
+            if (existingGift != null)
+            {
+                // Assuming CartId is set appropriately
+                existingGift.CartId = gift.CartId;
+
+                // Retrieve the corresponding cart
+                var cart = _context.Carts.FirstOrDefault(c => c.CartId == gift.CartId);
+                if (cart != null)
+                {
+                    // Add the gift to the cart
+                    cart.Gifts.Add(existingGift);
+                }
+                else
+                {
+                    // If the cart doesn't exist, you may need to create a new one
+                    // Handle this scenario based on your application logic
+                }
+            }
+            else
+            {
+                // Handle case where gift does not exist
+                // It's up to your application logic how to handle this scenario
+            }
         }
 
-        return Ok(addedOrder);
+        // Save changes to persist the updates to the database
+        _context.SaveChanges(); 
+
+        // Assuming your OrderService method returns the added order
+        var result = _orderService.AddOrder(order);
+
+        if (result != null)
+        {
+            return Ok(result);
+        }
     }
 
     return BadRequest("Failed to add order.");
 }
+
+
 
  
         // [Authorize]
