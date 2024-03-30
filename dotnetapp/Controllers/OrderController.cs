@@ -47,6 +47,10 @@ namespace dotnetapp.Controllers
         //     return BadRequest("Failed to add order.");
         // }
 
+        [HttpPost]
+[HttpPost]
+[HttpPost]
+[HttpPost]
 public ActionResult<Order> AddOrder([FromBody] Order order)
 {
     var addedOrder = _orderService.AddOrder(order);
@@ -55,46 +59,33 @@ public ActionResult<Order> AddOrder([FromBody] Order order)
     {
         foreach (var gift in order.Gifts)
         {
+            // Check if the gift already exists in the database
             var existingGift = _context.Gifts.FirstOrDefault(g => g.GiftId == gift.GiftId);
+
             if (existingGift != null)
             {
-                // Assuming CartId is set appropriately
-                existingGift.CartId = gift.CartId;
-
-                // Retrieve the corresponding cart
-                var cart = _context.Carts.FirstOrDefault(c => c.CartId == gift.CartId);
-                if (cart != null)
-                {
-                    // Add the gift to the cart
-                    cart.Gifts.Add(existingGift);
-                }
-                else
-                {
-                    // If the cart doesn't exist, you may need to create a new one
-                    // Handle this scenario based on your application logic
-                }
+                // Associate the existing gift with the order without modifying its ID
+                gift.GiftId = existingGift.GiftId;
             }
             else
             {
-                // Handle case where gift does not exist
-                // It's up to your application logic how to handle this scenario
+                // If the gift doesn't exist, add it to the database
+                _context.Gifts.Add(gift);
             }
+
+            // Associate the gift with the order
+            addedOrder.Gifts.Add(gift);
         }
 
-        // Save changes to persist the updates to the database
-        _context.SaveChanges(); 
+        _context.SaveChanges(); // Save changes to persist the updates to the database
 
-        // Assuming your OrderService method returns the added order
-        var result = _orderService.AddOrder(order);
-
-        if (result != null)
-        {
-            return Ok(result);
-        }
+        return Ok(addedOrder);
     }
 
     return BadRequest("Failed to add order.");
 }
+
+
 
 
 
