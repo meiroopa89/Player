@@ -3,6 +3,7 @@ using dotnetapp.Models;
 using dotnetapp.Services;
 using Microsoft.AspNetCore.Mvc;
 // using Microsoft.AspNetCore.Authorization;
+
  
 namespace dotnetapp.Controllers
 {
@@ -11,25 +12,48 @@ namespace dotnetapp.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
- 
-        public OrderController(IOrderService orderService)
+        private readonly CartService _cartService; // Change here
+
+        public OrderController(IOrderService orderService, CartService cartService) // Change here
         {
             _orderService = orderService;
+            _cartService = cartService;
         }
  
     // [Authorize]
     [HttpPost]
+        // public ActionResult<Order> AddOrder([FromBody] Order order)
+        // {
+        //     var result = _orderService.AddOrder(order);
+ 
+        //     if (result != null)
+        //     {
+        //         return Ok(result);
+        //     }
+ 
+        //     return BadRequest("Failed to add order.");
+        // }
+
         public ActionResult<Order> AddOrder([FromBody] Order order)
+{
+    // Assuming _orderService.AddOrder returns the added order
+    var addedOrder = _orderService.AddOrder(order);
+
+    if (addedOrder != null)
+    {
+        // Loop through the gifts in the order and add them to the cart
+        foreach (var gift in order.Gifts)
         {
-            var result = _orderService.AddOrder(order);
- 
-            if (result != null)
-            {
-                return Ok(result);
-            }
- 
-            return BadRequest("Failed to add order.");
+            // Assuming _cartService.AddItemToCart method adds the gift to the cart
+            _cartService.AddItemToCart(gift); // Pass the gift object here
         }
+
+        return Ok(addedOrder);
+    }
+
+    return BadRequest("Failed to add order.");
+}
+
  
         // [Authorize]
         [HttpGet]
