@@ -1,7 +1,10 @@
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using dotnetapp.Models;
 
+namespace dotnetapp.Controllers
+{
 public class ProductController : Controller
 {
     private ApplicationDbContext db = new ApplicationDbContext();
@@ -31,9 +34,10 @@ public class ProductController : Controller
         var product = db.Products.Find(id);
         if (product == null)
         {
-            return HttpNotFound();
+            return NotFound();
         }
         return View(product);
     }
 
+}
 }
