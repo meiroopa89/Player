@@ -6,7 +6,6 @@ using Microsoft.Data.SqlClient;
 using System;
 using dotnetapp.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory;
 
 
 namespace TestProject
@@ -208,11 +207,11 @@ public class Tests
             MethodInfo method = controllerType.GetMethod("Create", new[] { modelType });
             if (method != null)
             {
-                // Create DbContextOptions
-                var options = new DbContextOptions<ApplicationDbContext>()
-                    .UseInMemoryDatabase(databaseName: "TestDatabase")
-                    .Options;
-                
+                // Create DbContextOptions using DbContextOptionsBuilder
+                var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>()
+                    .UseInMemoryDatabase(databaseName: "TestDatabase");
+                var options = optionsBuilder.Options;
+
                 var dbContextInstance = new ApplicationDbContext(options);
                 var controller = Activator.CreateInstance(controllerType, dbContextInstance);
                 var result = method.Invoke(controller, new object[] { product });
@@ -232,6 +231,7 @@ public class Tests
                 Assert.Fail("Create method not found in ProductController");
             }
         }
+
 
 }
 }
