@@ -26,6 +26,7 @@ namespace dotnetapp.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _db.Products.Add(product);
                 _db.SaveChanges();
                 return RedirectToAction("View", new { id = product.Id });

@@ -11,7 +11,11 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
+            <th>Category</th>
             <th>Price</th>
+            <th>StockQuantity</th>
+            <th>ExpiryDate</th>
+
         </tr>
     </thead>
     <tbody>
@@ -20,7 +24,12 @@
             <tr>
                 <td>@product.Name</td>
                 <td>@product.Description</td>
+                <td>@product.Category</td>
                 <td>@product.Price</td>
+                <td>@product.StockQuantity</td>
+                @* <td>@product.ExpiryDate</td>*@
+                 <td>@product.ExpiryDate.ToString("yyyy-MM-dd")</td>
+
             </tr>
         }
     </tbody>
