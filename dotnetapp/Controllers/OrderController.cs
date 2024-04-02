@@ -47,10 +47,8 @@ namespace dotnetapp.Controllers
         //     return BadRequest("Failed to add order.");
         // }
 
+
         [HttpPost]
-[HttpPost]
-[HttpPost]
-[HttpPost]
 public ActionResult<Order> AddOrder([FromBody] Order order)
 {
     var addedOrder = _orderService.AddOrder(order);
@@ -72,10 +70,10 @@ public ActionResult<Order> AddOrder([FromBody] Order order)
                 // If the gift doesn't exist, add it to the database
                 _context.Gifts.Add(gift);
             }
-
-            // Associate the gift with the order
-            addedOrder.Gifts.Add(gift);
         }
+
+        // Associate the gifts with the order
+        addedOrder.Gifts = order.Gifts;
 
         _context.SaveChanges(); // Save changes to persist the updates to the database
 
