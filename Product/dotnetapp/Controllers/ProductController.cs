@@ -33,16 +33,31 @@ namespace dotnetapp.Controllers
             return View(product);
         }
 
+        // // GET: Product/View
+        // public ActionResult View(int id)
+        // {
+        //     var product = _db.Products.Find(id);
+        //     if (product == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     return View(product);
+        // }
+
         // GET: Product/View
-        public ActionResult View(int id)
+    public ActionResult View(int id)
+    {
+        var product = _db.Products.Find(id);
+        if (product == null)
         {
-            var product = _db.Products.Find(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
+            return NotFound();
         }
+
+        // Retrieve all products and pass them to the view
+        var products = _db.Products.ToList();
+        return View(products);
+    }
+
 
     }
 }
