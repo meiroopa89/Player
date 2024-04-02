@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using Microsoft.Data.SqlClient;
 using System;
+using dotnetapp.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory;
+
 
 namespace TestProject
 {
@@ -126,14 +130,36 @@ public class Tests
         }
 
         [Test]
-        public void ProductController_View_MethodReturns_IActionResult()
+        public void ProductController_ViewProducts_MethodExists()
         {
             string assemblyName = "dotnetapp";
             string typeName = "dotnetapp.Controllers.ProductController";
             Assembly assembly = Assembly.Load(assemblyName);
             Type ProductControllerType = assembly.GetType(typeName);
             MethodInfo methodInfo = ProductControllerType.GetMethod("ViewProducts");
-            Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method View in ProductController class is not of type ActionResult");
+            Assert.IsNotNull(methodInfo, "Method ViewProducts does not exist in ProductController class");
+        }
+
+        [Test]
+        public void ProductController_ViewProducts_MethodReturns_IActionResult()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.ProductController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type ProductControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = ProductControllerType.GetMethod("ViewProducts");
+            Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method ViewProducts in ProductController class is not of type IActionResult");
+        }
+
+        [Test]
+        public void ProductController_Create_MethodExists()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.ProductController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type ProductControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = ProductControllerType.GetMethod("Create", Type.EmptyTypes);
+            Assert.IsNotNull(methodInfo, "Method Create does not exist in ProductController class");
         }
 
         [Test]
@@ -144,10 +170,68 @@ public class Tests
             Assembly assembly = Assembly.Load(assemblyName);
             Type ProductControllerType = assembly.GetType(typeName);
             MethodInfo methodInfo = ProductControllerType.GetMethod("Create", Type.EmptyTypes);
-            Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method Create in ProductController class is not of type ActionResult");
+            Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method Create in ProductController class is not of type IActionResult");
         }
 
-       
+        [Test]
+        public void Create_in_ProductController_Add_new_Product_to_DB()
+        {
+            string assemblyName = "dotnetapp";
+            Assembly assembly = Assembly.Load(assemblyName);
+            string modelTypeName = "dotnetapp.Models.Product";
+            string controllerTypeName = "dotnetapp.Controllers.ProductController";
+            Type controllerType = assembly.GetType(controllerTypeName);
+            Type modelType = assembly.GetType(modelTypeName);
+
+            // Prepare data for creating a new product
+            var productData = new Dictionary<string, object>
+            {
+                { "Name", "Sample Product" },
+                { "Description", "Sample Description" },
+                { "Category", "Sample Category" },
+                { "Price", 10.99m },
+                { "StockQuantity", 100 },
+                { "ExpiryDate", DateTime.Now.AddDays(30) }
+            };
+
+            var product = new Product();
+            foreach (var kvp in productData)
+            {
+                var propertyInfo = modelType.GetProperty(kvp.Key);
+                if (propertyInfo != null)
+                {
+                    propertyInfo.SetValue(product, kvp.Value);
+                }
+            }
+
+            // Invoke the Create method in the ProductController
+            MethodInfo method = controllerType.GetMethod("Create", new[] { modelType });
+            if (method != null)
+            {
+                // Create DbContextOptions
+                var options = new DbContextOptions<ApplicationDbContext>()
+                    .UseInMemoryDatabase(databaseName: "TestDatabase")
+                    .Options;
+                
+                var dbContextInstance = new ApplicationDbContext(options);
+                var controller = Activator.CreateInstance(controllerType, dbContextInstance);
+                var result = method.Invoke(controller, new object[] { product });
+
+                // Validate the result
+                var savedProduct = dbContextInstance.Products.FirstOrDefault(p => p.Name == "Sample Product");
+                Assert.IsNotNull(savedProduct);
+                Assert.AreEqual("Sample Description", savedProduct.Description);
+                // Add more assertions as needed
+
+                // Optionally, clean up by deleting the added product from the database
+                dbContextInstance.Products.Remove(savedProduct);
+                dbContextInstance.SaveChanges();
+            }
+            else
+            {
+                Assert.Fail("Create method not found in ProductController");
+            }
+        }
 
 }
 }
