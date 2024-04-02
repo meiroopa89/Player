@@ -34,8 +34,6 @@ namespace dotnetapp.Controllers
         // GET: Product/View
         public IActionResult ViewProducts()
         {
-
-            // Retrieve all products and pass them to the view
             var products = _db.Products.ToList();
             return View(products);
         }
