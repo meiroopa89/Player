@@ -13,14 +13,14 @@ namespace dotnetapp.Controllers
         }
 
         // GET: Product/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
         // POST: Product/Create
         [HttpPost]
-        public ActionResult Create(Product product)
+        public IActionResult Create(Product product)
         {
             if (ModelState.IsValid)
             {
@@ -32,7 +32,7 @@ namespace dotnetapp.Controllers
         }
 
         // GET: Product/View
-        public ActionResult View()
+        public IActionResult ViewProducts()
         {
 
             // Retrieve all products and pass them to the view

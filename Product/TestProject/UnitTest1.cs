@@ -126,14 +126,28 @@ public class Tests
         }
 
         [Test]
-        public void ProductController_View_MethodExists()
+        public void ProductController_View_MethodReturns_IActionResult()
         {
             string assemblyName = "dotnetapp";
             string typeName = "dotnetapp.Controllers.ProductController";
             Assembly assembly = Assembly.Load(assemblyName);
             Type ProductControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = ProductControllerType.GetMethod("View");
-            Assert.IsNotNull(methodInfo, "Method View does not exist in ProductController class");
+            MethodInfo methodInfo = ProductControllerType.GetMethod("ViewProducts");
+            Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method View in ProductController class is not of type ActionResult");
         }
+
+        [Test]
+        public void ProductController_Create_Method_with_NoParams_Returns_IActionResult()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Controllers.ProductController";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type ProductControllerType = assembly.GetType(typeName);
+            MethodInfo methodInfo = ProductControllerType.GetMethod("Create", Type.EmptyTypes);
+            Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method Create in ProductController class is not of type ActionResult");
+        }
+
+       
+
 }
 }
