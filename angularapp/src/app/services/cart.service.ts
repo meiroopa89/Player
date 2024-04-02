@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root',
@@ -12,16 +12,27 @@ export class CartService {
 
   constructor(private http: HttpClient) { }
 
-  updateCart(cartDetails: any): any {
+  // updateCart(cartDetails: any): any {
+  //   const token = localStorage.getItem('token');
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': `Bearer ${token}` // Assuming your token is a bearer token, replace it accordingly
+  //   });
+  //   console.log(cartDetails);
+  //   const cartId = localStorage.getItem('cartId');
+  //   return this.http.put(`${this.apiUrl}/api/cart/update/${cartId}`, cartDetails, { headers });
+  // }
+
+  updateCart(cartDetails: any): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}` // Assuming your token is a bearer token, replace it accordingly
+      'Authorization': `Bearer ${token}`
     });
-    console.log(cartDetails);
     const cartId = localStorage.getItem('cartId');
-    return this.http.put(`${this.apiUrl}/api/cart/update/${cartId}`, cartDetails, { headers });
+    return this.http.post(`${this.apiUrl}/api/cart/update/${cartId}`, cartDetails, { headers });
   }
+  
 
   removeGiftsFromCart(cartDetails: any, giftId: any): any {
     console.log("cartId", cartDetails.cartId)
@@ -45,43 +56,15 @@ export class CartService {
   }
 
 
-  // getAllGiftsFromCart(): any {
-  //   const token = localStorage.getItem('token');
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${token}` // Assuming your token is a bearer token, replace it accordingly
-  //   });
-  //   const customerId = localStorage.getItem('customerId');
-  //   return this.http.get(`${this.apiUrl}/api/cart/customer/${customerId}`, { headers });
-  // }
-
-  getAllGiftsFromCart() {
-    this.cartService.getAllGiftsFromCart().subscribe(
-      (response) => {
-        console.log(response);
-        if (response && response.gifts) {
-          // Check if the gifts property is an array
-          if (Array.isArray(response.gifts)) {
-            this.gifts = response.gifts;
-          } else {
-            // If not an array, consider it as a single gift object and convert it to an array
-            this.gifts = [response.gifts];
-          }
-          this.totalAmount = response.totalAmount;
-          this.gifts.forEach(gift => {
-            gift.userQuantity = 1;
-          });
-        } else {
-          console.error('Invalid response format:', response);
-        }
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  getAllGiftsFromCart(): any {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` // Assuming your token is a bearer token, replace it accordingly
+    });
+    const customerId = localStorage.getItem('customerId');
+    return this.http.get(`${this.apiUrl}/api/cart/customer/${customerId}`, { headers });
   }
-  
-  
 
   addReview(review: any): Observable<any> {
     const token = localStorage.getItem('token');

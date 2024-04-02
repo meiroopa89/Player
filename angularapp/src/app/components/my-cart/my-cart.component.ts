@@ -25,23 +25,41 @@ export class MyCartComponent implements OnInit {
     this.getAllGiftsFromCart();
   }
 
+  // getAllGiftsFromCart() {
+  //   this.cartService.getAllGiftsFromCart().subscribe(
+  //     (response) => {
+  //       console.log(response);
+  //       if (response && response.gifts) {
+  //         // Check if the gifts property is an object with $values array
+  //         if (Array.isArray(response.gifts.$values)) {
+  //           // Extract the array from the nested object
+  //           this.gifts = response.gifts.$values;
+  //         } else {
+  //           // If $values array is not present, consider gifts itself as the array
+  //           this.gifts = response.gifts;
+  //         }
+  //         this.totalAmount = response.totalAmount;
+  //         this.gifts.forEach(gift => {
+  //           gift.userQuantity = 1;
+  //         });
+  //       } else {
+  //         console.error('Invalid response format:', response);
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  //   //new
+  // }
+
   getAllGiftsFromCart() {
     this.cartService.getAllGiftsFromCart().subscribe(
       (response) => {
         console.log(response);
-        if (response && response.gifts) {
-          // Check if the gifts property is an object with $values array
-          if (Array.isArray(response.gifts.$values)) {
-            // Extract the array from the nested object
-            this.gifts = response.gifts.$values;
-          } else {
-            // If $values array is not present, consider gifts itself as the array
-            this.gifts = response.gifts;
-          }
-          this.totalAmount = response.totalAmount;
-          this.gifts.forEach(gift => {
-            gift.userQuantity = 1;
-          });
+        if (response && response.gifts && Array.isArray(response.gifts.$values)) {
+          this.gifts = response.gifts.$values;
+          this.totalAmount = this.calculateTotalAmount();
         } else {
           console.error('Invalid response format:', response);
         }
@@ -50,8 +68,8 @@ export class MyCartComponent implements OnInit {
         console.error(error);
       }
     );
-    //new
   }
+  
   
   calculateTotalAmount(): number {
     let totalAmount = 0;
@@ -77,6 +95,28 @@ export class MyCartComponent implements OnInit {
   }
 
 
+  // updateQuantity(giftData: any): void {
+  //   if (giftData.quantity > giftData.userQuantity) {
+  //     giftData.quantity = giftData.userQuantity;
+  //   }
+    
+  //   giftData.totalAmount = giftData.userQuantity * giftData.giftPrice; // Update the total amount for the specific gift
+    
+  //   const customerId = localStorage.getItem('customerId'); // Get the customerId from local storage
+    
+  //   // Call getTotalAmount method from CartService with customerId as argument
+  //   this.cartService.getTotalAmount(customerId).subscribe(
+  //     response => {
+  //       console.log(response); // Handle the response as per your requirement
+  //     },
+  //     error => {
+  //       console.error('Error:', error); 
+  //     }
+  //   );
+  //   this.updateTotalAmount();
+  //   console.log('Total amount updated:', this.totalAmount);
+  // }
+
   updateQuantity(giftData: any): void {
     if (giftData.quantity > giftData.userQuantity) {
       giftData.quantity = giftData.userQuantity;
@@ -84,24 +124,17 @@ export class MyCartComponent implements OnInit {
     
     giftData.totalAmount = giftData.userQuantity * giftData.giftPrice; // Update the total amount for the specific gift
     
-    const customerId = localStorage.getItem('customerId'); // Get the customerId from local storage
-    
-    // Call getTotalAmount method from CartService with customerId as argument
-    this.cartService.getTotalAmount(customerId).subscribe(
-      response => {
-        console.log(response); // Handle the response as per your requirement
-      },
-      error => {
-        console.error('Error:', error); 
-      }
-    );
-    this.updateTotalAmount();
+    // Recalculate total amount for all gifts
+    this.totalAmount = this.gifts.reduce((total, gift) => total + (gift.userQuantity * gift.giftPrice), 0);
     console.log('Total amount updated:', this.totalAmount);
   }
+  
+
   updateTotalAmount(): void {
-    this.totalAmount = this.gifts.reduce((total, gift) => total + (this.userQuantity * gift.giftPrice), 0);
+    this.totalAmount = this.gifts.reduce((total, gift) => total + (gift.userQuantity * gift.giftPrice), 0);
     console.log('Total amount:', this.totalAmount);
   }
+  
 
   // removeFromCart(giftId: number) {
   //   this.gifts = this.gifts.filter(gift => gift.giftId !== giftId);
