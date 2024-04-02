@@ -46,14 +46,8 @@ namespace dotnetapp.Controllers
         // }
 
         // GET: Product/View
-    public ActionResult View(int id)
+    public ActionResult View()
     {
-        // var product = _db.Products.Find(id);
-        // if (product == null)
-        // {
-        //     return NotFound();
-        // }
-
         // Retrieve all products and pass them to the view
         var products = _db.Products.ToList();
         return View(products);
