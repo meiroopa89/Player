@@ -49,43 +49,37 @@ namespace dotnetapp.Controllers
 
 
         [HttpPost]
-public ActionResult<Order> AddOrder([FromBody] Order order)
-{
-    var addedOrder = _orderService.AddOrder(order);
-
-    if (addedOrder != null)
-    {
-        foreach (var gift in order.Gifts)
+         public ActionResult<Order> AddOrder([FromBody] Order order)
         {
-            // Check if the gift already exists in the database
-            var existingGift = _context.Gifts.FirstOrDefault(g => g.GiftId == gift.GiftId);
+            var addedOrder = _orderService.AddOrder(order);
 
-            if (existingGift != null)
+            if (addedOrder != null)
             {
-                // Associate the existing gift with the order without modifying its ID
-                gift.GiftId = existingGift.GiftId;
+                foreach (var gift in order.Gifts)
+                {
+                    // Check if the gift already exists in the database
+                    var existingGift = _context.Gifts.FirstOrDefault(g => g.GiftId == gift.GiftId);
+
+                    if (existingGift != null)
+                    {
+                        // Associate the existing gift with the order
+                        addedOrder.Gifts.Add(existingGift);
+                    }
+                    else
+                    {
+                        // If the gift doesn't exist, add it to the database and associate it with the order
+                        _context.Gifts.Add(gift);
+                        addedOrder.Gifts.Add(gift);
+                    }
+                }
+
+                _context.SaveChanges(); // Save changes to persist the updates to the database
+
+                return Ok(addedOrder);
             }
-            else
-            {
-                // If the gift doesn't exist, add it to the database
-                _context.Gifts.Add(gift);
-            }
+
+            return BadRequest("Failed to add order.");
         }
-
-        // Associate the gifts with the order
-        addedOrder.Gifts = order.Gifts;
-
-        _context.SaveChanges(); // Save changes to persist the updates to the database
-
-        return Ok(addedOrder);
-    }
-
-    return BadRequest("Failed to add order.");
-}
-
-
-
-
 
  
         // [Authorize]
