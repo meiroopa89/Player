@@ -38,5 +38,30 @@ public class Tests
             Type expectedType = propertyInfo.PropertyType;
             Assert.AreEqual(typeof(int), expectedType, "Property Id in Product class is not of type int");
         }
+
+        [Test]
+        public void Product_Name_PropertyExists_ReturnExpectedDataTypes_string()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.Product";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type ProductType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = ProductType.GetProperty("Name");
+            Assert.IsNotNull(propertyInfo, "Property Name does not exist in Product class");
+            Type expectedType = propertyInfo.PropertyType;
+            Assert.AreEqual(typeof(string), expectedType, "Property Name in Product class is not of type string");
+        }
+        [Test]
+        public void Product_Description_PropertyExists_ReturnExpectedDataTypes_string()
+        {
+            string assemblyName = "dotnetapp";
+            string typeName = "dotnetapp.Models.Product";
+            Assembly assembly = Assembly.Load(assemblyName);
+            Type ProductType = assembly.GetType(typeName);
+            PropertyInfo propertyInfo = ProductType.GetProperty("Description");
+            Assert.IsNotNull(propertyInfo, "Property Name does not exist in Product class");
+            Type expectedType = propertyInfo.PropertyType;
+            Assert.AreEqual(typeof(string), expectedType, "Property Description in Product class is not of type string");
+        }
 }
 }
