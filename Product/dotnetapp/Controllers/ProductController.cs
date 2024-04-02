@@ -5,39 +5,44 @@ using dotnetapp.Models;
 
 namespace dotnetapp.Controllers
 {
-public class ProductController : Controller
-{
-    private ApplicationDbContext db = new ApplicationDbContext();
-
-    // GET: Product/Create
-    public ActionResult Create()
+    public class ProductController : Controller
     {
-        return View();
-    }
+        private readonly ApplicationDbContext _db;
 
-    // POST: Product/Create
-    [HttpPost]
-    public ActionResult Create(Product product)
-    {
-        if (ModelState.IsValid)
+        public ProductController(DbContextOptions<ApplicationDbContext> options)
         {
-            db.Products.Add(product);
-            db.SaveChanges();
-            return RedirectToAction("View", new { id = product.Id });
+            _db = new ApplicationDbContext(options);
         }
-        return View(product);
-    }
 
-    // GET: Product/View
-    public ActionResult View(int id)
-    {
-        var product = db.Products.Find(id);
-        if (product == null)
+        // GET: Product/Create
+        public ActionResult Create()
         {
-            return NotFound();
+            return View();
         }
-        return View(product);
-    }
 
-}
+        // POST: Product/Create
+        [HttpPost]
+        public ActionResult Create(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Products.Add(product);
+                _db.SaveChanges();
+                return RedirectToAction("View", new { id = product.Id });
+            }
+            return View(product);
+        }
+
+        // GET: Product/View
+        public ActionResult View(int id)
+        {
+            var product = _db.Products.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+    }
 }

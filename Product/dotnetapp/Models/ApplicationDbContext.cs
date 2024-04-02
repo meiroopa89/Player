@@ -1,6 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using dotnetapp.Models;
-public class ApplicationDbContext : DbContext
+
+namespace dotnetapp.Models
 {
-    public DbSet<Product> Products { get; set; }
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        }
+
+        public DbSet<Product> Products { get; set; }
+
+    }
 }
