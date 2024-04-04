@@ -1,7 +1,7 @@
 // src/app/recipe-form/recipe-form.component.ts
 import { Component } from '@angular/core';
 import { Recipe } from '../models/receipe.model';
-import { RecipeService } from '../services/receipe.service'; // Corrected import statement
+import { RecipeService } from '../services/recipe.service'; // Corrected import statement
 import { Router } from '@angular/router';
 
 
