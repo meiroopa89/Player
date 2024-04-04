@@ -5,10 +5,10 @@ import { RecipeService } from '../services/receipe.service'; // Corrected import
 
 @Component({
   selector: 'app-recipe-form',
-  templateUrl: './recipe-form.html',
-  styleUrls: ['./recipe-form.css']
+  templateUrl: './receipe-form.html',
+  styleUrls: ['./receipe-form.css']
 })
-export class RecipeFormComponent {
+export class RecipeForm{
   newRecipe: Recipe = {
     recipeId: 0,
     name: '',

@@ -5,14 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RecipeFormComponent } from './receipe-form-component/receipe-form.component';
+import { RecipeForm } from './receipe-form-component/receipe-form.component';}
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ReceipeFormComponent
+    RecipeForm
   ],
   imports: [
     BrowserModule,
