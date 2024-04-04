@@ -5,8 +5,8 @@ import { RecipeService } from '../services/receipe.service'; // Corrected import
 
 @Component({
   selector: 'app-recipe-form',
-  templateUrl: './recipe-form.component.html',
-  styleUrls: ['./recipe-form.component.css']
+  templateUrl: './recipe-form.html',
+  styleUrls: ['./recipe-form.css']
 })
 export class RecipeFormComponent {
   newRecipe: Recipe = {
