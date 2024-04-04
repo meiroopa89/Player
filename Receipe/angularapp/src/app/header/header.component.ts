@@ -14,7 +14,7 @@ export class HeaderComponent {
     this.router.navigate(['/addNewRecipe']);
   }
 
-  // navigateToViewRecipes() {
-  //   this.router.navigate(['/viewRecipes']);
-  // }
+  navigateToViewRecipes() {
+    this.router.navigate(['/viewRecipes']);
+  }
 }
