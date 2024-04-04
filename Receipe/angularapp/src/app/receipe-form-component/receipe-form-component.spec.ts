@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReceipeFormComponentComponent } from './receipe-form-component.component';
+import { ReceipeFormComponentComponent } from './receipe-form.component';
 
 describe('ReceipeFormComponentComponent', () => {
   let component: ReceipeFormComponentComponent;
