@@ -1,7 +1,7 @@
 // src/app/recipe-form/recipe-form.component.ts
 import { Component } from '@angular/core';
-import { Recipe } from '../models/recipe.model';
-import { RecipeService } from '../services/recipe.service';
+import { Recipe } from '../models/receipe.model';
+import { ReceipeServiceService } from '../services/receipe-service.service';
 
 @Component({
   selector: 'app-recipe-form',
@@ -18,7 +18,7 @@ export class RecipeFormComponent {
     author: ''
   };
 
-  constructor(private recipeService: RecipeService) { }
+  constructor(private recipeService: ReceipeServiceService) { }
 
   addRecipe(): void {
     this.recipeService.addRecipe(this.newRecipe).subscribe(() => {

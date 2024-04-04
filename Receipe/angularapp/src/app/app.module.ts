@@ -6,13 +6,11 @@ import { AppComponent } from './app.component';
 import { ReceipeFormComponentComponent } from './receipe-form-component/receipe-form-component.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ReceipeServiceComponent } from './receipe-service/receipe-service.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ReceipeFormComponentComponent,
-    ReceipeServiceComponent
+    ReceipeFormComponentComponent
   ],
   imports: [
     BrowserModule,
