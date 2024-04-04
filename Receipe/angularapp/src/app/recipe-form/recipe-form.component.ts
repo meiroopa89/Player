@@ -2,6 +2,8 @@
 import { Component } from '@angular/core';
 import { Recipe } from '../models/receipe.model';
 import { RecipeService } from '../services/receipe.service'; // Corrected import statement
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-recipe-form',
@@ -18,11 +20,12 @@ export class RecipeFormComponent {
     author: ''
   };
 
-  constructor(private recipeService: RecipeService) { } 
+  constructor(private recipeService: RecipeService, private router: Router) { }
 
   addRecipe(): void {
     this.recipeService.addRecipe(this.newRecipe).subscribe(() => {
       console.log('Recipe added successfully!');
+      this.router.navigate(['/viewRecipes']);
     });
   }
 }
