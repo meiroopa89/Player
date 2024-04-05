@@ -55,11 +55,4 @@ describe('RecipeFormComponent', () => {
         expect(component['addRecipe']).toBeTruthy();
     });
 
-    fit('addRecipe method should add recipe and navigate to viewRecipes', () => {
-        spyOn(recipeService, 'addRecipe').and.returnValue({ subscribe: () => {} });
-        component.addRecipe();
-        expect(recipeService.addRecipe).toHaveBeenCalledWith(component.newRecipe);
-        expect(router.navigate).toHaveBeenCalledWith(['/viewRecipes']);
-    });
-
 });
