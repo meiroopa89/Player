@@ -24,13 +24,13 @@ describe('RecipeListComponent', () => {
         component = fixture.componentInstance;
     });
 
-    fit('should create recipe-listComponent', () => {
+    fit('should_create_recipe_listComponent', () => {
         mockRecipeService.getRecipes.and.returnValue(of([]));
         fixture.detectChanges();
         expect(component).toBeTruthy();
     });
 
-    fit('recipe-listComponent_should call loadRecipes on ngOnInit', () => {
+    fit('recipe-listComponent_should_call_loadRecipes_on_ngOnInit', () => {
         spyOn(component, 'loadRecipes');
         fixture.detectChanges();
         expect(component.loadRecipes).toHaveBeenCalled();

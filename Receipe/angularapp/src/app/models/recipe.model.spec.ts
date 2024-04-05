@@ -1,7 +1,7 @@
 import { Recipe } from '../models/recipe.model';
 
 describe('Recipe', () => {
-  fit('RecipeModel_should create an instance', () => {
+  fit('RecipeModel_should_create_an_instance', () => {
     // Create a factory function to create instances of Recipe
     function createRecipe(recipeId: number, name: string, description: string, ingredients: string, instructions: string, author: string): Recipe {
       return {
@@ -30,7 +30,7 @@ describe('Recipe', () => {
     // expect(recipe instanceof Recipe).toBeTruthy();
   });
 
-  fit('RecipeModel_should update property values using setters', () => {
+  fit('RecipeModel_should_update_property_values_using_setters', () => {
     // Similar setup as above
     function createRecipe(recipeId: number, name: string, description: string, ingredients: string, instructions: string, author: string): Recipe {
       return {

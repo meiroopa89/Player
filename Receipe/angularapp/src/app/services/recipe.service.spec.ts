@@ -21,19 +21,19 @@ describe('RecipeService', () => {
     httpTestingController.verify();
   });
 
-  it('RecipeService_should be created', () => {
+  fit('RecipeService_should_be_created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('RecipeService_should have addRecipe method', () => {
+  fit('RecipeService_should_have_addRecipe_method', () => {
     expect(service.addRecipe).toBeTruthy();
   });
 
-  it('RecipeService_should have getRecipes method', () => {
+  fit('RecipeService_should_have_getRecipes_method', () => {
     expect(service.getRecipes).toBeTruthy();
   });
 
-  fit('RecipeService_should_add_a_recipe and return it', () => {
+  fit('RecipeService_should_add_a_recipe_and_return_it', () => {
     const mockRecipe: Recipe = {
       recipeId: 1,
       name: 'Test Recipe',

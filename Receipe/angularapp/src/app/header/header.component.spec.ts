@@ -19,28 +19,28 @@ describe('HeaderComponent', () => {
         router = TestBed.inject(Router);
     });
 
-    fit('should create HeaderComponent', () => {
+    fit('should_create_HeaderComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    fit('HeaderComponent_should navigate to Add New Recipe', () => {
+    fit('HeaderComponent_should_navigate_to_Add_New_Recipe', () => {
         spyOn(router, 'navigate');
         component.navigateToAddRecipe();
         expect(router.navigate).toHaveBeenCalledWith(['/addNewRecipe']);
     });
 
-    fit('HeaderComponent_should navigate to View Recipe', () => {
+    fit('HeaderComponent_should_navigate_to_View_Recipe', () => {
         spyOn(router, 'navigate');
         component.navigateToViewRecipes();
         expect(router.navigate).toHaveBeenCalledWith(['/viewRecipes']);
     });
 
-    fit('HeaderComponent_should have Recipe Sharing Platform as the brand', () => {
+    fit('HeaderComponent_should_have_Recipe_Sharing_Platform_as_the_brand', () => {
         const brandElement: HTMLElement = fixture.nativeElement.querySelector('h1');
         expect(brandElement.textContent).toContain('Recipe Sharing Platform');
     });
 
-    fit('HeaderComponent_should have a link with text View Recipe', () => {
+    fit('HeaderComponent_should_have_a_link_with_text_View_Recipe', () => {
         const navItems: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('a');
         const viewRecipeLink: HTMLElement = navItems[navItems.length - 1];
         expect(viewRecipeLink.textContent).toContain('View Recipe');
