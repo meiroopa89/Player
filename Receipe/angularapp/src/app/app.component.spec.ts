@@ -18,12 +18,12 @@ describe('AppComponent', () => {
 
     });
 
-  fit('AppComponent_should_render_router-outlet', () => {
+  fit('AppComponent_should_render_router_outlet', () => {
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 
-  fit('AppComponent_should_render_app-header', () => {
+  fit('AppComponent_should_render_app_header', () => {
       const compiled = fixture.nativeElement;
       expect(compiled.querySelector('app-header')).toBeTruthy();
   });

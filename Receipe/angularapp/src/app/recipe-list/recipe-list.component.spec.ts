@@ -30,7 +30,7 @@ describe('RecipeListComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    fit('recipe-listComponent_should_call_loadRecipes_on_ngOnInit', () => {
+    fit('recipe_listComponent_should_call_loadRecipes_on_ngOnInit', () => {
         spyOn(component, 'loadRecipes');
         fixture.detectChanges();
         expect(component.loadRecipes).toHaveBeenCalled();

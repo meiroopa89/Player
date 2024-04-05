@@ -36,7 +36,7 @@ describe('RecipeFormComponent', () => {
         expect(formElement).toBeTruthy();
     });
 
-    fit('RecipeFormComponent_should_have_form_controls_for_recipe details_description_ingredients_instructions_and_author', () => {
+    fit('RecipeFormComponent_should_have_form_controls_for_recipe_details_description_ingredients_instructions_and_author', () => {
         const formElement: HTMLFormElement = fixture.nativeElement.querySelector('form');
         expect(formElement.querySelector('#name')).toBeTruthy();
         expect(formElement.querySelector('#description')).toBeTruthy();
