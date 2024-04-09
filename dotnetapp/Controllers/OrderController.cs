@@ -48,38 +48,70 @@ namespace dotnetapp.Controllers
         // }
 
 
+        // [HttpPost]
+        //  public ActionResult<Order> AddOrder([FromBody] Order order)
+        // {
+        //     var addedOrder = _orderService.AddOrder(order);
+
+        //     if (addedOrder != null)
+        //     {
+        //         foreach (var gift in order.Gifts)
+        //         {
+        //             // Check if the gift already exists in the database
+        //             var existingGift = _context.Gifts.FirstOrDefault(g => g.GiftId == gift.GiftId);
+
+        //             if (existingGift != null)
+        //             {
+        //                 // Associate the existing gift with the order
+        //                 addedOrder.Gifts.Add(existingGift);
+        //             }
+        //             else
+        //             {
+        //                 // If the gift doesn't exist, add it to the database and associate it with the order
+        //                 _context.Gifts.Add(gift);
+        //                 addedOrder.Gifts.Add(gift);
+        //             }
+        //         }
+
+        //         _context.SaveChanges(); // Save changes to persist the updates to the database
+
+        //         return Ok(addedOrder);
+        //     }
+
+        //     return BadRequest("Failed to add order.");
+        // }
+
         [HttpPost]
-         public ActionResult<Order> AddOrder([FromBody] Order order)
+public ActionResult<Order> AddOrder([FromBody] Order order)
+{
+    var addedOrder = _orderService.AddOrder(order);
+
+    if (addedOrder != null)
+    {
+        foreach (var gift in order.Gifts)
         {
-            var addedOrder = _orderService.AddOrder(order);
+            // Check if the gift already exists in the database
+            var existingGift = _context.Gifts.FirstOrDefault(g => g.GiftId == gift.GiftId);
 
-            if (addedOrder != null)
+            if (existingGift != null)
             {
-                foreach (var gift in order.Gifts)
-                {
-                    // Check if the gift already exists in the database
-                    var existingGift = _context.Gifts.FirstOrDefault(g => g.GiftId == gift.GiftId);
-
-                    if (existingGift != null)
-                    {
-                        // Associate the existing gift with the order
-                        addedOrder.Gifts.Add(existingGift);
-                    }
-                    else
-                    {
-                        // If the gift doesn't exist, add it to the database and associate it with the order
-                        _context.Gifts.Add(gift);
-                        addedOrder.Gifts.Add(gift);
-                    }
-                }
-
-                _context.SaveChanges(); // Save changes to persist the updates to the database
-
-                return Ok(addedOrder);
+                // Associate the existing gift with the order
+                addedOrder.Gifts.Add(existingGift);
             }
-
-            return BadRequest("Failed to add order.");
+            else
+            {
+                // If the gift doesn't exist, add it to the database
+                _context.Gifts.Add(gift);
+            }
         }
+
+        _context.SaveChanges(); // Save changes to persist the updates to the database
+
+        return Ok(addedOrder);
+    }
+
+    return BadRequest("Failed to add order.");
+}
 
  
         // [Authorize]
@@ -124,6 +156,6 @@ namespace dotnetapp.Controllers
         {
             var orders = _orderService.GetOrdersByCustomerId(customerId);
             return Ok(orders);
-        }
+        }   
     }
 }
