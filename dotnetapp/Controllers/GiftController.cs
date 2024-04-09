@@ -54,7 +54,7 @@ public class GiftController : ControllerBase
         if (deletedGift != null)
         {
             return Ok(deletedGift);
-        }
+        }   
         return NotFound("Gift not found");
     }
 }

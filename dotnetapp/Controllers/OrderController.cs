@@ -102,6 +102,8 @@ public ActionResult<Order> AddOrder([FromBody] Order order)
             {
                 // If the gift doesn't exist, add it to the database
                 _context.Gifts.Add(gift);
+                // Break out of the loop after adding the gift to the database
+                break;
             }
         }
 
