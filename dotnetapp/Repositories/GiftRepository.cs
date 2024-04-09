@@ -23,8 +23,6 @@ public class GiftRepository
         return gift;
     }
 
-
-
     public List<Gift> getAllGifts()
     {
         Console.WriteLine("gift repo");
