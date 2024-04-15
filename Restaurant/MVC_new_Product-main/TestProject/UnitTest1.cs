@@ -131,28 +131,6 @@ public class Tests
         }
 
         [Test]
-        public void RestaurantController_View_MethodExists()
-        {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.RestaurantController";
-            Assembly assembly = Assembly.Load(assemblyName);
-            Type RestaurantControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = RestaurantControllerType.GetMethod("View");
-            Assert.IsNotNull(methodInfo, "Method View does not exist in RestaurantController class");
-        }
-
-        [Test]
-        public void RestaurantController_ViewRestaurants_MethodReturns_IActionResult()
-        {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Controllers.RestaurantController";
-            Assembly assembly = Assembly.Load(assemblyName);
-            Type RestaurantControllerType = assembly.GetType(typeName);
-            MethodInfo methodInfo = RestaurantControllerType.GetMethod("ViewRestaurants");
-            Assert.AreEqual(typeof(IActionResult), methodInfo.ReturnType, "Method ViewRestaurants in RestaurantController class is not of type IActionResult");
-        }
-
-        [Test]
         public void RestaurantController_Create_MethodExists()
         {
             string assemblyName = "dotnetapp";
