@@ -31,6 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors();
 
 app.UseHttpsRedirection();
 
@@ -41,4 +42,3 @@ app.MapControllers();
 app.Run();
 
 
-npx -p @angular/cli@10.1.3 ng new angularapp - creating angular
