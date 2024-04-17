@@ -1,7 +1,7 @@
 import { Doctor } from '../models/doctor.model';
 
 describe('Doctor', () => {
-  fit('DoctorModel should create an instance', () => {
+  fit('DoctorModel_should_create_an_instance', () => {
     // Create a factory function to create instances of Doctor
     function createDoctor(id: number, firstName: string, lastName: string, specialization: string, phoneNumber: string, email: string, address: string): Doctor {
       return {
@@ -30,7 +30,7 @@ describe('Doctor', () => {
     expect(doctor).toBeDefined();
   });
 
-  fit('DoctorModel should update property values using setters', () => {
+  fit('DoctorModel_should_update_property_values_using_setters', () => {
     // Similar setup as above
     function createDoctor(id: number, firstName: string, lastName: string, specialization: string, phoneNumber: string, email: string, address: string): Doctor {
       return {
