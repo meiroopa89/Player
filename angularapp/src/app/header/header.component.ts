@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+// header.component.ts
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
+  constructor(private router: Router) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  navigateToAddDoctor() {
+    this.router.navigate(['/addNewDoctor']);
   }
 
+  navigateToViewDoctors() {
+    this.router.navigate(['/viewDoctors']);
+  }
 }
