@@ -4,6 +4,7 @@ import { DoctorFormComponent } from './doctor-form.component';
 import { DoctorService } from '../services/doctor.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('DoctorFormComponent', () => {
     let component: DoctorFormComponent;
@@ -13,7 +14,7 @@ describe('DoctorFormComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [FormsModule],
+            imports: [FormsModule,HttpClientTestingModule],
             declarations: [DoctorFormComponent],
             providers: [DoctorService, { provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); } }]
         }).compileComponents();
@@ -26,16 +27,16 @@ describe('DoctorFormComponent', () => {
         router = TestBed.inject(Router);
     });
 
-    fit('should create DoctorFormComponent', () => {
+    fit('should_create_DoctorFormComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    fit('DoctorFormComponent should have a form for adding a doctor', () => {
+    fit('DoctorFormComponent_should_have_a_form_for_adding_a_doctor', () => {
         const formElement: HTMLFormElement = fixture.nativeElement.querySelector('form');
         expect(formElement).toBeTruthy();
     });
 
-    fit('DoctorFormComponent should have form controls for doctor details', () => {
+    fit('DoctorFormComponent_should_have_form_controls_for_doctor_details', () => {
         const formElement: HTMLFormElement = fixture.nativeElement.querySelector('form');
         expect(formElement.querySelector('#firstName')).toBeTruthy();
         expect(formElement.querySelector('#lastName')).toBeTruthy();
@@ -45,13 +46,13 @@ describe('DoctorFormComponent', () => {
         expect(formElement.querySelector('#address')).toBeTruthy();
     });
 
-    fit('DoctorFormComponent_should_have_a_button_for_adding_a doctor', () => {
+    fit('DoctorFormComponent_should_have_a_button_for_adding_a_doctor', () => {
         const buttonElement: HTMLButtonElement = fixture.nativeElement.querySelector('button');
         expect(buttonElement).toBeTruthy();
         expect(buttonElement.textContent).toContain('Add Doctor');
     });
 
-    fit('DoctorFormComponent should have addDoctor method', () => {
+    fit('DoctorFormComponent_should_have_addDoctor_method', () => {
         expect(component.addDoctor).toBeTruthy();
     });
   });
