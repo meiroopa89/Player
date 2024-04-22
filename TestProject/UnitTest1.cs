@@ -1,15 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using KathakBookingSystem.Controllers;
+using KathakBookingSystem.Data;
+using KathakBookingSystem.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using GuitarBookingSystem.Data;
 
 
-namespace GuitarBookingSystem.Tests
+namespace KathakBookingSystem.Tests
 {
     [TestFixture]
-    public class GuitarBookingSystemTest
+    public class KathakBookingSystemTest
     {
         private DbContextOptions<ApplicationDbContext> _dbContextOptions;
 
@@ -46,6 +49,33 @@ namespace GuitarBookingSystem.Tests
             }
         }
 
+        //[Test]
+        //public void JoinRide_ValidCommuter_JoinsSuccessfully()
+        //{
+        //    using (var dbContext = new ApplicationDbContext(_dbContextOptions))
+        //    {
+        //        // Arrange
+        //        var bookingController = new BookingController(dbContext);
+        //        var student = new Student
+        //        {
+        //            Name = "John Doe",
+        //            Email = "johndoe@example.com",
+        //        };
+
+        //        // Act
+        //        var result = bookingController.ClassEnrollmentForm(1, "John Doe", "johndoe@example.com") as RedirectToActionResult;
+
+        //        // Assert
+        //        Assert.IsNotNull(result);
+        //        //Assert.AreEqual("Details", result.ActionName);
+        //        //Assert.AreEqual("Ride", result.ControllerName);
+
+        //        var ride = dbContext.Classes.Include(r => r.Students).FirstOrDefault(r => r.ClassID == 1);
+        //        Assert.IsNotNull(ride);
+        //        Assert.AreEqual(1, ride.Students.Count);
+        //        //Assert.AreEqual(4, ride.MaximumCapacity);
+        //    }
+        //}
         [Test]
         public void ClassEnrollmentForm_ValidStudent_JoinsSuccessfully_ClassTable()
         {
@@ -359,8 +389,8 @@ namespace GuitarBookingSystem.Tests
                     method1.Invoke(controller, new object[] { 1 });
                 });
 
-                // Assert that the inner exception is of type GuitarClassBookingException
-                Assert.IsInstanceOf<GuitarClassBookingException>(exception.InnerException);
+                // Assert that the inner exception is of type KathakClassBookingException
+                Assert.IsInstanceOf<KathakClassBookingException>(exception.InnerException);
             }
         }
 
@@ -395,8 +425,8 @@ namespace GuitarBookingSystem.Tests
                     method1.Invoke(controller, new object[] { 1 });
                 });
 
-                // Assert that the inner exception is of type GuitarClassBookingException
-                Assert.IsInstanceOf<GuitarClassBookingException>(exception.InnerException);
+                // Assert that the inner exception is of type KathakClassBookingException
+                Assert.IsInstanceOf<KathakClassBookingException>(exception.InnerException);
                 Assert.AreEqual("Class is fully booked.", exception.InnerException.Message);
             }
         }
@@ -461,8 +491,8 @@ namespace GuitarBookingSystem.Tests
         [Test]
         public void Class_ClassExists()
         {
-                    string assemblyName = "GuitarBookingSystem"; 
-                    string typeName = "GuitarBookingSystem.Models.Class";
+                    string assemblyName = "KathakBookingSystem"; 
+                    string typeName = "KathakBookingSystem.Models.Class";
                     Assembly assembly = Assembly.Load(assemblyName);
                     Type rideType = assembly.GetType(typeName);
                     Assert.IsNotNull(rideType);
@@ -473,8 +503,8 @@ namespace GuitarBookingSystem.Tests
         [Test]
         public void Student_ClassExists()
         {
-            string assemblyName = "GuitarBookingSystem";
-            string typeName = "GuitarBookingSystem.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type rideType = assembly.GetType(typeName);
             Assert.IsNotNull(rideType);
@@ -482,10 +512,10 @@ namespace GuitarBookingSystem.Tests
             Assert.IsNotNull(ride);
         }
         [Test]
-        public void GuitarBookingSystemException_ClassExists()
+        public void KathakBookingSystemException_ClassExists()
         {
-            string assemblyName = "GuitarBookingSystem";
-            string typeName = "GuitarBookingSystem.Models.GuitarClassBookingException";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.KathakClassBookingException";
             Assembly assembly = Assembly.Load(assemblyName);
             Type rideType = assembly.GetType(typeName);
             Assert.IsNotNull(rideType);
@@ -522,8 +552,8 @@ namespace GuitarBookingSystem.Tests
         [Test]
         public void Class_Properties_ClassID_ReturnExpectedDataTypes_int()
         {
-            string assemblyName = "GuitarBookingSystem";
-            string typeName = "GuitarBookingSystem.Models.Class";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Class";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("ClassID");
@@ -535,8 +565,8 @@ namespace GuitarBookingSystem.Tests
         [Test]
         public void Class_Properties_StartTime_ReturnExpectedDataTypes_DateTime()
         {
-            string assemblyName = "GuitarBookingSystem";
-            string typeName = "GuitarBookingSystem.Models.Class";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Class";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("StartTime");
@@ -547,8 +577,8 @@ namespace GuitarBookingSystem.Tests
         [Test]
         public void Class_Properties_EndTime_ReturnExpectedDataTypes_DateTime()
         {
-            string assemblyName = "GuitarBookingSystem";
-            string typeName = "GuitarBookingSystem.Models.Class";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Class";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("EndTime");
@@ -560,8 +590,8 @@ namespace GuitarBookingSystem.Tests
         [Test]
         public void Class_Properties_Students_ReturnExpectedDataTypes_Student()
         {
-            string assemblyName = "GuitarBookingSystem";
-            string typeName = "GuitarBookingSystem.Models.Class";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Class";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("Students");
@@ -573,8 +603,8 @@ namespace GuitarBookingSystem.Tests
         [Test]
         public void Student_Properties_StudentID_ReturnExpectedDataTypes_int()
         {
-            string assemblyName = "GuitarBookingSystem";
-            string typeName = "GuitarBookingSystem.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("StudentID");
@@ -585,8 +615,8 @@ namespace GuitarBookingSystem.Tests
         [Test]
         public void Student_Properties_Name_ReturnExpectedDataTypes_string()
         {
-            string assemblyName = "GuitarBookingSystem";
-            string typeName = "GuitarBookingSystem.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("Name");
@@ -597,8 +627,8 @@ namespace GuitarBookingSystem.Tests
         [Test]
         public void Student_Properties_Email_ReturnExpectedDataTypes_string()
         {
-            string assemblyName = "GuitarBookingSystem";
-            string typeName = "GuitarBookingSystem.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("Email");
@@ -610,8 +640,8 @@ namespace GuitarBookingSystem.Tests
         [Test]
         public void Student_Properties_ClassID_ReturnExpectedDataTypes_int()
         {
-            string assemblyName = "GuitarBookingSystem";
-            string typeName = "GuitarBookingSystem.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("ClassID");
@@ -623,8 +653,8 @@ namespace GuitarBookingSystem.Tests
         [Test]
         public void Student_Properties_Class_ReturnExpectedDataTypes_Class()
         {
-            string assemblyName = "GuitarBookingSystem";
-            string typeName = "GuitarBookingSystem.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("Class");
