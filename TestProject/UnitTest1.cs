@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using GuitarBookingSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using GuitarBookingSystem.Data;
 
 
 namespace GuitarBookingSystem.Tests
