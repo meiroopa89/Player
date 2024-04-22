@@ -1,4 +1,4 @@
-using KathakBookingSystem.Data;
+using GuitarBookingSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using KathakBookingSystem.Data;
-using KathakBookingSystem.Models;
+using GuitarBookingSystem.Data;
+using GuitarBookingSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace KathakBookingSystem.Controllers
+namespace GuitarBookingSystem.Controllers
 {
     public class ClassController : Controller
     {

@@ -1,4 +1,4 @@
-namespace KathakBookingSystem.Models
+namespace GuitarBookingSystem.Models
 {
     public class ErrorViewModel
     {

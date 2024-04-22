@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
-using KathakBookingSystem.Models;
+using GuitarBookingSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KathakBookingSystem.Controllers
+namespace GuitarBookingSystem.Controllers
 {
     public class HomeController : Controller
     {

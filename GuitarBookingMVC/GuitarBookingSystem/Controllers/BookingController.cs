@@ -1,10 +1,10 @@
 ﻿using System;
-using KathakBookingSystem.Data;
-using KathakBookingSystem.Models;
+using GuitarBookingSystem.Data;
+using GuitarBookingSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace KathakBookingSystem.Controllers
+namespace GuitarBookingSystem.Controllers
 {
     public class BookingController : Controller
     {
@@ -27,7 +27,7 @@ namespace KathakBookingSystem.Controllers
 
             if (selectedClass1.Students.Count >= selectedClass1.Capacity)
             {
-                throw new KathakClassBookingException("Class is fully booked.");
+                throw new GuitarClassBookingException("Class is fully booked.");
             }
 
             if (selectedClass == null)
@@ -54,7 +54,7 @@ namespace KathakBookingSystem.Controllers
 
                 if (selectedClass.Students.Count >= selectedClass.Capacity)
                 {
-                    throw new KathakClassBookingException("Class is fully booked.");
+                    throw new GuitarClassBookingException("Class is fully booked.");
                 }
 
                 var student = new Student
@@ -69,7 +69,7 @@ namespace KathakBookingSystem.Controllers
 
                 return RedirectToAction("EnrollmentConfirmation", new { studentId = student.StudentID });
             }
-            catch (KathakClassBookingException ex)
+            catch (GuitarClassBookingException ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
                 return View(); // Return to the enrollment form with an error message

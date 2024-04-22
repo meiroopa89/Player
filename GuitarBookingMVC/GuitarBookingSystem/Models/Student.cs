@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace KathakBookingSystem.Models
+namespace GuitarBookingSystem.Models
 {
    public class Student
     {

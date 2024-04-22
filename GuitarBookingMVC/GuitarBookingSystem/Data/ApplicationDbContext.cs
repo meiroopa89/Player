@@ -1,9 +1,9 @@
-﻿using KathakBookingSystem.Models;
+﻿using GuitarBookingSystem.Models;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace KathakBookingSystem.Data
+namespace GuitarBookingSystem.Data
 {
     public class ApplicationDbContext : DbContext
     {
