@@ -1,0 +1,51 @@
+﻿@model List<Class>
+<center>
+<h1>Available Kathak Dance Classes</h1>
+</center>
+@if (Model.Count == 0)
+{
+    <p>No available classes at the moment. Please check back later.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Class ID</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Total Capacity</th>
+                <th>Students Count</th>
+                <th>Remaining Capacity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var @class in Model)
+            {
+                int studen = (@class.Students != null) ? @class.Students.Count : 0; // Check for null
+                <tr>
+                    <td>@(@class.ClassID)</td>
+                    <td>@(@class.StartTime.ToString("yyyy-MM-dd HH:mm"))</td>
+                    <td>@(@class.EndTime.ToString("yyyy-MM-dd HH:mm"))</td>
+                    <td>@(@class.Capacity)</td>
+                    <td>@studen</td>
+                    <td>@(@class.Capacity - studen)</td>
+
+                    @if (@class.EndTime <= new DateTime(2023, 09, 30, 12, 0, 0)) // Check end time condition
+                    {
+                        <td>Enrollment is over</td>
+                    }
+                    else if (@class.Students.Count < @class.Capacity)
+                    {
+                        <td><a asp-controller="Booking" asp-action="ClassEnrollmentForm" asp-route-id="@(@class.ClassID)">Enroll</a></td>
+                    }
+                    else
+                    {
+                        <td><span class="text-danger">Fully Booked</span></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,20 @@
+﻿@model Student
+<center>
+<h1>Enrollment Confirmation</h1>
+
+<p>You have successfully enrolled in the Kathak Dance Class.</p>
+</center>
+<table class="table">
+    <tr>
+        <th>Class ID</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+    </tr>
+    <tr>
+        <td>@Model.Class.ClassID</td>
+        <td>@Model.Class.StartTime.ToString("yyyy-MM-dd HH:mm")</td>
+        <td>@Model.Class.EndTime.ToString("yyyy-MM-dd HH:mm")</td>
+    </tr>
+</table>
+
+<a asp-controller="Class" asp-action="AvailableClasses">Back to Available Class</a>
