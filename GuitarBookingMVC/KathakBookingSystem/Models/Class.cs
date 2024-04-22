@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace dotnetapp.Models
+namespace KathakBookingSystem.Models
 {
     public class Class
     {

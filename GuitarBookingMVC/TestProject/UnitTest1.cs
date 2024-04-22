@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using dotnetapp.Controllers;
-using dotnetapp.Data;
-using dotnetapp.Models;
+using KathakBookingSystem.Controllers;
+using KathakBookingSystem.Data;
+using KathakBookingSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
 
-namespace dotnetapp.Tests
+namespace KathakBookingSystem.Tests
 {
     [TestFixture]
-    public class dotnetappTest
+    public class KathakBookingSystemTest
     {
         private DbContextOptions<ApplicationDbContext> _dbContextOptions;
 
@@ -491,8 +491,8 @@ namespace dotnetapp.Tests
         [Test]
         public void Class_ClassExists()
         {
-                    string assemblyName = "dotnetapp"; 
-                    string typeName = "dotnetapp.Models.Class";
+                    string assemblyName = "KathakBookingSystem"; 
+                    string typeName = "KathakBookingSystem.Models.Class";
                     Assembly assembly = Assembly.Load(assemblyName);
                     Type rideType = assembly.GetType(typeName);
                     Assert.IsNotNull(rideType);
@@ -503,8 +503,8 @@ namespace dotnetapp.Tests
         [Test]
         public void Student_ClassExists()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type rideType = assembly.GetType(typeName);
             Assert.IsNotNull(rideType);
@@ -512,10 +512,10 @@ namespace dotnetapp.Tests
             Assert.IsNotNull(ride);
         }
         [Test]
-        public void dotnetappException_ClassExists()
+        public void KathakBookingSystemException_ClassExists()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.KathakClassBookingException";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.KathakClassBookingException";
             Assembly assembly = Assembly.Load(assemblyName);
             Type rideType = assembly.GetType(typeName);
             Assert.IsNotNull(rideType);
@@ -552,8 +552,8 @@ namespace dotnetapp.Tests
         [Test]
         public void Class_Properties_ClassID_ReturnExpectedDataTypes_int()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Class";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Class";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("ClassID");
@@ -565,8 +565,8 @@ namespace dotnetapp.Tests
         [Test]
         public void Class_Properties_StartTime_ReturnExpectedDataTypes_DateTime()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Class";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Class";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("StartTime");
@@ -577,8 +577,8 @@ namespace dotnetapp.Tests
         [Test]
         public void Class_Properties_EndTime_ReturnExpectedDataTypes_DateTime()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Class";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Class";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("EndTime");
@@ -590,8 +590,8 @@ namespace dotnetapp.Tests
         [Test]
         public void Class_Properties_Students_ReturnExpectedDataTypes_Student()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Class";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Class";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("Students");
@@ -603,8 +603,8 @@ namespace dotnetapp.Tests
         [Test]
         public void Student_Properties_StudentID_ReturnExpectedDataTypes_int()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("StudentID");
@@ -615,8 +615,8 @@ namespace dotnetapp.Tests
         [Test]
         public void Student_Properties_Name_ReturnExpectedDataTypes_string()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("Name");
@@ -627,8 +627,8 @@ namespace dotnetapp.Tests
         [Test]
         public void Student_Properties_Email_ReturnExpectedDataTypes_string()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("Email");
@@ -640,8 +640,8 @@ namespace dotnetapp.Tests
         [Test]
         public void Student_Properties_ClassID_ReturnExpectedDataTypes_int()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("ClassID");
@@ -653,8 +653,8 @@ namespace dotnetapp.Tests
         [Test]
         public void Student_Properties_Class_ReturnExpectedDataTypes_Class()
         {
-            string assemblyName = "dotnetapp";
-            string typeName = "dotnetapp.Models.Student";
+            string assemblyName = "KathakBookingSystem";
+            string typeName = "KathakBookingSystem.Models.Student";
             Assembly assembly = Assembly.Load(assemblyName);
             Type commuterType = assembly.GetType(typeName);
             PropertyInfo propertyInfo = commuterType.GetProperty("Class");

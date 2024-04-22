@@ -1,4 +1,4 @@
-using dotnetapp.Data;
+using KathakBookingSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 

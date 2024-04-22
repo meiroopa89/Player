@@ -1,9 +1,9 @@
-﻿using dotnetapp.Models;
+﻿using KathakBookingSystem.Models;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace dotnetapp.Data
+namespace KathakBookingSystem.Data
 {
     public class ApplicationDbContext : DbContext
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dotnetapp.Models
+namespace KathakBookingSystem.Models
 {
 
     public class KathakClassBookingException : Exception
