@@ -15,35 +15,32 @@
 </form> *@
 
 @model GuitarBookingSystem.Models.Class
-
-<h2>Class Enrollment Form</h2>
-
-@if (ViewBag.ErrorMessage != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @ViewBag.ErrorMessage
-    </div>
+@{
+    var ClassID = ViewBag.ClassID;
 }
-
-<div>
-    <p><strong>Class ID:</strong> @Model.ClassID</p>
-    <p><strong>Start Time:</strong> @Model.StartTime</p>
-    <p><strong>End Time:</strong> @Model.EndTime</p>
-    <p><strong>Capacity:</strong> @Model.Capacity</p>
-    @* <p><strong>Capacity:</strong> @Model.Students[0]</p> *@
+<h1>Enroll in Guitar Dance Class</h1>
+ 
+@using (Html.BeginForm())
+{
+<div class="form-group">
+        @Html.LabelFor(model => model.Name)
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+</div>
+ 
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email)
+        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 </div>
 
-<form method="post" asp-action="ClassEnrollmentForm">
-    <input type="hidden" asp-for="ClassID" />
+ 
     <div class="form-group">
-        <label for="studentName">Your Name:</label>
-        <input type="text" id="studentName" name="student.Name" class="form-control"  />
-        <span asp-validation-for="StartTime" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label for="studentEmail">Your Email:</label>
-        <input type="email" id="studentEmail" name="student.Email" class="form-control"  />
-        <span asp-validation-for="StartTime" class="text-danger"></span>
-    </div>
+        @Html.Label("ClassID", "Class ID")
+<input type="text" id="ClassID" name="ClassID" class="form-control" value="@ClassID" readonly />
+</div>
+ 
     <button type="submit" class="btn btn-primary">Enroll</button>
-</form>
+ 
+    @Html.ActionLink("Back to Available Rides", "AvailableRides", "Ride")
+}

@@ -16,27 +16,30 @@ namespace GuitarBookingSystem.Controllers
         }
 
         public IActionResult ClassEnrollmentForm(int id)
-        {
-            var selectedClass = _context.Classes.Find(id);
-            var selectedClass1 = _context.Classes
-                    .Include(c => c.Students)
-                    .FirstOrDefault(c => c.ClassID == id);
+{
+    var selectedClass = _context.Classes.Find(id);
+    var selectedClass1 = _context.Classes
+            .Include(c => c.Students)
+            .FirstOrDefault(c => c.ClassID == id);
 
-            Console.WriteLine(selectedClass1.Capacity);
-            Console.WriteLine(selectedClass1.Students.Count);
+    Console.WriteLine(selectedClass1.Capacity);
+    Console.WriteLine(selectedClass1.Students.Count);
 
-            if (selectedClass1.Students.Count >= selectedClass1.Capacity)
-            {
-                throw new GuitarClassBookingException("Class is fully booked.");
-            }
+    if (selectedClass1.Students.Count >= selectedClass1.Capacity)
+    {
+        throw new GuitarClassBookingException("Class is fully booked.");
+    }
+    
+    ViewBag.ClassID = id; // Pass ClassID to the view
 
-            if (selectedClass == null)
-            {
-                return NotFound(); // Handle class not found
-            }
+    if (selectedClass == null)
+    {
+        return NotFound(); // Handle class not found
+    }
 
-            return View(selectedClass1);
-        }
+    return View();
+}
+
 
         // [HttpPost]
         // public IActionResult ClassEnrollmentForm(int id, string name, string email)
