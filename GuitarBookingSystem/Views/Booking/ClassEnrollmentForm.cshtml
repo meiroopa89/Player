@@ -14,7 +14,8 @@
     <button type="submit" class="btn btn-primary">Enroll</button>
 </form> *@
 
-@model GuitarBookingSystem.Models.Class
+@model GuitarBookingSystem.Models.Student
+
 @{
     var ClassID = ViewBag.ClassID;
 }
@@ -23,18 +24,17 @@
 @using (Html.BeginForm())
 {
 <div class="form-group">
-        @Html.LabelFor(model => model.Name)
-        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    <label for="studentName">Your Name:</label>
+    <input type="text" id="studentName" name="Name" class="form-control" required data-val-required="Name is required"/>
+    <span asp-validation-for="Name" class="text-danger"></span>
 </div>
- 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email)
-        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+<div class="form-group">
+    <label for="studentEmail">Your Email:</label>
+    <input type="email" id="studentEmail" name="Email" class="form-control" required data-val-required="Email is required"/>
+    <span asp-validation-for="Email" class="text-danger"></span>
 </div>
 
- 
+
     <div class="form-group">
         @Html.Label("ClassID", "Class ID")
 <input type="text" id="ClassID" name="ClassID" class="form-control" value="@ClassID" readonly />
