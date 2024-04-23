@@ -30,6 +30,7 @@
     <p><strong>Start Time:</strong> @Model.StartTime</p>
     <p><strong>End Time:</strong> @Model.EndTime</p>
     <p><strong>Capacity:</strong> @Model.Capacity</p>
+    @* <p><strong>Capacity:</strong> @Model.Students[0]</p> *@
 </div>
 
 <form method="post" asp-action="ClassEnrollmentForm">
@@ -37,12 +38,12 @@
     <div class="form-group">
         <label for="studentName">Your Name:</label>
         <input type="text" id="studentName" name="student.Name" class="form-control"  />
-        @* <span asp-validation-for="Name" class="text-danger"></span> *@
+        <span asp-validation-for="StartTime" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label for="studentEmail">Your Email:</label>
         <input type="email" id="studentEmail" name="student.Email" class="form-control"  />
-        @* <span asp-validation-for="Email" class="text-danger"></span> *@
+        <span asp-validation-for="StartTime" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Enroll</button>
 </form>

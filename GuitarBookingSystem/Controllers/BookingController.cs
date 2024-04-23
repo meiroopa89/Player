@@ -35,7 +35,7 @@ namespace GuitarBookingSystem.Controllers
                 return NotFound(); // Handle class not found
             }
 
-            return View(selectedClass);
+            return View(selectedClass1);
         }
 
         // [HttpPost]
