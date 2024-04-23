@@ -29,17 +29,14 @@ namespace GuitarBookingSystem.Controllers
             {
                 throw new GuitarClassBookingException("Class is fully booked.");
             }
-            
-            ViewBag.ClassID = id; // Pass ClassID to the view
 
             if (selectedClass == null)
             {
                 return NotFound(); // Handle class not found
             }
 
-            return View();
+            return View(selectedClass);
         }
-
 
         [HttpPost]
         public IActionResult ClassEnrollmentForm(int id, string name, string email)
@@ -66,10 +63,9 @@ namespace GuitarBookingSystem.Controllers
                     Email = email,
                     ClassID = id
                 };
-                if(ModelState.IsValid){
+
                 _context.Students.Add(student);
                 _context.SaveChanges();
-                }
 
                 return RedirectToAction("EnrollmentConfirmation", new { studentId = student.StudentID });
             }
