@@ -7,7 +7,6 @@ namespace GuitarBookingSystem.Models
 {
     public class Class
     {
-        [Required(ErrorMessage = "ClassID is required")]
         public int ClassID { get; set; }
 
         [Required(ErrorMessage = "StartTime is required")]
@@ -19,7 +18,6 @@ namespace GuitarBookingSystem.Models
         [Required(ErrorMessage = "Capacity is required")]
         public int Capacity { get; set; }
 
-        [Required(ErrorMessage = "Students is required")]
         public ICollection<Student> Students { get; set; }
     }
     }

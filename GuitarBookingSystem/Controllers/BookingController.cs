@@ -82,45 +82,47 @@ namespace GuitarBookingSystem.Controllers
         //     }
         // }
 
-        [HttpPost]
-        public IActionResult ClassEnrollmentForm(int ClassID, Student student)
+       [HttpPost]
+public IActionResult ClassEnrollmentForm(int ClassID, Student student)
+{
+    try
+    {
+        var selectedClass = _context.Classes
+            .Include(c => c.Students)
+            .FirstOrDefault(c => c.ClassID == ClassID);
+
+        if (selectedClass == null)
         {
-            try
-            {
-                var selectedClass = _context.Classes
-                    .Include(c => c.Students)
-                    .FirstOrDefault(c => c.ClassID == ClassID); // Changed 'id' to 'ClassID'
-
-                if (selectedClass == null)
-                {
-                    return NotFound(); // Handle class not found
-                }
-
-                if (selectedClass.Students.Count >= selectedClass.Capacity)
-                {
-                    throw new GuitarClassBookingException("Class is fully booked.");
-                }
-
-                if(ModelState.IsValid)
-                {
-                    // No need to create a new Student object since 'student' parameter is already provided
-                    _context.Students.Add(student);
-                    _context.SaveChanges();
-                }
-
-                return RedirectToAction("EnrollmentConfirmation", new { studentId = student.StudentID });
-            }
-            catch (GuitarClassBookingException ex)
-            {
-                ModelState.AddModelError(string.Empty, ex.Message);
-                return View(); // Return to the enrollment form with an error message
-            }
-            catch (Exception ex)
-            {
-                // Handle other exceptions here, such as database errors
-                return View("Error"); // Redirect to an error page
-            }
+            return NotFound(); // Handle class not found
         }
+
+        if (selectedClass.Students.Count >= selectedClass.Capacity)
+        {
+            throw new GuitarClassBookingException("Class is fully booked.");
+        }
+
+        if(ModelState.IsValid)
+        {
+            _context.Students.Add(student);
+            _context.SaveChanges();
+            
+            return RedirectToAction("EnrollmentConfirmation", new { studentId = student.StudentID });
+        }
+    }
+    catch (GuitarClassBookingException ex)
+    {
+        ModelState.AddModelError(string.Empty, ex.Message);
+    }
+    catch (Exception ex)
+    {
+        ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
+    }
+    
+    // If the control reaches here, it means there are validation errors
+    var selectedClassForView = _context.Classes.Find(ClassID);
+    return View(selectedClassForView);
+}
+
 
 
         public IActionResult EnrollmentConfirmation(int studentId)
