@@ -8,10 +8,10 @@ namespace GuitarBookingSystem.Models
     {
         public int StudentID { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
+        [Required]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
+        [Required]
         public string Email { get; set; }
 
         public int ClassID { get; set; }

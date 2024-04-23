@@ -100,7 +100,7 @@ public IActionResult ClassEnrollmentForm(int ClassID, Student student)
         {
             throw new GuitarClassBookingException("Class is fully booked.");
         }
-
+        student.ClassID = ClassID;
         if(ModelState.IsValid)
         {
             _context.Students.Add(student);
