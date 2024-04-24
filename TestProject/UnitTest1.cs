@@ -77,7 +77,7 @@ namespace GuitarBookingSystem.Tests
                 var controller = Activator.CreateInstance(controllerType, dbContext);
 
                 // Specify the method signature (parameter types)
-                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(string), typeof(string) });
+                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(Student) });
 
                 var student = new Student
                 {
@@ -86,7 +86,7 @@ namespace GuitarBookingSystem.Tests
                 };
 
                 // Act
-                var result = method.Invoke(controller, new object[] { 1, "John Doe", "johndoe@example.com" }) as RedirectToActionResult;
+                var result = method.Invoke(controller, new object[] { 1, student }) as RedirectToActionResult;
 
                 // Assert
                 Assert.IsNotNull(result);
@@ -107,7 +107,7 @@ namespace GuitarBookingSystem.Tests
                 var controller = Activator.CreateInstance(controllerType, dbContext);
 
                 // Specify the method signature (parameter types)
-                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(string), typeof(string) });
+                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(Student) });
 
                 var student = new Student
                 {
@@ -116,7 +116,7 @@ namespace GuitarBookingSystem.Tests
                 };
 
                 // Act
-                var result = method.Invoke(controller, new object[] { 1, "John Doe", "johndoe@example.com" }) as RedirectToActionResult;
+                var result = method.Invoke(controller, new object[] { 1, student }) as RedirectToActionResult;
 
                 var ride = dbContext.Students.FirstOrDefault(r => r.StudentID == 1);
                 Assert.IsNotNull(ride);
@@ -134,8 +134,7 @@ namespace GuitarBookingSystem.Tests
                 var controller = Activator.CreateInstance(controllerType, dbContext);
 
                 // Specify the method signature (parameter types)
-                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(string), typeof(string) });
-
+                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(Student) });
                 var student = new Student
                 {
                     Name = "John Doe",
@@ -143,7 +142,7 @@ namespace GuitarBookingSystem.Tests
                 };
 
                 // Act
-                var result = method.Invoke(controller, new object[] { 1, "John Doe", "johndoe@example.com" }) as RedirectToActionResult;
+                var result = method.Invoke(controller, new object[] { 1, student }) as RedirectToActionResult;
 
                 var ride = dbContext.Students.FirstOrDefault(r => r.StudentID == 1);
                 Assert.IsNotNull(ride);
@@ -162,8 +161,7 @@ namespace GuitarBookingSystem.Tests
                 var controller = Activator.CreateInstance(controllerType, dbContext);
 
                 // Specify the method signature (parameter types)
-                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(string), typeof(string) });
-
+                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(Student) });
                 var student = new Student
                 {
                     Name = "John Doe",
@@ -171,7 +169,7 @@ namespace GuitarBookingSystem.Tests
                 };
 
                 // Act
-                var result = method.Invoke(controller, new object[] { 1, "John Doe", "johndoe@example.com" }) as RedirectToActionResult;
+                var result = method.Invoke(controller, new object[] { 1, student }) as RedirectToActionResult;
 
                 var ride = dbContext.Students.FirstOrDefault(r => r.StudentID == 1);
 
@@ -190,7 +188,7 @@ namespace GuitarBookingSystem.Tests
                 var controller = Activator.CreateInstance(controllerType, dbContext);
 
                 // Specify the method signature (parameter types)
-                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(string), typeof(string) });
+                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(Student) });
 
                 MethodInfo method1 = controllerType.GetMethod("EnrollmentConfirmation", new[] { typeof(int) });
 
@@ -201,7 +199,7 @@ namespace GuitarBookingSystem.Tests
                 };
 
                 // Act
-                var result = method.Invoke(controller, new object[] { 1, "John Doe", "johndoe@example.com" });
+                var result = method.Invoke(controller, new object[] { 1, student });
                 var result1 = method1.Invoke(controller, new object[] { 2 }) as NotFoundResult;
 
                 var ride = dbContext.Students.FirstOrDefault(r => r.StudentID == 1);
@@ -222,7 +220,7 @@ namespace GuitarBookingSystem.Tests
                 var controller = Activator.CreateInstance(controllerType, dbContext);
 
                 // Specify the method signature (parameter types)
-                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(string), typeof(string) });
+                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(Student) });
 
                 MethodInfo method1 = controllerType.GetMethod("EnrollmentConfirmation", new[] { typeof(int) });
 
@@ -233,7 +231,7 @@ namespace GuitarBookingSystem.Tests
                 };
 
                 // Act
-                var result = method.Invoke(controller, new object[] { 1, "John Doe", "johndoe@example.com" });
+                var result = method.Invoke(controller, new object[] { 1, student });
                 var result1 = method1.Invoke(controller, new object[] { 1 }) as ViewResult;
 
                 var ride = dbContext.Students.FirstOrDefault(r => r.StudentID == 1);
@@ -274,7 +272,7 @@ namespace GuitarBookingSystem.Tests
         }
 
         [Test]
-        public void ClassEnrollmentForm_Method_Exists_BookingController_3_parameter()
+        public void ClassEnrollmentForm_Method_Exists_BookingController_2_parameter()
         {
             using (var dbContext = new ApplicationDbContext(_dbContextOptions))
             {
@@ -283,7 +281,7 @@ namespace GuitarBookingSystem.Tests
                 var controller = Activator.CreateInstance(controllerType, dbContext);
 
                 // Specify the method signature (parameter types)
-                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(string), typeof(string) });
+                var method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(Student) });
                 Assert.IsNotNull(method);
             }
         }
@@ -313,7 +311,7 @@ namespace GuitarBookingSystem.Tests
                 var controller = Activator.CreateInstance(controllerType, dbContext);
 
                 // Specify the method signature (parameter types)
-                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(string), typeof(string) });
+                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(Student) });
 
                 var student = new Student
                 {
@@ -322,7 +320,7 @@ namespace GuitarBookingSystem.Tests
                 };
 
                 // Act
-                var result = method.Invoke(controller, new object[] { 2, "John Doe", "johndoe@example.com" }) as NotFoundResult;
+                var result = method.Invoke(controller, new object[] { 2, student }) as NotFoundResult;
 
 
                 // Assert
@@ -338,7 +336,7 @@ namespace GuitarBookingSystem.Tests
                 var controllerType = typeof(BookingController);
                 var controller = Activator.CreateInstance(controllerType, dbContext);
 
-                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(string), typeof(string) });
+                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(Student) });
 
                 // Act and Assert for the first scenario
                 var student = new Student
@@ -346,7 +344,7 @@ namespace GuitarBookingSystem.Tests
                     Name = "John Doe",
                     Email = "johndoe@example.com",
                 };
-                var result = method.Invoke(controller, new object[] { 1, "John Doe", "johndoe@example.com" }) as RedirectToActionResult;
+                var result = method.Invoke(controller, new object[] { 1, student }) as RedirectToActionResult;
 
                 // Assert for the first scenario
                 Assert.IsNotNull(result);
@@ -374,7 +372,7 @@ namespace GuitarBookingSystem.Tests
                 var controllerType = typeof(BookingController);
                 var controller = Activator.CreateInstance(controllerType, dbContext);
 
-                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(string), typeof(string) });
+                MethodInfo method = controllerType.GetMethod("ClassEnrollmentForm", new[] { typeof(int), typeof(Student) });
 
                 // Act and Assert for the first scenario
                 var student = new Student
@@ -382,7 +380,7 @@ namespace GuitarBookingSystem.Tests
                     Name = "John Doe",
                     Email = "johndoe@example.com",
                 };
-                var result = method.Invoke(controller, new object[] { 1, "John Doe", "johndoe@example.com" }) as RedirectToActionResult;
+                var result = method.Invoke(controller, new object[] { 1, student}) as RedirectToActionResult;
 
                 // Assert for the first scenario
                 Assert.IsNotNull(result);
@@ -590,7 +588,7 @@ namespace GuitarBookingSystem.Tests
             var controller = Activator.CreateInstance(controllerType, dbContext);
 
             // Specify the method signature (parameter types)
-            MethodInfo method = controllerType.GetMethod("DeleteClass", new[] { typeof(int) });
+            MethodInfo method = controllerType.GetMethod("DeleteConfirmed", new[] { typeof(int) });
 
             // Add a class to be deleted
             var classInstance = new Class
