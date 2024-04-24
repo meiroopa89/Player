@@ -49,7 +49,8 @@ namespace GuitarBookingSystem.Controllers
             {
                 _context.Classes.Remove(classToDelete); // Remove the class
                 _context.SaveChanges(); // Save changes to the database
-                return RedirectToAction("AvailableClasses"); // Redirect to the available classes page
+                // return RedirectToAction("AvailableClasses"); // Redirect to the available classes page
+                return RedirectToAction("DeleteConfirm");
             }
             catch (Exception)
             {
