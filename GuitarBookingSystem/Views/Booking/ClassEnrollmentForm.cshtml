@@ -1,16 +1,26 @@
 ﻿@model GuitarBookingSystem.Models.Student
-<center>
-    <h1>Enroll in Guitar Class</h1>
-</center>
-<form action="ClassEnrollmentForm" method="post">
+@{
+    var classId = ViewBag.ClassId;
+}
+<h2>Enroll in Guitar Class</h2>
+
+@using (Html.BeginForm())
+{
     <div class="form-group">
-        <label for="Name">Your Name</label>
-        <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required>
+        @Html.LabelFor(model => model.Name)
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
     </div>
+
     <div class="form-group">
-        <label for="Email">Your Email</label>
-        <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required>
+        @Html.LabelFor(model => model.Email)
+        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
     </div>
-    <input type="hidden" name="ClassID" value="@Model.ClassID" />
-    <button type="submit" class="btn btn-primary" id="enrollButton">Enroll</button>
-</form>
+
+    <input type="hidden" name="ClassID" value="@classId" />
+
+    <button type="submit" class="btn btn-primary">Enroll</button>
+
+    @Html.ActionLink("Back to Available Classes", "AvailableClasses", "Class")
+}
