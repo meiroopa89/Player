@@ -11,7 +11,7 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Class ID</th>
+                @* <th>Class ID</th> *@
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Total Capacity</th>
@@ -25,7 +25,7 @@ else
             {
                 int studen = (@class.Students != null) ? @class.Students.Count : 0; // Check for null
                 <tr>
-                    <td>@(@class.ClassID)</td>
+                    @* <td>@(@class.ClassID)</td> *@
                     <td>@(@class.StartTime.ToString("yyyy-MM-dd HH:mm"))</td>
                     <td>@(@class.EndTime.ToString("yyyy-MM-dd HH:mm"))</td>
                     <td>@(@class.Capacity)</td>
@@ -44,6 +44,12 @@ else
                     {
                         <td><span class="text-danger">Fully Booked</span></td>
                     }
+                    <td>
+                        <form asp-action="DeleteClass" asp-route-id="@(@class.ClassID)" method="post">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+
                 </tr>
             }
         </tbody>
