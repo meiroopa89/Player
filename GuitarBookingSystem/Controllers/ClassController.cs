@@ -58,5 +58,34 @@ namespace GuitarBookingSystem.Controllers
                 return BadRequest(); // Return a bad request status code
             }
         }
+
+        public IActionResult Details(int id)
+        {
+            var guitarClass = _context.Classes.Include(c => c.Students).FirstOrDefault(c => c.ClassID == id);
+            if (guitarClass == null)
+            {
+                return NotFound();
+            }
+
+            int enrolledStudents = guitarClass.Students.Count;
+            int availableSeats = guitarClass.Capacity - enrolledStudents;
+
+            ViewBag.EnrolledStudents = enrolledStudents;
+            ViewBag.AvailableSeats = availableSeats;
+
+            return View(guitarClass);
+        }
+
+public IActionResult DeleteConfirm(int id)
+{
+    var guitarClass = _context.Classes.Include(c => c.Students).FirstOrDefault(c => c.ClassID == id);
+    if (guitarClass == null)
+    {
+        return NotFound();
+    }
+
+    return View(guitarClass);
+}
+
     }
 }
