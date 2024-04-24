@@ -7,7 +7,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Class ID</th>
+                @* <th>Class ID</th> *@
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Capacity</th>
@@ -19,7 +19,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.ClassID</td>
+                    @* <td>@item.ClassID</td> *@
                     <td>@item.StartTime.ToString("yyyy-MM-dd HH:mm")</td>
                     <td>@item.EndTime.ToString("yyyy-MM-dd HH:mm")</td>
                     <td>@item.Capacity</td>
