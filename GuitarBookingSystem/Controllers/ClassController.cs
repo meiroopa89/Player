@@ -44,12 +44,10 @@ namespace GuitarBookingSystem.Controllers
             {
                 return NotFound(); // Return 404 if the class is not found
             }
-
             try
             {
-                _context.Classes.Remove(classToDelete); // Remove the class
-                _context.SaveChanges(); // Save changes to the database
-                // return RedirectToAction("AvailableClasses"); // Redirect to the available classes page
+                // _context.Classes.Remove(classToDelete); // Remove the class
+                // _context.SaveChanges(); // Save changes to the database
                 return RedirectToAction("DeleteConfirm");
             }
             catch (Exception)
@@ -57,24 +55,6 @@ namespace GuitarBookingSystem.Controllers
                 // Handle any exceptions that may occur during deletion
                 return BadRequest(); // Return a bad request status code
             }
-        }
-
-        public IActionResult Details(int id)
-        {
-            var guitarClass = _context.Classes.Include(c => c.Students).FirstOrDefault(c => c.ClassID == id);
-            if (guitarClass == null)
-            {
-                return NotFound();
-            }
-
-            int enrolledStudents = guitarClass.Students.Count;
-            int availableSeats = guitarClass.Capacity - enrolledStudents;
-
-            ViewBag.EnrolledStudents = enrolledStudents;
-            ViewBag.AvailableSeats = availableSeats;
-
-            // return View(guitarClass);
-            return RedirectToAction("AvailableClasses");
         }
 
         public IActionResult DeleteConfirm(int id)
@@ -87,6 +67,22 @@ namespace GuitarBookingSystem.Controllers
 
             return View(guitarClass);
         }
+
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var guitarClass = _context.Classes.Find(id);
+            if (guitarClass == null)
+            {
+                return NotFound();
+            }
+
+            _context.Classes.Remove(guitarClass);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(AvailableClasses));
+        }
+
 
     }
 }

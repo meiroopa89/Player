@@ -15,7 +15,7 @@
         <dd class="col-sm-10">@Model.Capacity</dd>
         <!-- Include other class details as needed -->
     </dl>
-    <form asp-action="AvailableClasses" asp-route-id="@Model.ClassID" method="post">
+    <form asp-action="DeleteConfirmed" asp-route-id="@Model.ClassID" method="post">
         <input type="submit" value="Delete" class="btn btn-danger" />
         <a asp-action="AvailableClasses" class="btn btn-secondary">Cancel</a>
     </form>
