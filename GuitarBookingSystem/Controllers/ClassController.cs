@@ -24,7 +24,6 @@ namespace GuitarBookingSystem.Controllers
                 .ToList();
             Console.WriteLine(availableClasses.Count);
 
-
             return View(availableClasses);
         }
 
