@@ -56,5 +56,76 @@ namespace GuitarBookingSystem.Controllers
                 return BadRequest(); // Return a bad request status code
             }
         }
+
+        // GET: /Class/ClassEnrollmentForm/5
+        public IActionResult ClassEnrollmentForm(int id)
+        {
+            // Fetch the class based on the provided ID
+            var selectedClass = _context.Classes.Find(id);
+
+            if (selectedClass == null)
+            {
+                return NotFound(); // Handle class not found
+            }
+
+            return View(selectedClass); // Return the view with the selected class
+        }
+
+        // POST: /Class/ClassEnrollmentForm/5
+        [HttpPost]
+        public IActionResult ClassEnrollmentForm(int id, Student student)
+        {
+            try
+            {
+                var selectedClass = _context.Classes
+                    .Include(c => c.Students)
+                    .FirstOrDefault(c => c.ClassID == id);
+
+                if (selectedClass == null)
+                {
+                    return NotFound(); // Handle class not found
+                }
+
+                if (selectedClass.Students.Count >= selectedClass.Capacity)
+                {
+                    throw new GuitarClassBookingException("Class is fully booked.");
+                }
+
+                student.ClassID = id;
+
+                if (ModelState.IsValid)
+                {
+                    _context.Students.Add(student);
+                    _context.SaveChanges();
+
+                   return RedirectToAction("ClassEnrollmentForm", "Booking", new { studentId = student.StudentID });
+                }
+            }
+            catch (GuitarClassBookingException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
+            }
+
+            // If the control reaches here, it means there are validation errors
+            var selectedClassForView = _context.Classes.Find(id);
+            return View(selectedClassForView);
+        }
+
+        // GET: /Class/EnrollmentConfirmation/5
+        public IActionResult EnrollmentConfirmation(int studentId)
+        {
+            var enrolledStudent = _context.Students.Include(s => s.Class).FirstOrDefault(s => s.StudentID == studentId);
+
+            if (enrolledStudent == null)
+            {
+                return NotFound(); // Handle student not found
+            }
+
+            return View(enrolledStudent);
+        }
     }
 }
