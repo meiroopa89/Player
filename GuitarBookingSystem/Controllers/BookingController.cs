@@ -15,13 +15,13 @@ namespace GuitarBookingSystem.Controllers
             _context = context;
         }
 
-        public IActionResult ClassEnrollmentForm(int id)
+        public IActionResult ClassEnrollmentForm(int classid)
 {
-    var selectedClass = _context.Classes.Find(id);
+    var selectedClass = _context.Classes.Find(classid);
     Console.WriteLine(selectedClass);
     var selectedClass1 = _context.Classes
             .Include(c => c.Students)
-            .FirstOrDefault(c => c.ClassID == id);
+            .FirstOrDefault(c => c.ClassID == classid);
 
     Console.WriteLine(selectedClass1.Capacity);
     Console.WriteLine(selectedClass1.Students.Count);
@@ -37,7 +37,7 @@ namespace GuitarBookingSystem.Controllers
     }
 
     // Pass the selected class ID to the view to maintain context
-    ViewBag.ClassId = id;
+    ViewBag.ClassId = classid;
 
     // Return the ClassEnrollmentForm view
     return View();
@@ -50,7 +50,9 @@ namespace GuitarBookingSystem.Controllers
         {
             try
             {
-                if(!ModelState)
+                if(!ModelState.IsValid){
+                    return View(student);
+                }
                 var selectedClass = _context.Classes
                     .Include(c => c.Students)
                     .FirstOrDefault(c => c.ClassID == id);

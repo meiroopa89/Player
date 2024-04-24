@@ -1,6 +1,6 @@
 ﻿@model GuitarBookingSystem.Models.Student
 @{
-    var classId = ViewBag.ClassId;
+    var classid = Context.Request.Query["classid"];
 }
 <h2>Enroll in Guitar Class</h2>
 
@@ -18,7 +18,12 @@
         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
     </div>
 
-    <input type="hidden" name="ClassID" value="@classId" />
+    <div class="form-group">
+        @Html.Label("DiningTable", "Dining Table")
+        <input type="text" id="ClassID" name="ClassID" class="form-control" value="@classid" readonly />
+    </div>
+
+    @* <input type="hidden" name="ClassID" value="@classId" /> *@
 
     <button type="submit" class="btn btn-primary">Enroll</button>
 
