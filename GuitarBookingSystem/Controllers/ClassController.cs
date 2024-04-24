@@ -73,19 +73,35 @@ namespace GuitarBookingSystem.Controllers
             ViewBag.EnrolledStudents = enrolledStudents;
             ViewBag.AvailableSeats = availableSeats;
 
-            return View(guitarClass);
+            // return View(guitarClass);
+            return RedirectToAction("AvailableClasses");
         }
+
+        // public IActionResult DeleteConfirm(int id)
+        // {
+        //     var guitarClass = _context.Classes.Include(c => c.Students).FirstOrDefault(c => c.ClassID == id);
+        //     if (guitarClass == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     return View(guitarClass);
+            
+
+        // }
 
         public IActionResult DeleteConfirm(int id)
-        {
-            var guitarClass = _context.Classes.Include(c => c.Students).FirstOrDefault(c => c.ClassID == id);
-            if (guitarClass == null)
-            {
-                return NotFound();
-            }
+{
+    var guitarClass = _context.Classes.Include(c => c.Students).FirstOrDefault(c => c.ClassID == id);
+    if (guitarClass == null)
+    {
+        return NotFound();
+    }
 
-            return View(guitarClass);
-        }
+    return View(guitarClass);
+}
+
+
 
     }
 }
