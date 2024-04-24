@@ -1,7 +1,27 @@
+// namespace TestProject;
+
+// public class Tests
+// {
+//     [SetUp]
+//     public void Setup()
+//     {
+//     }
+
+//     [Test]
+//     public void Test1()
+//     {
+//         Assert.Pass();
+//     }
+// }
+
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using GuitarBookingSystem.Controllers;
 using GuitarBookingSystem.Data;
+using GuitarBookingSystem.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
@@ -46,33 +66,7 @@ namespace GuitarBookingSystem.Tests
             }
         }
 
-        //[Test]
-        //public void JoinRide_ValidCommuter_JoinsSuccessfully()
-        //{
-        //    using (var dbContext = new ApplicationDbContext(_dbContextOptions))
-        //    {
-        //        // Arrange
-        //        var bookingController = new BookingController(dbContext);
-        //        var student = new Student
-        //        {
-        //            Name = "John Doe",
-        //            Email = "johndoe@example.com",
-        //        };
-
-        //        // Act
-        //        var result = bookingController.ClassEnrollmentForm(1, "John Doe", "johndoe@example.com") as RedirectToActionResult;
-
-        //        // Assert
-        //        Assert.IsNotNull(result);
-        //        //Assert.AreEqual("Details", result.ActionName);
-        //        //Assert.AreEqual("Ride", result.ControllerName);
-
-        //        var ride = dbContext.Classes.Include(r => r.Students).FirstOrDefault(r => r.ClassID == 1);
-        //        Assert.IsNotNull(ride);
-        //        Assert.AreEqual(1, ride.Students.Count);
-        //        //Assert.AreEqual(4, ride.MaximumCapacity);
-        //    }
-        //}
+        
         [Test]
         public void ClassEnrollmentForm_ValidStudent_JoinsSuccessfully_ClassTable()
         {
@@ -308,28 +302,7 @@ namespace GuitarBookingSystem.Tests
                 Assert.IsNotNull(method);
             }
         }
-        //// [Test]
-        //// public void JoinRide_InvalidCommuter_ModelStateInvalid()
-        //// {
-        ////     using (var dbContext = new RideSharingDbContext(_dbContextOptions))
-        ////     {
-        ////         // Arrange
-        ////         var slotController = new SlotController(dbContext);
-        ////         var commuter = new Commuter(); // Invalid commuter with missing required fields
-
-        ////         // Act
-        ////         slotController.ModelState.AddModelError("Name", "Name is required");
-        ////         var result = slotController.JoinRide(1, commuter) as ViewResult;
-
-        ////         // Assert
-        ////         Assert.IsNotNull(result);
-        ////         Assert.AreEqual("", result.ViewName); // Returns the same view
-        ////         Assert.IsFalse(result.ViewData.ModelState.IsValid);
-        ////         Assert.AreEqual(1, result.ViewData.ModelState.ErrorCount);
-        ////         Assert.IsTrue(result.ViewData.ModelState.ContainsKey("Name"));
-        ////     }
-        //// }
-
+        
         [Test]
         public void ClassEnrollmentForm_ClassNotFound_ReturnsNotFoundResult()
         {
@@ -428,61 +401,8 @@ namespace GuitarBookingSystem.Tests
             }
         }
 
-        ////     [Test]
-        //// public void JoinRide_DestinationSameAsDeparture_ReturnsViewWithValidationError()
-        //// {
-        ////     using (var dbContext = new RideSharingDbContext(_dbContextOptions))
-        ////     {
-        ////         // Arrange
-        ////         var slotController = new SlotController(dbContext);
-        ////         var commuter = new Commuter
-        ////         {
-        ////             Name = "John Doe",
-        ////             Email = "johndoe@example.com",
-        ////             Phone = "1234567890"
-        ////         };
 
-        ////         // Act
-        ////         var ride = dbContext.Rides.FirstOrDefault(r => r.RideID == 1);
-        ////         ride.Destination = ride.DepartureLocation; // Set the destination as the same as departure
-        ////         dbContext.SaveChanges();
-
-        ////         var result = slotController.JoinRide(1, commuter) as ViewResult;
-
-        ////         // Assert
-        ////         Assert.IsNotNull(result);
-        ////         Assert.IsFalse(result.ViewData.ModelState.IsValid);
-        ////         Assert.IsTrue(result.ViewData.ModelState.ContainsKey("Destination"));
-        ////     }
-        //// }
-
-        //// [Test]
-        //// public void JoinRide_MaximumCapacityNotPositiveInteger_ReturnsViewWithValidationError()
-        //// {
-        ////     using (var dbContext = new RideSharingDbContext(_dbContextOptions))
-        ////     {
-        ////         // Arrange
-        ////         var slotController = new SlotController(dbContext);
-        ////         var commuter = new Commuter
-        ////         {
-        ////             Name = "John Doe",
-        ////             Email = "johndoe@example.com",
-        ////             Phone = "1234567890"
-        ////         };
-
-        ////         // Act
-        ////         var ride = dbContext.Rides.FirstOrDefault(r => r.RideID == 1);
-        ////         ride.MaximumCapacity = -5; // Set a negative value for MaximumCapacity
-        ////         dbContext.SaveChanges();
-
-        ////         var result = slotController.JoinRide(1, commuter) as ViewResult;
-
-        ////         // Assert
-        ////         Assert.IsNotNull(result);
-        ////         Assert.IsFalse(result.ViewData.ModelState.IsValid);
-        ////         Assert.IsTrue(result.ViewData.ModelState.ContainsKey("MaximumCapacity"));
-        ////     }
-        //// }
+        
 
 
         [Test]
@@ -660,155 +580,42 @@ namespace GuitarBookingSystem.Tests
             Assert.AreEqual(typeof(Class), propertyType, "The data type of 'Class' property is not as expected (Class).");
         }
 
-        //[Test]
-        //public void Ride_Properties_MaximumCapacity_ReturnExpectedDataTypes()
-        //{
-        //    // Arrange
-        //    Ride ride = new Ride();
+         [Test]
+    public void DeleteClass_ValidClassId_RemovesClassFromDatabase()
+    {
+        using (var dbContext = new ApplicationDbContext(_dbContextOptions))
+        {
+            // Arrange
+            var controllerType = typeof(ClassController);
+            var controller = Activator.CreateInstance(controllerType, dbContext);
 
-        //    Assert.That(ride.MaximumCapacity, Is.TypeOf<int>());
-        //}
+            // Specify the method signature (parameter types)
+            MethodInfo method = controllerType.GetMethod("DeleteClass", new[] { typeof(int) });
 
-        //[Test]
-        //public void Commuter_Ride_ReturnsExpectedValue()
-        //{
-        //    // Arrange
-        //    Ride expectedRide = new Ride { RideID = 2 };
-        //    Commuter commuter = new Commuter { Ride = expectedRide };
+            // Add a class to be deleted
+            var classInstance = new Class
+            {
+                ClassID = 100,
+                StartTime = DateTime.Now,
+                EndTime = DateTime.Now.AddHours(1),
+                Capacity = 5
+            };
+            dbContext.Classes.Add(classInstance);
+            dbContext.SaveChanges();
 
-        //    // Assert
-        //    Assert.AreEqual(expectedRide, commuter.Ride);
-        //}
+            // Act
+            var result = method.Invoke(controller, new object[] { 100 }) as RedirectToActionResult;
 
-        //[Test]
-        //public void Commuter_Properties_CommuterID_ReturnExpectedValues()
-        //{
-        //    // Arrange
-        //    int expectedCommuterID = 1;
+            // Assert
+            Assert.IsNotNull(result);
 
-        //    // Act
-        //    Commuter commuter = new Commuter
-        //    {
-        //        CommuterID = expectedCommuterID,
-        //    };
+            var deletedClass = dbContext.Classes.Find(100);
+            Assert.IsNull(deletedClass);
+        }
+    }
 
-        //    // Assert
-        //    Assert.AreEqual(expectedCommuterID, commuter.CommuterID);
-        //}
 
-        //[Test]
-        //public void Commuter_Properties_Name_ReturnExpectedValues()
-        //{
-
-        //    string expectedName = "John Doe";
-
-        //    // Act
-        //    Commuter commuter = new Commuter
-        //    {
-        //        Name = expectedName,
-        //    };
-
-        //    // Assert
-        //    Assert.AreEqual(expectedName, commuter.Name);
-        //}
-
-        //[Test]
-        //public void Commuter_Properties_Email_ReturnExpectedValues()
-        //{
-        //    string expectedEmail = "john@example.com";
-
-        //    // Act
-        //    Commuter commuter = new Commuter
-        //    {
-        //        Email = expectedEmail,
-        //    };
-
-        //    Assert.AreEqual(expectedEmail, commuter.Email);
-        //}
-
-        //[Test]
-        //public void Commuter_Properties_Phone_ReturnExpectedValues()
-        //{
-
-        //    string expectedPhone = "1234567890";
-
-        //    // Act
-        //    Commuter commuter = new Commuter
-        //    {
-        //        Phone = expectedPhone,
-        //    };
-
-        //    Assert.AreEqual(expectedPhone, commuter.Phone);
-        //}
-
-        //[Test]
-        //public void Commuter_Properties_RideID_ReturnExpectedValues()
-        //{
-        //    int expectedRideID = 2;
-
-        //    // Act
-        //    Commuter commuter = new Commuter
-        //    {
-        //        RideID = expectedRideID
-        //    };
-        //    Assert.AreEqual(expectedRideID, commuter.RideID);
-        //}
-
-        //[Test]
-        //public void test_case12()
-        //{
-        //    using (var dbContext = new RideSharingDbContext(_dbContextOptions))
-        //    {
-        //        // Arrange
-        //        var slotController = new SlotController(dbContext);
-        //        var commuter = new Commuter
-        //        {
-        //            Name = "John Doe",
-        //            Email = "johndoe@example.com",
-        //            Phone = "1234567890"
-        //        };
-
-        //        // Act
-        //        var ride = dbContext.Rides.FirstOrDefault(r => r.RideID == 1);
-        //        ride.Destination = ride.DepartureLocation; // Set the destination as the same as departure
-        //        dbContext.SaveChanges();
-
-        //        var result = slotController.JoinRide(1, commuter) as ViewResult;
-
-        //        // Assert
-        //        Assert.IsNotNull(result);
-        //        Assert.IsFalse(result.ViewData.ModelState.IsValid);
-        //        Assert.IsTrue(result.ViewData.ModelState.ContainsKey("Destination"));
-        //    }
-        //}
-
-        //[Test]
-        //public void test_case13()
-        //{
-        //    using (var dbContext = new RideSharingDbContext(_dbContextOptions))
-        //    {
-        //        // Arrange
-        //        var slotController = new SlotController(dbContext);
-        //        var commuter = new Commuter
-        //        {
-        //            Name = "John Doe",
-        //            Email = "johndoe@example.com",
-        //            Phone = "1234567890"
-        //        };
-
-        //        // Act
-        //        var ride = dbContext.Rides.FirstOrDefault(r => r.RideID == 1);
-        //        ride.MaximumCapacity = -5; // Set a negative value for MaximumCapacity
-        //        dbContext.SaveChanges();
-
-        //        var result = slotController.JoinRide(1, commuter) as ViewResult;
-
-        //        // Assert
-        //        Assert.IsNotNull(result);
-        //        Assert.IsFalse(result.ViewData.ModelState.IsValid);
-        //        Assert.IsTrue(result.ViewData.ModelState.ContainsKey("MaximumCapacity"));
-        //    }
-        //}
+        
     }
 
 }
