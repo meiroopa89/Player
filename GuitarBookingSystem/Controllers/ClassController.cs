@@ -76,16 +76,16 @@ namespace GuitarBookingSystem.Controllers
             return View(guitarClass);
         }
 
-public IActionResult DeleteConfirm(int id)
-{
-    var guitarClass = _context.Classes.Include(c => c.Students).FirstOrDefault(c => c.ClassID == id);
-    if (guitarClass == null)
-    {
-        return NotFound();
-    }
+        public IActionResult DeleteConfirm(int id)
+        {
+            var guitarClass = _context.Classes.Include(c => c.Students).FirstOrDefault(c => c.ClassID == id);
+            if (guitarClass == null)
+            {
+                return NotFound();
+            }
 
-    return View(guitarClass);
-}
+            return View(guitarClass);
+        }
 
     }
 }
