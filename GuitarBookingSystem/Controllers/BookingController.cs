@@ -16,27 +16,32 @@ namespace GuitarBookingSystem.Controllers
         }
 
         public IActionResult ClassEnrollmentForm(int id)
-        {
-            var selectedClass = _context.Classes.Find(id);
-            var selectedClass1 = _context.Classes
-                    .Include(c => c.Students)
-                    .FirstOrDefault(c => c.ClassID == id);
+{
+    var selectedClass = _context.Classes.Find(id);
+    var selectedClass1 = _context.Classes
+            .Include(c => c.Students)
+            .FirstOrDefault(c => c.ClassID == id);
 
-            Console.WriteLine(selectedClass1.Capacity);
-            Console.WriteLine(selectedClass1.Students.Count);
+    Console.WriteLine(selectedClass1.Capacity);
+    Console.WriteLine(selectedClass1.Students.Count);
 
-            if (selectedClass1.Students.Count >= selectedClass1.Capacity)
-            {
-                throw new GuitarClassBookingException("Class is fully booked.");
-            }
+    if (selectedClass1.Students.Count >= selectedClass1.Capacity)
+    {
+        throw new GuitarClassBookingException("Class is fully booked.");
+    }
 
-            if (selectedClass == null)
-            {
-                return NotFound(); // Handle class not found
-            }
+    if (selectedClass == null)
+    {
+        return NotFound(); // Handle class not found
+    }
 
-            return View(selectedClass);
-        }
+    // Pass the selected class ID to the view to maintain context
+    ViewBag.ClassId = id;
+
+    // Return the ClassEnrollmentForm view
+    return View("ClassEnrollmentForm", selectedClass);
+}
+
 
         [HttpPost]
         public IActionResult ClassEnrollmentForm(int id, Student student)
@@ -57,10 +62,9 @@ namespace GuitarBookingSystem.Controllers
                     throw new GuitarClassBookingException("Class is fully booked.");
                 }
 
-                student.ClassID = id;
-
                 if (ModelState.IsValid)
                 {
+                    student.ClassID = id; // Assign the class ID
                     _context.Students.Add(student);
                     _context.SaveChanges();
 
@@ -73,17 +77,20 @@ namespace GuitarBookingSystem.Controllers
             }
             catch (Exception ex)
             {
+                // Handle other exceptions here, such as database errors
                 ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
             }
 
-            // If the control reaches here, it means there are validation errors
+            // If the control reaches here, it means there are validation errors or other exceptions
             var selectedClassForView = _context.Classes.Find(id);
             return View(selectedClassForView);
         }
 
         public IActionResult EnrollmentConfirmation(int studentId)
         {
-            var enrolledStudent = _context.Students.Include(s => s.Class).FirstOrDefault(s => s.StudentID == studentId);
+            var enrolledStudent = _context.Students
+                .Include(s => s.Class)
+                .FirstOrDefault(s => s.StudentID == studentId);
 
             if (enrolledStudent == null)
             {
