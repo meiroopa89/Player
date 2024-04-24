@@ -46,19 +46,25 @@ namespace GuitarBookingSystem.Controllers
 
 
         [HttpPost]
-        public IActionResult ClassEnrollmentForm(int id, Student student)
+        public IActionResult ClassEnrollmentForm(int classid, Student student)
         {
             try
             {
+                    Console.WriteLine("hai17"+ classid);
+                
                 if(!ModelState.IsValid){
+                    Console.WriteLine("hai3");
+                    
                     return View(student);
                 }
                 var selectedClass = _context.Classes
                     .Include(c => c.Students)
-                    .FirstOrDefault(c => c.ClassID == id);
+                    .FirstOrDefault(c => c.ClassID == classid);
 
                 if (selectedClass == null)
                 {
+                    Console.WriteLine("hai4");
+
                     return NotFound(); // Handle class not found
                 }
 
@@ -66,29 +72,35 @@ namespace GuitarBookingSystem.Controllers
                 {
                     throw new GuitarClassBookingException("Class is fully booked.");
                 }
+                    Console.WriteLine("hai2");
 
                 if (ModelState.IsValid)
                 {
-                    student.ClassID = id; // Assign the class ID
+                    Console.WriteLine("hai");
+                    student.ClassID = classid; // Assign the class ID
                     _context.Students.Add(student);
                     _context.SaveChanges();
 
                     return RedirectToAction("EnrollmentConfirmation", new { studentId = student.StudentID });
                 }
+                return View(student);
             }
             catch (GuitarClassBookingException ex)
             {
+                throw;
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
             catch (Exception ex)
             {
+                    Console.WriteLine("hai10");
+                
                 // Handle other exceptions here, such as database errors
                 ModelState.AddModelError(string.Empty, "An error occurred while processing your request.");
             }
 
             // If the control reaches here, it means there are validation errors or other exceptions
-            var selectedClassForView = _context.Classes.Find(id);
-            return View(selectedClassForView);
+            // var selectedClassForView = _context.Classes.Find(id);
+            return View(student);
         }
 
         public IActionResult EnrollmentConfirmation(int studentId)
