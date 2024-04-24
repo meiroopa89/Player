@@ -18,6 +18,7 @@ namespace GuitarBookingSystem.Controllers
         public IActionResult ClassEnrollmentForm(int id)
 {
     var selectedClass = _context.Classes.Find(id);
+    Console.WriteLine(selectedClass);
     var selectedClass1 = _context.Classes
             .Include(c => c.Students)
             .FirstOrDefault(c => c.ClassID == id);

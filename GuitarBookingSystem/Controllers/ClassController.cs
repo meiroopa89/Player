@@ -16,15 +16,16 @@ namespace GuitarBookingSystem.Controllers
             _context = context;
         }
 
-        public IActionResult AvailableClasses(List<Class> availableClasses)
+        public IActionResult AvailableClasses()
         {
-            // Retrieve available classes and pass them to the view
-            var classes = _context.Classes
+            var availableClasses = _context.Classes
                 .Include(c => c.Students)
                 .Where(c => c.Students.Count < c.Capacity)
                 .ToList();
+            Console.WriteLine(availableClasses.Count);
 
-            return View(classes);
+
+            return View(availableClasses);
         }
 
         public IActionResult BookedClasses()

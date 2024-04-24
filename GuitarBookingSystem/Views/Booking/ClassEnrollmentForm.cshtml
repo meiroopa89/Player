@@ -2,14 +2,15 @@
 <center>
     <h1>Enroll in Guitar Class</h1>
 </center>
-<form asp-action="ClassEnrollmentForm" asp-route-id="@Model.ClassID" method="post">
+<form action="ClassEnrollmentForm" method="post">
     <div class="form-group">
-        <label for="name">Your Name</label>
-        <input type="text" class="form-control" id="name" name="Name" required>
+        <label for="Name">Your Name</label>
+        <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required>
     </div>
     <div class="form-group">
-        <label for="email">Your Email</label>
-        <input type="email" class="form-control" id="email" name="Email" required>
+        <label for="Email">Your Email</label>
+        <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required>
     </div>
+    <input type="hidden" name="ClassID" value="@Model.ClassID" />
     <button type="submit" class="btn btn-primary" id="enrollButton">Enroll</button>
 </form>
