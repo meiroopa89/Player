@@ -38,7 +38,7 @@ else
                     }
                     else if (@class.Students.Count < @class.Capacity)
                     {
-                        <td><a asp-controller="Booking" asp-action="ClassEnrollmentForm" asp-route-id="@(@class.ClassID)">Enroll</a></td>
+                        <td><a id="enroll" asp-controller="Booking" asp-action="ClassEnrollmentForm" asp-route-id="@(@class.ClassID)">Enroll</a></td>
                     }
                     else
                     {

@@ -1,32 +1,15 @@
-﻿
-
-@* @model GuitarBookingSystem.Models.Student
-
-@{
-    var ClassID = ViewBag.ClassID;
-}
-<h1>Enroll in Guitar Dance Class</h1>
- 
-@using (Html.BeginForm())
-{
-<div class="form-group">
-    <label for="studentName">Your Name:</label>
-    <input type="text" id="studentName" name="Name" class="form-control" required data-val-required="Name is required"/>
-    <span asp-validation-for="Name" class="text-danger"></span>
-</div>
-<div class="form-group">
-    <label for="studentEmail">Your Email:</label>
-    <input type="email" id="studentEmail" name="Email" class="form-control" required data-val-required="Email is required"/>
-    <span asp-validation-for="Email" class="text-danger"></span>
-</div>
-
-
+﻿@model Class
+<center>
+<h1>Enroll in Guitar Class</h1>
+</center>
+<form asp-action="ClassEnrollmentForm" asp-route-id="@Model.ClassID" method="post">
     <div class="form-group">
-        @Html.Label("ClassID", "Class ID")
-<input type="text" id="ClassID" name="ClassID" class="form-control" value="@ClassID" readonly />
-</div>
- 
+        <label for="name">Your Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Your Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+    </div>
     <button type="submit" class="btn btn-primary">Enroll</button>
- 
-    @Html.ActionLink("Back to Available Rides", "AvailableRides", "Ride")
-} *@
+</form>
