@@ -40,6 +40,7 @@ namespace GuitarBookingSystem.Controllers
     ViewBag.ClassId = id;
 
     // Return the ClassEnrollmentForm view
+    return View();
     return View("ClassEnrollmentForm", selectedClass);
 }
 
@@ -49,6 +50,7 @@ namespace GuitarBookingSystem.Controllers
         {
             try
             {
+                if(!ModelState)
                 var selectedClass = _context.Classes
                     .Include(c => c.Students)
                     .FirstOrDefault(c => c.ClassID == id);

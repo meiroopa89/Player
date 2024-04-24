@@ -27,7 +27,7 @@
                     <td>
                         @if (item.Students.Count < item.Capacity)
                         {
-                            <a asp-action="ClassEnrollmentForm" asp-route-id="@item.ClassID" class="btn btn-primary">Enroll</a>
+                            <a asp-controller="Booking" asp-action="ClassEnrollmentForm" asp-route-id="@item.ClassID" class="btn btn-primary">Enroll</a>
                         }
                         else
                         {
