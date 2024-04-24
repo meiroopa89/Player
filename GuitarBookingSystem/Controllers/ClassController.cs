@@ -34,29 +34,6 @@ namespace GuitarBookingSystem.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult DeleteClass(int id)
-        {
-            // Find the class by its ID
-            var classToDelete = _context.Classes.Find(id);
-
-            if (classToDelete == null)
-            {
-                return NotFound(); // Return 404 if the class is not found
-            }
-            try
-            {
-                // _context.Classes.Remove(classToDelete); // Remove the class
-                // _context.SaveChanges(); // Save changes to the database
-                return RedirectToAction("DeleteConfirm");
-            }
-            catch (Exception)
-            {
-                // Handle any exceptions that may occur during deletion
-                return BadRequest(); // Return a bad request status code
-            }
-        }
-
         public IActionResult DeleteConfirm(int id)
         {
             var guitarClass = _context.Classes.Include(c => c.Students).FirstOrDefault(c => c.ClassID == id);
