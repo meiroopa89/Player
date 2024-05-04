@@ -42,13 +42,13 @@ describe('DeleteConfirmComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    fit('should_navigate_to_viewRecipes_after_cancelDelete', () => {
+    fit('DeleteConfirmComponent_should_navigate_to_viewRecipes_after_cancelDelete', () => {
         spyOn(router, 'navigate').and.stub(); // Spy on router.navigate method
         component.cancelDelete();
         expect(router.navigate).toHaveBeenCalledWith(['/viewRecipes']); // Verify router.navigate is called with correct argument
     });
 
-    fit('should_call_deleteRecipe_method_when_confirmDelete_is_called', () => {
+    fit('DeleteConfirmComponent_should_call_deleteRecipe_method_when_confirmDelete_is_called', () => {
         const recipeId = 1;
         
         // Spy on the deleteRecipe method of the RecipeService

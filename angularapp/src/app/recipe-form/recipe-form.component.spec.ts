@@ -40,11 +40,11 @@ describe('RecipeFormComponent', () => {
 
   });
 
-  fit('should_have_addRecipe_method', () => {
-    expect(component.addRecipe).toBeTruthy();
-  });
+  fit('should_create_RecipeFormComponent', () => {
+    expect(component).toBeTruthy();
+});
 
-  fit('should_show_error_messages_for_required_fields_on_submit', fakeAsync(() => {
+  fit('RecipeFormComponent_should_show_error_messages_for_required_fields_on_submit', fakeAsync(() => {
     // Mock new recipe data
     component.newRecipe = {
         recipeId: 1,
@@ -84,7 +84,7 @@ describe('RecipeFormComponent', () => {
   //   expect(errorMessage.nativeElement.textContent).toContain('Name is required');
   // }));
 
-  fit('should_not_render_any_error_messages_when_all_fields_are_filled', () => {
+  fit('RecipeFormComponent_should_not_render_any_error_messages_when_all_fields_are_filled', () => {
     const compiled = fixture.nativeElement;
     const form = compiled.querySelector('form');
 
@@ -110,7 +110,7 @@ describe('RecipeFormComponent', () => {
     expect(compiled.querySelector('#authorError')).toBeNull();
   });
 
-  fit('should_call_add_recipe_method_while_adding_the_recipe', () => {
+  fit('RecipeFormComponent_should_call_add_recipe_method_while_adding_the_recipe', () => {
     // Create a mock Recipe object with all required properties
     const recipe: Recipe = { 
       recipeId: 1, 

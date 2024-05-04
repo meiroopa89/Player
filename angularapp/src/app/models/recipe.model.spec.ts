@@ -1,7 +1,7 @@
 import { Recipe } from '../models/recipe.model';
 
 describe('Recipe', () => {
-  fit('should_create_recipe_instance', () => {
+  fit('Models_should_create_recipe_instance', () => {
     const recipe: Recipe = {
       recipeId: 1,
       name: 'Test Recipe',
