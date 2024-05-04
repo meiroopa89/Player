@@ -40,18 +40,4 @@ describe('RecipeListComponent', () => {
         expect(component.loadRecipes).toHaveBeenCalled();
     });
 
-    // fit('should_add_a_recipe_to_the_database', () => {
-    //     const newRecipe: Recipe = { recipeId: 1, name: 'New Recipe', description: 'Description', ingredients: 'Ingredients', instructions: 'Instructions', author: 'Author' };
-    //     const initialDatabaseLength = 0; // Assuming there are initially 2 recipes in the database
-    
-    //     mockRecipeService.addRecipe.and.returnValue(of()); // Mock addRecipe method to return a successful response
-    //     mockRecipeService.getRecipes.and.returnValue(of([...component.recipes, newRecipe])); // Mock getRecipes to return the updated list with the new recipe
-    
-    //     component.recipes = []; // Clear recipes array for testing
-    //     component.loadRecipes(); // Load recipes
-    
-    //     expect(mockRecipeService.addRecipe).toHaveBeenCalledWith(newRecipe); // Verify addRecipe method is called with new recipe
-    //     expect(component.recipes.length).toBe(initialDatabaseLength + 1); // Check if a recipe is added by checking the length
-    // });
-
 });
