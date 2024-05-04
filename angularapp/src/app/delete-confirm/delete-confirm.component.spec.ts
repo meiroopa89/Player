@@ -61,3 +61,4 @@ describe('DeleteConfirmComponent', () => {
         expect(mockRecipeService.deleteRecipe).toHaveBeenCalledWith(recipeId);
     });
 });
+
