@@ -86,7 +86,7 @@ describe('RecipeService', () => {
       ingredients: 'Test Ingredients',
       instructions: 'Test Instructions',
       author: 'Test Author'
-    };
+    } as any;
 
     service.getRecipe(recipeId).subscribe((recipe) => {
       expect(recipe).toEqual(mockRecipe);

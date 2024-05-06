@@ -53,7 +53,7 @@ describe('RecipeFormComponent', () => {
         ingredients: '',
         instructions: '',
         author: ''
-    };
+    } as any;
 
     // Trigger form submission
     const form = fixture.debugElement.query(By.css('form')).nativeElement;
@@ -96,7 +96,7 @@ describe('RecipeFormComponent', () => {
       ingredients: 'Test Ingredients',
       instructions: 'Test Instructions',
       author: 'Test Author'
-    };
+    } as any;
 
     fixture.detectChanges();
 
@@ -119,7 +119,7 @@ describe('RecipeFormComponent', () => {
       ingredients: 'Ingredient 2', 
       instructions: 'Test Recipe Instructions', 
       author: 'Test Author'
-    };
+    } as any;
     const addRecipeSpy = spyOn(component, 'addRecipe').and.callThrough();
     component.addRecipe();
     expect(addRecipeSpy).toHaveBeenCalled();
