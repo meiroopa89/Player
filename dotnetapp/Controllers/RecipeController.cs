@@ -47,7 +47,7 @@ namespace dotnetapp.Controllers
             _context.Recipes.Add(recipe);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRecipe", new { id = recipe.RecipeId }, recipe);
+            return CreatedAtAction("GetRecipe", new { id = recipe.recipeId }, recipe);
         }
 
         // DELETE: api/Recipe/5

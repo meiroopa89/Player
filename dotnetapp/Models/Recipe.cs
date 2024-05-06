@@ -6,20 +6,20 @@ namespace dotnetapp.Models
     public class Recipe
     {
         [Key]
-        public int RecipeId { get; set; }
+        public int recipeId { get; set; }
 
         [Required(ErrorMessage = "Recipe name is required")]
-        public string Name { get; set; }
+        public string name { get; set; }
 
-        public string Description { get; set; }
+        public string description { get; set; }
 
         [Required(ErrorMessage = "Ingredients are required")]
-        public string Ingredients { get; set; }
+        public string ingredients { get; set; }
 
         [Required(ErrorMessage = "Instructions are required")]
-        public string Instructions { get; set; }
+        public string instructions { get; set; }
 
-        public string Author { get; set; }
+        public string author { get; set; }
 
     }
 }
