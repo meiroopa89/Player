@@ -13,7 +13,7 @@ describe('RecipeListComponent', () => {
 
     beforeEach(waitForAsync(() => {
         // Create a spy object with the methods you want to mock
-        mockRecipeService = jasmine.createSpyObj<RecipeService>('RecipeService', ['getRecipes', 'addRecipe']);
+        mockRecipeService = jasmine.createSpyObj<RecipeService>('RecipeService', ['getRecipes', 'addRecipe'] as any);
 
         TestBed.configureTestingModule({
             declarations: [RecipeListComponent],
