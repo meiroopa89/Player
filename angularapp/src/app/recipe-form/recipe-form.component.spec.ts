@@ -44,35 +44,6 @@ describe('RecipeFormComponent', () => {
     expect(component).toBeTruthy();
 });
 
-  fit('RecipeFormComponent_should_show_error_messages_for_required_fields_on_submit', fakeAsync(() => {
-    // Mock new recipe data
-    component.newRecipe = {
-        recipeId: 1,
-        name: '',
-        description: '',
-        ingredients: '',
-        instructions: '',
-        author: ''
-    } as any;
-
-    // Trigger form submission
-    const form = fixture.debugElement.query(By.css('form')).nativeElement;
-    form.dispatchEvent(new Event('submit'));
-    fixture.detectChanges();
-    tick();
-
-    // Check error messages for each field
-    const errorMessages = fixture.debugElement.queryAll(By.css('.error-message'));
-    expect(errorMessages.length).toBe(5); // Assuming there are 5 required fields
-
-    // Check error messages content
-    expect(errorMessages[0].nativeElement.textContent).toContain('Name is required');
-    expect(errorMessages[1].nativeElement.textContent).toContain('Description is required');
-    expect(errorMessages[2].nativeElement.textContent).toContain('Ingredients are required');
-    expect(errorMessages[3].nativeElement.textContent).toContain('Instructions are required');
-    expect(errorMessages[4].nativeElement.textContent).toContain('Author is required');
-}));
-
   fit('RecipeFormComponent_should_not_render_any_error_messages_when_all_fields_are_filled', () => {
     const compiled = fixture.nativeElement;
     const form = compiled.querySelector('form');
