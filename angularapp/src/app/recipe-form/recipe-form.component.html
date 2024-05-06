@@ -1,4 +1,4 @@
-   <!-- <form (submit)="addRecipe()">
+   <form (submit)="addRecipe()">
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" [(ngModel)]="newRecipe.name" name="name" required>
@@ -25,14 +25,14 @@
         <div *ngIf="isFieldInvalid('author')" class="error-message">Author is required</div>
     </div>
     <button type="submit">Add Recipe</button>
-</form> -->
+</form>
 
-
-<form (ngSubmit)="addRecipe()" #recipeForm="ngForm" novalidate>
+<!-- 
+<form (ngSubmit)="addRecipe()" #recipeForm="ngForm" novalidate >
     <div>
         <label for="name">Name:</label>
-        <input type="text" id="name" [(ngModel)]="newRecipe.name" name="name" required #name="ngModel">
-        <div class="error-message" *ngIf="name.invalid" >Name is required</div>
+        <input type="text" id="name" [(ngModel)]="newRecipe.name" name="name" required #name="ngModel" [ngModelOptions]="{standalone: true}">
+        <div class="error-message" *ngIf="name.invalid && (name.dirty || name.touched || recipeForm.submitted)" >Name is required</div>
     </div>
     <div>
         <label for="description">Description:</label>
@@ -56,4 +56,4 @@
     </div>
     <button type="submit" [disabled]="recipeForm.invalid">Add Recipe</button>
 </form>
-
+ -->
