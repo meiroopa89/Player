@@ -73,16 +73,17 @@ describe('RecipeFormComponent', () => {
     expect(errorMessages[4].nativeElement.textContent).toContain('Author is required');
 }));
 
+fit('should show name required error message on register page', fakeAsync(() => {
+  const nameInput = fixture.debugElement.query(By.css('#name'));
+  nameInput.nativeElement.value = ''; // Set value to empty string
+  nameInput.nativeElement.dispatchEvent(new Event('input')); // Trigger input event
+  fixture.detectChanges();
+  tick();
 
-  fit('should show name required error message on register page', fakeAsync(() => {
-    const nameInput = fixture.debugElement.query(By.css('#name'));
-    nameInput.nativeElement.value = '';
-    nameInput.nativeElement.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-    tick();
-    const errorMessage = fixture.debugElement.query(By.css('.error-message'));
-    expect(errorMessage.nativeElement.textContent).toContain('Name is required');
-  }));
+  const errorMessage = fixture.debugElement.query(By.css('.error-message'));
+  expect(errorMessage.nativeElement.textContent).toContain('Name is required');
+}));
+
 
   fit('RecipeFormComponent_should_not_render_any_error_messages_when_all_fields_are_filled', () => {
     const compiled = fixture.nativeElement;
