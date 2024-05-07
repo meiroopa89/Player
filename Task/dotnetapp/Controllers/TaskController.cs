@@ -1,7 +1,9 @@
 using System;
-using System.Runtime.Versioning;
+using System.Linq;
 using System.Threading.Tasks;
 using dotnetapp.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace dotnetapp.Controllers
 {
@@ -15,10 +17,12 @@ namespace dotnetapp.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> AddPost(Task task)
+        public async Task<IActionResult<Task>> AddPost(Task task)
         {
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
+
+            return CreatedAtAction ("GetTask", new {id = task.id}, task);
         }
     }
 }

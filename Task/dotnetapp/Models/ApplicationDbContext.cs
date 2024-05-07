@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 using dotnetapp.Models;
-using Microsoft.EntityframeworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotnetapp.Models
 {

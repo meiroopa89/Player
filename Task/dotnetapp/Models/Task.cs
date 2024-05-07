@@ -5,7 +5,7 @@ namespace dotnetapp.Models
 {
     public class Task
     {
-        [key]
+        [Key]
         public int Id {get;set;}
 
         [Required (ErrorMessage = "Name is required")]
