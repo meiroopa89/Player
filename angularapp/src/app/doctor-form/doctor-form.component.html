@@ -1,28 +1,33 @@
-   <form (submit)="adddoctor()">
+<form (submit)="addDoctor()">
     <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" [(ngModel)]="newdoctor.name" name="name" required>
-        <div *ngIf="isFieldInvalid('name')" class="error-message">Name is required</div>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" [(ngModel)]="newDoctor.firstName" name="firstName" required>
+        <div *ngIf="isFieldInvalid('firstName')" class="error-message">First Name is required</div>
     </div>
     <div>
-        <label for="description">Description:</label>
-        <textarea id="description" [(ngModel)]="newdoctor.description" name="description" required></textarea>
-        <div *ngIf="isFieldInvalid('description')" class="error-message">Description is required</div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" [(ngModel)]="newDoctor.lastName" name="lastName" required>
+        <div *ngIf="isFieldInvalid('lastName')" class="error-message">Last Name is required</div>
     </div>
     <div>
-        <label for="ingredients">Ingredients:</label>
-        <textarea id="ingredients" [(ngModel)]="newdoctor.ingredients" name="ingredients" required></textarea>
-        <div *ngIf="isFieldInvalid('ingredients')" class="error-message">Ingredients are required</div>
+        <label for="specialization">Specialization:</label>
+        <input type="text" id="specialization" [(ngModel)]="newDoctor.specialization" name="specialization" required>
+        <div *ngIf="isFieldInvalid('specialization')" class="error-message">Specialization is required</div>
     </div>
     <div>
-        <label for="instructions">Instructions:</label>
-        <textarea id="instructions" [(ngModel)]="newdoctor.instructions" name="instructions" required></textarea>
-        <div *ngIf="isFieldInvalid('instructions')" class="error-message">Instructions are required</div>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" [(ngModel)]="newDoctor.phoneNumber" name="phoneNumber" required>
+        <div *ngIf="isFieldInvalid('phoneNumber')" class="error-message">Phone Number is required</div>
     </div>
     <div>
-        <label for="author">Author:</label>
-        <input type="text" id="author" [(ngModel)]="newdoctor.author" name="author" required>
-        <div *ngIf="isFieldInvalid('author')" class="error-message">Author is required</div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="newDoctor.email" name="email" required>
+        <div *ngIf="isFieldInvalid('email')" class="error-message">Email is required</div>
     </div>
-    <button type="submit">Add doctor</button>
+    <div>
+        <label for="address">Address:</label>
+        <textarea id="address" [(ngModel)]="newDoctor.address" name="address" required></textarea>
+        <div *ngIf="isFieldInvalid('address')" class="error-message">Address is required</div>
+    </div>
+    <button type="submit">Add Doctor</button>
 </form>

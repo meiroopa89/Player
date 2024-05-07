@@ -1,88 +1,90 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { RouterTestingModule } from '@angular/router/testing';
-import { DoctoreFormComponent } from './doctor-form.component';
-import { RecipeService } from '../services/doctor.service';
+import { DoctorFormComponent } from './doctor-form.component';
+import { DoctorService } from '../services/doctor.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { Recipe } from '../models/doctor.model';
+import { Doctor } from '../models/doctor.model';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { RecipeListComponent } from '../doctor-list/doctor-list.component';
+import { DoctorListComponent } from '../doctor-list/doctor-list.component';
 
 describe('DoctorFormComponent', () => {
   let component: DoctorFormComponent;
-  let fixture: ComponentFixture<RecipeFormComponent>;
-  let recipeService: RecipeService;
+  let fixture: ComponentFixture<DoctorFormComponent>;
+  let doctorService: DoctorService;
   let router: Router;
-  let recipeListComponent: RecipeListComponent;
+  let doctorListComponent: DoctorListComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecipeFormComponent],
+      declarations: [DoctorFormComponent],
       imports: [FormsModule, RouterTestingModule, HttpClientTestingModule],
       providers: [
-        RecipeService,
+        DoctorService,
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecipeFormComponent);
+    fixture = TestBed.createComponent(DoctorFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
 
-    recipeService = TestBed.inject(RecipeService);
+    doctorService = TestBed.inject(DoctorService);
     router = TestBed.inject(Router);
 
   });
 
-  fit('should_create_RecipeFormComponent', () => {
+  fit('should create DoctorFormComponent', () => {
     expect(component).toBeTruthy();
-});
+  });
 
-  fit('RecipeFormComponent_should_not_render_any_error_messages_when_all_fields_are_filled', () => {
+  fit('DoctorFormComponent should not render any error messages when all fields are filled', () => {
     const compiled = fixture.nativeElement;
     const form = compiled.querySelector('form');
 
     // Fill all fields
-    component.newRecipe = {
-      recipeId: null, // or omit this line if recipeId is auto-generated
-      name: 'Test Name',
-      description: 'Test Description',
-      ingredients: 'Test Ingredients',
-      instructions: 'Test Instructions',
-      author: 'Test Author'
-    } as any;
+    component.newDoctor = {
+      id: null, // or omit this line if doctorId is auto-generated
+      firstName: 'Test First Name',
+      lastName: 'Test Last Name',
+      specialization: 'Test Specialization',
+      phoneNumber: 'Test Phone Number',
+      email: 'test@example.com',
+      address: 'Test Address'
+    } as Doctor;
 
     fixture.detectChanges();
 
     form.dispatchEvent(new Event('submit')); // Submit the form
 
     // Check if no error messages are rendered
-    expect(compiled.querySelector('#nameError')).toBeNull();
-    expect(compiled.querySelector('#descriptionError')).toBeNull();
-    expect(compiled.querySelector('#ingredientsError')).toBeNull();
-    expect(compiled.querySelector('#instructionsError')).toBeNull();
-    expect(compiled.querySelector('#authorError')).toBeNull();
+    expect(compiled.querySelector('#firstNameError')).toBeNull();
+    expect(compiled.querySelector('#lastNameError')).toBeNull();
+    expect(compiled.querySelector('#specializationError')).toBeNull();
+    expect(compiled.querySelector('#phoneNumberError')).toBeNull();
+    expect(compiled.querySelector('#emailError')).toBeNull();
+    expect(compiled.querySelector('#addressError')).toBeNull();
   });
 
-  fit('RecipeFormComponent_should_call_add_recipe_method_while_adding_the_recipe', () => {
-    // Create a mock Recipe object with all required properties
-    const recipe: Recipe = { 
-      recipeId: 1, 
-      name: 'Test Recipe', 
-      description: 'Test Recipe Description', 
-      ingredients: 'Ingredient 2', 
-      instructions: 'Test Recipe Instructions', 
-      author: 'Test Author'
-    } as any;
-    const addRecipeSpy = spyOn(component, 'addRecipe').and.callThrough();
-    component.addRecipe();
-    expect(addRecipeSpy).toHaveBeenCalled();
+  fit('DoctorFormComponent should call addDoctor method while adding the doctor', () => {
+    // Create a mock Doctor object with all required properties
+    const doctor: Doctor = { 
+      id: 1, 
+      firstName: 'Test First Name', 
+      lastName: 'Test Last Name', 
+      specialization: 'Test Specialization', 
+      phoneNumber: 'Test Phone Number', 
+      email: 'test@example.com', 
+      address: 'Test Address'
+    };
+    const addDoctorSpy = spyOn(component, 'addDoctor').and.callThrough();
+    component.addDoctor();
+    expect(addDoctorSpy).toHaveBeenCalled();
   });
 });
-

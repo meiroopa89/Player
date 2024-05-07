@@ -1,34 +1,35 @@
 <div class="container">
-    <h2>Recipe List</h2>
+    <h2>Doctor List</h2>
   
-    <div *ngIf="recipes.length === 0" class="no-recipes-message">
-        No recipes available.
+    <div *ngIf="doctors.length === 0" class="no-doctors-message">
+        No doctors available.
     </div>
   
-    <table *ngIf="recipes.length > 0" class="recipe-table">
+    <table *ngIf="doctors.length > 0" class="doctor-table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ingredients</th>
-                <th>Instructions</th>
-                <th>Author</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Specialization</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
                 <!-- <th>Action</th> -->
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let recipe of recipes" class="recipe-item">
-                <td>{{ recipe.name }}</td>
-                <td>{{ recipe.description }}</td>
-                <td>{{ recipe.ingredients }}</td>
-                <td>{{ recipe.instructions }}</td>
-                <td>{{ recipe.author }}</td>
+            <tr *ngFor="let doctor of doctors" class="doctor-item">
+                <td>{{ doctor.firstName }}</td>
+                <td>{{ doctor.lastName }}</td>
+                <td>{{ doctor.specialization }}</td>
+                <td>{{ doctor.phoneNumber }}</td>
+                <td>{{ doctor.email }}</td>
+                <td>{{ doctor.address }}</td>
 
                 <td>
-                    <button id = "delete" class="delete-button" (click)="Delete(recipe.recipeId)">Delete</button>
+                    <button id="delete" class="delete-button" (click)="deleteDoctor(doctor.id)">Delete</button>
                 </td>
-
             </tr>
         </tbody>
     </table>
-  </div>
+</div>

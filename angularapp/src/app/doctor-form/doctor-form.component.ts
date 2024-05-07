@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Recipe } from '../models/doctor.model';
-import { RecipeService } from '../services/doctor.service'; // Corrected import statement
+import { Doctor } from '../models/doctor.model';
+import { DoctorService } from '../services/doctor.service'; // Corrected import statement
 import { Router } from '@angular/router';
 
 
@@ -11,32 +11,32 @@ import { Router } from '@angular/router';
 })
 
 export class DoctorFormComponent {
-  newRecipe: Recipe = {
-    recipeId: 0,
+  newDoctor: Doctor = {
+    id: 0,
     name: '',
     description: '',
     ingredients: '',
     instructions: '',
     author: ''
-  };
+  } as any;
   
   formSubmitted = false; // Track form submission
 
-  constructor(private recipeService: RecipeService, private router: Router) { }
+  constructor(private doctorService: DoctorService, private router: Router) { }
 
-  addRecipe(): void {
+  addDoctor(): void {
     this.formSubmitted = true; // Set formSubmitted to true on form submission
     if (this.isFormValid()) {
-      this.recipeService.addRecipe(this.newRecipe).subscribe(() => {
-        console.log('Recipe added successfully!');
-        this.router.navigate(['/viewRecipes']);
+      this.doctorService.addDoctor(this.newDoctor).subscribe(() => {
+        console.log('Doctor added successfully!');
+        this.router.navigate(['/viewDoctors']);
       });
     }
   }
 
   isFieldInvalid(fieldName: string): boolean {
-    const field = this.newRecipe[fieldName];
-    return !field && (this.formSubmitted || this.newRecipe[fieldName].touched);
+    const field = this.newDoctor[fieldName];
+    return !field && (this.formSubmitted || this.newDoctor[fieldName].touched);
   }
 
   isFormValid(): boolean {

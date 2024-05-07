@@ -1,43 +1,43 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { RecipeService } from '../services/doctor.service';
-import { RecipeListComponent } from './doctor-list.component';
+import { DoctorService } from '../services/doctor.service'; // Import DoctorService
+import { DoctorListComponent } from './doctor-list.component'; // Adjust the import path
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Recipe } from '../models/doctor.model';
+import { Doctor } from '../models/doctor.model'; // Import Doctor model
 
-describe('RecipeListComponent', () => {
-    let component: RecipeListComponent;
-    let fixture: ComponentFixture<RecipeListComponent>;
-    let mockRecipeService: jasmine.SpyObj<RecipeService>; // Specify the type of mock
+describe('DoctorListComponent', () => {
+    let component: DoctorListComponent;
+    let fixture: ComponentFixture<DoctorListComponent>;
+    let mockDoctorService: jasmine.SpyObj<DoctorService>; // Specify the type of mock
 
     beforeEach(waitForAsync(() => {
         // Create a spy object with the methods you want to mock
-        mockRecipeService = jasmine.createSpyObj<RecipeService>('RecipeService', ['getRecipes', 'addRecipe'] as any);
+        mockDoctorService = jasmine.createSpyObj<DoctorService>('DoctorService', ['getDoctors', 'deleteDoctor'] as any);
 
         TestBed.configureTestingModule({
-            declarations: [RecipeListComponent],
+            declarations: [DoctorListComponent],
             imports: [RouterTestingModule, HttpClientTestingModule],
             providers: [
                 // Provide the mock service instead of the actual service
-                { provide: RecipeService, useValue: mockRecipeService }
+                { provide: DoctorService, useValue: mockDoctorService }
             ]
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(RecipeListComponent);
+        fixture = TestBed.createComponent(DoctorListComponent);
         component = fixture.componentInstance;
     });
 
-    fit('should_create_recipe_listComponent', () => {
+    fit('should create DoctorListComponent', () => { // Change the function name
         expect(component).toBeTruthy();
     });
 
-    fit('recipe_listComponent_should_call_loadRecipes_on_ngOnInit', () => {
-        spyOn(component, 'loadRecipes');
+    fit('DoctorListComponent should call loadDoctors on ngOnInit', () => { // Change the function name
+        spyOn(component, 'loadDoctors'); // Adjust the method name
         fixture.detectChanges();
-        expect(component.loadRecipes).toHaveBeenCalled();
+        expect(component.loadDoctors).toHaveBeenCalled(); // Adjust the method name
     });
 
 });
