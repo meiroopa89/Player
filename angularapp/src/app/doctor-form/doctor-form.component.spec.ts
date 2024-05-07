@@ -40,11 +40,11 @@ describe('DoctorFormComponent', () => {
 
   });
 
-  fit('should create DoctorFormComponent', () => {
+  fit('should_create_DoctorFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('DoctorFormComponent should not render any error messages when all fields are filled', () => {
+  fit('DoctorFormComponent_should_not_render_any_error_messages_when_all_fields_are_filled', () => {
     const compiled = fixture.nativeElement;
     const form = compiled.querySelector('form');
 
@@ -71,7 +71,7 @@ describe('DoctorFormComponent', () => {
     expect(compiled.querySelector('#addressError')).toBeNull();
   });
 
-  fit('DoctorFormComponent should call addDoctor method while adding the doctor', () => {
+  fit('DoctorFormComponent_should_call_addDoctor_method_while_adding_the_doctor', () => {
     // Create a mock Doctor object with all required properties
     const doctor: Doctor = { 
       id: 1, 
