@@ -32,15 +32,14 @@ export class DoctorFormComponent {
       });
     }
   }
-
   isFieldInvalid(fieldName: string): boolean {
     const field = this.newDoctor[fieldName];
-    return !field && this.formSubmitted; // Check if field is empty and form is submitted
+    return !field && (this.formSubmitted || this.newDoctor[fieldName].touched);
   }
-
   isFormValid(): boolean {
     return !this.isFieldInvalid('firstName') && !this.isFieldInvalid('lastName') &&
       !this.isFieldInvalid('specialization') && !this.isFieldInvalid('phoneNumber') &&
       !this.isFieldInvalid('email') && !this.isFieldInvalid('address');
   }
 }
+

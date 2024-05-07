@@ -21,11 +21,11 @@ describe('DoctorService', () => { // Change description to DoctorService
     httpTestingController.verify();
   });
 
-  fit('DoctorService should be created', () => { // Change fit to it
+  fit('DoctorService_should_be_created', () => { // Change fit to it
     expect(service).toBeTruthy();
   });
 
-  fit('DoctorService should add a doctor and return it', () => { // Change fit to it
+  fit('DoctorService_should_add_a_doctor_and_return_it', () => { // Change fit to it
     const mockDoctor: Doctor = {
       id: 100,
       firstName: 'Test First Name',
@@ -34,7 +34,7 @@ describe('DoctorService', () => { // Change description to DoctorService
       phoneNumber: 'Test Phone Number',
       email: 'test@email.com',
       address: 'Test Address'
-    };
+    } as any;
 
     service.addDoctor(mockDoctor).subscribe((doctor) => {
       expect(doctor).toEqual(mockDoctor);
@@ -45,7 +45,7 @@ describe('DoctorService', () => { // Change description to DoctorService
     req.flush(mockDoctor);
   });
 
-  fit('DoctorService should get doctors', () => { // Change fit to it
+  fit('DoctorService_should_get_doctors', () => { // Change fit to it
     const mockDoctors: Doctor[] = [
       {
         id: 100,
@@ -56,7 +56,7 @@ describe('DoctorService', () => { // Change description to DoctorService
         email: 'test@email.com',
         address: 'Test Address'
       }
-    ];
+    ] as any;
 
     service.getDoctors().subscribe((doctors) => {
       expect(doctors).toEqual(mockDoctors);
@@ -67,7 +67,7 @@ describe('DoctorService', () => { // Change description to DoctorService
     req.flush(mockDoctors);
   });
 
-  fit('DoctorService should delete doctor', () => { // Change fit to it
+  fit('DoctorService_should_delete_doctor', () => { // Change fit to it
     const doctorId = 100;
 
     service.deleteDoctor(doctorId).subscribe(() => {
@@ -79,7 +79,7 @@ describe('DoctorService', () => { // Change description to DoctorService
     req.flush({});
   });
 
-  fit('DoctorService should get doctor by id', () => { // Change fit to it
+  fit('DoctorService_should_get_doctor_by_id', () => { // Change fit to it
     const doctorId = 100;
     const mockDoctor: Doctor = {
       doctorId: doctorId,

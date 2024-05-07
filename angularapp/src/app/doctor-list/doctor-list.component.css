@@ -1,41 +1,27 @@
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  h2 {
-    text-align: center;
-  }
-  
-  .no-recipes-message {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .recipe-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .recipe-table th,
-  .recipe-table td {
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .recipe-table th {
-    background-color: #f2f2f2;
-    text-align: left;
-  }
-  
-  .recipe-item:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .recipe-item:hover {
-    background-color: #ddd;
-  }
+.doctor-table {
+  width: 100%; /* Set table width to fill its container */
+  border-collapse: collapse; /* Collapse borders for a cleaner look */
+}
+
+.doctor-table th,
+.doctor-table td {
+  padding: 12px; /* Add padding for cells */
+  border-bottom: 1px solid #ddd; /* Add bottom border for rows */
+  text-align: left; /* Align text to the left */
+}
+
+.doctor-table th {
+  background-color: #f2f2f2; /* Set background color for header row */
+}
+
+.doctor-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2; /* Alternate row background color */
+}
+
+.doctor-table tbody tr:hover {
+  background-color: #ddd; /* Change background color on hover */
+}
+
 
   .delete-button {
     background-color: #ff2600; /* Coral */

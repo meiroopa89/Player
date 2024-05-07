@@ -81,7 +81,7 @@ describe('DoctorFormComponent', () => {
       phoneNumber: 'Test Phone Number', 
       email: 'test@example.com', 
       address: 'Test Address'
-    };
+    } as any;
     const addDoctorSpy = spyOn(component, 'addDoctor').and.callThrough();
     component.addDoctor();
     expect(addDoctorSpy).toHaveBeenCalled();

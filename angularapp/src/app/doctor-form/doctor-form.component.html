@@ -21,7 +21,7 @@
     </div>
     <div>
         <label for="email">Email:</label>
-        <input type="email" id="email" [(ngModel)]="newDoctor.email" name="email" required>
+        <input type="text" id="email" [(ngModel)]="newDoctor.email" name="email" required>
         <div *ngIf="isFieldInvalid('email')" class="error-message">Email is required</div>
     </div>
     <div>
