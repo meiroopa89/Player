@@ -3,6 +3,8 @@ using System.Collections;
 using System.Linq;
 using dotnetapp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace dotnetapp.Controllers
 {
@@ -17,17 +19,19 @@ namespace dotnetapp.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Task>> AddPost(Task task)
+        public async Task<ActionResult<Task>> AddTask(Task task)
         {
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTask", new { id = task.Id }, task);
         }
-
-        public async Task<ActionResult<IEnumerable<Task>>> GetTask()
+       [HttpGet]
+        public async Task<ActionResult<IEnumerable<Task>>> GetTasks()
         {
             return await _context.Tasks.ToListAsync();
         }
     }
 }
+
+
