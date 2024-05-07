@@ -22,16 +22,4 @@ describe('HeaderComponent', () => {
     fit('should_create_HeaderComponent', () => {
         expect(component).toBeTruthy();
     });
-
-    // fit('HeaderComponent_should_navigate_to_Add_New_Recipe', () => {
-    //     spyOn(router, 'navigate');
-    //     component['navigateToAddRecipe']();
-    //     expect(router.navigate).toHaveBeenCalledWith(['/addNewRecipe']);
-    // });
-
-    // fit('HeaderComponent_should_navigate_to_View_Recipe', () => {
-    //     spyOn(router, 'navigate');
-    //     component['navigateToViewRecipes']();
-    //     expect(router.navigate).toHaveBeenCalledWith(['/viewRecipes']);
-    // });
 });

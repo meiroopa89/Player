@@ -1,7 +1,8 @@
+// delete-confirm.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RecipeService } from '../services/doctor.service';
-import { Recipe } from '../models/doctor.model'; // Import Recipe interface
+import { DoctorService } from '../services/doctor.service'; // Adjust service name
+import { Doctor } from '../models/doctor.model'; // Import Doctor model
 
 @Component({
   selector: 'app-delete-confirm',
@@ -9,42 +10,42 @@ import { Recipe } from '../models/doctor.model'; // Import Recipe interface
   styleUrls: ['./delete-confirm.component.css']
 })
 export class DeleteConfirmComponent implements OnInit {
-  recipeId: number;
-  recipe: Recipe; // Initialize recipe property with an empty object
+  doctorId: number;
+  doctor: Doctor; // Initialize doctor property with an empty object
 
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
-    private recipeService: RecipeService
+    private doctorService: DoctorService // Adjust service name
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.recipeId = +params['id'];
-      this.recipeService.getRecipe(this.recipeId).subscribe(
-        (recipe: Recipe) => {
-          this.recipe = recipe;
+      this.doctorId = +params['id']; // Adjust parameter name
+      this.doctorService.getDoctor(this.doctorId).subscribe(
+        (doctor: Doctor) => {
+          this.doctor = doctor;
         },
         error => {
-          console.error('Error fetching recipe:', error);
+          console.error('Error fetching doctor:', error);
         }
       );
     });
   }
 
-  confirmDelete(recipeId: number): void {
-    this.recipeService.deleteRecipe(recipeId).subscribe(
+  confirmDelete(doctorId: number): void { // Adjust method signature
+    this.doctorService.deleteDoctor(doctorId).subscribe(
       () => {
-        console.log('Recipe deleted successfully.');
-        this.router.navigate(['/viewRecipes']);
+        console.log('Doctor deleted successfully.');
+        this.router.navigate(['/doctor-list']); // Adjust the route
       },
       (error) => {
-        console.error('Error deleting recipe:', error);
+        console.error('Error deleting doctor:', error);
       }
     );
   }
 
   cancelDelete(): void {
-    this.router.navigate(['/viewRecipes']);
+    this.router.navigate(['/doctor-list']); // Adjust the route
   }
 }

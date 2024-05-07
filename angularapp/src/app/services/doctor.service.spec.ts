@@ -1,19 +1,19 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { Recipe } from '../models/doctor.model';
-import { RecipeService } from './doctor.service';
+import { Doctor } from '../models/doctor.model'; // Import Doctor model
+import { DoctorService } from './doctor.service'; // Import DoctorService
 
-describe('RecipeService', () => {
-  let service: RecipeService;
+describe('DoctorService', () => { // Change description to DoctorService
+  let service: DoctorService; // Change service to DoctorService
   let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [RecipeService],
+      providers: [DoctorService], // Change RecipeService to DoctorService
     });
-    service = TestBed.inject(RecipeService);
+    service = TestBed.inject(DoctorService); // Change RecipeService to DoctorService
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
@@ -21,79 +21,82 @@ describe('RecipeService', () => {
     httpTestingController.verify();
   });
 
-  fit('RecipeService_should_be_created', () => {
+  fit('DoctorService should be created', () => { // Change fit to it
     expect(service).toBeTruthy();
   });
 
-  fit('RecipeService_should_add_a_recipe_and_return_it', () => {
-    const mockRecipe: Recipe = {
-      recipeId: 100,
-      name: 'Test Recipe',
-      description: 'Test Description',
-      ingredients: 'Test Ingredients',
-      instructions: 'Test Instructions',
-      author: 'Test Author'
+  fit('DoctorService should add a doctor and return it', () => { // Change fit to it
+    const mockDoctor: Doctor = {
+      id: 100,
+      firstName: 'Test First Name',
+      lastName: 'Test Last Name',
+      specialization: 'Test Specialization',
+      phoneNumber: 'Test Phone Number',
+      email: 'test@email.com',
+      address: 'Test Address'
     };
 
-    service.addRecipe(mockRecipe).subscribe((recipe) => {
-      expect(recipe).toEqual(mockRecipe);
+    service.addDoctor(mockDoctor).subscribe((doctor) => {
+      expect(doctor).toEqual(mockDoctor);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Recipe`);
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Doctor`); // Adjust the API endpoint
     expect(req.request.method).toBe('POST');
-    req.flush(mockRecipe);
+    req.flush(mockDoctor);
   });
 
-  fit('RecipeService_should_get_recipes', () => {
-    const mockRecipes: Recipe[] = [
+  fit('DoctorService should get doctors', () => { // Change fit to it
+    const mockDoctors: Doctor[] = [
       {
-        recipeId: 100,
-        name: 'Test Recipe 1',
-        description: 'Test Description',
-        ingredients: 'Test Ingredients',
-        instructions: 'Test Instructions',
-        author: 'Test Author'
+        id: 100,
+        firstName: 'Test First Name',
+        lastName: 'Test Last Name',
+        specialization: 'Test Specialization',
+        phoneNumber: 'Test Phone Number',
+        email: 'test@email.com',
+        address: 'Test Address'
       }
     ];
 
-    service.getRecipes().subscribe((recipes) => {
-      expect(recipes).toEqual(mockRecipes);
+    service.getDoctors().subscribe((doctors) => {
+      expect(doctors).toEqual(mockDoctors);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Recipe`);
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Doctor`); // Adjust the API endpoint
     expect(req.request.method).toBe('GET');
-    req.flush(mockRecipes);
+    req.flush(mockDoctors);
   });
 
-  fit('RecipeService_should_delete_recipe', () => {
-    const recipeId = 100;
+  fit('DoctorService should delete doctor', () => { // Change fit to it
+    const doctorId = 100;
 
-    service.deleteRecipe(recipeId).subscribe(() => {
+    service.deleteDoctor(doctorId).subscribe(() => {
       expect().nothing();
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Recipe/${recipeId}`);
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Doctor/${doctorId}`); // Adjust the API endpoint
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });
 
-  fit('RecipeService_should_get_recipe_by_id', () => {
-    const recipeId = 100;
-    const mockRecipe: Recipe = {
-      recipeId: recipeId,
-      name: 'Test Recipe',
-      description: 'Test Description',
-      ingredients: 'Test Ingredients',
-      instructions: 'Test Instructions',
-      author: 'Test Author'
+  fit('DoctorService should get doctor by id', () => { // Change fit to it
+    const doctorId = 100;
+    const mockDoctor: Doctor = {
+      doctorId: doctorId,
+      firstName: 'Test First Name',
+      lastName: 'Test Last Name',
+      specialization: 'Test Specialization',
+      phoneNumber: 'Test Phone Number',
+      email: 'test@email.com',
+      address: 'Test Address'
     } as any;
 
-    service.getRecipe(recipeId).subscribe((recipe) => {
-      expect(recipe).toEqual(mockRecipe);
+    service.getDoctor(doctorId).subscribe((doctor) => {
+      expect(doctor).toEqual(mockDoctor);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Recipe/${recipeId}`);
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Doctor/${doctorId}`); // Adjust the API endpoint
     expect(req.request.method).toBe('GET');
-    req.flush(mockRecipe);
+    req.flush(mockDoctor);
   });
 });

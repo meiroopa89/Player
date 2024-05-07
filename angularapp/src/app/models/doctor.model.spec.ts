@@ -1,26 +1,27 @@
-import { Recipe } from './doctor.model';
+import { Doctor } from './doctor.model'; // Import Doctor model
 
-describe('Recipe', () => {
-  fit('Models_should_create_recipe_instance', () => {
-    const recipe: Recipe = {
-      recipeId: 1,
-      name: 'Test Recipe',
-      description: 'Test Description',
-      ingredients: 'Test Ingredients',
-      instructions: 'Test Instructions',
-      author: 'Test Author'
+describe('Doctor', () => { // Change description to Doctor
+  it('Models should create doctor instance', () => { // Change fit to it and update test description
+    const doctor: Doctor = { // Change recipe to doctor and Recipe to Doctor
+      id: 1, // Adjust property name
+      firstName: 'Test First Name', // Adjust property name
+      lastName: 'Test Last Name', // Adjust property name
+      specialization: 'Test Specialization', // Adjust property name
+      phoneNumber: 'Test Phone Number', // Adjust property name
+      email: 'test@email.com', // Adjust property name
+      address: 'Test Address' // Adjust property name
     } as any;
 
-    // Check if the recipe object exists
-    expect(recipe).toBeTruthy();
+    // Check if the doctor object exists
+    expect(doctor).toBeTruthy();
 
-    // Check individual properties of the recipe
-    expect(recipe.recipeId).toBe(1);
-    expect(recipe.name).toBeDefined();
-    expect(recipe.description).toBe('Test Description');
-    expect(recipe.ingredients).toBe('Test Ingredients');
-    expect(recipe.instructions).toBe('Test Instructions');
-    expect(recipe.author).toBe('Test Author');
-});
-
+    // Check individual properties of the doctor
+    expect(doctor.id).toBe(1); // Adjust property name
+    expect(doctor.firstName).toBe('Test First Name'); // Adjust property name
+    expect(doctor.lastName).toBe('Test Last Name'); // Adjust property name
+    expect(doctor.specialization).toBe('Test Specialization'); // Adjust property name
+    expect(doctor.phoneNumber).toBe('Test Phone Number'); // Adjust property name
+    expect(doctor.email).toBe('test@email.com'); // Adjust property name
+    expect(doctor.address).toBe('Test Address'); // Adjust property name
+  });
 });

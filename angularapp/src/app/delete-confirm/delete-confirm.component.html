@@ -1,18 +1,19 @@
 <!-- delete-confirm.component.html -->
 
-<div class="container" *ngIf="recipe">
+<div class="container" *ngIf="doctor">
   <h2>Delete Confirmation</h2>
   <div class="confirmation-message">
-    <p>Are you sure you want to delete this recipe?</p>
-    <p>Name: {{ recipe.name }}</p>
-    <p>Description: {{ recipe.description }}</p>
-    <p>Ingredients: {{ recipe.ingredients }}</p>
-    <p>Instructions: {{ recipe.instructions }}</p>
-    <p>Author: {{ recipe.author }}</p>
-    <!-- You can display other relevant information about the recipe here -->
+    <p>Are you sure you want to delete this doctor?</p>
+    <p>First Name: {{ doctor.firstName }}</p>
+    <p>Last Name: {{ doctor.lastName }}</p>
+    <p>Specialization: {{ doctor.specialization }}</p>
+    <p>Phone Number: {{ doctor.phoneNumber }}</p>
+    <p>Email: {{ doctor.email }}</p>
+    <p>Address: {{ doctor.address }}</p>
+    <!-- You can display other relevant information about the doctor here -->
   </div>
   <div class="form-buttons">
-    <button type="button" id = "confirm" class="confirm-button" (click)="confirmDelete(recipeId)">Confirm Delete</button>
-    <button type="button" id = "cancel" class="cancel-button" (click)="cancelDelete()">Cancel</button>
+    <button type="button" id="confirm" class="confirm-button" (click)="confirmDelete(doctorId)">Confirm Delete</button>
+    <button type="button" id="cancel" class="cancel-button" (click)="cancelDelete()">Cancel</button>
   </div>
 </div>

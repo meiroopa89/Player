@@ -50,7 +50,6 @@ describe('DoctorFormComponent', () => {
 
     // Fill all fields
     component.newDoctor = {
-      id: null, // or omit this line if doctorId is auto-generated
       firstName: 'Test First Name',
       lastName: 'Test Last Name',
       specialization: 'Test Specialization',
