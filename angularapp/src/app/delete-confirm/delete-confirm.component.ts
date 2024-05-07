@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../services/recipe.service';
-import { Recipe } from '../models/recipe.model'; // Import Recipe interface
+import { Recipe } from '../models/doctor.model'; // Import Recipe interface
 
 @Component({
   selector: 'app-delete-confirm',
