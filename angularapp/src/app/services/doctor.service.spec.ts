@@ -2,7 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 
 import { Recipe } from '../models/doctor.model';
-import { RecipeService } from './recipe.service';
+import { RecipeService } from './doctor.service';
 
 describe('RecipeService', () => {
   let service: RecipeService;

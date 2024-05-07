@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { RecipeService } from '../services/recipe.service';
+import { RecipeService } from '../services/doctor.service';
 import { RecipeListComponent } from './doctor-list.component';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';

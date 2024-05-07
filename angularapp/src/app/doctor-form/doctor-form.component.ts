@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { Recipe } from '../models/doctor.model';
-import { RecipeService } from '../services/recipe.service'; // Corrected import statement
+import { RecipeService } from '../services/doctor.service'; // Corrected import statement
 import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-recipe-form',
-  templateUrl: './recipe-form.component.html',
-  styleUrls: ['./recipe-form.component.css']
+  selector: 'app-doctor-form',
+  templateUrl: './doctor-form.component.html',
+  styleUrls: ['./doctor-form.component.css']
 })
 
-export class RecipeFormComponent {
+export class DoctorFormComponent {
   newRecipe: Recipe = {
     recipeId: 0,
     name: '',

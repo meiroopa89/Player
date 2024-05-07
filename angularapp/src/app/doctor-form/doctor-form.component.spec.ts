@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { RouterTestingModule } from '@angular/router/testing';
-import { RecipeFormComponent } from './doctor-form.component';
-import { RecipeService } from '../services/recipe.service';
+import { DoctoreFormComponent } from './doctor-form.component';
+import { RecipeService } from '../services/doctor.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -12,8 +12,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { RecipeListComponent } from '../doctor-list/doctor-list.component';
 
-describe('RecipeFormComponent', () => {
-  let component: RecipeFormComponent;
+describe('DoctorFormComponent', () => {
+  let component: DoctorFormComponent;
   let fixture: ComponentFixture<RecipeFormComponent>;
   let recipeService: RecipeService;
   let router: Router;
