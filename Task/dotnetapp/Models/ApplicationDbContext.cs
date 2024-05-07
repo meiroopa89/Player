@@ -5,7 +5,7 @@ using Microsoft.EntityframeworkCore;
 
 namespace dotnetapp.Models
 {
-    public class ApplicationDbContext
+    public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions <ApplicationDbContext> options) : base(options)
         {
