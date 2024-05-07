@@ -1,9 +1,8 @@
 using System;
+using System.Collections;
 using System.Linq;
-using System.Threading.Tasks;
 using dotnetapp.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace dotnetapp.Controllers
 {
@@ -17,12 +16,18 @@ namespace dotnetapp.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult<Task>> AddPost(Task task)
+        [HttpPost]
+        public async Task<ActionResult<Task>> AddPost(Task task)
         {
             _context.Tasks.Add(task);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction ("GetTask", new {id = task.id}, task);
+            return CreatedAtAction("GetTask", new { id = task.Id }, task);
+        }
+
+        public async Task<ActionResult<IEnumerable<Task>>> GetTask()
+        {
+            return await _context.Tasks.ToListAsync();
         }
     }
 }
