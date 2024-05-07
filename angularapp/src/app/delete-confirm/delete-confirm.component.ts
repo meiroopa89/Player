@@ -37,7 +37,7 @@ export class DeleteConfirmComponent implements OnInit {
     this.doctorService.deleteDoctor(doctorId).subscribe(
       () => {
         console.log('Doctor deleted successfully.');
-        this.router.navigate(['/doctor-list']); // Adjust the route
+        this.router.navigate(['/viewDoctors']); // Adjust the route
       },
       (error) => {
         console.error('Error deleting doctor:', error);
@@ -46,6 +46,6 @@ export class DeleteConfirmComponent implements OnInit {
   }
 
   cancelDelete(): void {
-    this.router.navigate(['/doctor-list']); // Adjust the route
+    this.router.navigate(['/viewDoctors']); // Adjust the route
   }
 }
