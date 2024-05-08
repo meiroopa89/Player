@@ -44,32 +44,40 @@ describe('DoctorFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('DoctorFormComponent_should_not_render_any_error_messages_when_all_fields_are_filled', () => {
-    const compiled = fixture.nativeElement;
-    const form = compiled.querySelector('form');
-
-    // Fill all fields
+  fit('DoctorFormComponent_should_render_error_messages_when_required_fields_are_empty_on_submit', () => {
+    // Set all fields to empty strings
     component.newDoctor = {
-      firstName: 'Test First Name',
-      lastName: 'Test Last Name',
-      specialization: 'Test Specialization',
-      phoneNumber: 'Test Phone Number',
-      email: 'test@example.com',
-      address: 'Test Address'
-    } as Doctor;
-
+      id: null,
+      firstName: '',
+      lastName: '',
+      specialization: '',
+      phoneNumber: '',
+      email: '',
+      address: ''
+    };
+  
+    // Manually trigger form submission
+    component.formSubmitted = true;
+  
     fixture.detectChanges();
-
-    form.dispatchEvent(new Event('submit')); // Submit the form
-
-    // Check if no error messages are rendered
-    expect(compiled.querySelector('#firstNameError')).toBeNull();
-    expect(compiled.querySelector('#lastNameError')).toBeNull();
-    expect(compiled.querySelector('#specializationError')).toBeNull();
-    expect(compiled.querySelector('#phoneNumberError')).toBeNull();
-    expect(compiled.querySelector('#emailError')).toBeNull();
-    expect(compiled.querySelector('#addressError')).toBeNull();
+  
+    // Find the form element
+    const form = fixture.debugElement.query(By.css('form')).nativeElement;
+  
+    // Submit the form
+    form.dispatchEvent(new Event('submit'));
+  
+    fixture.detectChanges();
+  
+    // Check if error messages are rendered for each field
+    expect(fixture.debugElement.query(By.css('#firstName + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#lastName + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#specialization + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#phoneNumber + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#email + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#address + .error-message'))).toBeTruthy();
   });
+  
 
   fit('DoctorFormComponent_should_call_addDoctor_method_while_adding_the_doctor', () => {
     // Create a mock Doctor object with all required properties
