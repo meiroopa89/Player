@@ -1,0 +1,16 @@
+<div>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Ingrdients</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let recipe for recipes">
+            <td>{{recipes.Name}}</td>
+            <td>{{recipes.Ingredients}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>

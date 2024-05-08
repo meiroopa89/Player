@@ -22,8 +22,10 @@ export class RecipeFormComponent{
     addRecipe(): void
     {
       this.recipeService.addRecipe(this.newRecipe).subscribe(() =>
+      {
 
-      this.router.navigate(['/viewRecipes'])
-      );
-    }
-}
+      console.log('Recipe added successfully.');
+      // this.router.navigate(['/viewRecipes'])
+      
+    });
+  }}
