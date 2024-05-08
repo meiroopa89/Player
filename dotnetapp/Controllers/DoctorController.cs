@@ -51,20 +51,20 @@ namespace dotnetapp.Controllers
         }
 
         // DELETE: api/Doctor/5
-[HttpDelete("{id}")]
-public async Task<ActionResult<Doctor>> DeleteDoctor(int id)
-{
-    var doctor = await _context.Doctors.FindAsync(id);
-    if (doctor == null)
-    {
-        return NotFound();
-    }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Doctor>> DeleteDoctor(int id)
+        {
+            var doctor = await _context.Doctors.FindAsync(id);
+            if (doctor == null)
+            {
+                return NotFound();
+            }
 
-    _context.Doctors.Remove(doctor);
-    await _context.SaveChangesAsync();
+            _context.Doctors.Remove(doctor);
+            await _context.SaveChangesAsync();
 
-    return doctor;
-}
+            return doctor;
+        }
 
     }
 }
