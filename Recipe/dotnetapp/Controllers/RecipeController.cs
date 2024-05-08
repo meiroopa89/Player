@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace dotnetapp.Controllers
 {
-    [Route("api/[Controller]")]
+    [Route("api/[controller]")]
+    [ApiController]
     public class RecipeController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -20,15 +21,17 @@ namespace dotnetapp.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult<Recipe>> AddPost (Recipe recipe)
+        [HttpPost]
+        public async Task<ActionResult<Recipe>> AddRecipe (Recipe recipe)
         {
             _context.Recipes.Add(recipe);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRecipe",new { id = Recipe.Id}, recipe);
+            return CreatedAtAction("GetRecipe",new { id = recipe.Id}, recipe);
         } 
 
-        public async Task<IActionResult<IEnumerable<Recipe>>> GetRecipe()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipe()
         {
             return await _context.Recipes.ToListAsync();
         }
