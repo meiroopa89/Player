@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 
 const routes: Routes = [
-  {path: "/addRecipe", component: RecipeFormComponent},
+  {path: '/addRecipe', component: RecipeFormComponent},
   // {path: "/viewRecipes", component: RecipeListComponent}
 ];
 
