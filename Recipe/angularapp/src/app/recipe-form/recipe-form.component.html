@@ -1,5 +1,10 @@
-<form>
+<form (OnSubmit) = "addRecipe()">
     <div>
-        <label for="name"></label>
+        <label for="Name">Name:</label>
+        <input id = "Name" type = "text" [(ngModel)]="newRecipe.Name required>
+    </div>
+    <div>
+        <label for="Ingredients">Ingredients:</label>
+        <input id = "Ingredients" type = "text" [(ngModel)]="newRecipe.Ingredients required>
     </div>
 </form>

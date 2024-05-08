@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../services/recipe.service';
 import { Router } from '@angular/router';
+import { Recipe } from '../models/recipe.model';
 
 @Component({
   selector: 'app-recipe-form',
@@ -9,22 +10,20 @@ import { Router } from '@angular/router';
 })
 export class RecipeFormComponent{
 
-  newRecipe = Recipe{
+  newRecipe: Recipe = {
 
-      Id = 0,
-      Name = '',
-      Ingredients = ''
+      Id: 0,
+      Name: '',
+      Ingredients: ''
   };
 
   constructor(private recipeService: RecipeService, private router: Router) { }
 
-    addRecipe()
+    addRecipe(): void
     {
       this.recipeService.addRecipe(this.newRecipe).subscribe(() =>
 
-      // this.router.navigate(['/viewRecipes']);
-      )
+      this.router.navigate(['/viewRecipes'])
+      );
     }
-
-
 }
