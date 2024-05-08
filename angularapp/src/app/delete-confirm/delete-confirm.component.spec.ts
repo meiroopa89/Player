@@ -38,20 +38,20 @@ describe('DeleteConfirmComponent', () => {
         fixture.detectChanges();
     });
 
-    fit('should_create_DeleteConfirmComponent', () => { // Adjust the function name
+    fit('should create DeleteConfirmComponent', () => { // Adjust the function name
         expect(component).toBeTruthy();
     });
 
-    fit('DeleteConfirmComponent_should_call_deleteDoctor_method_when_confirmDelete_is_called', () => { // Adjust the function name
-        const id = 1; // Adjust the id
+    fit('DeleteConfirmComponent should call deleteDoctor method when confirmDelete is called', () => { // Adjust the function name
+        const doctorId = 1; // Adjust the doctorId
         
         // Spy on the deleteDoctor method of the DoctorService
         mockDoctorService.deleteDoctor.and.returnValue(of(null)); // Adjust the method name
 
         // Call the confirmDelete method
-        component.confirmDelete(id); // Adjust the parameter name
+        component.confirmDelete(doctorId); // Adjust the parameter name
 
-        // Expect the deleteDoctor method to have been called with the id
-        expect(mockDoctorService.deleteDoctor).toHaveBeenCalledWith(id); // Adjust the method name and parameter
+        // Expect the deleteDoctor method to have been called with the doctorId
+        expect(mockDoctorService.deleteDoctor).toHaveBeenCalledWith(doctorId); // Adjust the method name and parameter
     });
 });

@@ -11,9 +11,9 @@ describe('DoctorService', () => { // Change description to DoctorService
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [DoctorService], // Change DoctorService to DoctorService
+      providers: [DoctorService], // Change RecipeService to DoctorService
     });
-    service = TestBed.inject(DoctorService); // Change DoctorService to DoctorService
+    service = TestBed.inject(DoctorService); // Change RecipeService to DoctorService
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 

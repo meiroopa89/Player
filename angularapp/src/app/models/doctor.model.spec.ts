@@ -1,8 +1,8 @@
 import { Doctor } from './doctor.model'; // Import Doctor model
 
 describe('Doctor', () => { // Change description to Doctor
-  fit('Models_should_create_doctor_instance', () => { // Change fit to it and update test description
-    const doctor: Doctor = { // Change Doctor to doctor and Doctor to Doctor
+  fit('Models should create doctor instance', () => { // Change fit to it and update test description
+    const doctor: Doctor = { // Change recipe to doctor and Recipe to Doctor
       id: 1, // Adjust property name
       firstName: 'Test First Name', // Adjust property name
       lastName: 'Test Last Name', // Adjust property name
