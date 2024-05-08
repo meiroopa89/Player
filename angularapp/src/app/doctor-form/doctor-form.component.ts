@@ -32,6 +32,7 @@ export class DoctorFormComponent {
       });
     }
   }
+  
   isFieldInvalid(fieldName: string): boolean {
     const field = this.newDoctor[fieldName];
     return !field && (this.formSubmitted || this.newDoctor[fieldName].touched);
