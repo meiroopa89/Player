@@ -1,15 +1,30 @@
 import { Component, OnInit } from '@angular/core';
+import { RecipeService } from '../services/recipe.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-form',
   templateUrl: './recipe-form.component.html',
   styleUrls: ['./recipe-form.component.css']
 })
-export class RecipeFormComponent implements OnInit {
+export class RecipeFormComponent{
 
-  constructor() { }
+  newRecipe = Recipe{
 
-  ngOnInit(): void {
-  }
+      Id = 0,
+      Name = '',
+      Ingredients = ''
+  };
+
+  constructor(private recipeService: RecipeService, private router: Router) { }
+
+    addRecipe()
+    {
+      this.recipeService.addRecipe(this.newRecipe).subscribe(() =>
+
+      // this.router.navigate(['/viewRecipes']);
+      )
+    }
+
 
 }
