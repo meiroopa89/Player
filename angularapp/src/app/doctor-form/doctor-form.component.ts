@@ -23,7 +23,10 @@ export class DoctorFormComponent {
 
   constructor(private doctorService: DoctorService, private router: Router) { }
 
-  addDoctor(): void {
+  addDoctor
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.newDoctor[fieldName];
+    return !field &&(): void {
     this.formSubmitted = true; // Set formSubmitted to true on form submission
     if (this.isFormValid()) {
       this.doctorService.addDoctor(this.newDoctor).subscribe(() => {
@@ -32,10 +35,7 @@ export class DoctorFormComponent {
       });
     }
   }
-  
-  isFieldInvalid(fieldName: string): boolean {
-    const field = this.newDoctor[fieldName];
-    return !field && (this.formSubmitted || this.newDoctor[fieldName].touched);
+   (this.formSubmitted || this.newDoctor[fieldName].touched);
   }
   isFormValid(): boolean {
     return !this.isFieldInvalid('firstName') && !this.isFieldInvalid('lastName') &&
