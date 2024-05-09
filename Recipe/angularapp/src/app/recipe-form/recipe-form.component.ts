@@ -25,7 +25,7 @@ export class RecipeFormComponent{
       {
 
       console.log('Recipe added successfully.');
-      // this.router.navigate(['/viewRecipes'])
+      this.router.navigate(['/viewRecipes'])
       
     });
   }}

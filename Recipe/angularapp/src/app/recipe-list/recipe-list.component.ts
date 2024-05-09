@@ -19,7 +19,7 @@ export class RecipeListComponent implements OnInit {
 
   loadRecipes(): void
   {
-      this.recipeService
+      this.recipeService.getRecipes().subscribe(recipes => this.recipes = recipes);    
   }
 
 }
