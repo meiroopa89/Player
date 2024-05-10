@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class RecipeService {
 
-  public apiUrl = "";
+  public apiUrl = "https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/";
 
   constructor(private http: HttpClient) { }
 

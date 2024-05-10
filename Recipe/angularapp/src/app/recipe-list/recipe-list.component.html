@@ -1,1 +1,14 @@
-<p>recipe-list works!</p>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Ingredients</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = let recipes of recipe>
+            <td>{{recipes.name}}</td>
+            <td>{{recipes.ingredients}}</td>
+        </tr>
+    </tbody>
+</table>
