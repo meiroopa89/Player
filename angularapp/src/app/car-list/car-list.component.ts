@@ -19,7 +19,8 @@ export class CarListComponent implements OnInit {
   }
 
   loadCars(): void {
-    this.carService.getCars().subscribe(cars => this.cars = cars); // Adjust the service method name
+    this.carService.getCars().subscribe(cars => this.cars = cars); 
+    console.log(this.cars);// Adjust the service method name
   }
 
   deleteCar(carId: number): void { // Adjust the method name and parameter
