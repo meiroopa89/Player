@@ -6,8 +6,9 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 import { HeaderComponent } from './header/header.component';
-import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { FormsModule } from '@angular/forms';
+import { RecipeListComponent } from './recipe-list/recipe-list.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

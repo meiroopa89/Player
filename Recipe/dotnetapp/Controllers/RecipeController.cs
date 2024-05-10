@@ -9,6 +9,7 @@ using System.Collections;
 namespace dotnetapp.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class RecipeController :  ControllerBase
     {
         private readonly ApplicationDbContext _context;
