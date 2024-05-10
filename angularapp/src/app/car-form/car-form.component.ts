@@ -33,10 +33,17 @@ export class CarFormComponent {
     }
   }
   
+  // isFieldInvalid(fieldName: string): boolean {
+  //   const field = this.newCar[fieldName];
+  //   return !field && (this.formSubmitted || this.newCar[fieldName].touched);
+  // }
+
   isFieldInvalid(fieldName: string): boolean {
     const field = this.newCar[fieldName];
-    return !field && (this.formSubmitted || this.newCar[fieldName].touched);
+    return !field || (this.formSubmitted && field.touched);
   }
+
+  
   isFormValid(): boolean {
     return !this.isFieldInvalid('firstName') && !this.isFieldInvalid('lastName') &&
       !this.isFieldInvalid('specialization') && !this.isFieldInvalid('phoneNumber') &&
