@@ -8,10 +8,17 @@ import { Observable } from 'rxjs';
 })
 export class RecipeService {
 
+  public apiUrl = "";
+
   constructor(private http: HttpClient) { }
 
   addRecipe(Recipe: Recipe): Observable<Recipe>
   {
-    return this.http.post<Recipe>()
+    return this.http.post<Recipe>(`${this.apiUrl}api/Recipe`, Recipe);
+  }
+
+  getRecipes(): Observable<Recipe[]>
+  {
+    return this.http.get<Recipe[]>(`${this.apiUrl}api/Recipe`);
   }
 }
