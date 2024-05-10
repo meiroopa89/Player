@@ -2,12 +2,12 @@
 
     <div>
         <label for = "name">Name:</label>
-        <input name = "name" id = "name" [(ngModel)]="newRecipe.name" required>
+        <input type ="text" name = "name" id = "name" [(ngModel)]="newRecipe.name" required>
     </div>
 
     <div>
         <label for = "ingrdients">Ingrdients:</label>
-        <input name = "ingrdients" id = "ingrdients" [(ngModel)]="newRecipe.ingrdients" required>
+        <input type ="text" name = "ingrdients" id = "ingrdients" [(ngModel)]="newRecipe.ingredients" required>
     </div>
 
     <button type="submit">Add Recipe</button>

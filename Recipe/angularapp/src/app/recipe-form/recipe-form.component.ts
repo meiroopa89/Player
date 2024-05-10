@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../services/recipe.service';
 import { Route, Router } from '@angular/router';
 import { Recipe } from '../models/recipe.model';
-import { Console } from 'console';
 
 @Component({
   selector: 'app-recipe-form',
