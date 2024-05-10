@@ -316,12 +316,23 @@ public void BatchEnrollmentForm_BatchFull_ThrowsException_with_message()
         [Test]
         public void Batch_Properties_Price_ReturnExpectedValues()
         {
-            int expectedPrice = 500.0;
+            decimal expectedPrice = 500.00m;
             Batch batch = new Batch
             {
                 Price = expectedPrice
             };
             Assert.AreEqual(expectedPrice, batch.Price);
+        }
+
+        [Test]
+        public void Batch_Properties_Duration_ReturnExpectedValues()
+        {
+            int expectedDuration = 5;
+            Batch batch = new Batch
+            {
+                Duration = expectedDuration
+            };
+            Assert.AreEqual(expectedDuration, batch.Duration);
         }
 
 //This test checks the expected value of StudentID in Student class is int
