@@ -8,24 +8,23 @@
     <table *ngIf="cars.length > 0" class="car-table">
         <thead>
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Specialization</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Address</th>
-                <!-- <th>Action</th> -->
+                <th>Make</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Color</th>
+                <th>Mileage</th>
+                <th>Price</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let car of cars" class="car-item">
-                <td>{{ car.firstName }}</td>
-                <td>{{ car.lastName }}</td>
-                <td>{{ car.specialization }}</td>
-                <td>{{ car.phoneNumber }}</td>
-                <td>{{ car.email }}</td>
-                <td>{{ car.address }}</td>
-
+                <td>{{ car.make }}</td>
+                <td>{{ car.model }}</td>
+                <td>{{ car.year }}</td>
+                <td>{{ car.color }}</td>
+                <td>{{ car.mileage }}</td>
+                <td>{{ car.price }}</td>
                 <td>
                     <button id="delete" class="delete-button" (click)="deleteCar(car.id)">Delete</button>
                 </td>
