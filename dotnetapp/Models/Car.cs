@@ -22,7 +22,7 @@ namespace dotnetapp.Models
 
         [Required(ErrorMessage = "Color is required.")]
         [StringLength(20, MinimumLength = 1, ErrorMessage = "Color must be between 1 and 20 characters.")]
-        public string color { get; set; }
+        public string c { get; set; }
 
         [Required(ErrorMessage = "Mileage is required.")]
         [Range(0, int.MaxValue, ErrorMessage = "Mileage must be a positive number.")]

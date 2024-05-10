@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DoctorFormComponent } from './doctor-form/doctor-form.component';
-import { DoctorListComponent } from './doctor-list/doctor-list.component';
+import { DoctorFormComponent } from './car-form/car-form.component';
+import { DoctorListComponent } from './car-list/doctor-list.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
 
 

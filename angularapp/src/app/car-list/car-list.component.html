@@ -1,0 +1,35 @@
+<div class="container">
+    <h2>Doctor List</h2>
+  
+    <div *ngIf="doctors.length === 0" class="no-doctors-message">
+        No doctors available.
+    </div>
+  
+    <table *ngIf="doctors.length > 0" class="doctor-table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Specialization</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <!-- <th>Action</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let doctor of doctors" class="doctor-item">
+                <td>{{ doctor.firstName }}</td>
+                <td>{{ doctor.lastName }}</td>
+                <td>{{ doctor.specialization }}</td>
+                <td>{{ doctor.phoneNumber }}</td>
+                <td>{{ doctor.email }}</td>
+                <td>{{ doctor.address }}</td>
+
+                <td>
+                    <button id="delete" class="delete-button" (click)="deleteDoctor(doctor.id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

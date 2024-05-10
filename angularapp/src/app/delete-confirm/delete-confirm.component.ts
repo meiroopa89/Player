@@ -1,8 +1,8 @@
 // delete-confirm.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DoctorService } from '../services/doctor.service'; // Adjust service name
-import { Doctor } from '../models/doctor.model'; // Import Doctor model
+import { DoctorService } from '../services/car.service'; // Adjust service name
+import { Doctor } from '../models/car.model'; // Import Doctor model
 
 @Component({
   selector: 'app-delete-confirm',

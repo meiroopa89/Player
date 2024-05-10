@@ -5,9 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { DoctorFormComponent } from './doctor-form/doctor-form.component';
+import { DoctorFormComponent } from './car-form/car-form.component';
 import { HeaderComponent } from './header/header.component';
-import { DoctorListComponent } from './doctor-list/doctor-list.component';
+import { DoctorListComponent } from './car-list/doctor-list.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
 
 

@@ -6,8 +6,8 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DoctorService } from '../services/doctor.service'; // Import DoctorService
-import { Doctor } from '../models/doctor.model'; // Import Doctor model
+import { DoctorService } from '../services/car.service'; // Import DoctorService
+import { Doctor } from '../models/car.model'; // Import Doctor model
 
 describe('DeleteConfirmComponent', () => {
     let component: DeleteConfirmComponent;
