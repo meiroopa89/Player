@@ -11,6 +11,8 @@
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Remaining Capacity</th>
+                <th>Price</th>
+                <th>Duration (hours)</th>
                 <th></th>
             </tr>
         </thead>
@@ -21,6 +23,8 @@
                     <td>@batch.StartTime</td>
                     <td>@batch.EndTime</td>
                     <td>@batch.Capacity</td>
+                    <td>@batch.Price</td>
+                    <td>@batch.Duration</td>
                    
                     <td>
                         @if (batch.Capacity >= 1 )

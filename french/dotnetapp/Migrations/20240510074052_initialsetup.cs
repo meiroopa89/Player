@@ -17,7 +17,9 @@ namespace dotnetapp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Capacity = table.Column<int>(type: "int", nullable: false)
+                    Capacity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Duration = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,14 +49,14 @@ namespace dotnetapp.Migrations
 
             migrationBuilder.InsertData(
                 table: "Batches",
-                columns: new[] { "BatchID", "Capacity", "EndTime", "StartTime" },
+                columns: new[] { "BatchID", "Capacity", "Duration", "EndTime", "Price", "StartTime" },
                 values: new object[,]
                 {
-                    { 1, 5, new DateTime(2024, 7, 9, 2, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 2, 5, new DateTime(2024, 8, 18, 1, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 3, 5, new DateTime(2024, 11, 26, 1, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 4, 5, new DateTime(2025, 3, 6, 1, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 6, 9, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 5, 5, new DateTime(2025, 6, 14, 1, 0, 0, 0, DateTimeKind.Local), new DateTime(2024, 6, 19, 0, 0, 0, 0, DateTimeKind.Local) }
+                    { 1, 5, 40, new DateTime(2024, 7, 9, 2, 0, 0, 0, DateTimeKind.Local), 100m, new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 2, 5, 45, new DateTime(2024, 8, 18, 1, 0, 0, 0, DateTimeKind.Local), 120m, new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 3, 5, 50, new DateTime(2024, 11, 26, 1, 0, 0, 0, DateTimeKind.Local), 150m, new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 4, 5, 45, new DateTime(2025, 3, 6, 1, 0, 0, 0, DateTimeKind.Local), 130m, new DateTime(2024, 6, 9, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 5, 5, 40, new DateTime(2025, 6, 14, 1, 0, 0, 0, DateTimeKind.Local), 140m, new DateTime(2024, 6, 19, 0, 0, 0, 0, DateTimeKind.Local) }
                 });
 
             migrationBuilder.CreateIndex(

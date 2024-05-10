@@ -12,7 +12,7 @@ using dotnetapp.Models;
 namespace dotnetapp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240510061847_initialsetup")]
+    [Migration("20240510074052_initialsetup")]
     partial class initialsetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,8 +35,14 @@ namespace dotnetapp.Migrations
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
@@ -50,35 +56,45 @@ namespace dotnetapp.Migrations
                         {
                             BatchID = 1,
                             Capacity = 5,
+                            Duration = 40,
                             EndTime = new DateTime(2024, 7, 9, 2, 0, 0, 0, DateTimeKind.Local),
+                            Price = 100m,
                             StartTime = new DateTime(2024, 5, 10, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             BatchID = 2,
                             Capacity = 5,
+                            Duration = 45,
                             EndTime = new DateTime(2024, 8, 18, 1, 0, 0, 0, DateTimeKind.Local),
+                            Price = 120m,
                             StartTime = new DateTime(2024, 5, 20, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             BatchID = 3,
                             Capacity = 5,
+                            Duration = 50,
                             EndTime = new DateTime(2024, 11, 26, 1, 0, 0, 0, DateTimeKind.Local),
+                            Price = 150m,
                             StartTime = new DateTime(2024, 5, 30, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             BatchID = 4,
                             Capacity = 5,
+                            Duration = 45,
                             EndTime = new DateTime(2025, 3, 6, 1, 0, 0, 0, DateTimeKind.Local),
+                            Price = 130m,
                             StartTime = new DateTime(2024, 6, 9, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             BatchID = 5,
                             Capacity = 5,
+                            Duration = 40,
                             EndTime = new DateTime(2025, 6, 14, 1, 0, 0, 0, DateTimeKind.Local),
+                            Price = 140m,
                             StartTime = new DateTime(2024, 6, 19, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
