@@ -42,8 +42,7 @@ public void BatchEnrollmentForm_ValidBatchId_RedirectsToEnrollmentConfirmation()
 {
     // Arrange
     // var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5 };
-    var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5, Price = 100, Duration = 40 };
-    _context.Batches.Add(batch);
+         var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5, Price = 100, Duration = 40 };
     _context.Batches.Add(batch);
     _context.SaveChanges();
 
@@ -64,9 +63,7 @@ public void BatchEnrollmentForm_ValidBatchId_RedirectsToEnrollmentConfirmation()
         {
             // Arrange
             // var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5 };
-            var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5, Price = 100, Duration = 40 };
-    
-            _context.Batches.Add(batch);
+         var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5, Price = 100, Duration = 40 };
 
             // Act
             var result = _controller.BatchEnrollmentForm(batch.BatchID) as NotFoundResult;
@@ -80,7 +77,7 @@ public void BatchEnrollmentForm_ValidData_CreatesStudentAndRedirects()
 {
     // Arrange
     // var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 1 };
-    var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5, Price = 100, Duration = 40 };
+         var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 1, Price = 100, Duration = 40 };
 
     _context.Batches.Add(batch);
     _context.SaveChanges();
@@ -101,7 +98,7 @@ public void BatchEnrollmentForm_ValidData_CreatesStudentAndRedirects()
     {
         // Arrange
         // var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 1 };
-        var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5, Price = 100, Duration = 40 };
+         var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 1, Price = 100, Duration = 40 };
         _context.Batches.Add(batch);
         _context.SaveChanges();
 
@@ -123,7 +120,7 @@ public void BatchEnrollmentForm_BatchFull_ThrowsException()
 {
     // Arrange
     // var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 0 };
-    var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5, Price = 100, Duration = 40 };
+     var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 0, Price = 0, Duration = 0 };
     _context.Batches.Add(batch);
     _context.SaveChanges();
 
@@ -142,8 +139,7 @@ public void BatchEnrollmentForm_BatchFull_ThrowsException()
 public void BatchEnrollmentForm_BatchFull_ThrowsException_with_message()
 {
     // Arrange
-    // var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 0 };
-    var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5, Price = 100, Duration = 40 };
+    var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 0 };
     _context.Batches.Add(batch);
     _context.SaveChanges();
 
@@ -362,8 +358,7 @@ public void BatchEnrollmentForm_BatchFull_ThrowsException_with_message()
         public void DeleteBatch_ValidBatchId_RemovesBatchFromDatabase()
         {
             // Arrange
-            // var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5 };
-            var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5, Price = 100, Duration = 40 };
+            var batch = new Batch { BatchID = 100, StartTime = DateTime.Now, EndTime = DateTime.Now.AddHours(1), Capacity = 5 };
             _context.Batches.Add(batch);
             _context.SaveChanges();
             var controller = new BatchController(_context);
