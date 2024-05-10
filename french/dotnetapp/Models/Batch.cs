@@ -17,6 +17,11 @@ namespace dotnetapp.Models
         [Required(ErrorMessage = "Capacity is required")]
         public int Capacity { get; set; }
 
+        [Required(ErrorMessage = "Price is required")]
+        public decimal Price { get; set; } // Cost associated with the batch
+
+        [Required(ErrorMessage = "Duration is required")]
+        public int Duration { get; set; } // Duration of the batch in hours
         public virtual ICollection<Student> Students { get; set; }
     }
 }
