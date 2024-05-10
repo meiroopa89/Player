@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DoctorFormComponent } from './car-form/car-form.component';
-import { DoctorListComponent } from './car-list/doctor-list.component';
+import { CarFormComponent } from './car-form/car-form.component';
+import { CarListComponent } from './car-list/car-list.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
 
 
 const routes: Routes = [
-  { path: 'addNewDoctor', component: DoctorFormComponent },
-  { path: 'viewDoctors', component: DoctorListComponent },
+  { path: 'addNewCar', component: CarFormComponent },
+  { path: 'viewCars', component: CarListComponent },
   { path: 'confirmDelete/:id', component: DeleteConfirmComponent},
 
 ];

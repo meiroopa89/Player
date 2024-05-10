@@ -1,24 +1,24 @@
-.doctor-table {
+.car-table {
   width: 100%; /* Set table width to fill its container */
   border-collapse: collapse; /* Collapse borders for a cleaner look */
 }
 
-.doctor-table th,
-.doctor-table td {
+.car-table th,
+.car-table td {
   padding: 12px; /* Add padding for cells */
   border-bottom: 1px solid #ddd; /* Add bottom border for rows */
   text-align: left; /* Align text to the left */
 }
 
-.doctor-table th {
+.car-table th {
   background-color: #f2f2f2; /* Set background color for header row */
 }
 
-.doctor-table tbody tr:nth-child(even) {
+.car-table tbody tr:nth-child(even) {
   background-color: #f2f2f2; /* Alternate row background color */
 }
 
-.doctor-table tbody tr:hover {
+.car-table tbody tr:hover {
   background-color: #ddd; /* Change background color on hover */
 }
 

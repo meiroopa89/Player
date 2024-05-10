@@ -1,11 +1,11 @@
 <div class="container">
-    <h2>Doctor List</h2>
+    <h2>Car List</h2>
   
-    <div *ngIf="doctors.length === 0" class="no-doctors-message">
-        No doctors available.
+    <div *ngIf="cars.length === 0" class="no-cars-message">
+        No cars available.
     </div>
   
-    <table *ngIf="doctors.length > 0" class="doctor-table">
+    <table *ngIf="cars.length > 0" class="car-table">
         <thead>
             <tr>
                 <th>First Name</th>
@@ -18,16 +18,16 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let doctor of doctors" class="doctor-item">
-                <td>{{ doctor.firstName }}</td>
-                <td>{{ doctor.lastName }}</td>
-                <td>{{ doctor.specialization }}</td>
-                <td>{{ doctor.phoneNumber }}</td>
-                <td>{{ doctor.email }}</td>
-                <td>{{ doctor.address }}</td>
+            <tr *ngFor="let car of cars" class="car-item">
+                <td>{{ car.firstName }}</td>
+                <td>{{ car.lastName }}</td>
+                <td>{{ car.specialization }}</td>
+                <td>{{ car.phoneNumber }}</td>
+                <td>{{ car.email }}</td>
+                <td>{{ car.address }}</td>
 
                 <td>
-                    <button id="delete" class="delete-button" (click)="deleteDoctor(doctor.id)">Delete</button>
+                    <button id="delete" class="delete-button" (click)="deleteCar(car.id)">Delete</button>
                 </td>
             </tr>
         </tbody>

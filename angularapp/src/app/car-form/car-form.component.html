@@ -1,33 +1,33 @@
-<form (submit)="addDoctor()">
+<form (submit)="addCar()">
     <div>
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" [(ngModel)]="newDoctor.firstName" name="firstName" required>
-        <div *ngIf="isFieldInvalid('firstName')" class="error-message">First Name is required</div>
+        <label for="make">Make:</label>
+        <input type="text" id="make" [(ngModel)]="newCar.make" name="make" required>
+        <div *ngIf="isFieldInvalid('make')" class="error-message">Make is required</div>
     </div>
     <div>
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" [(ngModel)]="newDoctor.lastName" name="lastName" required>
-        <div *ngIf="isFieldInvalid('lastName')" class="error-message">Last Name is required</div>
+        <label for="model">Model:</label>
+        <input type="text" id="model" [(ngModel)]="newCar.model" name="model" required>
+        <div *ngIf="isFieldInvalid('model')" class="error-message">Model is required</div>
     </div>
     <div>
-        <label for="specialization">Specialization:</label>
-        <input type="text" id="specialization" [(ngModel)]="newDoctor.specialization" name="specialization" required>
-        <div *ngIf="isFieldInvalid('specialization')" class="error-message">Specialization is required</div>
+        <label for="year">Year:</label>
+        <input type="text" id="year" [(ngModel)]="newCar.year" name="year" required>
+        <div *ngIf="isFieldInvalid('year')" class="error-message">Year is required</div>
     </div>
     <div>
-        <label for="phoneNumber">Phone Number:</label>
-        <input type="text" id="phoneNumber" [(ngModel)]="newDoctor.phoneNumber" name="phoneNumber" required>
-        <div *ngIf="isFieldInvalid('phoneNumber')" class="error-message">Phone Number is required</div>
+        <label for="color">Color:</label>
+        <input type="text" id="color" [(ngModel)]="newCar.color" name="color" required>
+        <div *ngIf="isFieldInvalid('color')" class="error-message">Color is required</div>
     </div>
     <div>
-        <label for="email">Email:</label>
-        <input type="text" id="email" [(ngModel)]="newDoctor.email" name="email" required>
-        <div *ngIf="isFieldInvalid('email')" class="error-message">Email is required</div>
+        <label for="mileage">Mileage:</label>
+        <input type="number" id="mileage" [(ngModel)]="newCar.mileage" name="mileage" required>
+        <div *ngIf="isFieldInvalid('mileage')" class="error-message">Mileage is required</div>
     </div>
     <div>
-        <label for="address">Address:</label>
-        <textarea id="address" [(ngModel)]="newDoctor.address" name="address" required></textarea>
-        <div *ngIf="isFieldInvalid('address')" class="error-message">Address is required</div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" [(ngModel)]="newCar.price" name="price" required>
+        <div *ngIf="isFieldInvalid('price')" class="error-message">Price is required</div>
     </div>
-    <button type="submit">Add Doctor</button>
+    <button type="submit">Add Car</button>
 </form>

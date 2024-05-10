@@ -3,29 +3,27 @@ import { DeleteConfirmComponent } from './delete-confirm.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
-import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DoctorService } from '../services/car.service'; // Import DoctorService
-import { Doctor } from '../models/car.model'; // Import Doctor model
+import { CarService } from '../services/car.service'; // Adjusted service name
+import { Car } from '../models/recipe.model'; // Adjusted model name
 
 describe('DeleteConfirmComponent', () => {
     let component: DeleteConfirmComponent;
     let fixture: ComponentFixture<DeleteConfirmComponent>;
     let router: Router;
     let activatedRoute: ActivatedRoute;
-    let mockDoctorService: jasmine.SpyObj<DoctorService>; // Declare mockDoctorService
+    let mockCarService: jasmine.SpyObj<CarService>; // Adjusted service name
 
     beforeEach(waitForAsync(() => {
-        // Create a spy object with the methods you want to mock
-        mockDoctorService = jasmine.createSpyObj<DoctorService>('DoctorService', ['getDoctor', 'deleteDoctor'] as any);
+        mockCarService = jasmine.createSpyObj<CarService>('CarService', ['getCar', 'deleteCar'] as any); // Adjusted service name and methods
 
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule, HttpClientModule, FormsModule, HttpClientTestingModule], // Add HttpClientModule and HttpClientTestingModule to imports
+            imports: [RouterTestingModule, HttpClientModule, FormsModule, HttpClientTestingModule],
             declarations: [DeleteConfirmComponent],
             providers: [
-                // Provide the mock service instead of the actual service
-                { provide: DoctorService, useValue: mockDoctorService }
+                { provide: CarService, useValue: mockCarService } // Adjusted service name
             ]
         }).compileComponents();
         router = TestBed.inject(Router);
@@ -38,20 +36,17 @@ describe('DeleteConfirmComponent', () => {
         fixture.detectChanges();
     });
 
-    fit('should create DeleteConfirmComponent', () => { // Adjust the function name
+    it('should create DeleteConfirmComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    fit('DeleteConfirmComponent should call deleteDoctor method when confirmDelete is called', () => { // Adjust the function name
-        const doctorId = 1; // Adjust the doctorId
+    it('DeleteConfirmComponent should call deleteCar method when confirmDelete is called', () => {
+        const carId = 1; // Adjusted ID name
         
-        // Spy on the deleteDoctor method of the DoctorService
-        mockDoctorService.deleteDoctor.and.returnValue(of(null)); // Adjust the method name
+        mockCarService.deleteCar.and.returnValue(of(null)); // Adjusted method name
 
-        // Call the confirmDelete method
-        component.confirmDelete(doctorId); // Adjust the parameter name
+        component.confirmDelete(carId); // Adjusted parameter name
 
-        // Expect the deleteDoctor method to have been called with the doctorId
-        expect(mockDoctorService.deleteDoctor).toHaveBeenCalledWith(doctorId); // Adjust the method name and parameter
+        expect(mockCarService.deleteCar).toHaveBeenCalledWith(carId); // Adjusted method name and parameter
     });
 });

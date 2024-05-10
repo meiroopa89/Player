@@ -1,8 +1,7 @@
-// delete-confirm.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DoctorService } from '../services/car.service'; // Adjust service name
-import { Doctor } from '../models/car.model'; // Import Doctor model
+import { CarService } from '../services/car.service'; // Adjusted service name
+import { Car } from '../models/recipe.model'; // Adjusted model name
 
 @Component({
   selector: 'app-delete-confirm',
@@ -10,42 +9,42 @@ import { Doctor } from '../models/car.model'; // Import Doctor model
   styleUrls: ['./delete-confirm.component.css']
 })
 export class DeleteConfirmComponent implements OnInit {
-  doctorId: number;
-  doctor: Doctor; // Initialize doctor property with an empty object
+  carId: number;
+  car: Car = {} as Car; // Initialize car property with an empty object
 
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
-    private doctorService: DoctorService // Adjust service name
+    private carService: CarService // Adjusted service name
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.doctorId = +params['id']; // Adjust parameter name
-      this.doctorService.getDoctor(this.doctorId).subscribe(
-        (doctor: Doctor) => {
-          this.doctor = doctor;
+      this.carId = +params['id']; // Adjust parameter name
+      this.carService.getCar(this.carId).subscribe(
+        (car: Car) => {
+          this.car = car;
         },
         error => {
-          console.error('Error fetching doctor:', error);
+          console.error('Error fetching car:', error);
         }
       );
     });
   }
 
-  confirmDelete(doctorId: number): void { // Adjust method signature
-    this.doctorService.deleteDoctor(doctorId).subscribe(
+  confirmDelete(carId: number): void { // Adjust method signature
+    this.carService.deleteCar(carId).subscribe(
       () => {
-        console.log('Doctor deleted successfully.');
-        this.router.navigate(['/viewDoctors']); // Adjust the route
+        console.log('Car deleted successfully.');
+        this.router.navigate(['/viewCars']); // Adjust the route
       },
       (error) => {
-        console.error('Error deleting doctor:', error);
+        console.error('Error deleting car:', error);
       }
     );
   }
 
   cancelDelete(): void {
-    this.router.navigate(['/viewDoctors']); // Adjust the route
+    this.router.navigate(['/viewCars']); // Adjust the route
   }
 }

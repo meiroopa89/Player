@@ -1,89 +1,79 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DoctorFormComponent } from './car-form.component';
-import { DoctorService } from '../services/car.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CarFormComponent } from './car-form.component'; // Adjusted component name
+import { CarService } from '../services/car.service'; // Adjusted service name
 import { Router } from '@angular/router';
+import { Car } from '../models/recipe.model'; // Imported Car model
 import { of } from 'rxjs';
-import { Doctor } from '../models/car.model';
-import { fakeAsync, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-import { DoctorListComponent } from '../car-list/doctor-list.component';
 
-describe('DoctorFormComponent', () => {
-  let component: DoctorFormComponent;
-  let fixture: ComponentFixture<DoctorFormComponent>;
-  let doctorService: DoctorService;
+describe('CarFormComponent', () => { // Adjusted component name
+  let component: CarFormComponent; // Adjusted component name
+  let fixture: ComponentFixture<CarFormComponent>; // Adjusted component name
+  let carService: CarService; // Adjusted service name
   let router: Router;
-  let doctorListComponent: DoctorListComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DoctorFormComponent],
+      declarations: [CarFormComponent], // Adjusted component name
       imports: [FormsModule, RouterTestingModule, HttpClientTestingModule],
-      providers: [
-        DoctorService,
-      ]
-    })
-      .compileComponents();
+      providers: [CarService] // Adjusted service name
+    }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DoctorFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-
-    doctorService = TestBed.inject(DoctorService);
+    fixture = TestBed.createComponent(CarFormComponent); // Adjusted component name
+    component = fixture.componentInstance; // Adjusted component name
+    carService = TestBed.inject(CarService); // Adjusted service name
     router = TestBed.inject(Router);
-
+    fixture.detectChanges();
   });
 
-  fit('should create DoctorFormComponent', () => {
+  it('should create CarFormComponent', () => { // Adjusted component name
     expect(component).toBeTruthy();
   });
 
-  fit('DoctorFormComponent should not render any error messages when all fields are filled', () => {
+  it('CarFormComponent should not render any error messages when all fields are filled', () => { // Adjusted component name
     const compiled = fixture.nativeElement;
     const form = compiled.querySelector('form');
 
     // Fill all fields
-    component.newDoctor = {
-      firstName: 'Test First Name',
-      lastName: 'Test Last Name',
-      specialization: 'Test Specialization',
-      phoneNumber: 'Test Phone Number',
-      email: 'test@example.com',
-      address: 'Test Address'
-    } as Doctor;
+    component.newCar = {
+      make: 'Test Make',
+      model: 'Test Model',
+      year: 'Test Year',
+      color: 'Test Color',
+      mileage: 10000,
+      price: 5000
+    } as Car;
 
     fixture.detectChanges();
 
     form.dispatchEvent(new Event('submit')); // Submit the form
 
     // Check if no error messages are rendered
-    expect(compiled.querySelector('#firstNameError')).toBeNull();
-    expect(compiled.querySelector('#lastNameError')).toBeNull();
-    expect(compiled.querySelector('#specializationError')).toBeNull();
-    expect(compiled.querySelector('#phoneNumberError')).toBeNull();
-    expect(compiled.querySelector('#emailError')).toBeNull();
-    expect(compiled.querySelector('#addressError')).toBeNull();
+    expect(compiled.querySelector('#makeError')).toBeNull();
+    expect(compiled.querySelector('#modelError')).toBeNull();
+    expect(compiled.querySelector('#yearError')).toBeNull();
+    expect(compiled.querySelector('#colorError')).toBeNull();
+    expect(compiled.querySelector('#mileageError')).toBeNull();
+    expect(compiled.querySelector('#priceError')).toBeNull();
   });
 
-  fit('DoctorFormComponent should call addDoctor method while adding the doctor', () => {
-    // Create a mock Doctor object with all required properties
-    const doctor: Doctor = { 
+  it('CarFormComponent should call addCar method while adding the car', () => { // Adjusted component name and method name
+    // Create a mock Car object with all required properties
+    const car: Car = { 
       id: 1, 
-      firstName: 'Test First Name', 
-      lastName: 'Test Last Name', 
-      specialization: 'Test Specialization', 
-      phoneNumber: 'Test Phone Number', 
-      email: 'test@example.com', 
-      address: 'Test Address'
-    } as any;
-    const addDoctorSpy = spyOn(component, 'addDoctor').and.callThrough();
-    component.addDoctor();
-    expect(addDoctorSpy).toHaveBeenCalled();
+      make: 'Test Make', 
+      model: 'Test Model', 
+      year: 'Test Year', 
+      color: 'Test Color', 
+      mileage: 10000, 
+      price: 5000
+    };
+    const addCarSpy = spyOn(component, 'addCar').and.callThrough(); // Adjusted method name
+    component.addCar(); // Adjusted method name
+    expect(addCarSpy).toHaveBeenCalled();
   });
 });

@@ -2,7 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 
 import { Doctor } from '../models/car.model'; // Import Doctor model
-import { DoctorService } from './car.service'; // Import DoctorService
+import { DoctorService } from './doctor.service'; // Import DoctorService
 
 describe('DoctorService', () => { // Change description to DoctorService
   let service: DoctorService; // Change service to DoctorService
