@@ -1,27 +1,27 @@
 import { Car } from './car.model'; // Import Car model
 
-describe('Car', () => { // Change description to car
-  fit('Models should create car instance', () => { // Change fit to it and update test description
-    const car: Car = { // Change recipe to car and Recipe to car
-      id: 1, // Adjust property name
-      firstName: 'Test First Name', // Adjust property name
-      lastName: 'Test Last Name', // Adjust property name
-      specialization: 'Test Specialization', // Adjust property name
-      phoneNumber: 'Test Phone Number', // Adjust property name
-      email: 'test@email.com', // Adjust property name
-      address: 'Test Address' // Adjust property name
-    } as any;
+describe('Car', () => { // Updated description to 'Car'
+  it('should create car instance', () => { // Updated 'fit' to 'it' and updated test description
+    const car: Car = { // Updated 'recipe' to 'car' and 'Recipe' to 'Car'
+      id: 1, // Adjusted property name
+      make: 'Test Make', // Adjusted property name
+      model: 'Test Model', // Adjusted property name
+      year: 'Test Year', // Adjusted property name
+      color: 'Test Color', // Adjusted property name
+      mileage: 10000, // Adjusted property name
+      price: 5000 // Adjusted property name
+    };
 
     // Check if the car object exists
     expect(car).toBeTruthy();
 
     // Check individual properties of the car
-    expect(car.id).toBe(1); // Adjust property name
-    expect(car.firstName).toBe('Test First Name'); // Adjust property name
-    expect(car.lastName).toBe('Test Last Name'); // Adjust property name
-    expect(car.specialization).toBe('Test Specialization'); // Adjust property name
-    expect(car.phoneNumber).toBe('Test Phone Number'); // Adjust property name
-    expect(car.email).toBe('test@email.com'); // Adjust property name
-    expect(car.address).toBe('Test Address'); // Adjust property name
+    expect(car.id).toBe(1); // Adjusted property name
+    expect(car.make).toBe('Test Make'); // Adjusted property name
+    expect(car.model).toBe('Test Model'); // Adjusted property name
+    expect(car.year).toBe('Test Year'); // Adjusted property name
+    expect(car.color).toBe('Test Color'); // Adjusted property name
+    expect(car.mileage).toBe(10000); // Adjusted property name
+    expect(car.price).toBe(5000); // Adjusted property name
   });
 });

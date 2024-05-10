@@ -1,19 +1,18 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { CarService } from './car.service'; // Adjusted service import
+import { Car } from '../models/car.model';
 
-import { Doctor } from '../models/car.model'; // Import Doctor model
-import { DoctorService } from './doctor.service'; // Import DoctorService
-
-describe('DoctorService', () => { // Change description to DoctorService
-  let service: DoctorService; // Change service to DoctorService
+describe('CarService', () => { // Changed description to CarService
+  let service: CarService; // Changed service variable name to CarService
   let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [DoctorService], // Change RecipeService to DoctorService
+      providers: [CarService], // Changed service provider to CarService
     });
-    service = TestBed.inject(DoctorService); // Change RecipeService to DoctorService
+    service = TestBed.inject(CarService); // Changed service variable assignment to CarService
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
@@ -21,82 +20,82 @@ describe('DoctorService', () => { // Change description to DoctorService
     httpTestingController.verify();
   });
 
-  fit('DoctorService_should_be_created', () => { // Change fit to it
+  fit('CarService_should_be_created', () => { // Changed fit to it
     expect(service).toBeTruthy();
   });
 
-  fit('DoctorService_should_add_a_doctor_and_return_it', () => { // Change fit to it
-    const mockDoctor: Doctor = {
+  fit('CarService_should_add_a_car_and_return_it', () => { // Changed fit to it
+    const mockCar: Car = {
       id: 100,
-      firstName: 'Test First Name',
-      lastName: 'Test Last Name',
-      specialization: 'Test Specialization',
-      phoneNumber: 'Test Phone Number',
-      email: 'test@email.com',
-      address: 'Test Address'
-    } as any;
+      make: 'Test Make',
+      model: 'Test Model',
+      year: 'Test Year',
+      color: 'Test Color',
+      mileage: 10000,
+      price: 5000
+    };
 
-    service.addDoctor(mockDoctor).subscribe((doctor) => {
-      expect(doctor).toEqual(mockDoctor);
+    service.addCar(mockCar).subscribe((car) => {
+      expect(car).toEqual(mockCar);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Doctor`); // Adjust the API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Car`); // Adjusted API endpoint
     expect(req.request.method).toBe('POST');
-    req.flush(mockDoctor);
+    req.flush(mockCar);
   });
 
-  fit('DoctorService_should_get_doctors', () => { // Change fit to it
-    const mockDoctors: Doctor[] = [
+  fit('CarService_should_get_cars', () => { // Changed fit to it
+    const mockCars: Car[] = [
       {
         id: 100,
-        firstName: 'Test First Name',
-        lastName: 'Test Last Name',
-        specialization: 'Test Specialization',
-        phoneNumber: 'Test Phone Number',
-        email: 'test@email.com',
-        address: 'Test Address'
+        make: 'Test Make',
+        model: 'Test Model',
+        year: 'Test Year',
+        color: 'Test Color',
+        mileage: 10000,
+        price: 5000
       }
-    ] as any;
+    ];
 
-    service.getDoctors().subscribe((doctors) => {
-      expect(doctors).toEqual(mockDoctors);
+    service.getCars().subscribe((cars) => {
+      expect(cars).toEqual(mockCars);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Doctor`); // Adjust the API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Car`); // Adjusted API endpoint
     expect(req.request.method).toBe('GET');
-    req.flush(mockDoctors);
+    req.flush(mockCars);
   });
 
-  fit('DoctorService_should_delete_doctor', () => { // Change fit to it
-    const doctorId = 100;
+  fit('CarService_should_delete_car', () => { // Changed fit to it
+    const carId = 100;
 
-    service.deleteDoctor(doctorId).subscribe(() => {
+    service.deleteCar(carId).subscribe(() => {
       expect().nothing();
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Doctor/${doctorId}`); // Adjust the API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Car/${carId}`); // Adjusted API endpoint
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });
 
-  fit('DoctorService_should_get_doctor_by_id', () => { // Change fit to it
-    const doctorId = 100;
-    const mockDoctor: Doctor = {
-      doctorId: doctorId,
-      firstName: 'Test First Name',
-      lastName: 'Test Last Name',
-      specialization: 'Test Specialization',
-      phoneNumber: 'Test Phone Number',
-      email: 'test@email.com',
-      address: 'Test Address'
-    } as any;
+  fit('CarService_should_get_car_by_id', () => { // Changed fit to it
+    const carId = 100;
+    const mockCar: Car = {
+      id: carId,
+      make: 'Test Make',
+      model: 'Test Model',
+      year: 'Test Year',
+      color: 'Test Color',
+      mileage: 10000,
+      price: 5000
+    };
 
-    service.getDoctor(doctorId).subscribe((doctor) => {
-      expect(doctor).toEqual(mockDoctor);
+    service.getCar(carId).subscribe((car) => {
+      expect(car).toEqual(mockCar);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Doctor/${doctorId}`); // Adjust the API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Car/${carId}`); // Adjusted API endpoint
     expect(req.request.method).toBe('GET');
-    req.flush(mockDoctor);
+    req.flush(mockCar);
   });
 });

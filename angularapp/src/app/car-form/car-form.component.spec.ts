@@ -30,36 +30,44 @@ describe('CarFormComponent', () => { // Adjusted component name
     fixture.detectChanges();
   });
 
-  it('should create CarFormComponent', () => { // Adjusted component name
+  fit('should create CarFormComponent', () => { // Adjusted component name
     expect(component).toBeTruthy();
   });
 
-  it('CarFormComponent should not render any error messages when all fields are filled', () => { // Adjusted component name
-    const compiled = fixture.nativeElement;
-    const form = compiled.querySelector('form');
-
-    // Fill all fields
+  fit('CarFormComponent_should_render_error_messages_when_required_fields_are_empty_on_submit', () => {
+    // Set all fields to empty strings
     component.newCar = {
-      make: 'Test Make',
-      model: 'Test Model',
-      year: 'Test Year',
-      color: 'Test Color',
-      mileage: 10000,
-      price: 5000
-    } as Car;
-
+      id: null,
+      make: '',
+      model: '',
+      year: '',
+      color: '',
+      mileage: null,
+      price: null
+    } as any;
+    
+    // Manually trigger form submission
+    component.formSubmitted = true;
+    
     fixture.detectChanges();
-
-    form.dispatchEvent(new Event('submit')); // Submit the form
-
-    // Check if no error messages are rendered
-    expect(compiled.querySelector('#makeError')).toBeNull();
-    expect(compiled.querySelector('#modelError')).toBeNull();
-    expect(compiled.querySelector('#yearError')).toBeNull();
-    expect(compiled.querySelector('#colorError')).toBeNull();
-    expect(compiled.querySelector('#mileageError')).toBeNull();
-    expect(compiled.querySelector('#priceError')).toBeNull();
+    
+    // Find the form element
+    const form = fixture.debugElement.query(By.css('form')).nativeElement;
+    
+    // Submit the form
+    form.dispatchEvent(new Event('submit'));
+    
+    fixture.detectChanges();
+    
+    // Check if error messages are rendered for each field
+    expect(fixture.debugElement.query(By.css('#make + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#model + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#year + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#color + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#mileage + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#price + .error-message'))).toBeTruthy();
   });
+
 
   it('CarFormComponent should call addCar method while adding the car', () => { // Adjusted component name and method name
     // Create a mock Car object with all required properties

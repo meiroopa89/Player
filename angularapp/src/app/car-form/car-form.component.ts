@@ -4,9 +4,9 @@ import { CarService } from '../services/car.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-Car-form',
-  templateUrl: './Car-form.component.html',
-  styleUrls: ['./Car-form.component.css']
+  selector: 'app-car-form',
+  templateUrl: './car-form.component.html',
+  styleUrls: ['./car-form.component.css']
 })
 export class CarFormComponent {
   newCar: Car = {

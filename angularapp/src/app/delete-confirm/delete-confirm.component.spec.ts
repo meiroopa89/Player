@@ -36,11 +36,11 @@ describe('DeleteConfirmComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create DeleteConfirmComponent', () => {
+    fit('should create DeleteConfirmComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('DeleteConfirmComponent should call deleteCar method when confirmDelete is called', () => {
+    fit('DeleteConfirmComponent should call deleteCar method when confirmDelete is called', () => {
         const carId = 1; // Adjusted ID name
         
         mockCarService.deleteCar.and.returnValue(of(null)); // Adjusted method name
