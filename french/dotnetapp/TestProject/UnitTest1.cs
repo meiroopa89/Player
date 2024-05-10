@@ -248,6 +248,22 @@ public void BatchEnrollmentForm_BatchFull_ThrowsException_with_message()
             Assert.That(batch.Capacity, Is.TypeOf<int>());
         }
 
+        [Test]
+        public void Batch_Properties_Price_ReturnExpectedDataTypes()
+        {
+            // Arrange
+            Batch batch = new Batch();
+            Assert.That(batch.Price, Is.TypeOf<decimal>());
+        }
+
+        [Test]
+        public void Batch_Properties_Duration_ReturnExpectedDataTypes()
+        {
+            // Arrange
+            Batch batch = new Batch();
+            Assert.That(batch.Duration, Is.TypeOf<int>());
+        }
+
 //This test checks the expected value of BatchID
         [Test]
         public void Batch_Properties_BatchID_ReturnExpectedValues()
@@ -296,6 +312,18 @@ public void BatchEnrollmentForm_BatchFull_ThrowsException_with_message()
             };
             Assert.AreEqual(expectedCapacity, batch.Capacity);
         }
+
+        [Test]
+        public void Batch_Properties_Price_ReturnExpectedValues()
+        {
+            int expectedPrice = 500.0;
+            Batch batch = new Batch
+            {
+                Price = expectedPrice
+            };
+            Assert.AreEqual(expectedPrice, batch.Price);
+        }
+
 //This test checks the expected value of StudentID in Student class is int
         [Test]
         public void Student_Properties_StudentID_ReturnExpectedDataTypes()
