@@ -5,8 +5,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CarFormComponent } from './car-form.component'; // Adjusted component name
 import { CarService } from '../services/car.service'; // Adjusted service name
 import { Router } from '@angular/router';
-import { Car } from '../models/recipe.model'; // Imported Car model
 import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
+import { Car } from '../models/car.model';
 
 describe('CarFormComponent', () => { // Adjusted component name
   let component: CarFormComponent; // Adjusted component name
@@ -69,9 +70,9 @@ describe('CarFormComponent', () => { // Adjusted component name
   });
 
 
-  it('CarFormComponent should call addCar method while adding the car', () => { // Adjusted component name and method name
+  fit('CarFormComponent should call addCar method while adding the car', () => { // Adjusted component name and method name
     // Create a mock Car object with all required properties
-    const car: Car = { 
+    const car: Car= { 
       id: 1, 
       make: 'Test Make', 
       model: 'Test Model', 

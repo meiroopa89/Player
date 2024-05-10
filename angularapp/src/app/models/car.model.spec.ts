@@ -1,7 +1,7 @@
 import { Car } from './car.model'; // Import Car model
 
 describe('Car', () => { // Updated description to 'Car'
-  it('should create car instance', () => { // Updated 'fit' to 'it' and updated test description
+  fit('should create car instance', () => { // Updated 'fit' to 'it' and updated test description
     const car: Car = { // Updated 'recipe' to 'car' and 'Recipe' to 'Car'
       id: 1, // Adjusted property name
       make: 'Test Make', // Adjusted property name

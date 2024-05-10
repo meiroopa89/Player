@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CarService } from '../services/car.service'; // Adjusted service name
-import { Car } from '../models/recipe.model'; // Adjusted model name
 
 describe('DeleteConfirmComponent', () => {
     let component: DeleteConfirmComponent;
