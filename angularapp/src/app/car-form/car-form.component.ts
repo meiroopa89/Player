@@ -33,20 +33,14 @@ export class CarFormComponent {
     }
   }
   
-  // isFieldInvalid(fieldName: string): boolean {
-  //   const field = this.newCar[fieldName];
-  //   return !field && (this.formSubmitted || this.newCar[fieldName].touched);
-  // }
-
   isFieldInvalid(fieldName: string): boolean {
-    const field = this.newCar[fieldName];
-    return !field || (this.formSubmitted && field.touched);
+    const fieldValue = this.newCar[fieldName];
+    return !fieldValue && (this.formSubmitted || fieldValue?.touched);
   }
 
-  
   isFormValid(): boolean {
-    return !this.isFieldInvalid('firstName') && !this.isFieldInvalid('lastName') &&
-      !this.isFieldInvalid('specialization') && !this.isFieldInvalid('phoneNumber') &&
-      !this.isFieldInvalid('email') && !this.isFieldInvalid('address');
+    return !this.isFieldInvalid('make') && !this.isFieldInvalid('model') &&
+      !this.isFieldInvalid('year') && !this.isFieldInvalid('color') &&
+      !this.isFieldInvalid('mileage') && !this.isFieldInvalid('price');
   }
 }
