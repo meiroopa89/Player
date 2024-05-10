@@ -1,0 +1,33 @@
+@model Student
+
+@{
+    var studentID = Context.Request.Query["studentID"];
+}
+<h2>Batch Enrollment Form</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name)
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email)
+        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+    </div>
+
+    @* <div class="form-group">
+        @Html.Label("StudentID", "StudentID")
+        <input type="text" id="StudentID" name="StudentID" class="form-control" value="@studentID" readonly />
+    </div>  *@
+
+    <button type="submit" class="btn btn-primary">Enroll</button>
+
+   @Html.ActionLink("Back to available batches", "AvailableBatches", "Batch", null, new { id = "backtobatch" })
+   
+
+}
+
