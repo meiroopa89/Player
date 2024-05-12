@@ -19,14 +19,16 @@ namespace dotnetapp.Controllers
             _context = context;
         }
 
+        [HttpPost]
         public async Task<ActionResult<Recipe>> AddRecipe(Recipe recipe)
         {
             _context.Recipes.Add(recipe);
            await _context.SaveChangesAsync();
 
-           return CreatedAtAction("GetRecipes", new {id => recipe.id}, recipe);
+           return CreatedAtAction("GetRecipes", new { id = recipe.id }, recipe);
         }
 
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
         {
             return await _context.Recipes.ToListAsync();
