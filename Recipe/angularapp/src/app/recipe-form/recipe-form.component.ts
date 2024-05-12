@@ -18,7 +18,7 @@ newRecipe: Recipe =
 
   constructor(private recipeService: RecipeService, private router: Router) { }
 
-  addrecipe(): void {
+  addRecipe(): void {
     this.recipeService.addRecipe(this.newRecipe). subscribe(() =>
     {
         this.router.navigate(["/viewRecipes"]);
