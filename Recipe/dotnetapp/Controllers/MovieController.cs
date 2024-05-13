@@ -35,7 +35,7 @@ namespace dotnetapp.Models
 
             foreach(var movie in movies)
             {
-                var reviews = await _context.Reviews.Where(m => m.MovieID == movie.MovieID).ToListAsync();
+                var reviews = await _context.Reviews.Where(m => m.MovieID = movie.MovieID).ToListAsync();
                 movie.Reviews = reviews;
             }
 
