@@ -26,7 +26,32 @@ namespace dotnetapp.Models
 
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
-            return await _context.Movies.ToListAsync();
+            var movies = await _context.Movies.ToListAsync();
+
+            foreach(var movie in movies)
+            {
+                var reviews = await _context.Reviews.Where(m => m.MovieID == movie.MovieID).ToListAsync();
+
+                movies.Reviews = reviews;
+            }
+
+            return Ok(movies);
+        
+        }
+
+        public async Task<ActionResult<Movie>> GetMovie (int movieId)
+        {
+            var Movie = _context.Movies.FindAsync(movieId);
+            var reviews = await _context.Reviews.Where(r => r.MovieID == movieId).ToListAsync();
+
+            Movie.Reviews = reviews;
+
+            if(Movie==null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Movie);
         }
     }
 }
