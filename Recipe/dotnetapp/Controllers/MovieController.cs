@@ -1,25 +1,22 @@
+using System;
 using dotnetapp.Models;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Collections;
-using System.Runtime.Versioning;
-using System;
 
-namespace dotnetapp.Controllers
+namespace dotnetapp.Models
 {
-    [Route("api/movies")]
-    [ApiController]
-    public class MovieController : ControllerBase
+    public class MovieController: ControllerBase
     {
         private readonly ApplicationDbContext _context;
+
         public MovieController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        [HttpPost]
         public async Task<ActionResult<Movie>> AddMovie(Movie movie)
         {
             _context.Movies.Add(movie);
@@ -27,21 +24,9 @@ namespace dotnetapp.Controllers
             return CreatedAtAction("GetMovies", new {movieId = movie.MovieID}, movie);
         }
 
-        [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
             return await _context.Movies.ToListAsync();
-        }
-
-        [HttpGet("{movieId}")]
-        public async Task<ActionResult<Movie>> GetMovie(int movieId)
-        {
-            var Movie = _context.Movies.FindAsync(movieId);
-            if(Movie==null)
-            {
-                return NotFound();
-            }
-            return Ok(Movie);
         }
     }
 }
