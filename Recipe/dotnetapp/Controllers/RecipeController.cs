@@ -19,6 +19,8 @@ namespace dotnet.Controllers
         {
             _context = context;
         }
+
+        [HttpPost]
         public async Task<ActionResult<Recipe>> AddRecipe(Recipe recipe)
         {
             _context.Recipes.Add(recipe);
@@ -27,7 +29,9 @@ namespace dotnet.Controllers
              return CreatedAtAction("GetRecipes", new {id = recipe.Id}, recipe);
         }
 
-        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipe()
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Recipe>>> GetRecipes()
         {
             return await _context.Recipes.ToListAsync();
         }
