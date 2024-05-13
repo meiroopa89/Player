@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 namespace dotnetapp.Models
 {
