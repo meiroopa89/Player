@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using dotnetapp.Models;
+using System.Threading;
 
 namespace dotnetapp.Controllers
 {
@@ -28,7 +29,7 @@ namespace dotnetapp.Controllers
         [HttpGet("{movieId}")]
         public async Task<ActionResult<Review>> GetReviews (int movieId)
         {
-            var Review = _context.Reviews.Where(r => r.MovieID == movieId).ToListAsync();
+            var Review = await _context.Reviews.Where(r => r.MovieID == movieId).ToListAsync();
             return Ok(Review);
         }
 
