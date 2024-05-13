@@ -11,6 +11,6 @@ namespace dotnetapp.Models
 
         }
 
-        public DbSet<Recipe> Recipes {get;set;}
+        public DbSet<Movie> Movies {get;set;}
     }
 }
