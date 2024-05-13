@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace dotnetapp.Models
 {
-    public class Recipe
+    public class Movie
     {
     public int MovieID {get;set;}
     public string Title {get;set;}

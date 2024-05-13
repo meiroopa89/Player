@@ -16,7 +16,7 @@ namespace dotnetapp.Controllers
             _context = context;
         }
 
-        [HttpPost]
+        [HttpPost("{movieId}")]
         public async Task<ActionResult<Review>> AddReview(Review review, int movieId)
         {
             review.MovieID = movieId;
@@ -26,11 +26,10 @@ namespace dotnetapp.Controllers
         }
 
         [HttpGet("{movieId}")]
-        public async Task<ActionResult<Review>> GetReview (int movieId)
+        public async Task<ActionResult<Review>> GetReviews (int movieId)
         {
-            var Review = _context.Reviews.FindAsync();
-
-            if()
+            var Review = _context.Reviews.Where(r => r.MovieID == movieId).ToListAsync();
+            return Ok(Review);
         }
 
     }

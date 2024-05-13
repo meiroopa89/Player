@@ -33,10 +33,10 @@ namespace dotnetapp.Controllers
             return await _context.Movies.ToListAsync();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{movieId}")]
         public async Task<ActionResult<Movie>> GetMovie(int movieId)
         {
-            var Movie = _context.Movies.FindAsync();
+            var Movie = _context.Movies.FindAsync(movieId);
             if(Movie==null)
             {
                 return NotFound();
