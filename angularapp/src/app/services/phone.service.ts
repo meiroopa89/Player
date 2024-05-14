@@ -1,32 +1,31 @@
-// src/app/services/phone.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Phone } from '../models/phone.model'; // Adjusted import for Phone model
+import { Phone } from '../models/phone.model'; // Import Phone model
 
 @Injectable({
   providedIn: 'root'
 })
-export class PhoneService { // Adjusted class name to PhoneService
-  private apiUrl = 'https://example.com/api/'; // Replace this with your API endpoint
+export class PhoneService {
+  private apiUrl = 'https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/'; // Replace this with your API endpoint
 
   constructor(private http: HttpClient) { }
 
-  addPhone(phone: Phone): Observable<Phone> { // Adjusted method name and parameter
-    return this.http.post<Phone>(`${this.apiUrl}phones`, phone); // Adjusted endpoint URL
+  addPhone(phone: Phone): Observable<Phone> { // Adjust method name and parameter
+    return this.http.post<Phone>(`${this.apiUrl}api/Phone`, phone); // Adjust endpoint and parameter
   }
 
-  getPhones(): Observable<Phone[]> { // Adjusted method name and return type
-    return this.http.get<Phone[]>(`${this.apiUrl}phones`); // Adjusted endpoint URL
+  getPhones(): Observable<Phone[]> { // Adjust method name
+    return this.http.get<Phone[]>(`${this.apiUrl}api/Phone`); // Adjust endpoint
   }
 
-  deletePhone(phoneId: number): Observable<void> { // Adjusted method name and parameter
-    const url = `${this.apiUrl}phones/${phoneId}`; // Adjusted endpoint URL
-    return this.http.delete<void>(url);
+  deletePhone(phoneId: number): Observable<void> { // Adjust method name and parameter
+    const url = `${this.apiUrl}api/Phone/${phoneId}`; // Adjust the URL to match your API endpoint
+    return this.http.delete<void>(url); // Adjust endpoint and parameter
   }
 
-  getPhone(phoneId: number): Observable<Phone> { // Adjusted method name and parameter
-    const url = `${this.apiUrl}phones/${phoneId}`; // Adjusted endpoint URL
-    return this.http.get<Phone>(url);
+  getPhone(phoneId: number): Observable<Phone> { // Adjust method name and return type
+    const url = `${this.apiUrl}api/Phone/${phoneId}`; // Adjust the URL to match your API endpoint
+    return this.http.get<Phone>(url); // Adjust endpoint and return type
   }
 }
