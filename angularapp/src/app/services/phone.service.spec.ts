@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { PhoneService } from './phone.service'; // Adjusted service import
 import { Phone } from '../models/phone.model';
+import { PhoneService } from './phone.service';
 
 describe('PhoneService', () => { // Changed description to PhoneService
   let service: PhoneService; // Changed service variable name to PhoneService
@@ -24,76 +24,77 @@ describe('PhoneService', () => { // Changed description to PhoneService
     expect(service).toBeTruthy();
   });
 
-  fit('PhoneService_should_add_a_phone_and_return_it', () => { // Changed fit to it
-    const mockPhone: Phone = {
-      phoneId: 100,
-      brand: 'Test Brand',
-      model: 'Test Model',
-      screenSize: 6.5,
-      storageCapacity: 128,
-      ram: 8,
-      batteryCapacity: 5000
+  fit('PhoneService_should_add_a_Phone_and_return_it', () => { // Changed fit to it
+    const mockPhone: Phone = { // Updated 'recipe' to 'phone' and 'Recipe' to 'Phone'
+      phoneId: 1, // Adjusted property name
+      brand: 'Test Brand', // Adjusted property name
+      model: 'Test Model', // Adjusted property name
+      screenSize: 6, // Adjusted property name
+      storageCapacity: 128, // Adjusted property name
+      ram: 8, // Adjusted property name
+      batteryCapacity: 4000 // Adjusted property name
     };
 
-    service.addPhone(mockPhone).subscribe((phone) => {
-      expect(phone).toEqual(mockPhone);
+    service.addPhone(mockPhone).subscribe((Phone) => {
+      expect(Phone).toEqual(mockPhone);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}phones`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Phone`); // Adjusted API endpoint
     expect(req.request.method).toBe('POST');
     req.flush(mockPhone);
   });
 
-  fit('PhoneService_should_get_phones', () => { // Changed fit to it
+  fit('PhoneService_should_get_Phones', () => { // Changed fit to it
     const mockPhones: Phone[] = [
       {
-        phoneId: 100,
-        brand: 'Test Brand',
-        model: 'Test Model',
-        screenSize: 6.5,
-        storageCapacity: 128,
-        ram: 8,
-        batteryCapacity: 5000
+        phoneId: 1, // Adjusted property name
+        brand: 'Test Brand', // Adjusted property name
+        model: 'Test Model', // Adjusted property name
+        screenSize: 6, // Adjusted property name
+        storageCapacity: 128, // Adjusted property name
+        ram: 8, // Adjusted property name
+        batteryCapacity: 4000 // Adjusted property name
       }
     ];
 
-    service.getPhones().subscribe((phones) => {
-      expect(phones).toEqual(mockPhones);
+    service.getPhones().subscribe((Phones) => {
+      expect(Phones).toEqual(mockPhones);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}phones`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Phone`); // Adjusted API endpoint
     expect(req.request.method).toBe('GET');
     req.flush(mockPhones);
   });
 
-  fit('PhoneService_should_delete_phone', () => { // Changed fit to it
-    const phoneId = 100;
+  fit('PhoneService_should_delete_Phone', () => { // Changed fit to it
+    const PhoneId = 100;
 
-    service.deletePhone(phoneId).subscribe(() => {
+    service.deletePhone(PhoneId).subscribe(() => {
       expect().nothing();
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}phones/${phoneId}`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Phone/${PhoneId}`); // Adjusted API endpoint
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });
 
-  fit('PhoneService_should_get_phone_by_id', () => { // Changed fit to it
-    const phoneId = 100;
+  fit('PhoneService_should_get_Phone_by_id', () => { // Changed fit to it
+    const PhoneId = 100;
     const mockPhone: Phone = {
-      phoneId: phoneId,
-      brand: 'Test Brand',
-      model: 'Test Model',
-      screenSize: 6.5,
-      storageCapacity: 128,
-      ram: 8,
-      batteryCapacity: 5000
+      phoneId: PhoneId, // Adjusted property name
+      brand: 'Test Brand', // Adjusted property name
+      model: 'Test Model', // Adjusted property name
+      screenSize: 6, // Adjusted property name
+      storageCapacity: 128, // Adjusted property name
+      ram: 8, // Adjusted property name
+      batteryCapacity: 4000 // Adjusted property name
     };
-    service.getPhone(phoneId).subscribe((phone) => {
-      expect(phone).toEqual(mockPhone);
+
+    service.getPhone(PhoneId).subscribe((Phone) => {
+      expect(Phone).toEqual(mockPhone);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}phones/${phoneId}`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Phone/${PhoneId}`); // Adjusted API endpoint
     expect(req.request.method).toBe('GET');
     req.flush(mockPhone);
   });
