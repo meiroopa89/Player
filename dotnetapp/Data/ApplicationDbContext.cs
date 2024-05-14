@@ -10,6 +10,6 @@ namespace dotnetapp.Data
         {
         }
         
-        public DbSet<Car> Cars { get; set; }
+        public DbSet<Phone> Phones { get; set; }
     }
 }

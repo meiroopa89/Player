@@ -10,61 +10,60 @@ namespace dotnetapp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarController : ControllerBase
+    public class PhoneController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public CarController(ApplicationDbContext context)
+        public PhoneController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Car
+        // GET: api/Phone
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Car>>> GetCars()
+        public async Task<ActionResult<IEnumerable<Phone>>> GetPhones()
         {
-            return await _context.Cars.ToListAsync();
+            return await _context.Phones.ToListAsync();
         }
 
-        // GET: api/Car/5
+        // GET: api/Phone/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Car>> GetCar(int id)
+        public async Task<ActionResult<Phone>> GetPhone(int id)
         {
-            var Car = await _context.Cars.FindAsync(id);
+            var phone = await _context.Phones.FindAsync(id);
 
-            if (Car == null)
+            if (phone == null)
             {
                 return NotFound();
             }
 
-            return Car;
+            return phone;
         }
 
-        // POST: api/Car
+        // POST: api/Phone
         [HttpPost]
-        public async Task<ActionResult<Car>> PostCar(Car Car)
+        public async Task<ActionResult<Phone>> PostPhone(Phone phone)
         {
-            _context.Cars.Add(Car);
+            _context.Phones.Add(phone);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCar", new { id = Car.id }, Car);
+            return CreatedAtAction("GetPhone", new { id = phone.phoneId }, phone);
         }
 
-        // DELETE: api/Car/5
+        // DELETE: api/Phone/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Car>> DeleteCar(int id)
+        public async Task<ActionResult<Phone>> DeletePhone(int id)
         {
-            var Car = await _context.Cars.FindAsync(id);
-            if (Car == null)
+            var phone = await _context.Phones.FindAsync(id);
+            if (phone == null)
             {
                 return NotFound();
             }
 
-            _context.Cars.Remove(Car);
+            _context.Phones.Remove(phone);
             await _context.SaveChangesAsync();
 
-            return Car;
+            return phone;
         }
-
     }
 }

@@ -21,43 +21,39 @@ namespace dotnetapp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("dotnetapp.Models.Car", b =>
+            modelBuilder.Entity("dotnetapp.Models.Phone", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("phoneId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("phoneId"), 1L, 1);
 
-                    b.Property<string>("color")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("batteryCapacity")
+                        .HasColumnType("int");
 
-                    b.Property<string>("make")
+                    b.Property<string>("brand")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("mileage")
-                        .HasColumnType("int");
 
                     b.Property<string>("model")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<decimal>("price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("ram")
+                        .HasColumnType("int");
 
-                    b.Property<string>("year")
-                        .IsRequired()
-                        .HasMaxLength(4)
-                        .HasColumnType("nvarchar(4)");
+                    b.Property<double>("screenSize")
+                        .HasColumnType("float");
 
-                    b.HasKey("id");
+                    b.Property<int>("storageCapacity")
+                        .HasColumnType("int");
 
-                    b.ToTable("Cars");
+                    b.HasKey("phoneId");
+
+                    b.ToTable("Phones");
                 });
 #pragma warning restore 612, 618
         }
