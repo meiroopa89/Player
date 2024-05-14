@@ -5,9 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CarFormComponent } from './car-form/car-form.component';
+import { CarFormComponent } from './phone-form/phone-form.component';
 import { HeaderComponent } from './header/header.component';
-import { CarListComponent } from './car-list/car-list.component';
+import { CarListComponent } from './phone-list/phone-list.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
 
 
