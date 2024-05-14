@@ -79,8 +79,9 @@ describe('PhoneService', () => { // Changed description to PhoneService
   });
 
   fit('PhoneService_should_get_phone_by_id', () => { // Changed fit to it
+    const phoneId = 100;
     const mockPhone: Phone = {
-      phoneId: 0,
+      phoneId: phoneId,
       brand: 'Test Brand',
       model: 'Test Model',
       screenSize: 6.5,
@@ -88,7 +89,6 @@ describe('PhoneService', () => { // Changed description to PhoneService
       ram: 8,
       batteryCapacity: 5000
     };
-
     service.getPhone(phoneId).subscribe((phone) => {
       expect(phone).toEqual(mockPhone);
     });

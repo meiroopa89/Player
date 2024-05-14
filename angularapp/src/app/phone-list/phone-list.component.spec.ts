@@ -1,10 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { PhoneService } from '../services/Phone.service'; // Import PhoneService
-import { PhoneListComponent } from './Phone-list.component'; // Adjust the import path
-import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Phone } from '../models/phone.model'; // Import Phone model
+import { PhoneListComponent } from './phone-list.component';
+import { PhoneService } from '../services/phone.service';
 
 describe('PhoneListComponent', () => {
     let component: PhoneListComponent;
