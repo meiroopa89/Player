@@ -1,6 +1,6 @@
 // car-list.component.ts
 import { Component, OnInit } from '@angular/core';
-import { Car } from '../models/car.model'; // Import car model
+import { Car } from '../models/phone.model'; // Import car model
 import { CarService} from '../services/car.service'; // Import carService
 import { Router } from '@angular/router';
 

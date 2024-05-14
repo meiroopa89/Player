@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Car } from '../models/car.model';
+import { Car } from '../models/phone.model';
 import { CarService } from '../services/car.service';
 import { Router } from '@angular/router';
 

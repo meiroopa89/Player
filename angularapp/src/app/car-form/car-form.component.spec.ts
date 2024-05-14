@@ -7,7 +7,7 @@ import { CarService } from '../services/car.service'; // Adjusted service name
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { Car } from '../models/car.model';
+import { Car } from '../models/phone.model';
 
 describe('CarFormComponent', () => { // Adjusted component name
   let component: CarFormComponent; // Adjusted component name

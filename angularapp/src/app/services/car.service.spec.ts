@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { CarService } from './car.service'; // Adjusted service import
-import { Car } from '../models/car.model';
+import { Car } from '../models/phone.model';
 
 describe('CarService', () => { // Changed description to CarService
   let service: CarService; // Changed service variable name to CarService

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarService } from '../services/car.service'; // Adjusted service name
-import { Car } from '../models/car.model';
+import { Car } from '../models/phone.model';
 
 @Component({
   selector: 'app-delete-confirm',

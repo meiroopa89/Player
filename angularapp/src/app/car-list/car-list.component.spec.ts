@@ -4,7 +4,7 @@ import { CarListComponent } from './car-list.component'; // Adjust the import pa
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Car } from '../models/car.model'; // Import Car model
+import { Car } from '../models/phone.model'; // Import Car model
 
 describe('CarListComponent', () => {
     let component: CarListComponent;
