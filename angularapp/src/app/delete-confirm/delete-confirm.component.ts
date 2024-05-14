@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CarService } from '../services/car.service'; // Adjusted service name
-import { Car } from '../models/phone.model';
+import { PhoneService } from '../services/phone.service'; // Adjusted service name
+import { Phone } from '../models/phone.model';
 
 @Component({
   selector: 'app-delete-confirm',
@@ -9,42 +9,42 @@ import { Car } from '../models/phone.model';
   styleUrls: ['./delete-confirm.component.css']
 })
 export class DeleteConfirmComponent implements OnInit {
-  carId: number;
-  car: Car = {} as Car; // Initialize car property with an empty object
+  phoneId: number;
+  phone: Phone = {} as Phone; // Initialize phone property with an empty object
 
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
-    private carService: CarService // Adjusted service name
+    private phoneService: PhoneService // Adjusted service name
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.carId = +params['id']; // Adjust parameter name
-      this.carService.getCar(this.carId).subscribe(
-        (car: Car) => {
-          this.car = car;
+      this.phoneId = +params['id']; // Adjust parameter name
+      this.phoneService.getPhone(this.phoneId).subscribe(
+        (phone: Phone) => {
+          this.phone = phone;
         },
         error => {
-          console.error('Error fetching car:', error);
+          console.error('Error fetching phone:', error);
         }
       );
     });
   }
 
-  confirmDelete(carId: number): void { // Adjust method signature
-    this.carService.deleteCar(carId).subscribe(
+  confirmDelete(phoneId: number): void { // Adjust method signature
+    this.phoneService.deletePhone(phoneId).subscribe(
       () => {
-        console.log('Car deleted successfully.');
-        this.router.navigate(['/viewCars']); // Adjust the route
+        console.log('Phone deleted successfully.');
+        this.router.navigate(['/viewPhones']); // Adjust the route
       },
       (error) => {
-        console.error('Error deleting car:', error);
+        console.error('Error deleting phone:', error);
       }
     );
   }
 
   cancelDelete(): void {
-    this.router.navigate(['/viewCars']); // Adjust the route
+    this.router.navigate(['/viewPhones']); // Adjust the route
   }
 }

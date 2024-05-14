@@ -1,33 +1,32 @@
-// src/app/services/Car.service.ts
+// src/app/services/phone.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Car } from '../models/phone.model';
-
+import { Phone } from '../models/phone.model'; // Adjusted import for Phone model
 
 @Injectable({
   providedIn: 'root'
 })
-export class CarService {
-  private apiUrl = 'https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/'; // Replace this with your API endpoint
+export class PhoneService { // Adjusted class name to PhoneService
+  private apiUrl = 'https://example.com/api/'; // Replace this with your API endpoint
 
   constructor(private http: HttpClient) { }
 
-  addCar(Car: Car): Observable<Car> {
-    return this.http.post<Car>(`${this.apiUrl}api/Car`, Car);
+  addPhone(phone: Phone): Observable<Phone> { // Adjusted method name and parameter
+    return this.http.post<Phone>(`${this.apiUrl}phones`, phone); // Adjusted endpoint URL
   }
 
-  getCars(): Observable<Car[]> {
-    return this.http.get<Car[]>(`${this.apiUrl}api/Car`);
+  getPhones(): Observable<Phone[]> { // Adjusted method name and return type
+    return this.http.get<Phone[]>(`${this.apiUrl}phones`); // Adjusted endpoint URL
   }
 
-  deleteCar(CarId: number): Observable<void> {
-    const url = `${this.apiUrl}api/Car/${CarId}`; // Adjust the URL to match your API endpoint
+  deletePhone(phoneId: number): Observable<void> { // Adjusted method name and parameter
+    const url = `${this.apiUrl}phones/${phoneId}`; // Adjusted endpoint URL
     return this.http.delete<void>(url);
   }
 
-  getCar(CarId: number): Observable<Car> {
-    const url = `${this.apiUrl}api/Car/${CarId}`;
-    return this.http.get<Car>(url);
+  getPhone(phoneId: number): Observable<Phone> { // Adjusted method name and parameter
+    const url = `${this.apiUrl}phones/${phoneId}`; // Adjusted endpoint URL
+    return this.http.get<Phone>(url);
   }
 }

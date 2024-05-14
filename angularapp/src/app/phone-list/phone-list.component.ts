@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Phone } from '../models/phone.model'; // Import phone model
-import { PhoneService } from '../services/phone.service'; // Import phone service
 import { Router } from '@angular/router';
+import { PhoneService } from '../services/phone.service';
+import { Phone } from '../models/phone.model';
 
 @Component({
   selector: 'app-phone-list', // Changed selector to 'app-phone-list'

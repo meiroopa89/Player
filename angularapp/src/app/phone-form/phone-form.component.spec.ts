@@ -70,7 +70,7 @@ describe('PhoneFormComponent', () => { // Adjusted component name
   });
 
 
-  fit('PhoneFormComponent should call addPhone method while adding the phone', () => { // Adjusted component name and method name
+  fit('PhoneFormComponent_should_call_addPhone_method_while_adding_the_phone', () => { // Adjusted component name and method name
     // Create a mock Phone object with all required properties
     const phone: Phone = { 
       phoneId: 1, 

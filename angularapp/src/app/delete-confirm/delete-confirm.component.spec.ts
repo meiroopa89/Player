@@ -6,23 +6,23 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CarService } from '../services/car.service'; // Adjusted service name
+import { PhoneService } from '../services/phone.service'; // Adjusted service name
 
 describe('DeleteConfirmComponent', () => {
     let component: DeleteConfirmComponent;
     let fixture: ComponentFixture<DeleteConfirmComponent>;
     let router: Router;
     let activatedRoute: ActivatedRoute;
-    let mockCarService: jasmine.SpyObj<CarService>; // Adjusted service name
+    let mockPhoneService: jasmine.SpyObj<PhoneService>; // Adjusted service name
 
     beforeEach(waitForAsync(() => {
-        mockCarService = jasmine.createSpyObj<CarService>('CarService', ['getCar', 'deleteCar'] as any); // Adjusted service name and methods
+        mockPhoneService = jasmine.createSpyObj<PhoneService>('PhoneService', ['getPhone', 'deletePhone'] as any); // Adjusted service name and methods
 
         TestBed.configureTestingModule({
             imports: [RouterTestingModule, HttpClientModule, FormsModule, HttpClientTestingModule],
             declarations: [DeleteConfirmComponent],
             providers: [
-                { provide: CarService, useValue: mockCarService } // Adjusted service name
+                { provide: PhoneService, useValue: mockPhoneService } // Adjusted service name
             ]
         }).compileComponents();
         router = TestBed.inject(Router);
@@ -35,17 +35,17 @@ describe('DeleteConfirmComponent', () => {
         fixture.detectChanges();
     });
 
-    fit('should create DeleteConfirmComponent', () => {
+    fit('should_create_DeleteConfirmComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    fit('DeleteConfirmComponent should call deleteCar method when confirmDelete is called', () => {
-        const carId = 1; // Adjusted ID name
+    fit('DeleteConfirmComponent_should_call_deletePhone_method_when_confirmDelete_is_called', () => {
+        const phoneId = 1; // Adjusted ID name
         
-        mockCarService.deleteCar.and.returnValue(of(null)); // Adjusted method name
+        mockPhoneService.deletePhone.and.returnValue(of(null)); // Adjusted method name
 
-        component.confirmDelete(carId); // Adjusted parameter name
+        component.confirmDelete(phoneId); // Adjusted parameter name
 
-        expect(mockCarService.deleteCar).toHaveBeenCalledWith(carId); // Adjusted method name and parameter
+        expect(mockPhoneService.deletePhone).toHaveBeenCalledWith(phoneId); // Adjusted method name and parameter
     });
 });

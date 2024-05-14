@@ -30,11 +30,11 @@ describe('PhoneListComponent', () => {
         component = fixture.componentInstance;
     });
 
-    fit('should create PhoneListComponent', () => { // Change the function name
+    fit('should_create_PhoneListComponent', () => { // Change the function name
         expect(component).toBeTruthy();
     });
 
-    fit('PhoneListComponent should call loadPhones on ngOnInit', () => { // Change the function name
+    fit('PhoneListComponent_should_call_loadPhones_on_ngOnInit', () => { // Change the function name
         spyOn(component, 'loadPhones'); // Adjust the method name
         fixture.detectChanges();
         expect(component.loadPhones).toHaveBeenCalled(); // Adjust the method name

@@ -5,10 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CarFormComponent } from './phone-form/phone-form.component';
 import { HeaderComponent } from './header/header.component';
-import { CarListComponent } from './phone-list/phone-list.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
+import { PhoneFormComponent } from './phone-form/phone-form.component';
+import { PhoneListComponent } from './phone-list/phone-list.component';
 
 
 
@@ -16,9 +16,9 @@ import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.componen
 @NgModule({
   declarations: [
     AppComponent,
-    CarFormComponent,
+    PhoneFormComponent,
     HeaderComponent,
-    CarListComponent,
+    PhoneListComponent,
     DeleteConfirmComponent
   ],
   imports: [
