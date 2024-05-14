@@ -39,7 +39,7 @@ describe('PhoneService', () => { // Changed description to PhoneService
       expect(Phone).toEqual(mockPhone);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Phone`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Phone`); // Adjusted API endpoint
     expect(req.request.method).toBe('POST');
     req.flush(mockPhone);
   });
@@ -61,7 +61,7 @@ describe('PhoneService', () => { // Changed description to PhoneService
       expect(Phones).toEqual(mockPhones);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Phone`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Phone`); // Adjusted API endpoint
     expect(req.request.method).toBe('GET');
     req.flush(mockPhones);
   });
@@ -73,7 +73,7 @@ describe('PhoneService', () => { // Changed description to PhoneService
       expect().nothing();
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Phone/${PhoneId}`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Phone/${PhoneId}`); // Adjusted API endpoint
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });
@@ -94,7 +94,7 @@ describe('PhoneService', () => { // Changed description to PhoneService
       expect(Phone).toEqual(mockPhone);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}api/Phone/${PhoneId}`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Phone/${PhoneId}`); // Adjusted API endpoint
     expect(req.request.method).toBe('GET');
     req.flush(mockPhone);
   });
