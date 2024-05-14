@@ -13,7 +13,7 @@ export class CarFormComponent {
     id: 0,
     make: '',
     model: '',
-    year: 0,
+    year: '',
     color: '',
     mileage: 0,
     price: 0

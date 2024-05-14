@@ -76,7 +76,7 @@ describe('CarFormComponent', () => { // Adjusted component name
       id: 1, 
       make: 'Test Make', 
       model: 'Test Model', 
-      year: 2024, 
+      year: 'Test Year', 
       color: 'Test Color', 
       mileage: 10000, 
       price: 5000
