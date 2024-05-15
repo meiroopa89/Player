@@ -8,7 +8,7 @@ import { Review } from '../models/review.model';
     providedIn: 'root'
 })
 export class ReviewService {
-    public apiUrl = 'https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/'; // Update with your API endpoint
+    public apiUrl = 'https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io'; // Update with your API endpoint
 
     constructor(private http: HttpClient) { }
 

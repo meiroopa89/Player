@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReviewService } from '../services/review.service'; // Adjusted service name
+import { Review } from '../models/review.model';
 
 @Component({
   selector: 'app-delete-confirm', // Adjusted component selector
@@ -9,6 +10,7 @@ import { ReviewService } from '../services/review.service'; // Adjusted service 
 })
 export class DeleteConfirmComponent implements OnInit {
   reviewId: number;
+  review: Review;
 
   constructor(
     private route: ActivatedRoute, 
