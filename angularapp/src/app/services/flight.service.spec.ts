@@ -1,18 +1,18 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Phone } from '../models/phone.model';
-import { PhoneService } from './flight.service';
+import { Flight } from '../models/flight.model'; // Adjusted import
+import { FlightService } from './flight.service';
 
-describe('PhoneService', () => { // Changed description to PhoneService
-  let service: PhoneService; // Changed service variable name to PhoneService
+describe('FlightService', () => { // Changed description to FlightService
+  let service: FlightService; // Changed service variable name to FlightService
   let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [PhoneService], // Changed service provider to PhoneService
+      providers: [FlightService], // Changed service provider to FlightService
     });
-    service = TestBed.inject(PhoneService); // Changed service variable assignment to PhoneService
+    service = TestBed.inject(FlightService); // Changed service variable assignment to FlightService
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
@@ -20,82 +20,79 @@ describe('PhoneService', () => { // Changed description to PhoneService
     httpTestingController.verify();
   });
 
-  fit('PhoneService_should_be_created', () => { // Changed fit to it
+  fit('FlightService_should_be_created', () => { // Changed fit to it
     expect(service).toBeTruthy();
   });
 
-  fit('PhoneService_should_add_a_Phone_and_return_it', () => { // Changed fit to it
-    const mockPhone: Phone = { // Updated 'recipe' to 'phone' and 'Recipe' to 'Phone'
-      phoneId: 1, // Adjusted property name
-      brand: 'Test Brand', // Adjusted property name
-      model: 'Test Model', // Adjusted property name
-      screenSize: 6, // Adjusted property name
-      storageCapacity: 128, // Adjusted property name
-      ram: 8, // Adjusted property name
-      batteryCapacity: 4000 // Adjusted property name
+  fit('FlightService_should_add_a_Flight_and_return_it', () => { // Changed fit to it
+    const mockFlight: Flight = { // Updated 'recipe' to 'flight' and 'Recipe' to 'Flight'
+      flightId: 1, // Adjusted property name
+      name: 'Test Name', // Adjusted property name
+      departureAirport: 'Test Departure Airport', // Adjusted property name
+      destinationAirport: 'Test Destination Airport', // Adjusted property name
+      departureDate: new Date(), // Adjusted property name and initialized with current date
+      arrivalDate: new Date() // Adjusted property name and initialized with current date
     };
 
-    service.addPhone(mockPhone).subscribe((Phone) => {
-      expect(Phone).toEqual(mockPhone);
+    service.addFlight(mockFlight).subscribe((flight) => { // Adjusted callback parameter
+      expect(flight).toEqual(mockFlight);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Phone`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Flight`); // Adjusted API endpoint
     expect(req.request.method).toBe('POST');
-    req.flush(mockPhone);
+    req.flush(mockFlight);
   });
 
-  fit('PhoneService_should_get_Phones', () => { // Changed fit to it
-    const mockPhones: Phone[] = [
+  fit('FlightService_should_get_Flights', () => { // Changed fit to it
+    const mockFlights: Flight[] = [
       {
-        phoneId: 1, // Adjusted property name
-        brand: 'Test Brand', // Adjusted property name
-        model: 'Test Model', // Adjusted property name
-        screenSize: 6, // Adjusted property name
-        storageCapacity: 128, // Adjusted property name
-        ram: 8, // Adjusted property name
-        batteryCapacity: 4000 // Adjusted property name
+        flightId: 1, // Adjusted property name
+        name: 'Test Name', // Adjusted property name
+        departureAirport: 'Test Departure Airport', // Adjusted property name
+        destinationAirport: 'Test Destination Airport', // Adjusted property name
+        departureDate: new Date(), // Adjusted property name and initialized with current date
+        arrivalDate: new Date() // Adjusted property name and initialized with current date
       }
     ];
 
-    service.getPhones().subscribe((Phones) => {
-      expect(Phones).toEqual(mockPhones);
+    service.getFlights().subscribe((flights) => { // Adjusted callback parameter
+      expect(flights).toEqual(mockFlights);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Phone`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Flight`); // Adjusted API endpoint
     expect(req.request.method).toBe('GET');
-    req.flush(mockPhones);
+    req.flush(mockFlights);
   });
 
-  fit('PhoneService_should_delete_Phone', () => { // Changed fit to it
-    const PhoneId = 100;
+  fit('FlightService_should_delete_Flight', () => { // Changed fit to it
+    const flightId = 100;
 
-    service.deletePhone(PhoneId).subscribe(() => {
+    service.deleteFlight(flightId).subscribe(() => {
       expect().nothing();
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Phone/${PhoneId}`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Flight/${flightId}`); // Adjusted API endpoint
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });
 
-  fit('PhoneService_should_get_Phone_by_id', () => { // Changed fit to it
-    const PhoneId = 100;
-    const mockPhone: Phone = {
-      phoneId: PhoneId, // Adjusted property name
-      brand: 'Test Brand', // Adjusted property name
-      model: 'Test Model', // Adjusted property name
-      screenSize: 6, // Adjusted property name
-      storageCapacity: 128, // Adjusted property name
-      ram: 8, // Adjusted property name
-      batteryCapacity: 4000 // Adjusted property name
+  fit('FlightService_should_get_Flight_by_id', () => { // Changed fit to it
+    const flightId = 100;
+    const mockFlight: Flight = {
+      flightId: flightId, // Adjusted property name
+      name: 'Test Name', // Adjusted property name
+      departureAirport: 'Test Departure Airport', // Adjusted property name
+      destinationAirport: 'Test Destination Airport', // Adjusted property name
+      departureDate: new Date(), // Adjusted property name and initialized with current date
+      arrivalDate: new Date() // Adjusted property name and initialized with current date
     };
 
-    service.getPhone(PhoneId).subscribe((Phone) => {
-      expect(Phone).toEqual(mockPhone);
+    service.getFlight(flightId).subscribe((flight) => { // Adjusted callback parameter
+      expect(flight).toEqual(mockFlight);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Phone/${PhoneId}`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Flight/${flightId}`); // Adjusted API endpoint
     expect(req.request.method).toBe('GET');
-    req.flush(mockPhone);
+    req.flush(mockFlight);
   });
 });
