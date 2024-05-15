@@ -1,1 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+.background-image {
+    background-image: url('https://images.pexels.com/photos/417045/pexels-photo-417045.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    background-size: cover; /* Cover the entire background */
+    background-position: center; /* Center the background image */
+    padding: 0; /* Remove any default padding */
+    margin: 0; /* Remove any default margin */
+}

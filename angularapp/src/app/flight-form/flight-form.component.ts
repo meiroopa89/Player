@@ -14,8 +14,8 @@ export class FlightFormComponent {
     name: '',
     departureAirport: '',
     destinationAirport: '',
-    departureDate: new Date(''),
-    arrivalDate: new Date('')
+    departureDate: null,
+    arrivalDate: null
   }; // Initialize newFlight with empty fields
 
   formSubmitted = false; // Track form submission
