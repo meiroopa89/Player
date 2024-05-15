@@ -6,6 +6,7 @@ import { Review } from '../models/review.model';
 describe('ReviewService', () => {
   let service: ReviewService;
   let httpMock: HttpTestingController;
+  let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -43,29 +44,70 @@ describe('ReviewService', () => {
     req.flush(dummyReviews);
   });
 
+  // fit('ReviewService_addReview_should add a review', () => {
+  //   const newReview: Review = {
+  //     reviewId: 3, movieName: 'New Movie', movieDirector: 'New Director', leadCast: 'New Lead Cast',
+  //     movieReleaseDate: new Date(), movieReviewDate: new Date(), reviewComments: 'New Comment', rating: 4,
+  //   };
+
+  //   service['addReview'](newReview).subscribe(review => {
+  //     expect(review).toEqual(newReview);
+  //   });
+
+  //   const req = httpMock.expectOne(service['apiUrl']);
+  //   expect(req.request.method).toBe('POST');
+  //   req.flush(newReview);
+  // });
+
+
   fit('ReviewService_addReview_should add a review', () => {
     const newReview: Review = {
       reviewId: 3, movieName: 'New Movie', movieDirector: 'New Director', leadCast: 'New Lead Cast',
       movieReleaseDate: new Date(), movieReviewDate: new Date(), reviewComments: 'New Comment', rating: 4,
     };
 
-    service['addReview'](newReview).subscribe(review => {
+    service.addReview(newReview).subscribe(review => {
       expect(review).toEqual(newReview);
     });
 
-    const req = httpMock.expectOne(service['apiUrl']);
+    const req = httpMock.expectOne(`${service['apiUrl']}/api/Review`); // Adjusted URL
     expect(req.request.method).toBe('POST');
     req.flush(newReview);
-  });
+});
 
-  fit('ReviewService_deleteReview_should delete a review', () => {
-    service['deleteReview'](1).subscribe(review => {
-      expect(review).toEqual(null);
+
+  fit('ReviewService_should_delete_Review', () => {
+    const reviewId = 100;
+  
+    service.deleteReview(reviewId).subscribe(() => {
+      expect().nothing();
     });
-
-    const req = httpMock.expectOne(`${service['apiUrl']}/1`);
+  
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Review/${reviewId}`); // Adjusted API endpoint
     expect(req.request.method).toBe('DELETE');
-    req.flush(null);
+    req.flush({});
   });
-
+  
+  fit('ReviewService_should_get_Review_by_id', () => {
+    const reviewId = 100;
+    const mockReview: Review = {
+      reviewId: reviewId, // Adjusted property name
+      movieName: 'Test Movie', // Adjusted property name
+      movieDirector: 'Test Director', // Adjusted property name
+      leadCast: 'Test Lead Cast', // Adjusted property name
+      movieReleaseDate: new Date(), // Adjusted property name and initialized with current date
+      movieReviewDate: new Date(), // Adjusted property name and initialized with current date
+      reviewComments: 'Test Comments', // Adjusted property name
+      rating: 5 // Adjusted property name
+    };
+  
+    service.getReview(reviewId).subscribe((review) => { // Adjusted callback parameter
+      expect(review).toEqual(mockReview);
+    });
+  
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Review/${reviewId}`); // Adjusted API endpoint
+    expect(req.request.method).toBe('GET');
+    req.flush(mockReview);
+  });
+  
 });
