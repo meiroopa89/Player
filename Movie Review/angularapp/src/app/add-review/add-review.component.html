@@ -1,0 +1,47 @@
+<div class="container">
+  <h2>Add Movie Review</h2>
+  <form (submit)="submitReview()">
+    <label for="movieName">Movie Name:</label>
+    <input type="text" id="movieName" [(ngModel)]="review.movieName" required [ngModelOptions]="{standalone: true}" [ngModelOptions]="{standalone: true}"
+    #MovieNgModel="ngModel">
+    <div *ngIf="MovieNgModel.invalid && (MovieNgModel.dirty || MovieNgModel.touched)"
+             class="error-message">Movie Name is required</div>
+
+    <label for="movieDirector">Movie Director:</label>
+    <input type="text" id="movieDirector" [(ngModel)]="review.movieDirector" required [ngModelOptions]="{standalone: true}" [ngModelOptions]="{standalone: true}"
+    #DirNgModel="ngModel">
+    <div *ngIf="DirNgModel.invalid && (DirNgModel.dirty || DirNgModel.touched)"
+             class="error-message">Movie Director is required</div>
+
+    <label for="leadCast">Lead Cast:</label>
+    <input type="text" id="leadCast" [(ngModel)]="review.leadCast" required [ngModelOptions]="{standalone: true}"
+    #castMgModel="ngModel">
+    <div *ngIf="castMgModel.invalid && (castMgModel.dirty || castMgModel.touched)"
+             class="error-message">Lead Cast is required</div>
+
+    <label for="releaseDate">Release Date:</label>
+    <input type="date" id="releaseDate" [(ngModel)]="review.movieReleaseDate" required [ngModelOptions]="{standalone: true}"
+    #releaseNgModel="ngModel">
+    <div *ngIf="releaseNgModel.invalid && (releaseNgModel.dirty || releaseNgModel.touched)"
+             class="error-message">Release Date is required</div>
+
+    <label for="reviewDate">Review Date:</label>
+    <input type="date" id="reviewDate" [(ngModel)]="review.movieReviewDate" required [ngModelOptions]="{standalone: true}"
+    #reviewDateNgModel="ngModel">
+    <div *ngIf="reviewDateNgModel.invalid && (reviewDateNgModel.dirty || reviewDateNgModel.touched)"
+             class="error-message">Review Date is required</div>
+
+    <label for="reviewComments">Review Comments:</label>
+    <textarea id="reviewComments" [(ngModel)]="review.reviewComments" required [ngModelOptions]="{standalone: true}"
+    #commentsNgModel="ngModel"></textarea>
+    <div *ngIf="commentsNgModel.invalid && (commentsNgModel.dirty || commentsNgModel.touched)"
+             class="error-message">Review Comments is required</div>
+
+    <label for="rating">Rating:</label>
+    <input type="number" id="rating" [(ngModel)]="review.rating" min="1" max="5" required [ngModelOptions]="{standalone: true}" #ratingNgModel="ngModel">
+    <div *ngIf="ratingNgModel.invalid && (ratingNgModel.dirty || ratingNgModel.touched)"
+             class="error-message">Rating is required</div>
+
+    <button type="submit">Submit Review</button>
+  </form>
+</div>
