@@ -1,50 +1,50 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Phone } from '../models/phone.model';
-import { PhoneService } from '../services/flight.service';
+import { Flight } from '../models/flight.model'; // Adjusted model name
+import { FlightService } from '../services/flight.service'; // Adjusted service name
 
 @Component({
-  selector: 'app-delete-confirm',
+  selector: 'app-delete-confirm', // Adjusted component selector
   templateUrl: './delete-confirm.component.html',
   styleUrls: ['./delete-confirm.component.css']
 })
 export class DeleteConfirmComponent implements OnInit {
-  phoneId: number;
-  phone: Phone = {} as Phone; // Initialize phone property with an empty object
+  flightId: number;
+  flight: Flight = {} as Flight; // Initialize flight property with an empty object
 
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
-    private phoneService: PhoneService // Adjusted service name
+    private flightService: FlightService // Adjusted service name
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.phoneId = +params['id']; // Adjust parameter name
-      this.phoneService.getPhone(this.phoneId).subscribe(
-        (phone: Phone) => {
-          this.phone = phone;
+      this.flightId = +params['id']; // Adjust parameter name
+      this.flightService.getFlight(this.flightId).subscribe(
+        (flight: Flight) => { // Adjust type casting
+          this.flight = flight;
         },
         error => {
-          console.error('Error fetching phone:', error);
+          console.error('Error fetching flight:', error);
         }
       );
     });
   }
 
-  confirmDelete(phoneId: number): void { // Adjust method signature
-    this.phoneService.deletePhone(phoneId).subscribe(
+  confirmDelete(flightId: number): void { // Adjust method signature
+    this.flightService.deleteFlight(flightId).subscribe(
       () => {
-        console.log('Phone deleted successfully.');
-        this.router.navigate(['/viewPhones']); // Adjust the route
+        console.log('Flight deleted successfully.');
+        this.router.navigate(['/viewFlights']); // Adjust the route
       },
       (error) => {
-        console.error('Error deleting phone:', error);
+        console.error('Error deleting flight:', error);
       }
     );
   }
 
   cancelDelete(): void {
-    this.router.navigate(['/viewPhones']); // Adjust the route
+    this.router.navigate(['/viewFlights']); // Adjust the route
   }
 }
