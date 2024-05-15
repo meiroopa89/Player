@@ -7,7 +7,7 @@ import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.componen
 const routes: Routes = [
   { path: 'addReview', component: AddReviewComponent },
   { path: 'viewReviews', component: ReviewListComponent },
-  // { path: '', redirectTo: '/viewReviews', pathMatch: 'full' },
+  { path: '', redirectTo: '/viewReviews', pathMatch: 'full' },
   { path: 'confirmDelete/:id', component: DeleteConfirmComponent },
 ];
 

@@ -29,9 +29,23 @@ export class ReviewListComponent implements OnInit {
   //   this.reviewService.deleteReview(id).subscribe(() => this.getReviews());
   // }
 
-  deleteReview(id: number): void { // Adjusted method name and parameter
-    // Navigate to confirm delete page with the flight ID as a parameter
-    this.router.navigate(['/confirmDelete', id]);
+  // deleteReview(reviewId: number): void {
+  //   if (reviewId) {
+  //     this.router.navigate(['/confirmDelete', reviewId]);
+  //   } else {
+  //     console.error('Review ID is undefined.');
+  //   }
+  // }
+
+  deleteReview(review: Review): void {
+    if (review) {
+      this.router.navigate(['/confirmDelete', review.reviewId], { state: { review } });
+    } else {
+      console.error('Review is undefined.');
+    }
   }
+  
+  
+  
 
 }
