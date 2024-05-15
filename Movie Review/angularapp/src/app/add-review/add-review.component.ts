@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Review } from '../models/review.model';
 import { ReviewService } from '../services/review.service';
 
 @Component({
@@ -6,30 +8,42 @@ import { ReviewService } from '../services/review.service';
   templateUrl: './add-review.component.html',
   styleUrls: ['./add-review.component.css']
 })
-export class AddReviewComponent implements OnInit {
+export class AddReviewComponent {
+  review: Review = {
+    reviewId: 0,
+    movieName: '',
+    movieDirector: '',
+    leadCast: '',
+    movieReleaseDate: null,
+    movieReviewDate: null,
+    reviewComments: '',
+    rating: 0
+  }; // Initialize review with empty fields
 
-  review: any = {};
+  formSubmitted = false; // Track form submission
 
-  constructor(private reviewService: ReviewService) { }
+  constructor(private reviewService: ReviewService, private router: Router) { }
 
-  ngOnInit(): void {
+  AddReview(): void {
+    this.formSubmitted = true; // Set formSubmitted to true on form submission
+    if (this.isFormValid()) {
+      this.reviewService.addReview(this.review).subscribe(() => {
+        console.log('Movie review added successfully!');
+        // Optionally, you can navigate to another route after submission
+        // this.router.navigate(['/viewMovieReviews']);
+      });
+    }
+  }
+  
+  isFieldInvalid(fieldName: string): boolean {
+    const fieldValue = this.review[fieldName];
+    return !fieldValue && (this.formSubmitted || fieldValue?.touched);
   }
 
-  submitReview() {
-    if (this.review.rating < 1 || this.review.rating > 5) {
-      alert('Rating must be between 1 and 5.');
-      return; // Don't submit the review if the rating is invalid
-    }
-    if (this.review.movieName == '' || this.review.movieDirector == '' || this.review.leadCast == '' || this.review.reviewComments == '' || this.review.rating == '' || this.review.movieReleaseDate == '' || this.review.movieReviewDate == '') {
-      return; // Don't submit the review if the rating is invalid
-    }
-    this.reviewService.addReview(this.review).subscribe(response => {
-      console.log('Review submitted successfully:', response);
-      window.location.href = '/viewReviews';
-
-      // You can navigate to another page or reset the form here
-    });
-
+  isFormValid(): boolean {
+    return !this.isFieldInvalid('movieName') && !this.isFieldInvalid('movieDirector') &&
+      !this.isFieldInvalid('leadCast') && !this.isFieldInvalid('movieReleaseDate') &&
+      !this.isFieldInvalid('movieReviewDate') && !this.isFieldInvalid('reviewComments') &&
+      !this.isFieldInvalid('rating');
   }
-
 }

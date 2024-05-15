@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReviewListComponent } from './review-list/review-list.component';
-import { AddReviewComponent } from './add-review/add-review.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
+import { AddReviewComponent } from './add-review/add-review.component';
 
 @NgModule({
   declarations: [

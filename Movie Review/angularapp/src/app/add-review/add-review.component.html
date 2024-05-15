@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Add Movie Review</h2>
-  <form (submit)="submitReview()">
+  <form (submit)="AddReview()">
     <label for="movieName">Movie Name:</label>
     <input type="text" id="movieName" [(ngModel)]="review.movieName" required [ngModelOptions]="{standalone: true}" [ngModelOptions]="{standalone: true}"
     #MovieNgModel="ngModel">
