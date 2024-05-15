@@ -23,5 +23,9 @@ export class ReviewService {
     deleteReview(id: number): Observable<Review> {
         return this.http.delete<Review>(`${this.apiUrl}/api/Review/${id}`);
       }
-      
+
+    getReview(id: number): Observable<Review> { // Adjust method name and return type
+        const url = `${this.apiUrl}/api/Review/${id}`; // Adjust the URL to match your API endpoint
+        return this.http.get<Review>(url); // Adjust endpoint and return type
+      }    
 }
