@@ -34,6 +34,20 @@ namespace dotnetapp.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Review>> GetReview(int id)
+        {
+            var review = await _context.Reviews.FindAsync(id);
+
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            return review;
+        }
+
+
 
         [HttpDelete("{id}")]
         public IActionResult DeleteReview(int id)
