@@ -92,3 +92,13 @@ button.delete-btn {
     overflow-x: auto;
   }
 }
+
+.delete-button {
+  background-color: #ff2600; /* Coral */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}

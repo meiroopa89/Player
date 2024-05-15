@@ -9,7 +9,7 @@ import { Review } from '../models/review.model';
   styleUrls: ['./delete-confirm.component.css']
 })
 export class DeleteConfirmComponent implements OnInit {
-  reviewId: number;
+  id: number;
   review: Review;
 
   constructor(
@@ -20,12 +20,12 @@ export class DeleteConfirmComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.reviewId = +params['id']; // Adjust parameter name
+      this.id = +params['id']; // Adjust parameter name
     });
   }
 
-  confirmDelete(reviewId: number): void {
-    this.reviewService.deleteReview(reviewId).subscribe(
+  confirmDelete(id: number): void {
+    this.reviewService.deleteReview(id).subscribe(
       () => {
         console.log('Review deleted successfully.');
         this.router.navigate(['/viewReviews']); // Adjust the route
