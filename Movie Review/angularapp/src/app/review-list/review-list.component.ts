@@ -1,36 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { ReviewService } from '../services/review.service';
-import { Review } from '../models/review.model';
 import { Router } from '@angular/router';
+import { ReviewService } from '../services/review.service'; // Adjusted service name
+import { Review } from '../models/review.model'; // Adjusted model name
 
 @Component({
-  selector: 'app-review-list',
-  templateUrl: './review-list.component.html',
-  styleUrls: ['./review-list.component.css']
+  selector: 'app-review-list', // Adjusted selector
+  templateUrl: './review-list.component.html', // Adjusted template URL
+  styleUrls: ['./review-list.component.css'] // Adjusted style URL
 })
 export class ReviewListComponent implements OnInit {
-  reviews: Review[] = [];
-  selectedReview: Review;
+  reviews: Review[] = []; // Adjusted property name
 
-
-  constructor(private reviewService: ReviewService, private router: Router) { }
+  constructor(private reviewService: ReviewService, private router: Router) { } // Adjusted service name
 
   ngOnInit(): void {
-    this.reviewService.getReviews().subscribe(reviews => {
+    this.loadReviews(); // Adjusted method name
+  }
+
+  loadReviews(): void {
+    this.reviewService.getReviews().subscribe(reviews => { // Adjusted method name
       this.reviews = reviews;
+      console.log(this.reviews);
     });
   }
 
-  getReviews(): void {
-    this.reviewService.getReviews().subscribe((reviews) => (this.reviews = reviews));
-  }
-
-  // deleteReview(id: number): void {
-  //   this.reviewService.deleteReview(id).subscribe(() => this.getReviews());
-  // }
-
   deleteReview(reviewId: number): void { // Adjusted method name and parameter
-    // Navigate to confirm delete page with the flight ID as a parameter
+    // Navigate to confirm delete page with the review ID as a parameter
     this.router.navigate(['/confirmDelete', reviewId]);
   }
 }

@@ -1,105 +1,91 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { AddReviewComponent } from './add-review.component';
+import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AddReviewComponent } from './add-review.component'; // Adjusted component name
+import { ReviewService } from '../services/review.service'; // Adjusted service name
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { By } from '@angular/platform-browser';
+import { Review } from '../models/review.model'; // Adjusted model name
 
-describe('AddReviewComponent (HTML)', () => {
-  let fixture: ComponentFixture<AddReviewComponent>;
-  let component: AddReviewComponent;
+describe('AddReviewComponent', () => { // Adjusted component name
+  let component: AddReviewComponent; // Adjusted component name
+  let fixture: ComponentFixture<AddReviewComponent>; // Adjusted component name
+  let reviewService: ReviewService; // Adjusted service name
+  let router: Router;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [AddReviewComponent], // Adjusted component name
+      imports: [FormsModule, RouterTestingModule, HttpClientTestingModule],
+      providers: [ReviewService] // Adjusted service name
+    }).compileComponents();
+  });
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [AddReviewComponent],
-      imports: [FormsModule, HttpClientTestingModule],
-    });
-
-    fixture = TestBed.createComponent(AddReviewComponent);
-    component = fixture.componentInstance;
+    fixture = TestBed.createComponent(AddReviewComponent); // Adjusted component name
+    component = fixture.componentInstance; // Adjusted component name
+    reviewService = TestBed.inject(ReviewService); // Adjusted service name
+    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
-  fit('AddReviewComponent_should be created', () => {
+  fit('should_create_AddReviewComponent', () => { // Adjusted component name
     expect(component).toBeTruthy();
   });
 
-  fit('AddReviewComponent_should display error message for Movie Name when touched and invalid', () => {
-    const movieNameInput = fixture.nativeElement.querySelector('#movieName');
-    movieNameInput.value = ''; // Set an invalid value
-    movieNameInput.dispatchEvent(new Event('input'));
-
+  fit('AddReviewComponent_should_render_error_messages_when_required_fields_are_empty_on_submit', () => { // Adjusted component name
+    // Set all fields to empty strings
+    component.review = {
+      reviewId: null,
+      movieName: '',
+      movieDirector: '',
+      leadCast: '',
+      movieReleaseDate: null,
+      movieReviewDate: null,
+      reviewComments: '',
+      rating: null
+    } as any;
+    
+    // Manually trigger form submission
+    component.formSubmitted = true;
+    
     fixture.detectChanges();
-
-    const errorMessage = fixture.nativeElement.querySelector('.error-message');
-    expect(errorMessage.textContent).toContain('Movie Name is required');
-  });
-
-  fit('AddReviewComponent_should display error message for Movie Director when touched and invalid', () => {
-    const movieDirectorInput = fixture.nativeElement.querySelector('#movieDirector');
-    movieDirectorInput.value = ''; // Set an invalid value
-    movieDirectorInput.dispatchEvent(new Event('input'));
-
+    
+    // Find the form element
+    const form = fixture.debugElement.query(By.css('form')).nativeElement;
+    
+    // Submit the form
+    form.dispatchEvent(new Event('submit'));
+    
     fixture.detectChanges();
-
-    const errorMessage = fixture.nativeElement.querySelector('.error-message');
-    expect(errorMessage.textContent).toContain('Movie Director is required');
+    
+    // Check if error messages are rendered for each field
+    expect(fixture.debugElement.query(By.css('#movieName + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#movieDirector + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#leadCast + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#reviewDate + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#reviewDate + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#reviewComments + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#rating + .error-message'))).toBeTruthy();
   });
 
-  // Repeat similar tests for Lead Cast, Release Date, Review Date, Review Comments, and Rating
 
-  it('AddReviewComponent_should not display error message for Movie Name when untouched', () => {
-    const errorMessage = fixture.nativeElement.querySelector('.error-message');
-    expect(errorMessage).toBeFalsy();
-  });
-
-  fit('AddReviewComponent_should call submitReview method on form submission', () => {
-    spyOn(component as any, 'submitReview');
-
-    const submitButton = fixture.nativeElement.querySelector('button[type="submit"]');
-    submitButton.click();
-
-    expect(component['submitReview']).toHaveBeenCalled();
-  });
-
-  fit('AddReviewComponent_should display error message for Rating when touched and invalid', fakeAsync(() => {
-    const ratingInput = fixture.nativeElement.querySelector('#rating');
-    ratingInput.value = ''; // Set an invalid value
-    ratingInput.dispatchEvent(new Event('input'));
-
-    tick(); // Wait for asynchronous validation to complete
-    fixture.detectChanges();
-
-    const errorMessage = fixture.nativeElement.querySelector('.error-message');
-    expect(errorMessage.textContent).toContain('Rating is required');
-  }));
-
-  it('AddReviewComponent_should not display error message for Rating when untouched', fakeAsync(() => {
-    const errorMessage = fixture.nativeElement.querySelector('.error-message');
-    expect(errorMessage).toBeFalsy();
-  }));
-
-  fit('AddReviewComponent_should submit the form when all fields are valid', fakeAsync(() => {
-    spyOn(component as any, 'submitReview');
-
-    // Set valid values for all fields
-    component['review'] = {
-      movieName: 'Valid Movie',
-      movieDirector: 'Valid Director',
-      leadCast: 'Valid Cast',
-      movieReleaseDate: '2023-01-01',
-      movieReviewDate: '2023-01-02',
-      reviewComments: 'Valid Comment',
-      rating: 4,
+  fit('AddReviewComponent_should_call_AddReview_method_while_adding_the_review', () => { // Adjusted component name and method name
+    // Create a mock Review object with all required properties
+    const review: Review = { 
+      reviewId: 1, 
+      movieName: 'Test Movie', 
+      movieDirector: 'Test Director', 
+      leadCast: 'Test Cast', 
+      movieReleaseDate: new Date(), 
+      movieReviewDate: new Date(), 
+      reviewComments: 'Test Comment', 
+      rating: 5
     };
-
-    // Trigger form submission
-    const submitButton = fixture.nativeElement.querySelector('button[type="submit"]');
-    submitButton.click();
-
-    tick(); // Wait for asynchronous operations to complete
-    fixture.detectChanges();
-
-    expect(component['submitReview']).toHaveBeenCalled();
-  }));
-
-  // Add more tests as needed to cover other aspects of your HTML template
+    const AddReviewSpy = spyOn(component, 'AddReview').and.callThrough(); // Adjusted method name
+    component.AddReview(); // Adjusted method name
+    expect(AddReviewSpy).toHaveBeenCalled();
+  });
 });

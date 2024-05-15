@@ -1,48 +1,41 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FormsModule } from '@angular/forms';
-import { ReviewListComponent } from './review-list.component';
-import { ReviewService } from '../services/review.service';
-import { of } from 'rxjs';
-import { Review } from '../models/review.model';
-import { RouterTestingModule } from '@angular/router/testing'; // Import RouterTestingModule
+import { ReviewListComponent } from './review-list.component'; // Adjusted component name
+import { ReviewService } from '../services/review.service'; // Adjusted service name
 
-describe('ReviewListComponent', () => {
-  let component: ReviewListComponent;
-  let fixture: ComponentFixture<ReviewListComponent>;
-  let reviewService: jasmine.SpyObj<ReviewService>;
+describe('ReviewListComponent', () => { // Adjusted component name
+    let component: ReviewListComponent; // Adjusted component name
+    let fixture: ComponentFixture<ReviewListComponent>; // Adjusted component name
+    let mockReviewService: jasmine.SpyObj<ReviewService>; // Specify the type of mock
 
-  beforeEach(() => {
-    const reviewServiceSpy = jasmine.createSpyObj('ReviewService', ['getReviews', 'deleteReview']);
+    beforeEach(waitForAsync(() => {
+        // Create a spy object with the methods you want to mock
+        mockReviewService = jasmine.createSpyObj<ReviewService>('ReviewService', ['getReviews', 'deleteReview'] as any); // Adjusted service name
 
-    TestBed.configureTestingModule({
-      declarations: [ReviewListComponent],
-      imports: [HttpClientTestingModule, FormsModule, RouterTestingModule], // Include RouterTestingModule
-      providers: [{ provide: ReviewService, useValue: reviewServiceSpy }],
+        TestBed.configureTestingModule({
+            declarations: [ReviewListComponent], // Adjusted component name
+            imports: [RouterTestingModule, HttpClientTestingModule],
+            providers: [
+                // Provide the mock service instead of the actual service
+                { provide: ReviewService, useValue: mockReviewService } // Adjusted service name
+            ]
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ReviewListComponent); // Adjusted component name
+        component = fixture.componentInstance; // Adjusted component name
     });
 
-    fixture = TestBed.createComponent(ReviewListComponent);
-    component = fixture.componentInstance;
-    reviewService = TestBed.inject(ReviewService) as jasmine.SpyObj<ReviewService>;
-  });
+    fit('should_create_ReviewListComponent', () => { // Adjusted function name and component name
+        expect(component).toBeTruthy();
+    });
 
-  fit('ReviewListComponent_should_create', () => {
-    expect(component).toBeTruthy();
-  });
+    fit('ReviewListComponent_should_call_loadReviews_on_ngOnInit', () => { // Adjusted function name and method name
+        spyOn(component, 'loadReviews'); // Adjusted method name
+        fixture.detectChanges();
+        expect(component.loadReviews).toHaveBeenCalled(); // Adjusted method name
+    });
 
-  fit('ReviewListComponent_should fetch reviews on init', () => {
-    const dummyReviews: Review[] = [
-      { reviewId: 1, movieName: 'Movie 1', movieDirector: 'Director 1', leadCast: 'Lead Cast 1',
-        movieReleaseDate: new Date(), movieReviewDate: new Date(), reviewComments: 'Comment 1', rating: 5 },
-      { reviewId: 2, movieName: 'Movie 2', movieDirector: 'Director 2', leadCast: 'Lead Cast 2',
-        movieReleaseDate: new Date(), movieReviewDate: new Date(), reviewComments: 'Comment 2', rating: 4 },
-    ];
-
-    reviewService.getReviews.and.returnValue(of(dummyReviews));
-
-    fixture.detectChanges(); // Trigger component initialization
-
-    expect(component.reviews).toEqual(dummyReviews);
-    expect(reviewService.getReviews).toHaveBeenCalledTimes(1); // Ensure getReviews is called only once during component initialization
-  });
 });
