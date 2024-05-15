@@ -1,10 +1,13 @@
 const puppeteer = require('puppeteer');
-
+console.log("hai");
 (async () => {
-  const browser = await puppeteer.launch({
-    headless: false,
-    args: ['--headless', '--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox', '--disable-setuid-sandbox'],
-  });
+    const browser = await puppeteer.launch({
+        headless: false,
+        args: ['--headless', '--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox', '--disable-setuid-sandbox'],
+      });
+
+  console.log("bye");
+
 
   const page1 = await browser.newPage();
 // Test Case: Check if table body is present
@@ -34,150 +37,150 @@ try {
 
   
 
-  const page2 = await browser.newPage();
-try {
-  await page2.goto('https://8081-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/addReview');
+//   const page2 = await browser.newPage();
+// try {
+//   await page2.goto('https://8081-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/addReview');
 
-  // Test Case: Check if form exists and specific input fields are present
-  const formExists = await page2.evaluate(() => {
-    const form = document.querySelector('form');
-    const inputFields = ['movieName', 'movieDirector' , 'leadCast', 'releaseDate', 'reviewDate', 'reviewComments', 'rating'];
-    const formHasInputFields = inputFields.every(field => !!form.querySelector(`[name="${field}"]`));
-    return !!form && formHasInputFields;
-  });
+//   // Test Case: Check if form exists and specific input fields are present
+//   const formExists = await page2.evaluate(() => {
+//     const form = document.querySelector('form');
+//     const inputFields = ['movieName', 'movieDirector' , 'leadCast', 'releaseDate', 'reviewDate', 'reviewComments', 'rating'];
+//     const formHasInputFields = inputFields.every(field => !!form.querySelector(`[name="${field}"]`));
+//     return !!form && formHasInputFields;
+//   });
 
-  if (formExists) {
-    console.log('TESTCASE:CreateReview_form_exists_and_input_fields_present_in_Create_Review:success');
-  } else {
-    console.log('TESTCASE:CreateReview_form_exists_and_input_fields_present_in_Create_Review:failure');
-  }
+//   if (formExists) {
+//     console.log('TESTCASE:CreateReview_form_exists_and_input_fields_present_in_Create_Review:success');
+//   } else {
+//     console.log('TESTCASE:CreateReview_form_exists_and_input_fields_present_in_Create_Review:failure');
+//   }
 
-} catch (e) {
-  console.log('TESTCASE:CreateReview_form_exists_and_input_fields_present_in_Create_Review:failure');
-}
+// } catch (e) {
+//   console.log('TESTCASE:CreateReview_form_exists_and_input_fields_present_in_Create_Review:failure');
+// }
 
-const page3 = await browser.newPage();
-  // Test Case: Check if table headers are present
+// const page3 = await browser.newPage();
+//   // Test Case: Check if table headers are present
 
-try {
-  await page3.goto('https://8081-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/viewReviews');
+// try {
+//   await page3.goto('https://8081-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/viewReviews');
 
-  // Wait for the table to be rendered
-  // await page3.waitForSelector('table');
-  await page3.waitForSelector('table', { timeout: 3000 });
+//   // Wait for the table to be rendered
+//   // await page3.waitForSelector('table');
+//   await page3.waitForSelector('table', { timeout: 3000 });
 
-  const tableHeaderContent = await page3.evaluate(() => {
-    const thElements = Array.from(document.querySelectorAll('table th'));
-    return thElements.map(th => th.textContent.trim());
-  });
+//   const tableHeaderContent = await page3.evaluate(() => {
+//     const thElements = Array.from(document.querySelectorAll('table th'));
+//     return thElements.map(th => th.textContent.trim());
+//   });
 
-  const expectedHeaders = ['Movie Name', 'Director' , 'Lead Cast', 'Release Date', 'Review Date', 'Comments', 'Rating'];
+//   const expectedHeaders = ['Movie Name', 'Director' , 'Lead Cast', 'Release Date', 'Review Date', 'Comments', 'Rating'];
 
-  const headerMatch = expectedHeaders.every(header => tableHeaderContent.includes(header));
+//   const headerMatch = expectedHeaders.every(header => tableHeaderContent.includes(header));
 
-  if (headerMatch) {
-    console.log('TESTCASE:Review_table_header_content:success');
-  } else {
-    console.log('TESTCASE:Review_table_header_content:failure');
-  }
-} catch (e) {
-  console.log('TESTCASE:Review_table_header_content:failure');
-}
+//   if (headerMatch) {
+//     console.log('TESTCASE:Review_table_header_content:success');
+//   } else {
+//     console.log('TESTCASE:Review_table_header_content:failure');
+//   }
+// } catch (e) {
+//   console.log('TESTCASE:Review_table_header_content:failure');
+// }
 
-const page4 = await browser.newPage();
-try {
-  await page4.goto('https://8081-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/viewReviews');
-  await page4.setViewport({
-    width: 1200,
-    height: 1200,
-  });
-  await page4.waitForSelector('#delete', { timeout: 3000 }); // Wait for delete button
+// const page4 = await browser.newPage();
+// try {
+//   await page4.goto('https://8081-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/viewReviews');
+//   await page4.setViewport({
+//     width: 1200,
+//     height: 1200,
+//   });
+//   await page4.waitForSelector('#delete', { timeout: 3000 }); // Wait for delete button
 
-  await page4.click('#delete');
+//   await page4.click('#delete');
 
-  await page4.waitForSelector('h2', { timeout: 2000 }); // Wait for confirmation message
+//   await page4.waitForSelector('h2', { timeout: 2000 }); // Wait for confirmation message
 
-  const confirmationMessage = await page4.$eval('h2', element => element.textContent.toLowerCase());
+//   const confirmationMessage = await page4.$eval('h2', element => element.textContent.toLowerCase());
 
-  const urlAfterClick = page4.url();
+//   const urlAfterClick = page4.url();
 
-  if (confirmationMessage.includes("delete confirmation") && urlAfterClick.toLowerCase().includes('confirmdelete')) {
-    console.log('TESTCASE:Verify_Navigation_to_ConfirmDelete_Page_and_Details:success');
-  } else {
-    console.log('TESTCASE:Verify_Navigation_to_ConfirmDelete_Page_and_Details:failure');
-  }
-} catch (error) {
-  console.log('TESTCASE:Verify_Navigation_to_ConfirmDelete_Page_and_Details:failure');
-}
+//   if (confirmationMessage.includes("delete confirmation") && urlAfterClick.toLowerCase().includes('confirmdelete')) {
+//     console.log('TESTCASE:Verify_Navigation_to_ConfirmDelete_Page_and_Details:success');
+//   } else {
+//     console.log('TESTCASE:Verify_Navigation_to_ConfirmDelete_Page_and_Details:failure');
+//   }
+// } catch (error) {
+//   console.log('TESTCASE:Verify_Navigation_to_ConfirmDelete_Page_and_Details:failure');
+// }
 
-const page5 = await browser.newPage();
-try {
-  await page5.goto('https://8081-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/addReview');
-  await page5.setViewport({
-    width: 1200,
-    height: 1200,
-  });
+// const page5 = await browser.newPage();
+// try {
+//   await page5.goto('https://8081-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io/addReview');
+//   await page5.setViewport({
+//     width: 1200,
+//     height: 1200,
+//   });
   
-  // Wait for the form elements to load
-  await page5.waitForSelector('#movieName');
-  await page5.waitForSelector('#movieDirector');
-  await page5.waitForSelector('#leadCast');
-  await page5.waitForSelector('#releaseDate');
-  await page5.waitForSelector('#reviewDate');
-  await page5.waitForSelector('#reviewComments');
-  await page5.waitForSelector('#rating');
+//   // Wait for the form elements to load
+//   await page5.waitForSelector('#movieName');
+//   await page5.waitForSelector('#movieDirector');
+//   await page5.waitForSelector('#leadCast');
+//   await page5.waitForSelector('#releaseDate');
+//   await page5.waitForSelector('#reviewDate');
+//   await page5.waitForSelector('#reviewComments');
+//   await page5.waitForSelector('#rating');
 
-  await page5.waitForSelector('button[type="submit"]');
+//   await page5.waitForSelector('button[type="submit"]');
 
-  // Click the Add Review button without entering any data
-  await page5.click('button[type="submit"]');
+//   // Click the Add Review button without entering any data
+//   await page5.click('button[type="submit"]');
 
-  // Wait for a short period for validation to take effect
-  await page5.waitForTimeout(1000);
+//   // Wait for a short period for validation to take effect
+//   await page5.waitForTimeout(1000);
 
-  // Define an array of field names and their corresponding error messages
-  const fieldsToCheck = [
-    { id: '#movieName', message: 'Movie Name is required' },
-    { id: '#movieDirector', message: 'Movie Director is required' },
-    { id: '#leadCast', message: 'Lead Cast is required' },
-    { id: '#releaseDate', message: 'Release Date is required' },
-    { id: '#reviewDate', message: 'Review Date is required' },
-    { id: '#reviewComments', message: 'Review Comments is required' },
-    { id: '#rating', message: 'Rating is required' }
-
-
-  ];
-
-  let isValidationFailed = false;
-
-  // Iterate through each field and check its corresponding error message
-  for (const fieldData of fieldsToCheck) {
-    const errorMessage = await page5.$eval(fieldData.id + ' + .error-message', el => el.textContent);
-    if (!errorMessage.includes(fieldData.message)) {
-      isValidationFailed = true;
-      // console.log(`Validation message for ${fieldData.message} field: failure - Expected message: ${fieldData.message}`);
-    }
-  }
-
-  // Log a single failure message if any validation fails
-  if (isValidationFailed) {
-    console.log('TESTCASE:Verify_required_validation_on_Add_Review_button:failure');
-  } else {
-    console.log('TESTCASE:Verify_required_validation_on_Add_Review_button:success');
-  }
-} catch (error) {
-  console.log('TESTCASE:Verify_required_validation_on_Add_Review_button:failure');
-}
+//   // Define an array of field names and their corresponding error messages
+//   const fieldsToCheck = [
+//     { id: '#movieName', message: 'Movie Name is required' },
+//     { id: '#movieDirector', message: 'Movie Director is required' },
+//     { id: '#leadCast', message: 'Lead Cast is required' },
+//     { id: '#releaseDate', message: 'Release Date is required' },
+//     { id: '#reviewDate', message: 'Review Date is required' },
+//     { id: '#reviewComments', message: 'Review Comments is required' },
+//     { id: '#rating', message: 'Rating is required' }
 
 
+//   ];
 
-  finally{
-    await page1.close();
-    await page2.close();
-    await page3.close();
-    await page4.close();
-    await page5.close();
-  }
+//   let isValidationFailed = false;
+
+//   // Iterate through each field and check its corresponding error message
+//   for (const fieldData of fieldsToCheck) {
+//     const errorMessage = await page5.$eval(fieldData.id + ' + .error-message', el => el.textContent);
+//     if (!errorMessage.includes(fieldData.message)) {
+//       isValidationFailed = true;
+//       // console.log(`Validation message for ${fieldData.message} field: failure - Expected message: ${fieldData.message}`);
+//     }
+//   }
+
+//   // Log a single failure message if any validation fails
+//   if (isValidationFailed) {
+//     console.log('TESTCASE:Verify_required_validation_on_Add_Review_button:failure');
+//   } else {
+//     console.log('TESTCASE:Verify_required_validation_on_Add_Review_button:success');
+//   }
+// } catch (error) {
+//   console.log('TESTCASE:Verify_required_validation_on_Add_Review_button:failure');
+// }
+
+
+
+//   finally{
+//     await page1.close();
+//     await page2.close();
+//     await page3.close();
+//     await page4.close();
+//     await page5.close();
+//   }
  
 
   await browser.close();
