@@ -5,6 +5,7 @@ import { ReviewListComponent } from './review-list.component';
 import { ReviewService } from '../services/review.service';
 import { of } from 'rxjs';
 import { Review } from '../models/review.model';
+import { RouterTestingModule } from '@angular/router/testing'; // Import RouterTestingModule
 
 describe('ReviewListComponent', () => {
   let component: ReviewListComponent;
@@ -16,7 +17,7 @@ describe('ReviewListComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [ReviewListComponent],
-      imports: [HttpClientTestingModule, FormsModule],
+      imports: [HttpClientTestingModule, FormsModule, RouterTestingModule], // Include RouterTestingModule
       providers: [{ provide: ReviewService, useValue: reviewServiceSpy }],
     });
 
@@ -37,11 +38,11 @@ describe('ReviewListComponent', () => {
         movieReleaseDate: new Date(), movieReviewDate: new Date(), reviewComments: 'Comment 2', rating: 4 },
     ];
 
-    reviewService['getReviews'].and.returnValue(of(dummyReviews));
+    reviewService.getReviews.and.returnValue(of(dummyReviews));
 
-    fixture.detectChanges();
+    fixture.detectChanges(); // Trigger component initialization
 
-    expect(component['reviews']).toEqual(dummyReviews);
+    expect(component.reviews).toEqual(dummyReviews);
+    expect(reviewService.getReviews).toHaveBeenCalledTimes(1); // Ensure getReviews is called only once during component initialization
   });
-
 });
