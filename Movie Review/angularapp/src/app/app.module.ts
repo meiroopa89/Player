@@ -8,6 +8,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReviewListComponent } from './review-list/review-list.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
 import { AddReviewComponent } from './add-review/add-review.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { AddReviewComponent } from './add-review/add-review.component';
     ReviewListComponent,
     AddReviewComponent,
     DeleteConfirmComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

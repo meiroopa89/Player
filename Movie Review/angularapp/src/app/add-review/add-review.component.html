@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Add Movie Review</h2>
-  <form (submit)="AddReview()">
+  <form (submit)="AddNewReview()">
       <div>
           <label for="movieName">Movie Name:</label>
           <input type="text" id="movieName" [(ngModel)]="review.movieName" name="movieName" required>
@@ -20,15 +20,15 @@
       </div>
 
       <div>
-          <label for="releaseDate">Release Date:</label>
-          <input type="date" id="releaseDate" [(ngModel)]="review.movieReleaseDate" name="releaseDate" required>
-          <div *ngIf="isFieldInvalid('releaseDate')" class="error-message">Release Date is required</div>
+          <label for="movieReleaseDate">Release Date:</label>
+          <input type="date" id="movieReleaseDate" [(ngModel)]="review.movieReleaseDate" name="movieReleaseDate" required>
+          <div *ngIf="isFieldInvalid('movieReleaseDate')" class="error-message">Release Date is required</div>
       </div>
 
       <div>
-          <label for="reviewDate">Review Date:</label>
-          <input type="date" id="reviewDate" [(ngModel)]="review.movieReviewDate" name="reviewDate" required>
-          <div *ngIf="isFieldInvalid('reviewDate')" class="error-message">Review Date is required</div>
+          <label for="movieReviewDate">Review Date:</label>
+          <input type="date" id="movieReviewDate" [(ngModel)]="review.movieReviewDate" name="movieReviewDate" required>
+          <div *ngIf="isFieldInvalid('movieReviewDate')" class="error-message">Review Date is required</div>
       </div>
 
       <div>
@@ -43,6 +43,6 @@
           <div *ngIf="isFieldInvalid('rating')" class="error-message">Rating is required</div>
       </div>
 
-      <button type="submit">Submit Review</button>
+      <button type="submit">Add Review</button>
   </form>
 </div>

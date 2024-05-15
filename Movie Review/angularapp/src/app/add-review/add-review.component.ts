@@ -14,8 +14,8 @@ export class AddReviewComponent {
     movieName: '',
     movieDirector: '',
     leadCast: '',
-    movieReleaseDate: null,
     movieReviewDate: null,
+    movieReleaseDate: null,
     reviewComments: '',
     rating: 0
   }; // Initialize review with empty fields
@@ -24,7 +24,7 @@ export class AddReviewComponent {
 
   constructor(private reviewService: ReviewService, private router: Router) { }
 
-  AddReview(): void {
+  AddNewReview(): void {
     this.formSubmitted = true; // Set formSubmitted to true on form submission
     if (this.isFormValid()) {
       this.reviewService.addReview(this.review).subscribe(() => {

@@ -2,7 +2,7 @@ import { Review } from "./review.model";
 
 describe('Review Model', () => {
 
-  fit('Review Model should create an instance of Review', () => {
+  fit('Review_Model_should_create_an_instance_of_Review', () => {
     const review: Review = {
       reviewId: 1,
       movieName: 'Movie 1',
