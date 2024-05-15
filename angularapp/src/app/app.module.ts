@@ -7,8 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
-import { PhoneFormComponent } from './flight-form/flight-form.component';
-import { PhoneListComponent } from './phone-list/phone-list.component';
+import { FlightFormComponent } from './flight-form/flight-form.component';
+import { FlightListComponent } from './flight-list/flight-list.component';
 
 
 
@@ -16,9 +16,9 @@ import { PhoneListComponent } from './phone-list/phone-list.component';
 @NgModule({
   declarations: [
     AppComponent,
-    PhoneFormComponent,
+    FlightFormComponent,
     HeaderComponent,
-    PhoneListComponent,
+    FlightListComponent,
     DeleteConfirmComponent
   ],
   imports: [

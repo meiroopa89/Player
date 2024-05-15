@@ -1,0 +1,32 @@
+<div class="container">
+    <h2>Flight List</h2>
+  
+    <div *ngIf="flights.length === 0" class="no-flights-message">
+        No flights available.
+    </div>
+  
+    <table *ngIf="flights.length > 0" class="flight-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Departure Airport</th>
+                <th>Destination Airport</th>
+                <th>Departure Date</th>
+                <th>Arrival Date</th>
+                <!-- <th>Action</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let flight of flights" class="flight-item">
+                <td>{{ flight.name }}</td>
+                <td>{{ flight.departureAirport }}</td>
+                <td>{{ flight.destinationAirport }}</td>
+                <td>{{ flight.departureDate | date: 'mediumDate' }}</td>
+                <td>{{ flight.arrivalDate | date: 'mediumDate' }}</td>
+                <td>
+                    <button id="delete" class="delete-button" (click)="deleteFlight(flight.flightId)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
