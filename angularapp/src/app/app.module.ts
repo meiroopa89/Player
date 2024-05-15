@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
-import { PhoneFormComponent } from './phone-form/phone-form.component';
+import { PhoneFormComponent } from './flight-form/flight-form.component';
 import { PhoneListComponent } from './phone-list/phone-list.component';
 
 

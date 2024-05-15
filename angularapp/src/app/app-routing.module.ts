@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
-import { PhoneFormComponent } from './phone-form/phone-form.component';
+import { PhoneFormComponent } from './flight-form/flight-form.component';
 import { PhoneListComponent } from './phone-list/phone-list.component';
 
 
