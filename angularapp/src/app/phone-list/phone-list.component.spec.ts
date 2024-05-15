@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PhoneListComponent } from './phone-list.component';
-import { PhoneService } from '../services/phone.service';
+import { PhoneService } from '../services/flight.service';
 
 describe('PhoneListComponent', () => {
     let component: PhoneListComponent;

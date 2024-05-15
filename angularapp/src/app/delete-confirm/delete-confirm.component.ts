@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Phone } from '../models/phone.model';
-import { PhoneService } from '../services/phone.service';
+import { PhoneService } from '../services/flight.service';
 
 @Component({
   selector: 'app-delete-confirm',
