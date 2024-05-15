@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReviewService } from '../services/review.service';
 import { Review } from '../models/review.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-review-list',
@@ -12,7 +13,7 @@ export class ReviewListComponent implements OnInit {
   selectedReview: Review;
 
 
-  constructor(private reviewService: ReviewService, private router: Rou) { }
+  constructor(private reviewService: ReviewService, private router: Router) { }
 
   ngOnInit(): void {
     this.reviewService.getReviews().subscribe(reviews => {
@@ -24,13 +25,13 @@ export class ReviewListComponent implements OnInit {
     this.reviewService.getReviews().subscribe((reviews) => (this.reviews = reviews));
   }
 
-  deleteReview(id: number): void {
-    this.reviewService.deleteReview(id).subscribe(() => this.getReviews());
-  }
+  // deleteReview(id: number): void {
+  //   this.reviewService.deleteReview(id).subscribe(() => this.getReviews());
+  // }
 
-  deleteFlight(flightId: number): void { // Adjusted method name and parameter
+  deleteReview(id: number): void { // Adjusted method name and parameter
     // Navigate to confirm delete page with the flight ID as a parameter
-    this.router.navigate(['/confirmDelete', flightId]);
+    this.router.navigate(['/confirmDelete', id]);
   }
 
 }
