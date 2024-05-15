@@ -30,7 +30,7 @@ export class AddReviewComponent {
       this.reviewService.addReview(this.review).subscribe(() => {
         console.log('Movie review added successfully!');
         // Optionally, you can navigate to another route after submission
-        // this.router.navigate(['/viewMovieReviews']);
+        this.router.navigate(['/viewMovieReviews']);
       });
     }
   }
