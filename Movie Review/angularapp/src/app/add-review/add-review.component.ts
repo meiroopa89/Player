@@ -1,8 +1,3 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Review } from '../models/review.model';
-import { ReviewService } from '../services/review.service';
-
 @Component({
   selector: 'app-add-review',
   templateUrl: './add-review.component.html',

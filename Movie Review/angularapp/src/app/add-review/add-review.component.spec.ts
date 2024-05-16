@@ -35,7 +35,7 @@ describe('AddReviewComponent', () => { // Adjusted component name
     expect(component).toBeTruthy();
   });
 
-  fit('AddReviewComponent_should_render_error_messages_when_required_fields_are_empty_on_submit', () => { // Adjusted component name
+  fit('AddReviewComponent_should_render_error_messages_when_required_fields_are_empty_on_submit', () => {
     // Set all fields to empty strings
     component.review = {
       reviewId: null,
@@ -65,12 +65,12 @@ describe('AddReviewComponent', () => { // Adjusted component name
     expect(fixture.debugElement.query(By.css('#movieName + .error-message'))).toBeTruthy();
     expect(fixture.debugElement.query(By.css('#movieDirector + .error-message'))).toBeTruthy();
     expect(fixture.debugElement.query(By.css('#leadCast + .error-message'))).toBeTruthy();
-    expect(fixture.debugElement.query(By.css('#reviewDate + .error-message'))).toBeTruthy();
-    expect(fixture.debugElement.query(By.css('#reviewDate + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#movieReleaseDate + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#movieReviewDate + .error-message'))).toBeTruthy(); // Corrected selector
     expect(fixture.debugElement.query(By.css('#reviewComments + .error-message'))).toBeTruthy();
     expect(fixture.debugElement.query(By.css('#rating + .error-message'))).toBeTruthy();
   });
-
+  
 
   fit('AddReviewComponent_should_call_AddReview_method_while_adding_the_review', () => { // Adjusted component name and method name
     // Create a mock Review object with all required properties

@@ -19,7 +19,7 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  fit('should_create_HeaderComponent', () => {
     expect(component).toBeTruthy();
-  });
+});
 });
