@@ -24,7 +24,7 @@ export class AddReviewComponent {
 
   constructor(private reviewService: ReviewService, private router: Router) { }
 
-  AddNewReview(): void {
+  AddReview(): void {
     this.formSubmitted = true; // Set formSubmitted to true on form submission
     if (this.isFormValid()) {
       this.reviewService.addReview(this.review).subscribe(() => {
