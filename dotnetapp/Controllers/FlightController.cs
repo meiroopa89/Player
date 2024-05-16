@@ -47,7 +47,7 @@ namespace dotnetapp.Controllers
             _context.Flights.Add(flight);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFlight", new { id = flight.FlightId }, flight);
+            return CreatedAtAction("GetFlight", new { id = flight.flightId }, flight);
         }
 
         // DELETE: api/Flight/5
