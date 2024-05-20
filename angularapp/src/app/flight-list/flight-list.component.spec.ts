@@ -35,7 +35,7 @@ describe('FlightListComponent', () => { // Adjusted component name
     fit('FlightListComponent_should_call_loadFlights_on_ngOnInit', () => { // Adjusted function name and method name
         spyOn(component, 'loadFlights'); // Adjusted method name
         fixture.detectChanges();
-        expect(component.loadFlights).toHaveBeenCalled(); // Adjusted method name
+        expect(component['loadFlights']).toHaveBeenCalled(); // Adjusted method name
     });
 
 });

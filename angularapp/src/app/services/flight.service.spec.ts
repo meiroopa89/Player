@@ -34,7 +34,7 @@ describe('FlightService', () => { // Changed description to FlightService
       arrivalDate: new Date() // Adjusted property name and initialized with current date
     } as any;
 
-    service.addFlight(mockFlight).subscribe((flight) => { // Adjusted callback parameter
+    service['addFlight'](mockFlight).subscribe((flight) => { // Adjusted callback parameter
       expect(flight).toEqual(mockFlight);
     });
 
@@ -55,7 +55,7 @@ describe('FlightService', () => { // Changed description to FlightService
       }
     ] as any;
 
-    service.getFlights().subscribe((flights) => { // Adjusted callback parameter
+    service['getFlights']().subscribe((flights) => { // Adjusted callback parameter
       expect(flights).toEqual(mockFlights);
     });
 
@@ -67,7 +67,7 @@ describe('FlightService', () => { // Changed description to FlightService
   fit('FlightService_should_delete_Flight', () => { // Changed fit to it
     const flightId = 100;
 
-    service.deleteFlight(flightId).subscribe(() => {
+    service['deleteFlight'](flightId).subscribe(() => {
       expect().nothing();
     });
 
@@ -87,7 +87,7 @@ describe('FlightService', () => { // Changed description to FlightService
       arrivalDate: new Date() // Adjusted property name and initialized with current date
     } as any;
 
-    service.getFlight(flightId).subscribe((flight) => { // Adjusted callback parameter
+    service['getFlight'](flightId).subscribe((flight) => { // Adjusted callback parameter
       expect(flight).toEqual(mockFlight);
     });
 

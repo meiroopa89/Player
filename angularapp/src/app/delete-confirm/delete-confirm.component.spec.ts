@@ -42,10 +42,10 @@ describe('DeleteConfirmComponent', () => {
     fit('DeleteConfirmComponent_should_call_deleteFlight_method_when_confirmDelete_is_called', () => {
         const flightId = 1; // Adjusted ID name
         
-        mockFlightService.deleteFlight.and.returnValue(of(null)); // Adjusted method name
+        mockFlightService['deleteFlight'].and.returnValue(of(null)); // Adjusted method name
 
-        component.confirmDelete(flightId); // Adjusted parameter name
+        component['confirmDelete'](flightId); // Adjusted parameter name
 
-        expect(mockFlightService.deleteFlight).toHaveBeenCalledWith(flightId); // Adjusted method name and parameter
+        expect(mockFlightService['deleteFlight']).toHaveBeenCalledWith(flightId); // Adjusted method name and parameter
     });
 });
