@@ -32,7 +32,7 @@ describe('FlightService', () => { // Changed description to FlightService
       destinationAirport: 'Test Destination Airport', // Adjusted property name
       departureDate: new Date(), // Adjusted property name and initialized with current date
       arrivalDate: new Date() // Adjusted property name and initialized with current date
-    };
+    } as any;
 
     service.addFlight(mockFlight).subscribe((flight) => { // Adjusted callback parameter
       expect(flight).toEqual(mockFlight);
@@ -53,7 +53,7 @@ describe('FlightService', () => { // Changed description to FlightService
         departureDate: new Date(), // Adjusted property name and initialized with current date
         arrivalDate: new Date() // Adjusted property name and initialized with current date
       }
-    ];
+    ] as any;
 
     service.getFlights().subscribe((flights) => { // Adjusted callback parameter
       expect(flights).toEqual(mockFlights);
@@ -85,7 +85,7 @@ describe('FlightService', () => { // Changed description to FlightService
       destinationAirport: 'Test Destination Airport', // Adjusted property name
       departureDate: new Date(), // Adjusted property name and initialized with current date
       arrivalDate: new Date() // Adjusted property name and initialized with current date
-    };
+    } as any;
 
     service.getFlight(flightId).subscribe((flight) => { // Adjusted callback parameter
       expect(flight).toEqual(mockFlight);

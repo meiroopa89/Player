@@ -9,7 +9,7 @@ describe('Flight', () => { // Updated description to 'Flight'
       destinationAirport: 'Test Destination Airport', // Adjusted property name
       departureDate: new Date('2024-05-15'), // Adjusted property name and added a date
       arrivalDate: new Date('2024-05-16') // Adjusted property name and added a date
-    };
+    } as any;
 
     // Check if the flight object exists
     expect(flight).toBeTruthy();

@@ -77,7 +77,7 @@ describe('FlightFormComponent', () => { // Adjusted component name
       destinationAirport: 'Test Destination', 
       departureDate: new Date(), 
       arrivalDate: new Date()
-    };
+    } as any;
     const addFlightSpy = spyOn(component, 'addFlight').and.callThrough(); // Adjusted method name
     component.addFlight(); // Adjusted method name
     expect(addFlightSpy).toHaveBeenCalled();
