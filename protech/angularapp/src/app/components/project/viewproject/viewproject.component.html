@@ -1,0 +1,69 @@
+
+
+<div>
+    <div id="loanHomeBody">
+      <h1>Available Project</h1>
+      <hr>
+  
+      <!-- Search Box -->
+      <div class="top-container">
+        <input
+          id="searchBox"
+          type="text"
+          placeholder="Search..."
+          [(ngModel)]="searchField"
+          (ngModelChange)="handleSearchChange($event)"
+        />
+  
+      </div>
+  
+      <!-- Available Project Table -->
+      <table class="loan-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>ProposalId</th>
+            <th>ProjectTitle</th>
+            <th>ProjectDescription</th>
+            <th>EndDate</th>
+            <th>Satus</th>
+            <th>FrontEndTechStack</th>
+            <th>BackendEndTechStack</th>
+            <th>Database</th>
+
+          </tr>
+        </thead>
+        <tbody *ngIf="filteredproject.length; else noRecords">
+            <tr *ngFor="let project of filteredproject,let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ project.ProposalId }}</td>
+              <td>{{ project.ProjectTitle }}</td>
+              <td>{{ project.ProjectDescription }}%</td>
+              <td>{{ project.EndDate }}</td>
+              <td>{{ project.Satus }}</td>
+              <td>{{ project.FrontEndTechStack }}</td>
+              <td>{{ project.BackendEndTechStack }}</td>
+              <td>{{ project.Database }}</td>
+              <td>
+                <!-- <button
+                  id="greenButton"
+                  *ngIf="!isLoanApplied(loan)"
+                  (click)="handleApplyClick(loan)"
+                >
+                  Apply
+                </button> -->
+                <!--   -->
+              </td>
+            </tr>
+          </tbody>
+        <ng-template #noRecords>
+          <tbody>
+            <tr>
+              <td colSpan="6" class="no-records-cell">Oops! No records Found</td>
+            </tr>
+          </tbody>
+        </ng-template>
+      </table>
+    </div>
+  </div>
+  
