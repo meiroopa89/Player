@@ -9,7 +9,7 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './createproject.component.html',
   styleUrls: ['./createproject.component.css']
 })
-export class CreateprojectComponent implements OnInit {
+export class CreateprojectComponent{
 
 
   id: number;
