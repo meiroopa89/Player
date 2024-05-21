@@ -1,0 +1,87 @@
+<div [ngClass]="{ blur: showEnrollPopup || showMaterialPopup }">
+  <div id="enrollmentHomeBody">
+    <h1>Available Courses</h1>
+    <hr>
+    
+    <!-- Search Box -->
+    <div class="top-container">
+      <input
+        id="searchBox"
+        type="text"
+        placeholder="Search..."
+        [(ngModel)]="searchField"
+        (ngModelChange)="handleSearchChange($event)"
+      />
+    </div>
+    
+    <!-- Available Courses Table -->
+    <table class="course-table">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Course Name</th>
+          <th>Course Description</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="filteredCourses.length; else noRecords">
+        <tr *ngFor="let course of filteredCourses, let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ course.Title }}</td>
+          <td>{{ course.Description }}</td>
+          <td>{{ course.CourseStartDate | date:'dd-MM-yyyy' }}</td>
+          <td>{{ course.CourseEndDate | date:'dd-MM-yyyy' }}</td>
+          <td>
+            <button
+              id="greenButton"
+              *ngIf="!isCourseEnrolled(course)"
+              (click)="handleEnrollClick(course)"
+            >
+              Enroll
+            </button>
+            <button id="enrolledButton" *ngIf="isCourseEnrolled(course)">Enrolled</button>
+            <button
+              id="viewMaterialButton"
+              (click)="handleViewMaterialClick(course.CourseId)"
+            >
+              View Material
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #noRecords>
+        <tbody>
+          <tr>
+            <td colSpan="6" class="no-records-cell">Oops! No records Found</td>
+          </tr>
+        </tbody>
+      </ng-template>
+    </table>
+  </div>
+</div>
+
+<!-- Enroll Popup -->
+<div *ngIf="showEnrollPopup" class="enroll-popup">
+  <p>Are you sure you want to enroll in this course?</p>
+  <button [class.disabled]="isEnrolling" [disabled]="isEnrolling" (click)="handleConfirmEnroll()" id="enroll-btn">Yes, Enroll</button>
+  <button style="background-color: rgb(203, 33, 33);" (click)="closeEnrollPopup()">Cancel</button>
+  <div class="success" *ngIf="successMessage">{{ successMessage }}</div>
+</div>
+
+<!-- Material Popup -->
+<div *ngIf="showMaterialPopup" class="material-popup">
+  <span class="close-btn" (click)="closeMaterialPopup()">&times;</span>
+  <div class="main-material" *ngIf="materials.length > 0">
+    <h2>Materials</h2>
+    <h3>Course: {{ currentMaterial.Course?.Title }}</h3>
+    <h4>{{ currentMaterial.Title }}</h4>
+    <p>Description: {{ currentMaterial.Description }}</p>
+    <p>URL: <a [href]="currentMaterial.URL" target="_blank">{{ currentMaterial.URL }}</a></p>
+    <p>Upload Date: {{ currentMaterial.UploadDate | date }}</p>
+    <button *ngIf="currentMaterialIndex > 0" (click)="previousMaterial()">Previous</button>
+    <button *ngIf="currentMaterialIndex < materials.length - 1" (click)="nextMaterial()">Next</button>
+  </div>
+  <p class="materialMessage" *ngIf="materials.length === 0">{{ materialMessage }}</p>
+</div>

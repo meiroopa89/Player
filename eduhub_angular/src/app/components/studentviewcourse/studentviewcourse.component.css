@@ -1,0 +1,367 @@
+#logoutbutton {
+  float: right;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#enrollmentHomeBody {
+  margin-top: 20px;
+  width: 90%;
+  margin: auto;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+#appliedloanbutton {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#searchBox {
+  width: 30%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  transition: box-shadow 0.3s ease;
+}
+
+#searchBox:focus {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+}
+
+.course-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.course-table th,
+.course-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.course-table th {
+  background-color: #3276a6;
+  color: white;
+}
+
+table td {
+  padding: 10px;
+}
+
+#sortButtonsone {
+  background-color: #fff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+#sortButtonstwo {
+  background-color: #fff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+#greenButton {
+  background-color: hsl(122, 39%, 49%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#enrolledButton {
+  background-color: hsl(13, 65%, 51%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 10px;
+}
+
+#enrolledButton:hover {
+  background-color: #d6382d; /* Darken the background color on hover */
+}
+
+.top-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+button:enabled {
+  background-color: #3498db; /* Green background */
+  color: white; /* White text */
+}
+
+button:enabled:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+button:disabled {
+  background-color: #ccc; /* Gray background */
+  color: #888; /* Dark gray text */
+}
+
+hr {
+  border: none;
+  border-top: 2px solid #3276a6;
+  color: #3276a6;
+  overflow: visible;
+  text-align: center;
+  height: 8px;
+  margin-bottom: 2%;
+}
+
+
+/* span{
+  padding-left: 10px;
+  padding-right: 10px;
+} */
+
+.pagination-button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 28px;
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+  transition: background-color 0.3s;
+  border-radius: 5px;
+}
+
+.pagination-button:disabled {
+  background-color: #ccc; /* Gray background */
+  color: #888; /* Dark gray text */
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #45a049; /* Darker green on hover */
+}
+/* Styles for the popups */
+.enroll-popup, .material-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.material-popup {
+  width: 80%;
+  max-width: 600px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+.blur {
+  filter: blur(5px);
+}
+
+.main-material {
+  margin: 20px 0;
+}
+
+.materialMessage {
+  text-align: center;
+  color: red;
+}
+
+.material-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f1efef;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: left;
+  z-index: 2;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.material-popup h2,
+.material-popup h3,
+.material-popup h4,
+.material-popup p {
+  color: #333;
+}
+
+.material-popup h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.material-popup h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.material-popup h4 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.material-popup p {
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.redbut{
+  background-color: #ff0000 !important;
+}
+
+.material-popup a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.material-popup a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.material-popup button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 4px 2px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.material-popup button:hover {
+  background-color: #0056b3;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+
+.materialMessage {
+  color: #ff0404 !important;
+  font-size: 26px !important;
+  text-align: center;
+}
+
+.success {
+  color: green;
+  margin-top: 10px;
+}
+
+.enroll-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 2;
+}
+
+.enroll-popup p {
+  margin-bottom: 20px;
+}
+
+.enroll-popup button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+.enroll-popup button:first-child {
+  background-color: #28a745 ; /* Green background */
+  color: white; /* White text */
+}
+
+.enroll-popup button:first-child:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.blur {
+  /* Your existing styles for the content here */
+  filter: blur(2px);
+  pointer-events: none;
+  /* Apply a blur filter to the content */
+}
+
+.enroll-popup .success {
+  color: #28a745; /* Green text */
+  margin-top: 20px;
+}
+
+#enroll-btn {
+  background-color: rgb(30, 186, 30);
+}
+
+#enroll-btn.disabled {
+  background-color: rgb(150, 186, 150);
+}

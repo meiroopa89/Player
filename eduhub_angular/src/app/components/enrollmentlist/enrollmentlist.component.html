@@ -1,0 +1,85 @@
+<div class="page-content" [ngClass]="{ blur: showModal }">
+  <h1>Enrollments</h1>
+  <hr>
+  <div class="top-container">
+    <input
+      id="searchBox"
+      type="text"
+      placeholder="Search..."
+      [(ngModel)]="searchValue"
+      (input)="handleSearchChange($event)"
+    />
+    <label id="filter">
+      Filter by Status:
+      <select [(ngModel)]="statusFilter" (change)="handleFilterChange($event)">
+        <option value="-1">All</option>
+        <option value="Pending">Pending</option>
+        <option value="Approved">Approved</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </label>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Username</th>
+        <th>Course Title</th>
+        <th>Enrollment Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="filteredEnrollments.length > 0; else noRecords">
+      <tr *ngFor="let enrollment of filteredEnrollments ; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ enrollment.User.Username }}</td>
+        <td>{{ enrollment.Course.Title }}</td>
+        <td>{{ enrollment.EnrollmentDate | date : "yyyy-MM-dd" }}</td>
+        <td>{{ enrollment.Status }}</td>
+        <td>
+          <button
+            id="greenButton"
+            *ngIf="enrollment.Status === 'Pending' || enrollment.Status === 'Rejected'"
+            (click)="handleApprove(enrollment)"
+          >
+            Approve
+          </button>
+          <button
+            id="redButton"
+            *ngIf="enrollment.Status === 'Pending' || enrollment.Status === 'Approved'"
+            (click)="handleReject(enrollment)"
+          >
+            Reject
+          </button>
+
+          <button (click)="handleRowExpand(i)">Show More</button>
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noRecords>
+      <tr>
+        <td colspan="6" class="no-records-cell">Oops! No records Found</td>
+      </tr>
+    </ng-template>
+  </table>
+</div>
+
+
+<div *ngIf="showModal" class="modal-overlay">
+  <div class="modal-content">
+    <h2>Enrollment Details</h2>
+    <button id="cross" (click)="closeEnrollmentDetailsModal()">X</button>
+    <div class="enrollment-details">
+      <div><b>Username:</b> {{ selectedEnrollment?.User.Username }}</div>
+      <div><b>Email:</b> {{ selectedEnrollment?.User.Email }}</div>
+      <div><b>Course Title:</b> {{ selectedEnrollment?.Course.Title }}</div>
+      <div><b>Course Category:</b> {{ selectedEnrollment?.Course.Category }}</div>
+      <div><b>Course Description:</b> {{ selectedEnrollment?.Course.Description }}</div>
+      <div><b>Course Level:</b> {{ selectedEnrollment?.Course.Level }}</div>
+      <div><b>Course Start Date:</b> {{ selectedEnrollment?.Course.CourseStartDate | date : "yyyy-MM-dd" }}</div>
+      <div><b>Course End Date:</b> {{ selectedEnrollment?.Course.CourseEndDate | date : "yyyy-MM-dd" }}</div>
+
+    </div>
+  </div>
+</div>

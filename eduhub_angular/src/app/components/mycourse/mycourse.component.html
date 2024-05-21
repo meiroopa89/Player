@@ -1,0 +1,52 @@
+<!-- mycourse.component.html -->
+<div class="page-content" [ngClass]="{ blur: showEnrollPopup }">
+
+  <h1>My Courses</h1>
+  <hr>
+
+
+
+  <table>
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Course Name</th>
+        <th>Enrollment Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="filteredCourses.length > 0; else noRecords">
+      <tr *ngFor="let variab of filteredCourses; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ variab.Course.Title }}</td>
+        <td>{{ variab.EnrollmentDate | date : "yyyy-MM-dd" }}</td>
+        <td>
+          {{
+            variab.Status
+          }}
+        </td>
+        <td>
+          <button id="redButton" (click)="handleUnenrollClick(variab)">
+            Unenroll
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <ng-template #noRecords>
+      <tr>
+        <td colspan="5" class="no-records-cell">Oops! No records Found</td>
+      </tr>
+    </ng-template>
+  </table>
+</div>
+
+<div *ngIf="showEnrollPopup" class="enroll-popup">
+  <p>Are you sure you want to unenroll?</p>
+  <button class="confirm-enroll-button" (click)="handleConfirmUnenroll()">
+    Yes, Unenroll
+  </button>
+  <button class="cancel-enroll-button" (click)="closeEnrollPopup()">
+    Cancel
+  </button>
+</div>
