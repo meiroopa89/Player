@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Flight } from '../models/flight.model';
+import { Flight } from '../models/bus.model';
 import { Router } from '@angular/router';
-import { FlightService } from '../services/flight.service';
+import { FlightService } from '../services/bus.service';
 
 @Component({
   selector: 'app-flight-form',

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FlightListComponent } from './flight-list.component'; // Adjusted component name
-import { FlightService } from '../services/flight.service'; // Adjusted service name
+import { FlightService } from '../services/bus.service'; // Adjusted service name
 
 describe('FlightListComponent', () => { // Adjusted component name
     let component: FlightListComponent; // Adjusted component name

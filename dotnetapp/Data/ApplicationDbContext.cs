@@ -10,6 +10,6 @@ namespace dotnetapp.Data
         {
         }
         
-        public DbSet<Flight> Flights { get; set; }
+        public DbSet<Bus> Buses { get; set; }
     }
 }

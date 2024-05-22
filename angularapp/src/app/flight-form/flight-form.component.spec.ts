@@ -3,11 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FlightFormComponent } from './flight-form.component'; // Adjusted component name
-import { FlightService } from '../services/flight.service'; // Adjusted service name
+import { FlightService } from '../services/bus.service'; // Adjusted service name
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { Flight } from '../models/flight.model'; // Adjusted model name
+import { Flight } from '../models/bus.model'; // Adjusted model name
 
 describe('FlightFormComponent', () => { // Adjusted component name
   let component: FlightFormComponent; // Adjusted component name

@@ -7,7 +7,7 @@ import { FlightListComponent } from './flight-list/flight-list.component';
 
 const routes: Routes = [
   { path: 'addNewFlight', component: FlightFormComponent },
-  { path: 'viewFlights', component: FlightListComponent },
+  { path: 'viewBuses', component: FlightListComponent },
   { path: 'confirmDelete/:id', component: DeleteConfirmComponent},
 
 ];
