@@ -1,3 +1,4 @@
+using dotnetapp.Data;
 using dotnetapp.Models;
 using dotnetapp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -32,32 +33,12 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<IUserService, UserService>();
 
-
-
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = true,
-//            ValidateAudience = true,
-//            ValidateLifetime = true,
-//            ValidateIssuerSigningKey = true,
-//            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-//            ValidAudience = builder.Configuration["Jwt:Audience"], // Change this to the appropriate audience
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-//        };
-//    });
-
 builder.Services.AddControllers();
 
 // Configure Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(
-//    c =>
-//{
-//    c.SwaggerDoc("v1", new OpenApiInfo { Title = "LoginAuth", Version = "v1" });
-//}
+
 );
 
 var app = builder.Build();
@@ -73,9 +54,9 @@ using (var scope = app.Services.CreateScope())
         await roleManager.CreateAsync(new IdentityRole("ADMIN"));
     }
 
-    if (!await roleManager.RoleExistsAsync("STUDENT"))
+    if (!await roleManager.RoleExistsAsync("USER"))
     {
-        await roleManager.CreateAsync(new IdentityRole("STUDENT"));
+        await roleManager.CreateAsync(new IdentityRole("USER"));
     }
 }
 
