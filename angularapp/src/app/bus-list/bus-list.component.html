@@ -1,11 +1,11 @@
 <div class="container">
     <h2>Bus List</h2>
   
-    <div *ngIf="buses.length === 0" class="no-flights-message">
+    <div *ngIf="buses.length === 0" class="no-buses-message">
         No buses available.
     </div>
   
-    <table *ngIf="buses.length > 0" class="flight-table">
+    <table *ngIf="buses.length > 0" class="bus-table">
         <thead>
             <tr>
                 <th>Bus Number</th>
@@ -13,16 +13,16 @@
                 <th>Route Destination</th>
                 <th>Passenger Name</th>
                 <th>Booking Date</th>
-                <!-- <th>Action</th> -->
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let bus of buses" class="flight-item">
+            <tr *ngFor="let bus of buses" class="bus-item">
                 <td>{{ bus.busNumber }}</td>
                 <td>{{ bus.routeSource }}</td>
                 <td>{{ bus.routeDestination }}</td>
                 <td>{{ bus.passengerName }}</td>
-                <td>{{ bus.bookingDate}}</td>
+                <td>{{ bus.bookingDate | date: 'mediumDate' }}</td>
                 <td>
                     <button id="delete" class="delete-button" (click)="deleteBus(bus.bookingId)">Delete</button>
                 </td>
