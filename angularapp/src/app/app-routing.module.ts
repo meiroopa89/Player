@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
-import { FlightFormComponent } from './flight-form/flight-form.component';
-import { FlightListComponent } from './flight-list/flight-list.component';
+import { BusFormComponent } from './bus-form/bus-form.component';
+import { BusListComponent } from './bus-list/bus-list.component';
 
 
 const routes: Routes = [
-  { path: 'addNewFlight', component: FlightFormComponent },
-  { path: 'viewBuses', component: FlightListComponent },
+  { path: 'addNewBus', component: BusFormComponent },
+  { path: 'viewBuses', component: BusListComponent },
   { path: 'confirmDelete/:id', component: DeleteConfirmComponent},
 
 ];

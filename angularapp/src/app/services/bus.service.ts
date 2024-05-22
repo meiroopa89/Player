@@ -19,7 +19,7 @@ export class BusService {
     return this.http.get<Bus[]>(`${this.apiUrl}/api/Bus`); // Adjust endpoint
   }
 
-  deleteBus(bId: number): Observable<void> { // Adjust method name and parameter
+  deleteBus(bookingId: number): Observable<void> { // Adjust method name and parameter
     const url = `${this.apiUrl}/api/Bus/${bookingId}`; // Adjust the URL to match your API endpoint
     return this.http.delete<void>(url); // Adjust endpoint and parameter
   }

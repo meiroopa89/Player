@@ -6,23 +6,23 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FlightService } from '../services/bus.service'; // Adjusted service name
+import { BusService } from '../services/bus.service'; // Adjusted service name
 
 describe('DeleteConfirmComponent', () => {
     let component: DeleteConfirmComponent;
     let fixture: ComponentFixture<DeleteConfirmComponent>;
     let router: Router;
     let activatedRoute: ActivatedRoute;
-    let mockFlightService: jasmine.SpyObj<FlightService>; // Adjusted service name
+    let mockBusService: jasmine.SpyObj<BusService>; // Adjusted service name
 
     beforeEach(waitForAsync(() => {
-        mockFlightService = jasmine.createSpyObj<FlightService>('FlightService', ['getFlight', 'deleteFlight'] as any); // Adjusted service name and methods
+        mockBusService = jasmine.createSpyObj<BusService>('BusService', ['getBus', 'deleteBus'] as any); // Adjusted service name and methods
 
         TestBed.configureTestingModule({
             imports: [RouterTestingModule, HttpClientModule, FormsModule, HttpClientTestingModule],
             declarations: [DeleteConfirmComponent],
             providers: [
-                { provide: FlightService, useValue: mockFlightService } // Adjusted service name
+                { provide: BusService, useValue: mockBusService } // Adjusted service name
             ]
         }).compileComponents();
         router = TestBed.inject(Router);
@@ -39,13 +39,13 @@ describe('DeleteConfirmComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    fit('DeleteConfirmComponent_should_call_deleteFlight_method_when_confirmDelete_is_called', () => {
-        const flightId = 1; // Adjusted ID name
+    fit('DeleteConfirmComponent_should_call_deleteBus_method_when_confirmDelete_is_called', () => {
+        const bookingId = 1; // Adjusted ID name
         
-        mockFlightService['deleteFlight'].and.returnValue(of(null)); // Adjusted method name
+        mockBusService['deleteBus'].and.returnValue(of(null)); // Adjusted method name
 
-        component['confirmDelete'](flightId); // Adjusted parameter name
+        component['confirmDelete'](bookingId); // Adjusted parameter name
 
-        expect(mockFlightService['deleteFlight']).toHaveBeenCalledWith(flightId); // Adjusted method name and parameter
+        expect(mockBusService['deleteBus']).toHaveBeenCalledWith(bookingId); // Adjusted method name and parameter
     });
 });
