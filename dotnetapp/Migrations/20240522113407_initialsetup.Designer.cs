@@ -11,7 +11,7 @@ using dotnetapp.Data;
 namespace dotnetapp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240522065407_initialsetup")]
+    [Migration("20240522113407_initialsetup")]
     partial class initialsetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,37 +23,36 @@ namespace dotnetapp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("dotnetapp.Models.Bus", b =>
+            modelBuilder.Entity("Fitness", b =>
                 {
-                    b.Property<int>("bookingId")
+                    b.Property<int>("classId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("bookingId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("classId"), 1L, 1);
 
-                    b.Property<string>("bookingDate")
+                    b.Property<string>("classDate")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("busNumber")
+                    b.Property<string>("className")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("passengerName")
+                    b.Property<int>("duration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("instructorName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("routeDestination")
+                    b.Property<string>("location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("routeSource")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("classId");
 
-                    b.HasKey("bookingId");
-
-                    b.ToTable("Buses");
+                    b.ToTable("FitnessClass");
                 });
 #pragma warning restore 612, 618
         }

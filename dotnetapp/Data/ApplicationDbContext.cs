@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using dotnetapp.Models;
 
 namespace dotnetapp.Data
 { 
@@ -10,6 +9,6 @@ namespace dotnetapp.Data
         {
         }
         
-        public DbSet<Bus> Buses { get; set; }
+        public DbSet<Fitness> FitnessClass { get; set; }
     }
 }
