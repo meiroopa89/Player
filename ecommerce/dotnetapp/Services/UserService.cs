@@ -16,53 +16,17 @@ namespace dotnetapp.Services
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
-        private readonly CourseEnquiryDbContext _context;
+        // private readonly CourseEnquiryDbContext _context;
 
-        public UserService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration, CourseEnquiryDbContext context)
+        public UserService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration) 
+        // CourseEnquiryDbContext context
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
-            _context = context;
+            // _context = context;
         }
 
-//        public async Task<bool> RegisterAsync(User user)
-// {
-//     try
-//     {
-//         Console.WriteLine("Register");
-//         var identityUser = new IdentityUser
-//         {
-//             UserName = user.UserName,
-//             Email = user.EmailID
-//         };
-
-//         var result = await _userManager.CreateAsync(identityUser, user.Password);
-
-//         if (result.Succeeded)
-//         {
-//             await _userManager.AddToRoleAsync(identityUser, user.UserRole);
-//             Console.WriteLine($"Registration successful for user with email '{user.EmailID}'.");
-//             return true;
-//         }
-//         else
-//         {
-//             Console.WriteLine($"Registration failed for user with email '{user.EmailID}'. Errors:");
-
-//             foreach (var error in result.Errors)
-//             {
-//                 Console.WriteLine($"- {error.Description}");
-//             }
-
-//             return false;
-//         }
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine($"Error during registration: {ex.Message}");
-//         return false;
-//     }
-// }
 public async Task<bool> RegisterAsync(User user)
 {
     try
