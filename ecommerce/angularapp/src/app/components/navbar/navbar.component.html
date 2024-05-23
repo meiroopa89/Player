@@ -10,8 +10,8 @@
       </ng-container>
       <ng-container *ngIf="isLoggedIn">
         <li><a routerLink="/">Home</a></li>
-        <li *ngIf="isAdmin"><a routerLink="/admin/dashboard">Admin</a></li>
-        <li *ngIf="isUser"><a routerLink="/User/dashboard">User</a></li>
+        <li *ngIf="isAdmin"><a routerLink="/admin/addProducts">Add Products</a></li>
+        <li *ngIf="isUser"><a routerLink="/User/viewProducts">View Products</a></li> 
         <li><a id="logout" (click)="logout()">Logout</a></li>
       </ng-container>
     </ul>
