@@ -16,10 +16,11 @@ export class ViewProductComponent implements OnInit {
   ngOnInit(): void {
     this.getProducts();
   }
-
+  
   getProducts(): void {
     this.productService.getProducts().subscribe(
       products => {
+        console.log('Fetched products:', products); // Log the fetched products
         this.products = products;
       },
       error => {
@@ -27,9 +28,12 @@ export class ViewProductComponent implements OnInit {
       }
     );
   }
+  
 
   editProduct(product: Product): void {
-    this.router.navigate(['/edit-product', product.id]); // Make sure '/edit-product' is the correct route path
+    console.log('Product object:', product); // Log the product object
+    console.log('Navigating to edit product with id:', product.id); // Log the product id
+    this.router.navigate(['/edit-product', product.id]);
   }
   
 

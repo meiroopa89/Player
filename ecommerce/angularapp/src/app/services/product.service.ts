@@ -25,11 +25,12 @@ export class ProductService {
     return this.http.post<Product>(this.apiUrl, product, { headers });
   }
 
-  updateProduct(product: Product): Observable<Product> { // Added method for updating
+  updateProduct(product: Product): Observable<Product> {
     const url = `${this.apiUrl}/${product.id}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<Product>(url, product, { headers });
   }
+  
 
   deleteProduct(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
