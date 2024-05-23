@@ -142,13 +142,13 @@ export class AuthService {
     return false; // Return false if the token is not present or doesn't have 'admin' role
   }
 
-  isStudent(): boolean {
+  isUser(): boolean {
     // Check if the user has the 'admin' role based on your token structure
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('userRole');
     if (token) {
       // console.log("token:asd"+token);
-      if(role === 'student' || role === 'STUDENT'){
+      if(role === 'user' || role === 'USER'){
         return true;
       }
 
@@ -156,27 +156,12 @@ export class AuthService {
       const decodedToken = this.decodeToken(token);
       const uname = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
       // console.log("dummy"+decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name']);
-      if(decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'student')
+      if(decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'user')
       return true;
      // else  return true && uname;
     }
     return false; // Return false if the token is not present or doesn't have 'admin' role
   }
-
-  // getCustomerName(): string {
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     const decodedToken = this.decodeToken(token);
-  //     const uname = localStorage.getItem('currentUser');
-  //     return uname; // Return the customer's name
-  //   }
-  //   return ''; // Return an empty string if the token is not present
-  // }
-
-
-
-
-
 
 
   private decodeToken(token: string): any {
