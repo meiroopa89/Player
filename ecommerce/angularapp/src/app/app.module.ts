@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { AddProductComponent } from './components/add-product/add-product.component';
+import { ViewProductComponent } from './components/view-product/view-product.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     LoginComponent,
     RegistrationComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    AddProductComponent,
+    ViewProductComponent
   ],
   imports: [
     BrowserModule,
