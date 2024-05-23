@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Bus } from '../models/bus.model'; // Adjusted model name
+import { Bus } from '../models/fitness.model'; // Adjusted model name
 import { BusService } from '../services/bus.service'; // Adjusted service name
 
 @Component({

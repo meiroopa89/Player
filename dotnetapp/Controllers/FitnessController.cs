@@ -51,7 +51,7 @@ namespace dotnetapp.Controllers
             _context.FitnessClass.Add(fitnessClass);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFitnessClass", new { id = fitnessClass.classId }, fitnessClass);
+            return CreatedAtAction("GetFitnessClass", new { id = fitnessClass.fitnessId }, fitnessClass);
         }
 
         // DELETE: api/FitnessClass/5

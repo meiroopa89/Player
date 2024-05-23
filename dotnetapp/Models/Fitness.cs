@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 public class Fitness
 {
     [Key]
-    public int classId { get; set; }
+    public int fitnessId { get; set; }
     
     [Required(ErrorMessage = "Class name is required")]
     public string className { get; set; }

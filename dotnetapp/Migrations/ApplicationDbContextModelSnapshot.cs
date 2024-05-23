@@ -23,11 +23,11 @@ namespace dotnetapp.Migrations
 
             modelBuilder.Entity("Fitness", b =>
                 {
-                    b.Property<int>("classId")
+                    b.Property<int>("fitnessId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("classId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("fitnessId"), 1L, 1);
 
                     b.Property<string>("classDate")
                         .IsRequired()
@@ -48,7 +48,7 @@ namespace dotnetapp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("classId");
+                    b.HasKey("fitnessId");
 
                     b.ToTable("FitnessClass");
                 });

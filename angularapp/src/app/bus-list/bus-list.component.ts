@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BusService } from '../services/bus.service'; // Adjusted service name
-import { Bus } from '../models/bus.model'; // Adjusted model name
+import { Bus } from '../models/fitness.model'; // Adjusted model name
 
 @Component({
   selector: 'app-bus-list', // Adjusted selector

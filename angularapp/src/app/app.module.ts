@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
-import { BusFormComponent } from './bus-form/bus-form.component';
+import { BusFormComponent } from './fitness-form/fitness-form.component';
 import { BusListComponent } from './bus-list/bus-list.component';
 
 

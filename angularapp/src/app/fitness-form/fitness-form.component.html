@@ -1,0 +1,28 @@
+<form (submit)="addBus()">
+    <div>
+        <label for="busNumber">Bus Number:</label>
+        <input type="text" id="busNumber" [(ngModel)]="newBus.busNumber" name="busNumber" required>
+        <div *ngIf="isFieldInvalid('busNumber')" class="error-message">Bus Number is required</div>
+    </div>
+    <div>
+        <label for="routeSource">Route Source:</label>
+        <input type="text" id="routeSource" [(ngModel)]="newBus.routeSource" name="routeSource" required>
+        <div *ngIf="isFieldInvalid('routeSource')" class="error-message">Route Source is required</div>
+    </div>
+    <div>
+        <label for="routeDestination">Route Destination:</label>
+        <input type="text" id="routeDestination" [(ngModel)]="newBus.routeDestination" name="routeDestination" required>
+        <div *ngIf="isFieldInvalid('routeDestination')" class="error-message">Route Destination is required</div>
+    </div>
+    <div>
+        <label for="passengerName">Passenger Name:</label>
+        <input type="text" id="passengerName" [(ngModel)]="newBus.passengerName" name="passengerName" required>
+        <div *ngIf="isFieldInvalid('passengerName')" class="error-message">Passenger Name is required</div>
+    </div>
+    <div>
+        <label for="bookingDate">Booking Date:</label>
+        <input type="date" id="bookingDate" [(ngModel)]="newBus.bookingDate" name="bookingDate" required>
+        <div *ngIf="isFieldInvalid('bookingDate')" class="error-message">Booking Date is required</div>
+    </div>
+    <button type="submit">Add Bus</button>
+</form>
