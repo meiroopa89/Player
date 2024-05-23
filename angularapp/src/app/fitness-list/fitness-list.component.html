@@ -5,7 +5,7 @@
         No fitness classes available.
     </div>
   
-    <table *ngIf="fitnessClasses.length > 0" class="fitness-table">
+    <table *ngIf="fitnessClasses.length > 0" class="class-table">
         <thead>
             <tr>
                 <th>Class Name</th>
@@ -24,7 +24,7 @@
                 <td>{{ fitnessClass.duration }}</td>
                 <td>{{ fitnessClass.location }}</td>
                 <td>
-                    <button id="delete" class="delete-button" (click)="deleteFitnessClass(fitnessClass.classId)">Delete</button>
+                    <button id="delete" class="delete-button" (click)="deleteFitnessClass(fitnessClass.fitnessId)">Delete</button>
                 </td>
             </tr>
         </tbody>

@@ -27,7 +27,7 @@ export class FitnessFormComponent {
     if (this.isFormValid()) {
       this.fitnessService.addFitnessClass(this.newFitnessClass).subscribe(() => {
         console.log('Fitness class added successfully!');
-        this.router.navigate(['/viewFitnessClasses']);
+        this.router.navigate(['/viewFitness']);
       });
     }
   }
