@@ -2,49 +2,48 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BusFormComponent } from './fitness-form.component'; // Adjusted component name
-import { BusService } from '../services/bus.service'; // Adjusted service name
+import { FitnessService } from '../services/fitness.service'; // Adjusted service name
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { Bus } from '../models/fitness.model'; // Adjusted model name
+import { Fitness } from '../models/fitness.model'; // Adjusted model name
 
-describe('BusFormComponent', () => { // Adjusted component name
-  let component: BusFormComponent; // Adjusted component name
-  let fixture: ComponentFixture<BusFormComponent>; // Adjusted component name
-  let busService: BusService; // Adjusted service name
+describe('FitnessFormComponent', () => { // Adjusted component name
+  let component: FitnessFormComponent; // Adjusted component name
+  let fixture: ComponentFixture<FitnessFormComponent>; // Adjusted component name
+  let fitnessService: FitnessService; // Adjusted service name
   let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BusFormComponent], // Adjusted component name
+      declarations: [FitnessFormComponent], // Adjusted component name
       imports: [FormsModule, RouterTestingModule, HttpClientTestingModule],
-      providers: [BusService] // Adjusted service name
+      providers: [FitnessService] // Adjusted service name
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BusFormComponent); // Adjusted component name
+    fixture = TestBed.createComponent(FitnessFormComponent); // Adjusted component name
     component = fixture.componentInstance; // Adjusted component name
-    busService = TestBed.inject(BusService); // Adjusted service name
+    fitnessService = TestBed.inject(FitnessService); // Adjusted service name
     router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
-  fit('should_create_BusFormComponent', () => { // Adjusted component name
+  fit('should_create_FitnessFormComponent', () => { // Adjusted component name
     expect(component).toBeTruthy();
   });
 
-  fit('BusFormComponent_should_render_error_messages_when_required_fields_are_empty_on_submit', () => { // Adjusted component name
+  fit('FitnessFormComponent_should_render_error_messages_when_required_fields_are_empty_on_submit', () => { // Adjusted component name
     // Set all fields to empty strings
-    component.newBus = {
-      bookingId: null,
-      busNumber: '',
-      routeSource: '',
-      routeDestination: '',
-      passengerName: '',
-      bookingDate: ''
-    } as any;
+    component.newFitnessClass = {
+      fitnessId: null,
+      className: '',
+      instructorName: '',
+      classDate: '',
+      duration: null,
+      location: ''
+    } as Fitness;
     
     // Manually trigger form submission
     component.formSubmitted = true;
@@ -60,26 +59,26 @@ describe('BusFormComponent', () => { // Adjusted component name
     fixture.detectChanges();
     
     // Check if error messages are rendered for each field
-    expect(fixture.debugElement.query(By.css('#busNumber + .error-message'))).toBeTruthy();
-    expect(fixture.debugElement.query(By.css('#routeSource + .error-message'))).toBeTruthy();
-    expect(fixture.debugElement.query(By.css('#routeDestination + .error-message'))).toBeTruthy();
-    expect(fixture.debugElement.query(By.css('#passengerName + .error-message'))).toBeTruthy();
-    expect(fixture.debugElement.query(By.css('#bookingDate + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#className + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#instructorName + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#classDate + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#duration + .error-message'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#location + .error-message'))).toBeTruthy();
   });
 
-
-  fit('BusFormComponent_should_call_addBus_method_while_adding_the_bus', () => { // Adjusted component name and method name
-    // Create a mock Bus object with all required properties
-    const bus: Bus = { 
-      bookingId: 1, 
-      busNumber: 'Test Bus Number', 
-      routeSource: 'Test Source', 
-      routeDestination: 'Test Destination', 
-      passengerName: 'Test Passenger', 
-      bookingDate: '2024-05-22'
-    } as any;
-    const addBusSpy = spyOn(component, 'addBus').and.callThrough(); // Adjusted method name
-    component['addBus'](); // Adjusted method name
-    expect(addBusSpy).toHaveBeenCalled();
+ fit('FitnessFormComponent_should_call_addFitnessClass_method_while_adding_the_fitness_class', () => { // Adjusted component name and method name
+    // Create a mock Fitness object with all required properties
+    const fitnessClass: Fitness = { 
+      fitnessId: 1, 
+      className: 'Yoga', 
+      instructorName: 'John Doe', 
+      classDate: '2024-05-22', 
+      duration: 60, 
+      location: 'Room 101'
+    };
+    
+    const addFitnessClassSpy = spyOn(component, 'addFitnessClass').and.callThrough(); // Adjusted method name
+    component.addFitnessClass(); // Adjusted method name
+    expect(addFitnessClassSpy).toHaveBeenCalled();
   });
 });

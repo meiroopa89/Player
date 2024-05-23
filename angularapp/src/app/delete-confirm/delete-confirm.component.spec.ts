@@ -6,23 +6,23 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BusService } from '../services/bus.service'; // Adjusted service name
+import { FitnessService } from '../services/fitness.service'; // Adjusted service name
 
 describe('DeleteConfirmComponent', () => {
     let component: DeleteConfirmComponent;
     let fixture: ComponentFixture<DeleteConfirmComponent>;
     let router: Router;
     let activatedRoute: ActivatedRoute;
-    let mockBusService: jasmine.SpyObj<BusService>; // Adjusted service name
+    let mockFitnessService: jasmine.SpyObj<FitnessService>; // Adjusted service name
 
     beforeEach(waitForAsync(() => {
-        mockBusService = jasmine.createSpyObj<BusService>('BusService', ['getBus', 'deleteBus'] as any); // Adjusted service name and methods
+        mockFitnessService = jasmine.createSpyObj<FitnessService>('FitnessService', ['getFitnessClass', 'deleteFitnessClass']); // Adjusted service name and methods
 
         TestBed.configureTestingModule({
             imports: [RouterTestingModule, HttpClientModule, FormsModule, HttpClientTestingModule],
             declarations: [DeleteConfirmComponent],
             providers: [
-                { provide: BusService, useValue: mockBusService } // Adjusted service name
+                { provide: FitnessService, useValue: mockFitnessService } // Adjusted service name
             ]
         }).compileComponents();
         router = TestBed.inject(Router);
@@ -39,13 +39,13 @@ describe('DeleteConfirmComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    fit('DeleteConfirmComponent_should_call_deleteBus_method_when_confirmDelete_is_called', () => {
-        const bookingId = 1; // Adjusted ID name
-        
-        mockBusService['deleteBus'].and.returnValue(of(null)); // Adjusted method name
+    fit('DeleteConfirmComponent_should_call_deleteFitnessClass_method_when_confirmDelete_is_called', () => {
+        const fitnessId = 1; // Adjusted ID name
 
-        component['confirmDelete'](bookingId); // Adjusted parameter name
+        mockFitnessService.deleteFitnessClass.and.returnValue(of(null)); // Adjusted method name
 
-        expect(mockBusService['deleteBus']).toHaveBeenCalledWith(bookingId); // Adjusted method name and parameter
+        component.confirmDelete(fitnessId); // Adjusted parameter name
+
+        expect(mockFitnessService.deleteFitnessClass).toHaveBeenCalledWith(fitnessId); // Adjusted method name and parameter
     });
 });

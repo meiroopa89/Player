@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Bus } from '../models/fitness.model'; // Adjusted model name
 import { Router } from '@angular/router';
-import { BusService } from '../services/bus.service'; // Adjusted service name
+import { FitnessService } from '../services/fitness.service'; // Adjusted service name
 
 @Component({
   selector: 'app-bus-form', // Adjusted selector
@@ -20,12 +20,12 @@ export class BusFormComponent {
 
   formSubmitted = false; // Track form submission
 
-  constructor(private busService: BusService, private router: Router) { } // Adjusted service name
+  constructor(private fitnessService: FitnessService, private router: Router) { } // Adjusted service name
 
   addBus(): void { // Adjusted method name
     this.formSubmitted = true; // Set formSubmitted to true on form submission
     if (this.isFormValid()) {
-      this.busService.addBus(this.newBus).subscribe(() => { // Adjusted method name
+      this.fitnessService.addBus(this.newBus).subscribe(() => { // Adjusted method name
         console.log('Bus added successfully!'); // Adjusted success message
         this.router.navigate(['/viewBuses']); // Adjusted route
       });
