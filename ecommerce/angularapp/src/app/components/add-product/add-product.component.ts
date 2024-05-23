@@ -26,17 +26,18 @@ export class AddProductComponent {
         response => {
           console.log('Product added successfully:', response);
           this.resetForm();
-          this.router.navigate('user/viewProducts');
+          this.router.navigate(['user/viewProducts']); // Correct navigation syntax
         },
         error => {
           console.error('Error adding product:', error);
         }
       );
     } else {
-      this.productService.editProduct(this.product).subscribe(
+      this.productService.updateProduct(this.product).subscribe( // Change to updateProduct
         response => {
           console.log('Product updated successfully:', response);
           this.resetForm();
+          this.router.navigate(['user/viewProducts']); // Navigate after updating
         },
         error => {
           console.error('Error updating product:', error);
@@ -49,6 +50,7 @@ export class AddProductComponent {
     this.productService.deleteProduct(id).subscribe(
       () => {
         console.log('Product deleted successfully');
+        this.router.navigate(['user/viewProducts']); // Navigate after deleting
       },
       error => {
         console.error('Error deleting product:', error);
@@ -56,7 +58,7 @@ export class AddProductComponent {
     );
   }
 
-  editProduct(product: Product): void {
+  loadProductForEdit(product: Product): void { // Renamed to avoid confusion
     this.product = { ...product };
   }
 
