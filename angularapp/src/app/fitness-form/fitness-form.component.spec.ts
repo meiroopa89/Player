@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Fitness } from '../models/fitness.model'; // Adjusted model name
+import { FitnessFormComponent } from './fitness-form.component';
 
 describe('FitnessFormComponent', () => { // Adjusted component name
   let component: FitnessFormComponent; // Adjusted component name
