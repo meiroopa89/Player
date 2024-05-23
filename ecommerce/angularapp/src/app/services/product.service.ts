@@ -26,14 +26,17 @@ export class ProductService {
   }
 
   updateProduct(product: Product): Observable<Product> {
-    const url = `${this.apiUrl}/${product.id}`;
+    const url = `${this.apiUrl}/${product.id}`; // Assuming the field name in the Product model is 'productId'
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<Product>(url, product, { headers });
   }
-  
 
-  deleteProduct(id: number): Observable<void> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<void>(url);
+  deleteProduct(productId: any): Observable<void> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete<void>(`${this.apiUrl}/${productId}`, { headers });
   }
 }
