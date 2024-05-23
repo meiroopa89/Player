@@ -1,45 +1,45 @@
 import { Component } from '@angular/core';
-import { Bus } from '../models/fitness.model'; // Adjusted model name
+import { Fitness } from '../models/fitness.model';
 import { Router } from '@angular/router';
-import { FitnessService } from '../services/fitness.service'; // Adjusted service name
+import { FitnessService } from '../services/fitness.service';
 
 @Component({
-  selector: 'app-bus-form', // Adjusted selector
-  templateUrl: './bus-form.component.html', // Adjusted template URL
-  styleUrls: ['./bus-form.component.css'] // Adjusted style URL
+  selector: 'app-fitness-form',
+  templateUrl: './fitness-form.component.html',
+  styleUrls: ['./fitness-form.component.css']
 })
-export class BusFormComponent {
-  newBus: Bus = { // Adjusted property name and type
-    bookingId: 0,
-    busNumber: '',
-    routeSource: '',
-    routeDestination: '',
-    passengerName: '',
-    bookingDate: ''
-  }; // Initialize newBus with empty fields
+export class FitnessFormComponent {
+  newFitnessClass: Fitness = {
+    fitnessId: 0,
+    className: '',
+    instructorName: '',
+    classDate: '',
+    duration: 0,
+    location: ''
+  };
 
-  formSubmitted = false; // Track form submission
+  formSubmitted = false;
 
-  constructor(private fitnessService: FitnessService, private router: Router) { } // Adjusted service name
+  constructor(private fitnessService: FitnessService, private router: Router) { }
 
-  addBus(): void { // Adjusted method name
-    this.formSubmitted = true; // Set formSubmitted to true on form submission
+  addFitnessClass(): void {
+    this.formSubmitted = true;
     if (this.isFormValid()) {
-      this.fitnessService.addBus(this.newBus).subscribe(() => { // Adjusted method name
-        console.log('Bus added successfully!'); // Adjusted success message
-        this.router.navigate(['/viewBuses']); // Adjusted route
+      this.fitnessService.addFitnessClass(this.newFitnessClass).subscribe(() => {
+        console.log('Fitness class added successfully!');
+        this.router.navigate(['/viewFitnessClasses']);
       });
     }
   }
   
-  isFieldInvalid(fieldName: string): boolean { // Adjusted method name
-    const fieldValue = this.newBus[fieldName];
+  isFieldInvalid(fieldName: string): boolean {
+    const fieldValue = this.newFitnessClass[fieldName];
     return !fieldValue && (this.formSubmitted || fieldValue?.touched);
   }
 
-  isFormValid(): boolean { // Adjusted method name
-    return !this.isFieldInvalid('busNumber') && !this.isFieldInvalid('routeSource') &&
-      !this.isFieldInvalid('routeDestination') && !this.isFieldInvalid('passengerName') &&
-      !this.isFieldInvalid('bookingDate');
+  isFormValid(): boolean {
+    return !this.isFieldInvalid('className') && !this.isFieldInvalid('instructorName') &&
+      !this.isFieldInvalid('classDate') && !this.isFieldInvalid('duration') &&
+      !this.isFieldInvalid('location');
   }
 }
