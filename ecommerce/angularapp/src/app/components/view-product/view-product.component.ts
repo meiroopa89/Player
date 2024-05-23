@@ -29,8 +29,9 @@ export class ViewProductComponent implements OnInit {
   }
 
   editProduct(product: Product): void {
-    this.router.navigate(['/edit-product', product.id]);
+    this.router.navigate(['/edit-product', product.id]); // Make sure '/edit-product' is the correct route path
   }
+  
 
   deleteProduct(id: number): void {
     if (confirm('Are you sure you want to delete this product?')) {

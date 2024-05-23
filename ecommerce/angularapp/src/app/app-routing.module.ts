@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { ViewProductComponent } from './components/view-product/view-product.component';
+import { EditProductComponent } from './components/edit-product/edit-product.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'admin/addProducts', component: AddProductComponent },
   {path: 'user/viewProducts', component: ViewProductComponent},
   {path: 'admin/viewProducts', component: ViewProductComponent},
+  { path: 'edit-product/:id', component: EditProductComponent },
 
 ];
 

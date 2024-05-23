@@ -40,7 +40,7 @@ export class EditProductComponent implements OnInit {
     this.productService.updateProduct(this.product).subscribe(
       () => {
         console.log('Product updated successfully');
-        this.router.navigate(['/view-products']);
+        this.router.navigate(['/admin/viewProducts']);
       },
       error => {
         console.error('Error updating product:', error);
