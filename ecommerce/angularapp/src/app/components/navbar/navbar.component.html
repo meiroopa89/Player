@@ -11,7 +11,7 @@
       <ng-container *ngIf="isLoggedIn">
         <li><a routerLink="/">Home</a></li>
         <li *ngIf="isAdmin"><a routerLink="/admin/addProducts">Add Products</a></li>
-        <li *ngIf="isAdmin"><a routerLink="/admin/viewProducts">View Produc`ts</a></li>
+        <li *ngIf="isAdmin"><a routerLink="/admin/viewProducts">View Products</a></li>
         <li *ngIf="isUser"><a routerLink="/user/viewProducts">View Products</a></li> 
         <li><a id="logout" (click)="logout()">Logout</a></li>
       </ng-container>
