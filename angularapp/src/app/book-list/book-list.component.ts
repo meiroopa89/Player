@@ -1,31 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FitnessService } from '../services/book.service'; // Adjusted service name
-import { Fitness } from '../models/book.model'; // Adjusted model name
+import { BookService } from '../services/book.service'; // Adjusted service name
+import { Book } from '../models/book.model'; // Adjusted model name
 
 @Component({
-  selector: 'app-fitness-list', // Adjusted selector
-  templateUrl: './fitness-list.component.html', // Adjusted template URL
-  styleUrls: ['./fitness-list.component.css'] // Adjusted style URL
+  selector: 'app-book-list', // Adjusted selector
+  templateUrl: './book-list.component.html', // Adjusted template URL
+  styleUrls: ['./book-list.component.css'] // Adjusted style URL
 })
-export class FitnessListComponent implements OnInit {
-  fitnessClasses: Fitness[] = []; // Adjusted property name
+export class BookListComponent implements OnInit {
+  books: Book[] = []; // Adjusted property name
 
-  constructor(private fitnessService: FitnessService, private router: Router) { } // Adjusted service name
+  constructor(private bookService: BookService, private router: Router) { } // Adjusted service name
 
   ngOnInit(): void {
-    this.loadFitnessClasses(); // Adjusted method name
+    this.loadBooks(); // Adjusted method name
   }
 
-  loadFitnessClasses(): void {
-    this.fitnessService.getFitnessClasses().subscribe(fitnessClasses => { // Adjusted method name
-      this.fitnessClasses = fitnessClasses;
-      console.log(this.fitnessClasses);
+  loadBooks(): void {
+    this.bookService.getBooks().subscribe(books => { // Adjusted method name
+      this.books = books;
+      console.log(this.books);
     });
   }
 
-  deleteFitnessClass(classId: number): void { // Adjusted method name and parameter
-    // Navigate to confirm delete page with the class ID as a parameter
-    this.router.navigate(['/confirmDelete', classId]);
+  deleteBook(bookId: number): void { // Adjusted method name and parameter
+    // Navigate to confirm delete page with the book ID as a parameter
+    this.router.navigate(['/confirmDelete', bookId]);
   }
 }

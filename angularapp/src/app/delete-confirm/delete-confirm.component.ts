@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Fitness } from '../models/book.model'; // Adjusted model name
-import { FitnessService } from '../services/book.service'; // Adjusted service name
+import { Book } from '../models/book.model'; // Adjusted model name
+import { BookService } from '../services/book.service'; // Adjusted service name
 
 @Component({
   selector: 'app-delete-confirm', // Component selector
@@ -9,42 +9,42 @@ import { FitnessService } from '../services/book.service'; // Adjusted service n
   styleUrls: ['./delete-confirm.component.css']
 })
 export class DeleteConfirmComponent implements OnInit {
-  fitnessId: number;
-  fitnessClass: Fitness = {} as Fitness; // Initialize fitnessClass property with an empty object
+  bookId: number;
+  book: Book = {} as Book; // Initialize book property with an empty object
 
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
-    private fitnessService: FitnessService // Adjusted service name
+    private bookService: BookService // Adjusted service name
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.fitnessId = +params['id']; // Adjust parameter name
-      this.fitnessService.getFitnessClass(this.fitnessId).subscribe(
-        (fitnessClass: Fitness) => { // Adjust type casting
-          this.fitnessClass = fitnessClass;
+      this.bookId = +params['id']; // Adjust parameter name
+      this.bookService.getBook(this.bookId).subscribe(
+        (book: Book) => { // Adjust type casting
+          this.book = book;
         },
         error => {
-          console.error('Error fetching fitness class:', error);
+          console.error('Error fetching book:', error);
         }
       );
     });
   }
 
-  confirmDelete(fitnessId: number): void { // Adjust method signature
-    this.fitnessService.deleteFitnessClass(fitnessId).subscribe(
+  confirmDelete(bookId: number): void { // Adjust method signature
+    this.bookService.deleteBook(bookId).subscribe(
       () => {
-        console.log('Fitness class deleted successfully.');
-        this.router.navigate(['/viewFitness']); // Adjust the route
+        console.log('Book deleted successfully.');
+        this.router.navigate(['/viewBooks']); // Adjust the route
       },
       (error) => {
-        console.error('Error deleting fitness class:', error);
+        console.error('Error deleting book:', error);
       }
     );
   }
 
   cancelDelete(): void {
-    this.router.navigate(['/viewFitness']); // Adjust the route
+    this.router.navigate(['/viewBooks']); // Adjust the route
   }
 }

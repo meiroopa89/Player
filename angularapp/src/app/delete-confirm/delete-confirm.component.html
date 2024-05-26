@@ -1,16 +1,16 @@
-<div class="container" *ngIf="fitnessClass">
+<div class="container" *ngIf="book">
   <h2>Delete Confirmation</h2>
   <div class="confirmation-message">
-    <p>Are you sure you want to delete this fitness class?</p>
-    <p>Class Name: {{ fitnessClass.className }}</p>
-    <p>Instructor Name: {{ fitnessClass.instructorName }}</p>
-    <p>Class Date: {{ fitnessClass.classDate }}</p>
-    <p>Duration: {{ fitnessClass.duration }} minutes</p>
-    <p>Location: {{ fitnessClass.location }}</p>
-    <!-- You can display other relevant information about the fitness class here -->
+    <p>Are you sure you want to delete this book?</p>
+    <p>Title: {{ book.title }}</p>
+    <p>Author: {{ book.author }}</p>
+    <p>Genre: {{ book.genre }}</p>
+    <p>Price: {{ book.price | currency }}</p>
+    <p>ISBN: {{ book.isbn }}</p>
+    <!-- You can display other relevant information about the book here -->
   </div>
   <div class="form-buttons">
-    <button type="button" id="confirm" class="confirm-button" (click)="confirmDelete(fitnessClass.fitnessId)">Confirm Delete</button>
+    <button type="button" id="confirm" class="confirm-button" (click)="confirmDelete(book.bookId)">Confirm Delete</button>
     <button type="button" id="cancel" class="cancel-button" (click)="cancelDelete()">Cancel</button>
   </div>
 </div>
