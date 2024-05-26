@@ -7,8 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
-import { FitnessFormComponent } from './fitness-form/fitness-form.component';
-import { FitnessListComponent } from './fitness-list/fitness-list.component';
+import { BookFormComponent } from './book-form/book-form.component';
+import { BookListComponent } from './book-list/book-list.component';
 
 
 
@@ -16,9 +16,9 @@ import { FitnessListComponent } from './fitness-list/fitness-list.component';
 @NgModule({
   declarations: [
     AppComponent,
-    FitnessFormComponent,
+    BookFormComponent,
     HeaderComponent,
-    FitnessListComponent,
+    BookListComponent,
     DeleteConfirmComponent
   ],
   imports: [

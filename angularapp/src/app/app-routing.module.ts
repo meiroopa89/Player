@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
-import { FitnessFormComponent } from './fitness-form/fitness-form.component';
-import { FitnessListComponent } from './fitness-list/fitness-list.component';
+import { BookFormComponent } from './book-form/book-form.component';
+import { BookListComponent } from './book-list/book-list.component';
 
 
 
 const routes: Routes = [
-  { path: 'addNewFitness', component: FitnessFormComponent },
-  { path: 'viewFitness', component: FitnessListComponent },
+  { path: 'addNewBook', component: BookFormComponent },
+  { path: 'viewBooks', component: BookListComponent },
   { path: 'confirmDelete/:id', component: DeleteConfirmComponent},
 
 ];
