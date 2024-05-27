@@ -6,23 +6,23 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BookService } from '../services/player.service'; // Adjusted service name
+import { PlayerService } from '../services/player.service'; // Adjusted service name
 
 describe('DeleteConfirmComponent', () => {
     let component: DeleteConfirmComponent;
     let fixture: ComponentFixture<DeleteConfirmComponent>;
     let router: Router;
     let activatedRoute: ActivatedRoute;
-    let mockBookService: jasmine.SpyObj<BookService>; // Adjusted service name
+    let mockPlayerService: jasmine.SpyObj<PlayerService>; // Adjusted service name
 
     beforeEach(waitForAsync(() => {
-        mockBookService = jasmine.createSpyObj<BookService>('BookService', ['getBook', 'deleteBook']); // Adjusted service name and methods
+        mockPlayerService = jasmine.createSpyObj<PlayerService>('PlayerService', ['getPlayer', 'deletePlayer']); // Adjusted service name and methods
 
         TestBed.configureTestingModule({
             imports: [RouterTestingModule, HttpClientModule, FormsModule, HttpClientTestingModule],
             declarations: [DeleteConfirmComponent],
             providers: [
-                { provide: BookService, useValue: mockBookService } // Adjusted service name
+                { provide: PlayerService, useValue: mockPlayerService } // Adjusted service name
             ]
         }).compileComponents();
         router = TestBed.inject(Router);
@@ -39,14 +39,13 @@ describe('DeleteConfirmComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    fit('DeleteConfirmComponent_should_call_deleteBook_method_when_confirmDelete_is_called', () => {
-        const bookId = 1; // Adjusted ID name
+    fit('should_call_deletePlayer_method_when_confirmDelete_is_called', () => {
+        const playerId = 1; // Adjusted ID name
 
-        mockBookService.deleteBook.and.returnValue(of(null)); // Adjusted method name
+        mockPlayerService.deletePlayer.and.returnValue(of(null)); // Adjusted method name
 
-        component.confirmDelete(bookId); // Adjusted parameter name
+        component.confirmDelete(playerId); // Adjusted parameter name
 
-        expect(mockBookService.deleteBook).toHaveBeenCalledWith(bookId); // Adjusted method name and parameter
+        expect(mockPlayerService.deletePlayer).toHaveBeenCalledWith(playerId); // Adjusted method name and parameter
     });
 });
-

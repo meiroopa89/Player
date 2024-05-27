@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Book } from '../models/player.model'; // Adjusted model name
-import { BookService } from '../services/player.service'; // Adjusted service name
+import { Player } from '../models/player.model'; // Adjusted model name
+import { PlayerService } from '../services/player.service'; // Adjusted service name
 
 @Component({
   selector: 'app-delete-confirm', // Component selector
@@ -9,42 +9,42 @@ import { BookService } from '../services/player.service'; // Adjusted service na
   styleUrls: ['./delete-confirm.component.css']
 })
 export class DeleteConfirmComponent implements OnInit {
-  bookId: number;
-  book: Book = {} as Book; // Initialize book property with an empty object
+  playerId: number;
+  player: Player = {} as Player; // Initialize player property with an empty object
 
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
-    private bookService: BookService // Adjusted service name
+    private playerService: PlayerService // Adjusted service name
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.bookId = +params['id']; // Adjust parameter name
-      this.bookService.getBook(this.bookId).subscribe(
-        (book: Book) => { // Adjust type casting
-          this.book = book;
+      this.playerId = +params['id']; // Adjust parameter name
+      this.playerService.getPlayer(this.playerId).subscribe(
+        (player: Player) => { // Adjust type casting
+          this.player = player;
         },
         error => {
-          console.error('Error fetching book:', error);
+          console.error('Error fetching player:', error);
         }
       );
     });
   }
 
-  confirmDelete(bookId: number): void { // Adjust method signature
-    this.bookService.deleteBook(bookId).subscribe(
+  confirmDelete(playerId: number): void { // Adjust method signature
+    this.playerService.deletePlayer(playerId).subscribe(
       () => {
-        console.log('Book deleted successfully.');
-        this.router.navigate(['/viewBooks']); // Adjust the route
+        console.log('Player deleted successfully.');
+        this.router.navigate(['/viewPlayers']); // Adjust the route
       },
       (error) => {
-        console.error('Error deleting book:', error);
+        console.error('Error deleting player:', error);
       }
     );
   }
 
   cancelDelete(): void {
-    this.router.navigate(['/viewBooks']); // Adjust the route
+    this.router.navigate(['/viewPlayers']); // Adjust the route
   }
 }
