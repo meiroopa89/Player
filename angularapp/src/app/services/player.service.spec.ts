@@ -24,7 +24,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
     expect(service).toBeTruthy();
   });
 
-  fit('should_add_a_Player_and_return_it', () => { // Changed fit to it and updated test description
+  fit('PlayerService_should_add_a_Player_and_return_it', () => { // Changed fit to it and updated test description
     const mockPlayer: Player = {
       playerId: 1,
       name: 'Lionel Messi',
@@ -43,7 +43,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
     req.flush(mockPlayer);
   });
 
-  fit('should_get_Players', () => { // Changed fit to it and updated test description
+  fit('PlayerService_should_get_Players', () => { // Changed fit to it and updated test description
     const mockPlayers: Player[] = [
       {
         playerId: 1,
@@ -64,7 +64,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
     req.flush(mockPlayers);
   });
 
-  fit('should_delete_a_Player', () => { // Changed fit to it and updated test description
+  fit('PlayerService_should_delete_a_Player', () => { // Changed fit to it and updated test description
     const playerId = 100;
 
     service.deletePlayer(playerId).subscribe(() => {
@@ -76,7 +76,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
     req.flush({});
   });
 
-  fit('should_get_a_Player_by_id', () => { // Changed fit to it and updated test description
+  fit('PlayerService_should_get_a_Player_by_id', () => { // Changed fit to it and updated test description
     const playerId = 100;
     const mockPlayer: Player = {
       playerId: playerId,
