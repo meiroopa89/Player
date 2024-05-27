@@ -34,7 +34,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
       nationality: 'Argentinian'
     };
 
-    service.addPlayer(mockPlayer).subscribe((player) => { // Changed addBook to addPlayer and adjusted callback parameter
+    service.addPlayer(mockPlayer).subscribe((player) => { // Changed addPlayer to addPlayer and adjusted callback parameter
       expect(player).toEqual(mockPlayer);
     });
 
@@ -55,7 +55,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
       }
     ];
 
-    service.getPlayers().subscribe((players) => { // Changed getBooks to getPlayers and adjusted callback parameter
+    service.getPlayers().subscribe((players) => { // Changed getPlayers to getPlayers and adjusted callback parameter
       expect(players).toEqual(mockPlayers);
     });
 
@@ -87,7 +87,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
       nationality: 'Argentinian'
     };
 
-    service.getPlayer(playerId).subscribe((player) => { // Changed getBook to getPlayer and adjusted callback parameter
+    service.getPlayer(playerId).subscribe((player) => { // Changed getPlayer to getPlayer and adjusted callback parameter
       expect(player).toEqual(mockPlayer);
     });
 
