@@ -11,8 +11,8 @@ using dotnetapp.Data;
 namespace dotnetapp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240527051856_initialsetup")]
-    partial class initialsetup
+    [Migration("20240527075428_intialsetup")]
+    partial class intialsetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,36 +23,35 @@ namespace dotnetapp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("dotnetapp.Models.Book", b =>
+            modelBuilder.Entity("dotnetapp.Models.Player", b =>
                 {
-                    b.Property<int>("bookId")
+                    b.Property<int>("playerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("bookId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("playerId"), 1L, 1);
 
-                    b.Property<string>("author")
+                    b.Property<int>("age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("genre")
+                    b.Property<string>("nationality")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("isbn")
+                    b.Property<int>("number")
+                        .HasColumnType("int");
+
+                    b.Property<string>("position")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("price")
-                        .HasColumnType("decimal(18,2)");
+                    b.HasKey("playerId");
 
-                    b.Property<string>("title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("bookId");
-
-                    b.ToTable("Books");
+                    b.ToTable("Players");
                 });
 #pragma warning restore 612, 618
         }

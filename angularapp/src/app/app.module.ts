@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
-import { BookFormComponent } from './book-form/book-form.component';
+import { BookFormComponent } from './player-form/book-form.component';
 import { BookListComponent } from './book-list/book-list.component';
 
 

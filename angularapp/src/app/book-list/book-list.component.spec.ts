@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BookListComponent } from './book-list.component'; // Adjusted component name
-import { BookService } from '../services/book.service'; // Adjusted service name
+import { BookService } from '../services/player.service'; // Adjusted service name
 
 describe('BookListComponent', () => { // Adjusted component name
     let component: BookListComponent; // Adjusted component name

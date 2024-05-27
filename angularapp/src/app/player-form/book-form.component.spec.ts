@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BookService } from '../services/book.service'; // Adjusted service name
+import { BookService } from '../services/player.service'; // Adjusted service name
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { Book } from '../models/book.model'; // Adjusted model name
+import { Book } from '../models/player.model'; // Adjusted model name
 import { BookFormComponent } from './book-form.component'; // Adjusted component name
 
 describe('BookFormComponent', () => { // Adjusted component name

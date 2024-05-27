@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Book } from '../models/book.model'; // Adjusted model name
-import { BookService } from '../services/book.service'; // Adjusted service name
+import { Book } from '../models/player.model'; // Adjusted model name
+import { BookService } from '../services/player.service'; // Adjusted service name
 
 @Component({
   selector: 'app-delete-confirm', // Component selector

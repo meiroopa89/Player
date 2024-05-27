@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Book } from '../models/book.model';
+import { Book } from '../models/player.model';
 import { Router } from '@angular/router';
-import { BookService } from '../services/book.service';
+import { BookService } from '../services/player.service';
 
 @Component({
   selector: 'app-book-form',

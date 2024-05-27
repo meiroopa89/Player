@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BookService } from '../services/book.service'; // Adjusted service name
+import { BookService } from '../services/player.service'; // Adjusted service name
 
 describe('DeleteConfirmComponent', () => {
     let component: DeleteConfirmComponent;
