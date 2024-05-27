@@ -7,36 +7,36 @@ h2 {
   color: #333;
 }
 
-.no-classes-message {
+.no-players-message { /* Updated class name */
   color: red;
   font-size: 18px;
 }
 
-.class-table {
+.player-table { /* Updated class name */
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.class-table th,
-.class-table td {
+.player-table th, /* Updated class name */
+.player-table td { /* Updated class name */
   padding: 12px;
   border: 1px solid #ddd;
   text-align: left;
 }
 
-.class-table th {
+.player-table th { /* Updated class name */
   background-color: #f4f4f4;
   color: #333;
   font-weight: bold;
 }
 
-.class-table tbody tr:nth-child(even) {
+.player-table tbody tr:nth-child(even) { /* Updated class name */
   background-color: #f9f9f9;
 }
 
-.class-table tbody tr:hover {
+.player-table tbody tr:hover { /* Updated class name */
   background-color: #f1f1f1;
 }
 

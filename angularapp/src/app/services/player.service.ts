@@ -1,39 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { PlayerService } from './services/player.service';
-import { Player } from './models/player.model';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Book } from '../models/player.model'; // Import Book model
 
-@Component({
-  selector: 'app-player-list',
-  templateUrl: './player-list.component.html',
-  styleUrls: ['./player-list.component.css']
+@Injectable({
+  providedIn: 'root'
 })
-export class PlayerListComponent implements OnInit {
-  players: Player[] = [];
+export class BookService { // Updated service name
+  private apiUrl = 'https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io'; // Replace this with your API endpoint
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private http: HttpClient) { }
 
-  ngOnInit(): void {
-    this.getPlayers();
+  addBook(book: Book): Observable<Book> { // Adjusted method name and parameter
+    return this.http.post<Book>(`${this.apiUrl}/api/Book`, book); // Adjusted endpoint and parameter
   }
 
-  getPlayers(): void {
-    this.playerService.getPlayers().subscribe(players => this.players = players);
+  getBooks(): Observable<Book[]> { // Adjusted method name
+    return this.http.get<Book[]>(`${this.apiUrl}/api/Book`); // Adjusted endpoint
   }
 
-  addPlayer(newPlayer: Player): void {
-    this.playerService.addPlayer(newPlayer).subscribe(player => this.players.push(player));
+  deleteBook(bookId: number): Observable<void> { // Adjusted method name and parameter
+    const url = `${this.apiUrl}/api/Book/${bookId}`; // Adjusted the URL to match your API endpoint
+    return this.http.delete<void>(url); // Adjusted endpoint and parameter
   }
 
-  deletePlayer(playerId: number): void {
-    this.playerService.deletePlayer(playerId).subscribe(() => {
-      this.players = this.players.filter(player => player.playerId !== playerId);
-    });
-  }
-
-  getPlayer(playerId: number): void {
-    this.playerService.getPlayer(playerId).subscribe(player => {
-      // Handle retrieved player
-      console.log(player);
-    });
+  getBook(bookId: number): Observable<Book> { // Adjusted method name and return type
+    const url = `${this.apiUrl}/api/Book/${bookId}`; // Adjusted the URL to match your API endpoint
+    return this.http.get<Book>(url); // Adjusted endpoint and return type
   }
 }
