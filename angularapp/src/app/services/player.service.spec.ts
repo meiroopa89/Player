@@ -20,7 +20,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
     httpTestingController.verify();
   });
 
-  fit('should_creat_PlayerService', () => { // Changed fit to it and updated test description
+  fit('should_create_PlayerService', () => { // Changed fit to it and updated test description
     expect(service).toBeTruthy();
   });
 
