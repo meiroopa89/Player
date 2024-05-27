@@ -12,20 +12,20 @@ export class BookService { // Updated service name
   constructor(private http: HttpClient) { }
 
   addBook(book: Book): Observable<Book> { // Adjusted method name and parameter
-    return this.http.post<Book>(`${this.apiUrl}/api/Books`, book); // Adjusted endpoint and parameter
+    return this.http.post<Book>(`${this.apiUrl}/api/Book`, book); // Adjusted endpoint and parameter
   }
 
   getBooks(): Observable<Book[]> { // Adjusted method name
-    return this.http.get<Book[]>(`${this.apiUrl}/api/Books`); // Adjusted endpoint
+    return this.http.get<Book[]>(`${this.apiUrl}/api/Book`); // Adjusted endpoint
   }
 
   deleteBook(bookId: number): Observable<void> { // Adjusted method name and parameter
-    const url = `${this.apiUrl}/api/Books/${bookId}`; // Adjusted the URL to match your API endpoint
+    const url = `${this.apiUrl}/api/Book/${bookId}`; // Adjusted the URL to match your API endpoint
     return this.http.delete<void>(url); // Adjusted endpoint and parameter
   }
 
   getBook(bookId: number): Observable<Book> { // Adjusted method name and return type
-    const url = `${this.apiUrl}/api/Books/${bookId}`; // Adjusted the URL to match your API endpoint
+    const url = `${this.apiUrl}/api/Book/${bookId}`; // Adjusted the URL to match your API endpoint
     return this.http.get<Book>(url); // Adjusted endpoint and return type
   }
 }
