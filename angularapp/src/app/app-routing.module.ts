@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
-import { BookFormComponent } from './player-form/book-form.component';
-import { BookListComponent } from './book-list/book-list.component';
+import { BookFormComponent } from './player-form/player-form.component';
+import { BookListComponent } from './player-list/player-list.component';
 
 
 
