@@ -67,7 +67,7 @@ describe('PlayerFormComponent', () => { // Adjusted component name
     expect(fixture.debugElement.query(By.css('#nationality + .error-message'))).toBeTruthy();
   });
 
-  it('PlayerFormComponent_should_call_addPlayer_method_while_adding_the_player', () => { // Adjusted component name and method name
+  fit('PlayerFormComponent_should_call_addPlayer_method_while_adding_the_player', () => { // Adjusted component name and method name
     // Create a mock Player object with all required properties
     const player: Player = { 
       playerId: 1, 

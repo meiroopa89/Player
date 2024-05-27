@@ -1,31 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Book } from '../models/player.model'; // Import Book model
+import { Player } from '../models/player.model'; // Import Player model
 
 @Injectable({
   providedIn: 'root'
 })
-export class BookService { // Updated service name
+export class PlayerService { // Updated service name
   private apiUrl = 'https://8080-bfdeeddcedfabcfacbdcbaeadbebabcdebdca.premiumproject.examly.io'; // Replace this with your API endpoint
 
   constructor(private http: HttpClient) { }
 
-  addBook(book: Book): Observable<Book> { // Adjusted method name and parameter
-    return this.http.post<Book>(`${this.apiUrl}/api/Book`, book); // Adjusted endpoint and parameter
+  addPlayer(player: Player): Observable<Player> { // Adjusted method name and parameter
+    return this.http.post<Player>(`${this.apiUrl}/api/Player`, player); // Adjusted endpoint and parameter
   }
 
-  getBooks(): Observable<Book[]> { // Adjusted method name
-    return this.http.get<Book[]>(`${this.apiUrl}/api/Book`); // Adjusted endpoint
+  getPlayers(): Observable<Player[]> { // Adjusted method name
+    return this.http.get<Player[]>(`${this.apiUrl}/api/Player`); // Adjusted endpoint
   }
 
-  deleteBook(bookId: number): Observable<void> { // Adjusted method name and parameter
-    const url = `${this.apiUrl}/api/Book/${bookId}`; // Adjusted the URL to match your API endpoint
+  deletePlayer(playerId: number): Observable<void> { // Adjusted method name and parameter
+    const url = `${this.apiUrl}/api/Player/${playerId}`; // Adjusted the URL to match your API endpoint
     return this.http.delete<void>(url); // Adjusted endpoint and parameter
   }
 
-  getBook(bookId: number): Observable<Book> { // Adjusted method name and return type
-    const url = `${this.apiUrl}/api/Book/${bookId}`; // Adjusted the URL to match your API endpoint
-    return this.http.get<Book>(url); // Adjusted endpoint and return type
+  getPlayer(playerId: number): Observable<Player> { // Adjusted method name and return type
+    const url = `${this.apiUrl}/api/Player/${playerId}`; // Adjusted the URL to match your API endpoint
+    return this.http.get<Player>(url); // Adjusted endpoint and return type
   }
 }

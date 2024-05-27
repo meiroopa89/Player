@@ -20,7 +20,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
     httpTestingController.verify();
   });
 
-  it('should create PlayerService', () => { // Changed fit to it and updated test description
+  fit('should_creat_PlayerService', () => { // Changed fit to it and updated test description
     expect(service).toBeTruthy();
   });
 
@@ -38,7 +38,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
       expect(player).toEqual(mockPlayer);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Players`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Player`); // Adjusted API endpoint
     expect(req.request.method).toBe('POST');
     req.flush(mockPlayer);
   });
@@ -59,7 +59,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
       expect(players).toEqual(mockPlayers);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Players`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Player`); // Adjusted API endpoint
     expect(req.request.method).toBe('GET');
     req.flush(mockPlayers);
   });
@@ -71,7 +71,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
       expect().nothing();
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Players/${playerId}`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Player/${playerId}`); // Adjusted API endpoint
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });
@@ -91,7 +91,7 @@ describe('PlayerService', () => { // Changed description to PlayerService
       expect(player).toEqual(mockPlayer);
     });
 
-    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Players/${playerId}`); // Adjusted API endpoint
+    const req = httpTestingController.expectOne(`${service['apiUrl']}/api/Player/${playerId}`); // Adjusted API endpoint
     expect(req.request.method).toBe('GET');
     req.flush(mockPlayer);
   });
