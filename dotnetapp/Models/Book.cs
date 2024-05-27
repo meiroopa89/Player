@@ -6,22 +6,22 @@ namespace dotnetapp.Models
 public class Book
 {
     [Key]
-    public int BookId { get; set; }
+    public int bookId { get; set; }
     
     [Required(ErrorMessage = "Title is required")]
-    public string Title { get; set; }
+    public string title { get; set; }
     
     [Required(ErrorMessage = "Author is required")]
-    public string Author { get; set; }
+    public string author { get; set; }
     
     [Required(ErrorMessage = "Genre is required")]
-    public string Genre { get; set; }
+    public string genre { get; set; }
 
     [Required(ErrorMessage = "Price is required")]
     [Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than zero")]
-    public decimal Price { get; set; }
+    public decimal price { get; set; }
     
     [Required(ErrorMessage = "ISBN is required")]
-    public string ISBN { get; set; }
+    public string isbn { get; set; }
 }
 }

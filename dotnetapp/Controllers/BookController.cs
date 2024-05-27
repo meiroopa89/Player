@@ -10,11 +10,11 @@ namespace dotnetapp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BooksController : ControllerBase
+    public class BookController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public BooksController(ApplicationDbContext context)
+        public BookController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -52,7 +52,7 @@ namespace dotnetapp.Controllers
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBook", new { id = book.BookId }, book);
+            return CreatedAtAction("GetBook", new { id = book.bookId }, book);
         }
 
         // DELETE: api/Books/5

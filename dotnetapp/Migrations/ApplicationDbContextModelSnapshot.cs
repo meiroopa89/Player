@@ -23,32 +23,32 @@ namespace dotnetapp.Migrations
 
             modelBuilder.Entity("dotnetapp.Models.Book", b =>
                 {
-                    b.Property<int>("BookId")
+                    b.Property<int>("bookId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("bookId"), 1L, 1);
 
-                    b.Property<string>("Author")
+                    b.Property<string>("author")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Genre")
+                    b.Property<string>("genre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ISBN")
+                    b.Property<string>("isbn")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("BookId");
+                    b.HasKey("bookId");
 
                     b.ToTable("Books");
                 });
