@@ -2,7 +2,7 @@ import { Player } from './player.model'; // Import Player model
 
 describe('Player', () => { // Updated description to 'Player'
   fit('should_create_player_instance', () => { // Updated test description
-    const player: Player = { // Updated 'book' to 'player'
+    const player: Player = { // Updated 'Player' to 'player'
       playerId: 1, // Adjusted property name
       name: 'Lionel Messi', // Adjusted property name
       position: 'Forward', // Adjusted property name
