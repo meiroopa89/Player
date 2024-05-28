@@ -47,7 +47,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
-import { ProductService } from 'src/app/services/product.service';
+
 
 @Component({
   selector: 'app-view-product',
@@ -82,15 +82,14 @@ export class ViewProductComponent implements OnInit {
   }
 
   updateProduct(): void {
-    if (this.editingProduct && this.editingProduct.id) { // Check if 'id' is defined
+    if (this.editingProduct && this.editingProduct.id) {
       this.productService.updateProduct(this.editingProduct).subscribe(updatedProduct => {
         const index = this.products.findIndex(product => product.id === updatedProduct.id);
         if (index !== -1) {
           this.products[index] = updatedProduct;
-          this.editingProduct = null; // Reset editingProduct and close the edit form
+          this.editingProduct = null;
+          this.router.navigate(['/admin/viewProducts']); // Navigate back to the view product component
         }
-        // Navigate back to the view product component
-        this.router.navigate(['/admin/viewProducts']);
       });
     } else {
       console.error("Error: 'id' property is undefined in the editing product.");
@@ -101,3 +100,4 @@ export class ViewProductComponent implements OnInit {
     this.editingProduct = null;
   }
 }
+
