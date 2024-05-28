@@ -13,6 +13,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { ViewProductComponent } from './components/view-product/view-product.component';
 import { EditProductComponent } from './components/edit-product/edit-product.component';
+import { DeleteConfirmComponent } from './components/delete-confirm/delete-confirm.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { EditProductComponent } from './components/edit-product/edit-product.com
     NavbarComponent,
     AddProductComponent,
     ViewProductComponent,
-    EditProductComponent
+    EditProductComponent,
+    DeleteConfirmComponent
   ],
   imports: [
     BrowserModule,

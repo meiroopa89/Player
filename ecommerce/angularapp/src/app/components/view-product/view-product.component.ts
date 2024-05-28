@@ -37,19 +37,9 @@ export class ViewProductComponent implements OnInit {
   }
   
 
-  deleteProduct(id: number): void {
-    if (confirm('Are you sure you want to delete this product?')) {
-      this.productService.deleteProduct(id).subscribe(
-        () => {
-          console.log('Product deleted successfully');
-          // Refresh products after deletion
-          this.getProducts();
-        },
-        error => {
-          console.error('Error deleting product:', error);
-        }
-      );
-    }
+  deletePlayer(productId: number): void { // Adjusted method name and parameter
+    // Navigate to confirm delete page with the player ID as a parameter
+    this.router.navigate(['/confirmDelete', productId]);
   }
     
 }
