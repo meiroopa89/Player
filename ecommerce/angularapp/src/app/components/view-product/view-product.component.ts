@@ -44,9 +44,10 @@
 // }
 
 
-
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { Product } from 'src/app/models/product';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-view-product',
@@ -57,7 +58,7 @@ export class ViewProductComponent implements OnInit {
   products: Product[] = [];
   editingProduct: Product | null = null;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -76,18 +77,23 @@ export class ViewProductComponent implements OnInit {
   }
 
   editProduct(product: Product): void {
-    this.editingProduct = { ...product }; // Create a copy of the product to avoid modifying the original directly
+    // Make sure to clone the product and set its 'id' property
+    this.editingProduct = { ...product, id: product.id };
   }
 
   updateProduct(): void {
-    if (this.editingProduct) {
+    if (this.editingProduct && this.editingProduct.id) { // Check if 'id' is defined
       this.productService.updateProduct(this.editingProduct).subscribe(updatedProduct => {
         const index = this.products.findIndex(product => product.id === updatedProduct.id);
         if (index !== -1) {
           this.products[index] = updatedProduct;
           this.editingProduct = null; // Reset editingProduct and close the edit form
         }
+        // Navigate back to the view product component
+        this.router.navigate(['/admin/viewProducts']);
       });
+    } else {
+      console.error("Error: 'id' property is undefined in the editing product.");
     }
   }
 
