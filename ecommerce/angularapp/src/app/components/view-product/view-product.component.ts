@@ -16,11 +16,11 @@ export class ViewProductComponent implements OnInit {
   ngOnInit(): void {
     this.getProducts();
   }
-  
+
   getProducts(): void {
     this.productService.getProducts().subscribe(
       products => {
-        console.log('Fetched products:', products); // Log the fetched products
+        console.log('Fetched products:', products);
         this.products = products;
       },
       error => {
@@ -28,18 +28,17 @@ export class ViewProductComponent implements OnInit {
       }
     );
   }
-  
 
   editProduct(product: Product): void {
-    console.log('Product object:', product); // Log the product object
-    console.log('Navigating to edit product with id:', product.id); // Log the product id
-    this.router.navigate(['/edit-product', product.id]);
+    if (product && product.productId) {
+      console.log('Navigating to edit product with id:', product.id);
+      this.router.navigate(['/edit-product', product.id]);
+    } else {
+      console.error('Product id is undefined:', product);
+    }
   }
-  
 
-  deletePlayer(productId: number): void { // Adjusted method name and parameter
-    // Navigate to confirm delete page with the player ID as a parameter
+  deleteProduct(productId: number): void {
     this.router.navigate(['/confirmDelete', productId]);
   }
-    
 }
