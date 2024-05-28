@@ -26,7 +26,7 @@ export class ProductService {
   }
 
   updateProduct(product: Product): Observable<Product> {
-    const url = `${this.apiUrl}/${product.id}`; // Assuming the field name in the Product model is 'productId'
+    const url = `${this.apiUrl}/${product.id}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put<Product>(url, product, { headers });
   }

@@ -1,58 +1,58 @@
 <div class="container">
-  <h1>{{ product.id === 0 ? 'Add New Product' : 'Edit Product' }}</h1>
-  <form (ngSubmit)="onSubmit()" #productForm="ngForm" novalidate>
+  <h1>{{ product?.id === 0 ? 'Add New Product' : 'Edit Product' }}</h1>
+  <form [formGroup]="editProductForm" (ngSubmit)="onSubmit()" novalidate>
     <div class="form-group">
       <label for="name">Product Name:</label>
-      <input type="text" id="name" [(ngModel)]="product.name" name="name" required class="form-control" #name="ngModel">
-      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error-message">
+      <input type="text" id="name" formControlName="name" class="form-control">
+      <div *ngIf="editProductForm.controls.name.invalid && (editProductForm.controls.name.dirty || editProductForm.controls.name.touched)" class="error-message">
         Product name is required.
       </div>
     </div>
 
     <div class="form-group">
       <label for="description">Description:</label>
-      <textarea id="description" [(ngModel)]="product.description" name="description" required class="form-control" #description="ngModel"></textarea>
-      <div *ngIf="description.invalid && (description.dirty || description.touched)" class="error-message">
+      <textarea id="description" formControlName="description" class="form-control"></textarea>
+      <div *ngIf="editProductForm.controls.description.invalid && (editProductForm.controls.description.dirty || editProductForm.controls.description.touched)" class="error-message">
         Description is required.
       </div>
     </div>
 
     <div class="form-group">
       <label for="price">Price:</label>
-      <input type="number" id="price" [(ngModel)]="product.price" name="price" required class="form-control" #price="ngModel">
-      <div *ngIf="price.invalid && (price.dirty || price.touched)" class="error-message">
+      <input type="number" id="price" formControlName="price" class="form-control">
+      <div *ngIf="editProductForm.controls.price.invalid && (editProductForm.controls.price.dirty || editProductForm.controls.price.touched)" class="error-message">
         Price is required.
       </div>
     </div>
 
     <div class="form-group">
-      <label for="imageUrl">Image URL:</label>
-      <input type="url" id="imageUrl" [(ngModel)]="product.imageUrl" name="imageUrl" required class="form-control" #imageUrl="ngModel">
-      <div *ngIf="imageUrl.invalid && (imageUrl.dirty || imageUrl.touched)" class="error-message">
-        Image URL is required.
-      </div>
-    </div>
-
-    <div class="form-group">
       <label for="stockQuantity">Stock Quantity:</label>
-      <input type="number" id="stockQuantity" [(ngModel)]="product.stockQuantity" name="stockQuantity" required class="form-control" #stockQuantity="ngModel">
-      <div *ngIf="stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)" class="error-message">
+      <input type="number" id="stockQuantity" formControlName="stockQuantity" class="form-control">
+      <div *ngIf="editProductForm.controls.stockQuantity.invalid && (editProductForm.controls.stockQuantity.dirty || editProductForm.controls.stockQuantity.touched)" class="error-message">
         Stock Quantity is required.
       </div>
     </div>
 
     <div class="form-group">
       <label for="category">Category:</label>
-      <input type="text" id="category" [(ngModel)]="product.category" name="category" required class="form-control" #category="ngModel">
-      <div *ngIf="category.invalid && (category.dirty || category.touched)" class="error-message">
+      <input type="text" id="category" formControlName="category" class="form-control">
+      <div *ngIf="editProductForm.controls.category.invalid && (editProductForm.controls.category.dirty || editProductForm.controls.category.touched)" class="error-message">
         Category is required.
       </div>
     </div>
 
-    <button type="submit" class="btn-submit" [disabled]="productForm.invalid">{{ product.id === 0 ? 'Add Product' : 'Update Product' }}</button>
+    <div class="form-group">
+      <label for="imageUrl">Image URL:</label>
+      <input type="file" (change)="handleFileChange($event)" class="form-control">
+      <div *ngIf="editProductForm.controls.imageUrl.invalid && (editProductForm.controls.imageUrl.dirty || editProductForm.controls.imageUrl.touched)" class="error-message">
+        Image URL is required.
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit" [disabled]="editProductForm.invalid">{{ product?.id === 0 ? 'Add Product' : 'Update Product' }}</button>
   </form>
 
-  <div *ngIf="product.id !== 0">
-    <button (click)="resetForm()" class="btn-cancel">Cancel Edit</button>
+  <div *ngIf="product?.id !== 0">
+    <button (click)="onCancel()" class="btn-cancel">Cancel Edit</button>
   </div>
 </div>
