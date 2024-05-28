@@ -30,7 +30,7 @@ export class ViewProductComponent implements OnInit {
   }
 
   editProduct(product: Product): void {
-    if (product && product.productId) {
+    if (product && product.id !== undefined) {
       console.log('Navigating to edit product with id:', product.id);
       this.router.navigate(['/edit-product', product.id]);
     } else {

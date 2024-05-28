@@ -15,6 +15,7 @@ export class AddProductComponent {
     description: '',
     price: 0,
     imageUrl: '',
+    stockQuantity: 0,
     category: ''
   };
 
@@ -40,6 +41,7 @@ export class AddProductComponent {
       description: '',
       price: 0,
       imageUrl: '',
+      stockQuantity: 0,
       category: ''
     };
   }

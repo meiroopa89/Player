@@ -34,6 +34,14 @@
     </div>
 
     <div class="form-group">
+      <label for="stockQuantity">Stock Quantity:</label>
+      <input type="number" id="stockQuantity" [(ngModel)]="product.stockQuantity" name="stockQuantity" required class="form-control" #stockQuantity="ngModel">
+      <div *ngIf="stockQuantity.invalid && (stockQuantity.dirty || stockQuantity.touched)" class="error-message">
+        Stock Quantity is required.
+      </div>
+    </div>
+
+    <div class="form-group">
       <label for="category">Category:</label>
       <input type="text" id="category" [(ngModel)]="product.category" name="category" required class="form-control" #category="ngModel">
       <div *ngIf="category.invalid && (category.dirty || category.touched)" class="error-message">

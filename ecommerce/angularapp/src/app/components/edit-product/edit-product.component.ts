@@ -21,14 +21,16 @@ export class EditProductComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.productId = +params['id'];
-      this.productService.getProduct(this.productId).subscribe(
-        (product: Product) => {
-          this.product = product;
-        },
-        error => {
-          console.error('Error fetching product:', error);
-        }
-      );
+      if (this.productId) {
+        this.productService.getProduct(this.productId).subscribe(
+          (product: Product) => {
+            this.product = product;
+          },
+          error => {
+            console.error('Error fetching product:', error);
+          }
+        );
+      }
     });
   }
 
@@ -42,5 +44,9 @@ export class EditProductComponent implements OnInit {
         console.error('Error updating product:', error);
       }
     );
+  }
+
+  resetForm(): void {
+    this.router.navigate(['/admin/viewProducts']);
   }
 }
