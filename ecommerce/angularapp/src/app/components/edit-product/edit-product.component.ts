@@ -9,112 +9,40 @@ import { Product } from 'src/app/models/product';
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.css']
 })
-export class EditProductComponent implements OnInit {
-  editProductForm: FormGroup;
-  product: Product;
-  errorMessage = '';
+export class EditProductComponent{
+  
+  products: Product[] = [];
+  editingProduct: Product | null = null;
+  readonly localStorageKey = 'products';
 
-  photoImage = '';
+  constructor(private productService: ProductService, private router: Router) {}
 
-  constructor(
-    private fb: FormBuilder,
-    private productService: ProductService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
-    this.editProductForm = this.fb.group({
-      name: ['', Validators.required],
-      imageUrl: ['', Validators.required],
-      description: ['', Validators.required],
-      price: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      stockQuantity: ['', [Validators.required, Validators.min(1)]],
-      category: ['', Validators.required]
+  refreshProducts(): void {
+    this.productService.getProducts().subscribe(products => {
+      this.products = products;
+      localStorage.setItem(this.localStorageKey, JSON.stringify(products));
     });
   }
 
-  ngOnInit(): void {
-    // Retrieve the product ID from the route parameters
-    const productId = this.route.snapshot.paramMap.get('id');
-    if (productId) {
-      this.productService.getProduct(+productId).subscribe(
-        (product: Product) => {
-          this.product = product;
-          this.editProductForm.patchValue({
-            name: product.name,
-            imageUrl: product.imageUrl,
-            description: product.description,
-            price: product.price,
-            stockQuantity: product.stockQuantity,
-            category: product.category
-          });
-        },
-        (error) => {
-          console.error('Error fetching product:', error);
-        }
-      );
+  updateProduct(): void {
+    if (this.editingProduct && this.editingProduct.productId) {
+      console.log('Updating product with id:', this.editingProduct.productId); // Log to ensure id is being used
+      this.productService.updateProduct(this.editingProduct).subscribe(updatedProduct => {
+        console.log('Updated product:', updatedProduct); // Log the server response
+        this.editingProduct = null;
+        localStorage.removeItem('editingProduct');
+        this.refreshProducts(); // Refresh the product list after update
+        this.router.navigate(['/admin/viewProducts']);
+      }, error => {
+        console.error('Error updating product:', error); // Log any errors
+      });
+    } else {
+      console.error("Error: 'id' property is undefined in the editing product.");
     }
   }
 
-  onSubmit(): void {
-    if (this.editProductForm.valid) {
-      const updatedProduct = this.editProductForm.value;
-
-      const requestObj: Product = {
-        id: this.product.id,
-        name: updatedProduct.name,
-        imageUrl: this.photoImage || updatedProduct.imageUrl,
-        description: updatedProduct.description,
-        price: updatedProduct.price,
-        stockQuantity: updatedProduct.stockQuantity,
-        category: updatedProduct.category
-      };
-
-      this.productService.updateProduct(requestObj).subscribe(
-        (response) => {
-          console.log('Product updated successfully', response);
-          this.product = response;
-          this.router.navigate(['admin/viewProducts']);
-        },
-        (error) => {
-          console.error('Error updating product', error);
-        }
-      );
-    }
-  }
-
-  handleFileChange(event: any): void {
-    const file = event.target.files[0];
-
-    if (file) {
-      this.convertFileToBase64(file).then(
-        (base64String) => {
-          this.photoImage = base64String;
-          console.log(this.photoImage, 'final');
-        },
-        (error) => {
-          console.error('Error converting file to base64:', error);
-        }
-      );
-    }
-  }
-
-  convertFileToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        resolve(reader.result as string);
-      };
-
-      reader.onerror = (error) => {
-        reject(error);
-      };
-
-      reader.readAsDataURL(file);
-    });
-  }
-
-  onCancel(): void {
-    this.router.navigate(['admin/viewProducts']);
+  cancelEdit(): void {
+    this.editingProduct = null;
+    localStorage.removeItem('editingProduct');
   }
 }

@@ -78,6 +78,13 @@ export class ViewProductComponent implements OnInit {
     }
   }
 
+  // refreshProducts(): void {
+  //   this.productService.getProducts().subscribe(products => {
+  //     this.products = products;
+  //     localStorage.setItem(this.localStorageKey, JSON.stringify(products));
+  //   });
+  // }
+
   deleteProduct(productId: number): void {
     this.router.navigate(['/confirmDelete', productId]);
   }
@@ -92,25 +99,25 @@ export class ViewProductComponent implements OnInit {
     }
   }
 
-  updateProduct(): void {
-    if (this.editingProduct && this.editingProduct.productId) {
-      console.log('Updating product with id:', this.editingProduct.productId); // Log to ensure id is being used
-      this.productService.updateProduct(this.editingProduct).subscribe(updatedProduct => {
-        const index = this.products.findIndex(product => product.productId === updatedProduct.productId);
-        if (index !== -1) {
-          this.products[index] = updatedProduct;
-          localStorage.setItem(this.localStorageKey, JSON.stringify(this.products));
-          this.editingProduct = null;
-          this.router.navigate(['/admin/viewProducts']);
-        }
-      });
-    } else {
-      console.error("Error: 'id' property is undefined in the editing product.");
-    }
-  }
+  // updateProduct(): void {
+  //   if (this.editingProduct && this.editingProduct.productId) {
+  //     console.log('Updating product with id:', this.editingProduct.productId); // Log to ensure id is being used
+  //     this.productService.updateProduct(this.editingProduct).subscribe(updatedProduct => {
+  //       console.log('Updated product:', updatedProduct); // Log the server response
+  //       this.editingProduct = null;
+  //       localStorage.removeItem('editingProduct');
+  //       this.refreshProducts(); // Refresh the product list after update
+  //       this.router.navigate(['/admin/viewProducts']);
+  //     }, error => {
+  //       console.error('Error updating product:', error); // Log any errors
+  //     });
+  //   } else {
+  //     console.error("Error: 'id' property is undefined in the editing product.");
+  //   }
+  // }
 
-  cancelEdit(): void {
-    this.editingProduct = null;
-    localStorage.removeItem('editingProduct');
-  }
+  // cancelEdit(): void {
+  //   this.editingProduct = null;
+  //   localStorage.removeItem('editingProduct');
+  // }
 }

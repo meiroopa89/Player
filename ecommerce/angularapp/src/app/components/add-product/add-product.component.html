@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>{{ product.id === 0 ? 'Add New Product' : 'Edit Product' }}</h1>
+  <h1>{{ product.productId === 0 ? 'Add New Product' : 'Edit Product' }}</h1>
   <form (ngSubmit)="onSubmit()" #productForm="ngForm" novalidate>
     <div class="form-group">
       <label for="name">Product Name:</label>
@@ -49,10 +49,10 @@
       </div>
     </div>
 
-    <button type="submit" class="btn-submit" [disabled]="productForm.invalid">{{ product.id === 0 ? 'Add Product' : 'Update Product' }}</button>
+    <button type="submit" class="btn-submit" [disabled]="productForm.invalid">{{ product.productId === 0 ? 'Add Product' : 'Update Product' }}</button>
   </form>
 
-  <div *ngIf="product.id !== 0">
+  <div *ngIf="product.productId !== 0">
     <button (click)="resetForm()" class="btn-cancel">Cancel Edit</button>
   </div>
 </div>

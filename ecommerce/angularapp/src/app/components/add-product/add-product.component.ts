@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AddProductComponent {
   product: Product = {
-    id: 0,
+    productId: 0,
     name: '',
     description: '',
     price: 0,
@@ -36,7 +36,7 @@ export class AddProductComponent {
 
   resetForm(): void {
     this.product = {
-      id: 0,
+      productId: 0,
       name: '',
       description: '',
       price: 0,
