@@ -65,13 +65,15 @@ public async Task<bool> Register([FromBody] User user)
     return false; // Registration failed
 }
 
-        [HttpPost("/auth/login")]
+[HttpPost("/auth/login")]
 public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
 {
     if (request == null || string.IsNullOrWhiteSpace(request.EmailID) || string.IsNullOrWhiteSpace(request.Password))
         return BadRequest("Invalid login request");
+
     var token = await _userService.LoginAsync(request.EmailID, request.Password);
-Console.WriteLine("Hello "+request.EmailID+" :"+request.Password);
+    Console.WriteLine("Hello " + request.EmailID + " :" + request.Password);
+
     if (token == null)
         return Unauthorized("Invalid email or password");
 
@@ -81,17 +83,17 @@ Console.WriteLine("Hello "+request.EmailID+" :"+request.Password);
     if (user == null)
         return Unauthorized("User not found");
 
-    var role = await _userManager.GetRolesAsync(user);
+    // Note: Do not retrieve roles here, as we don't need them for login
+    // var role = await _userManager.GetRolesAsync(user);
 
     return Ok(new
     {
         Token = token,
         Username = user.UserName,
-         Role = role[0].ToString(),
-         UserId=user.Id // Combine roles into a comma-separated string
-        //Roles = string.Join(",", role) // Combine roles into a comma-separated string
+        UserId = user.Id
     });
 }
+
 
 [HttpGet("/api/user")]
 public async Task<IActionResult> GetRegisteredUsers()
