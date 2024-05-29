@@ -44,11 +44,11 @@
 // }
 
 
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
-
 
 @Component({
   selector: 'app-view-product',
@@ -58,6 +58,7 @@ import { ProductService } from 'src/app/services/product.service';
 export class ViewProductComponent implements OnInit {
   products: Product[] = [];
   editingProduct: Product | null = null;
+  readonly localStorageKey = 'products';
 
   constructor(private productService: ProductService, private router: Router) {}
 
@@ -66,28 +67,41 @@ export class ViewProductComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.productService.getProducts().subscribe(products => {
-      this.products = products;
-    });
+    const storedProducts = localStorage.getItem(this.localStorageKey);
+    if (storedProducts) {
+      this.products = JSON.parse(storedProducts);
+    } else {
+      this.productService.getProducts().subscribe(products => {
+        this.products = products;
+        localStorage.setItem(this.localStorageKey, JSON.stringify(products));
+      });
+    }
   }
 
   deleteProduct(productId: number): void {
-        this.router.navigate(['/confirmDelete', productId]);
-      }
+    this.router.navigate(['/confirmDelete', productId]);
+  }
 
   editProduct(product: Product): void {
-    // Make sure to clone the product and set its 'id' property
-    this.editingProduct = { ...product, id: product.id };
+    if (product && product.productId !== undefined) {
+      this.editingProduct = { ...product };
+      console.log('Editing product:', this.editingProduct); // Log to ensure id is present
+      localStorage.setItem('editingProduct', JSON.stringify(this.editingProduct));
+    } else {
+      console.error('Product id is undefined:', product);
+    }
   }
 
   updateProduct(): void {
-    if (this.editingProduct && this.editingProduct.id) {
+    if (this.editingProduct && this.editingProduct.productId) {
+      console.log('Updating product with id:', this.editingProduct.productId); // Log to ensure id is being used
       this.productService.updateProduct(this.editingProduct).subscribe(updatedProduct => {
-        const index = this.products.findIndex(product => product.id === updatedProduct.id);
+        const index = this.products.findIndex(product => product.productId === updatedProduct.productId);
         if (index !== -1) {
           this.products[index] = updatedProduct;
+          localStorage.setItem(this.localStorageKey, JSON.stringify(this.products));
           this.editingProduct = null;
-          this.router.navigate(['/admin/viewProducts']); // Navigate back to the view product component
+          this.router.navigate(['/admin/viewProducts']);
         }
       });
     } else {
@@ -97,6 +111,6 @@ export class ViewProductComponent implements OnInit {
 
   cancelEdit(): void {
     this.editingProduct = null;
+    localStorage.removeItem('editingProduct');
   }
 }
-

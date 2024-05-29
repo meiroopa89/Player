@@ -18,6 +18,9 @@
   <div *ngIf="editingProduct" class="edit-form">
     <h2>Edit Product</h2>
     <form (ngSubmit)="updateProduct()" #editForm="ngForm">
+      <label>ID</label>
+      <input type="text" [(ngModel)]="editingProduct.id" name="id" readonly>
+
       <label>Name</label>
       <input type="text" [(ngModel)]="editingProduct.name" name="name" required>
 
