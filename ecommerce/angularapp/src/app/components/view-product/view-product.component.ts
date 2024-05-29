@@ -72,10 +72,8 @@ export class ViewProductComponent implements OnInit {
   }
 
   deleteProduct(productId: number): void {
-    this.productService.deleteProduct(productId).subscribe(() => {
-      this.products = this.products.filter(product => product.id !== productId);
-    });
-  }
+        this.router.navigate(['/confirmDelete', productId]);
+      }
 
   editProduct(product: Product): void {
     // Make sure to clone the product and set its 'id' property
