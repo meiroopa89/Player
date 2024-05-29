@@ -37,9 +37,7 @@ public async Task<bool> RegisterAsync(User user)
         if (userExists != null)
         {
             Console.WriteLine("User with that Email already exists");
-            return false; // User with the same email already exists
-            // return (false, "User with that Email already exists");
-
+            return true; // User with the same email already exists
         }
 
         var identityUser = new IdentityUser
@@ -74,6 +72,7 @@ public async Task<bool> RegisterAsync(User user)
         return false;
     }
 }
+
 
         public async Task<string> LoginAsync(string email, string password)
         {

@@ -35,7 +35,7 @@ public async Task<bool> Register([FromBody] User user)
         return false;
     }
 
-    if (user.UserRole == "ADMIN" || user.UserRole == "USER")
+    if (user.UserRole == "ADMIN" || user.UserRole == "STUDENT")
     {
         Console.WriteLine("Role: " + user.UserRole);
 
@@ -96,7 +96,7 @@ Console.WriteLine("Hello "+request.EmailID+" :"+request.Password);
 [HttpGet("/api/user")]
 public async Task<IActionResult> GetRegisteredUsers()
 {
-    var students = await _userManager.GetUsersInRoleAsync("USER");
+    var students = await _userManager.GetUsersInRoleAsync("STUDENT");
 
     if (students == null || !students.Any())
         return NotFound("No students found");
