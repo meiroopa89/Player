@@ -31,49 +31,44 @@ public async Task<bool> RegisterAsync(User user)
 {
     try
     {
-        Console.WriteLine("Register");
+        // Check if a user with the provided email already exists
         var userExists = await _userManager.FindByEmailAsync(user.EmailID);
         
         if (userExists != null)
         {
-            Console.WriteLine("User with that Email already exists");
-            return false; // User with the same email already exists
-            // return (false, "User with that Email already exists");
-
+            // User with the same email already exists
+            return false;
         }
 
+        // Create a new IdentityUser with the provided details
         var identityUser = new IdentityUser
         {
             UserName = user.UserName,
             Email = user.EmailID
         };
 
+        // Attempt to create the user
         var result = await _userManager.CreateAsync(identityUser, user.Password);
 
         if (result.Succeeded)
         {
+            // User creation succeeded, add the user to the specified role
             await _userManager.AddToRoleAsync(identityUser, user.UserRole);
-            Console.WriteLine($"Registration successful for user with email '{user.EmailID}'.");
             return true;
         }
         else
         {
-            Console.WriteLine($"Registration failed for user with email '{user.EmailID}'. Errors:");
-
-            foreach (var error in result.Errors)
-            {
-                Console.WriteLine($"- {error.Description}");
-            }
-
+            // User creation failed, log the errors if needed
             return false;
         }
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Error during registration: {ex.Message}");
+        // An error occurred during registration, log the exception if needed
         return false;
     }
 }
+
 
         public async Task<string> LoginAsync(string email, string password)
         {
