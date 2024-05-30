@@ -1,0 +1,55 @@
+.container {
+  margin: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  color: #333;
+}
+
+.no-classes-message {
+  color: red;
+  font-size: 18px;
+}
+
+.class-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.class-table th,
+.class-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.class-table th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.class-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.class-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.delete-button {
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #cc0000; /* Slightly darker shade on hover */
+}

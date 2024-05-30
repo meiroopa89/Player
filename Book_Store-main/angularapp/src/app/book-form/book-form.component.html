@@ -1,0 +1,28 @@
+<form (submit)="addBook()">
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" [(ngModel)]="newBook.title" name="title" required>
+        <div *ngIf="isFieldInvalid('title')" class="error-message">Title is required</div>
+    </div>
+    <div>
+        <label for="author">Author:</label>
+        <input type="text" id="author" [(ngModel)]="newBook.author" name="author" required>
+        <div *ngIf="isFieldInvalid('author')" class="error-message">Author is required</div>
+    </div>
+    <div>
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" [(ngModel)]="newBook.genre" name="genre" required>
+        <div *ngIf="isFieldInvalid('genre')" class="error-message">Genre is required</div>
+    </div>
+    <div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" [(ngModel)]="newBook.price" name="price" required>
+        <div *ngIf="isFieldInvalid('price')" class="error-message">Price is required</div>
+    </div>
+    <div>
+        <label for="isbn">ISBN:</label>
+        <input type="text" id="isbn" [(ngModel)]="newBook.isbn" name="isbn" required>
+        <div *ngIf="isFieldInvalid('isbn')" class="error-message">ISBN is required</div>
+    </div>
+    <button type="submit">Add Book</button>
+</form>
